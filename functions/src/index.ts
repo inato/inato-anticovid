@@ -69,7 +69,7 @@ const setupAlgoliaIndex = () => {
   return index;
 };
 
-export const uploadDataToAlgolia = functions
+export const uploadToAlgolia = functions
   .runWith({
     timeoutSeconds: 500,
     memory: "1GB"
