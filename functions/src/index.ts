@@ -85,6 +85,7 @@ export const uploadToAlgolia = functions
     await algoliaIndex.clearObjects();
 
     const rows = res.rows;
+    const totalNumberOfRows = res.rows.length;
     const batches = [];
     while (rows.length) {
       const batch = res.rows.splice(0, 50);
@@ -104,5 +105,5 @@ export const uploadToAlgolia = functions
     console.log("Replaced all objects");
 
     await client.end();
-    response.send(`Indexed ${res.rows.length} rows`);
+    response.send(`Indexed ${totalNumberOfRows} rows`);
   });
