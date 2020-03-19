@@ -8,13 +8,13 @@ on:
 jobs:
   firebase-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@master
         with:
           node-version: "12.x"
       - run: yarn install
+      - run: cd functions && npm install
       - run: yarn build
       - uses: w9jds/firebase-action@master
         with:
