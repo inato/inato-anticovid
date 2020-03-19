@@ -22,6 +22,7 @@ export const SearchPage = () => {
     <InstantSearch searchClient={searchClient} indexName={indexName}>
       <Header />
       <Content />
+      <Pagination />
     </InstantSearch>
   );
 };
@@ -36,22 +37,14 @@ const Header = () => (
 
 const Content = () => (
   <main>
-    <div className="information">
-      <div className="stats">
-        {" "}
-        <Stats />{" "}
-      </div>
-      <div className="">
-        <SortBy
-          defaultRefinement={indexName}
-          items={[{ value: indexName, label: "Most Relevant" }]}
-        />
-      </div>
+    <div>
+      <Stats />{" "}
+      <SortBy
+        defaultRefinement={indexName}
+        items={[{ value: indexName, label: "Most Relevant" }]}
+      />
     </div>
 
     <Hits hitComponent={ClinicalTrialHit} />
-    <div>
-      <Pagination />
-    </div>
   </main>
 );
