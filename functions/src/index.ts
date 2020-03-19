@@ -13,6 +13,45 @@ const PG_DB = "postgres";
 
 const PG_CONNECTION_STRING = `postgresql://${PG_USER}:${PG_PASSWORD}@${PG_IP}:${PG_PORT}/${PG_DB}`;
 
+const _reduce = async <T, R>(
+  array: ReadonlyArray<Promise<T> | T>,
+  callback: (acc: R, arg: T, index: number) => R | Promise<R>,
+  acc: R,
+  index: number
+): Promise<R> => {
+  if (index >= array.length) {
+    return acc;
+  }
+
+  return _reduce(
+    array,
+    callback,
+    await callback(acc, await array[index], index),
+    index + 1
+  );
+};
+
+export const reduce = async <T, R>(
+  array: ReadonlyArray<Promise<T> | T> | Promise<ReadonlyArray<Promise<T> | T>>,
+  callback: (acc: R, arg: T, index: number) => R | Promise<R>,
+  acc: R
+): Promise<R> => _reduce(await array, callback, acc, 0);
+
+export const forEachSequence = async <T, R>(
+  array: ReadonlyArray<Promise<T> | T> | Promise<ReadonlyArray<Promise<T> | T>>,
+  callback: (arg: T, index: number) => R | Promise<R>
+): Promise<void> => {
+  await reduce(
+    array,
+    async (acc, item, index) => {
+      await callback(item, index);
+
+      return acc;
+    },
+    null
+  );
+};
+
 const setupDBClient = async () => {
   const client = new Client({
     connectionString: PG_CONNECTION_STRING
@@ -45,16 +84,25 @@ export const uploadDataToAlgolia = functions
 
     await algoliaIndex.clearObjects();
 
-    await algoliaIndex.saveObjects(
-      res.rows.map(row => ({
-        objectID: row.trialid,
-        ...row
-      }))
-    );
+    const rows = res.rows;
+    const batches = [];
+    while (rows.length) {
+      const batch = res.rows.splice(0, 50);
+      batches.push(batch);
+    }
+
+    await forEachSequence(batches, async batch => {
+      await algoliaIndex.saveObjects(
+        batch.map(row => ({
+          objectID: row.trialid,
+          ...row
+        }))
+      );
+      console.log(`Sent ${batch.length} objects`);
+    });
 
     console.log("Replaced all objects");
 
-    response.send(`Indexed ${res.rows.length} rows`);
-
     await client.end();
+    response.send(`Indexed ${res.rows.length} rows`);
   });
