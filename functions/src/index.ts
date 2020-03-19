@@ -3,8 +3,8 @@ import { Client } from "pg";
 import algoliasearch from "algoliasearch";
 
 const ALGOLIA_CLIENT_ID = "QC98I887KP";
-const ALGOLIA_API_KEY = "***REMOVED***";
-const ALGOLIA_INDEX_NAME = "prod_data";
+const ALGOLIA_API_KEY = functions.config().algolia.apiKey;
+const ALGOLIA_INDEX_NAME = functions.config().algolia.index;
 const PG_IP = "***REMOVED***";
 const PG_PORT = 5432;
 const PG_USER = "app";
