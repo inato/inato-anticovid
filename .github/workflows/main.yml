@@ -24,7 +24,7 @@ jobs:
   firebase-deploy:
     needs: lint
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/head/master' || github.ref == 'refs/head/staging'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@master
