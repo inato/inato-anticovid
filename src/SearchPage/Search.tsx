@@ -5,12 +5,14 @@ import {
   SearchBox,
   Hits,
   Stats,
-  Pagination
+  Pagination,
+  RefinementList
 } from "react-instantsearch-dom";
 import styled from "styled-components";
 
 import { colors } from "../ui";
 
+import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
 
 const applicationId = "QC98I887KP";
@@ -23,19 +25,24 @@ export const SearchPage = () => {
   return (
     <Container>
       <InstantSearch searchClient={searchClient} indexName={indexName}>
-        <StyledSearchBox
-          translations={{
-            placeholder: "Search for clinical trials on Covid-19"
-          }}
-        />
-        <StyledStats
-          translations={{
-            stats(nbHits, timeSpentMS) {
-              return `${nbHits} trials found`;
-            }
-          }}
-        />
-        <StyledHits hitComponent={ClinicalTrialHit} />
+        <Layout>
+          <Facets />
+          <SearchContainter>
+            <StyledSearchBox
+              translations={{
+                placeholder: "Search for clinical trials on Covid-19"
+              }}
+            />
+            <StyledStats
+              translations={{
+                stats(nbHits, timeSpentMS) {
+                  return `${nbHits} trials found`;
+                }
+              }}
+            />
+            <StyledHits hitComponent={ClinicalTrialHit} />
+          </SearchContainter>
+        </Layout>
         <StyledPagination />
       </InstantSearch>
     </Container>
@@ -64,6 +71,13 @@ const StyledStats = styled(Stats)`
     font-weight: 500;
   }
 `;
+
+const Layout = styled.div`
+  display: flex;
+  margin-top: 24px;
+`;
+
+const SearchContainter = styled.div``;
 
 const StyledHits = styled(Hits)`
   .ais-Hits-list {
