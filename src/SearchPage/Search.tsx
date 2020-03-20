@@ -5,10 +5,11 @@ import {
   SearchBox,
   Hits,
   Stats,
-  SortBy,
   Pagination
 } from "react-instantsearch-dom";
+import styled from "styled-components";
 
+import { colors } from "../ui";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
 
 const applicationId = "QC98I887KP";
@@ -19,32 +20,72 @@ const indexName = "prod_data";
 
 export const SearchPage = () => {
   return (
-    <InstantSearch searchClient={searchClient} indexName={indexName}>
-      <Header />
-      <Content />
-      <Pagination />
-    </InstantSearch>
+    <Container>
+      <InstantSearch searchClient={searchClient} indexName={indexName}>
+        <StyledSearchBox
+          translations={{
+            placeholder: "Search for clinical trials on Covid-19"
+          }}
+        />
+        <StyledStats
+          translations={{
+            stats(nbHits, timeSpentMS) {
+              return `${nbHits} trials found`;
+            }
+          }}
+        />
+        <StyledHits hitComponent={ClinicalTrialHit} />
+        <StyledPagination />
+      </InstantSearch>
+    </Container>
   );
 };
 
-const Header = () => (
-  <header className="header">
-    <SearchBox
-      translations={{ placeholder: "Search for clinical trials on Covid" }}
-    />
-  </header>
-);
+const Container = styled.div`
+  padding: 32px 120px;
+`;
 
-const Content = () => (
-  <main>
-    <div>
-      <Stats />{" "}
-      <SortBy
-        defaultRefinement={indexName}
-        items={[{ value: indexName, label: "Most Relevant" }]}
-      />
-    </div>
+const StyledSearchBox = styled(SearchBox)`
+  width: 50%;
+  min-width: 500px;
 
-    <Hits hitComponent={ClinicalTrialHit} />
-  </main>
-);
+  .ais-SearchBox-input {
+    height: 40px;
+  }
+`;
+
+const StyledStats = styled(Stats)`
+  padding-top: 18px;
+
+  .ais-Stats-text {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+`;
+
+const StyledHits = styled(Hits)`
+  .ais-Hits-list {
+    margin: 0;
+    margin-top: 24px;
+  }
+
+  .ais-Hits-item {
+    margin: 0;
+    margin-bottom: 8px;
+    padding: 0;
+    width: 100%;
+  }
+`;
+
+const StyledPagination = styled(Pagination)`
+  padding: 24px 0;
+  .ais-Pagination-link {
+    color: ${colors.Primary};
+    border-color: ${colors.Separator};
+  }
+  .ais-Pagination-link--selected {
+    color: ${colors.SecondaryBackground};
+    background: ${colors.Primary};
+  }
+`;
