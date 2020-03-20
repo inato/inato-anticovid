@@ -25,7 +25,13 @@ jobs:
       - run: cd functions && yarn install
       - run: yarn build
       - uses: w9jds/firebase-action@master
-        if: github.ref == 'staging'
+        if: github.ref == 'refs/heads/master'
+        with:
+          args: use default
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      - uses: w9jds/firebase-action@master
+        if: github.ref == 'refs/heads/staging'
         with:
           args: use staging
         env:
