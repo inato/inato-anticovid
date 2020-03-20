@@ -30,13 +30,13 @@ export const TherapeuticClasses = ({ value }: { value: Array<string> }) => {
   const classes = (
     <ul style={{ listStyle: "none", paddingLeft: 0 }}>
       {value.map(therapeuticClass => (
-        <li>{therapeuticClass}</li>
+        <li key={therapeuticClass}>{therapeuticClass}</li>
       ))}
     </ul>
   );
   return (
     <HitHighlightContainer>
-      <Title>Therapeutic Class(es)</Title>
+      <Title>Therapeutic Class</Title>
       <Value>{classes}</Value>
     </HitHighlightContainer>
   );
