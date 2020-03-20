@@ -150,7 +150,15 @@ export const uploadToAlgolia = functions
           ).split(";"),
           clinical_outcome_extracted_: (
             row.clinical_outcome_extracted_ ?? ""
-          ).split(";")
+          ).split(";"),
+          exclusion_criteria: ((row.exclusion_criteria ?? "") as string).slice(
+            0,
+            500
+          ),
+          inclusion_criteria: ((row.inclusion_criteria ?? "") as string).slice(
+            0,
+            500
+          )
         }))
       );
       console.log(`Sent ${batch.length} objects`);
