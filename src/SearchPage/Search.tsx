@@ -5,12 +5,12 @@ import {
   SearchBox,
   Hits,
   Stats,
-  Pagination,
-  RefinementList
+  Pagination
 } from "react-instantsearch-dom";
 import styled from "styled-components";
 
 import { colors } from "../ui";
+import { Disclaimer } from "../Disclaimer";
 
 import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
@@ -41,9 +41,10 @@ export const SearchPage = () => {
               }}
             />
             <StyledHits hitComponent={ClinicalTrialHit} />
+            <StyledPagination />
+            <Disclaimer />
           </SearchContainter>
         </Layout>
-        <StyledPagination />
       </InstantSearch>
     </Container>
   );
