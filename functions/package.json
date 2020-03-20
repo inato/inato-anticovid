@@ -20,6 +20,11 @@
     "firebase-functions": "^3.3.0",
     "pg": "^7.18.2"
   },
+  "resolutions": {
+    "@typescript-eslint/eslint-plugin": "2.23.0",
+    "@typescript-eslint/parser": "2.23.0",
+    "@typescript-eslint/typescript-estree": "2.23.0"
+  },
   "devDependencies": {
     "tslint": "^5.12.0",
     "typescript": "^3.2.2",
