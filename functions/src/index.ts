@@ -84,47 +84,7 @@ export const uploadToAlgolia = functions
     const client = await setupDBClient();
     const algoliaIndex = setupAlgoliaIndex();
 
-    const res = await client.query(`SELECT countries,
-      therapeutic_classes,
-      surrogate_outcome_extracted_,
-      clinical_outcome_extracted_,
-      id,
-      trialid,
-      contact_address,
-      contact_affiliation,
-      contact_email,
-      contact_firstname,
-      contact_lastname,
-      contact_tel,
-      date_registration3,
-      ethics_review_approval_date,
-      date_enrollement,
-      ethics_review_status,
-      exclusion_criteria,
-      inclusion_agemax,
-      inclusion_agemin,
-      inclusion_criteria,
-      internal_number,
-      intervention,
-      intervention_cleaned,
-      last_refreshed_on,
-      phase,
-      primary_outcome,
-      primary_sponsor,
-      public_title,
-      recruitment_status,
-      results_url_link,
-      scientific_title,
-      secondary_outcome,
-      secondary_sponsor,
-      source_register,
-      source_support,
-      study_design,
-      study_type,
-      target_size,
-      total_recruitment_size,
-      web_address
-      from covid.who_trial`);
+    const res = await client.query(`SELECT * from covid.who_trial`);
 
     console.log(`Found ${res.rows.length}`);
 
