@@ -84,7 +84,9 @@ export const uploadToAlgolia = functions
     const client = await setupDBClient();
     const algoliaIndex = setupAlgoliaIndex();
 
-    const res = await client.query(`SELECT * from covid.who_trial`);
+    const res = await client.query(
+      `SELECT * from covid.${functions.config().algolia.tablename}`
+    );
 
     console.log(`Found ${res.rows.length}`);
 
