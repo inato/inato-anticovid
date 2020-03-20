@@ -51,6 +51,7 @@ export const SearchPage = () => {
 
 const Container = styled.div`
   padding: 32px 120px;
+  max-width: 1200px;
 `;
 
 const StyledSearchBox = styled(SearchBox)`
@@ -92,6 +93,7 @@ const StyledHits = styled(Hits)`
     padding: 0;
     width: 100%;
     border: none;
+    box-shadow: none;
   }
 `;
 

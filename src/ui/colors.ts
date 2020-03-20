@@ -1,7 +1,10 @@
 export enum colors {
   MainBackground = "#F6F7FA",
   SecondaryBackground = "#FFFFFF",
+  LightGreyBackground = "#F9FAFB",
   GreenDot = "#23D7C8",
+  OrangeText = "#CC9D00",
+  BoxShadow = "#e3e5ec",
 
   Primary = "#5928FA",
 
