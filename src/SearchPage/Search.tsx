@@ -93,6 +93,7 @@ const StyledHits = styled(Hits)`
     padding: 0;
     width: 100%;
     border: none;
+    box-shadow: none;
   }
 `;
 

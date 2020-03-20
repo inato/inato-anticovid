@@ -9,8 +9,8 @@ export const RegistrationDate = ({
 }: {
   registrationDate: string;
 }) => {
-  const formatedDate = format(new Date(registrationDate), "MMM dd yyyy");
-  return <Container>Registered on {formatedDate}</Container>;
+  const formattedDate = format(new Date(registrationDate), "MMM dd yyyy");
+  return <Container>Registered on {formattedDate}</Container>;
 };
 
 const Container = styled.div`
