@@ -5,26 +5,28 @@ import {
   SearchBox,
   Hits,
   Stats,
-  Pagination,
-  RefinementList
+  Pagination
 } from "react-instantsearch-dom";
 import styled from "styled-components";
 
+import config from "../config/config.json";
 import { colors } from "../ui";
 
 import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
 
-const applicationId = "QC98I887KP";
-const apiKey = "8675d3f84bdc4dd1412aa3baa1854319";
-const searchClient = algoliasearch(applicationId, apiKey);
-
-const indexName = "prod_data";
+const searchClient = algoliasearch(
+  config.algolia.applicationId,
+  config.algolia.publicApiKey
+);
 
 export const SearchPage = () => {
   return (
     <Container>
-      <InstantSearch searchClient={searchClient} indexName={indexName}>
+      <InstantSearch
+        searchClient={searchClient}
+        indexName={config.algolia.index}
+      >
         <Layout>
           <Facets />
           <SearchContainter>
