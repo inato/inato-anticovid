@@ -57,6 +57,7 @@ const Container = styled.div`
   :hover {
     background-color: ${colors.LightGreyBackground};
     cursor: pointer;
+    box-shadow: 0 2px 5px 0px ${colors.BoxShadow};
   }
   background-color: ${colors.SecondaryBackground};
   border: 1px solid ${colors.Border};
