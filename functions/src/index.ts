@@ -63,6 +63,12 @@ const setupDBClient = async () => {
 };
 
 const setupAlgoliaIndex = () => {
+  console.log(
+    "setup Algolia index",
+    ALGOLIA_INDEX_NAME,
+    ALGOLIA_CLIENT_ID,
+    ALGOLIA_API_KEY
+  );
   const client = algoliasearch(ALGOLIA_CLIENT_ID, ALGOLIA_API_KEY);
   const index = client.initIndex(ALGOLIA_INDEX_NAME);
 
@@ -96,7 +102,15 @@ export const uploadToAlgolia = functions
       await algoliaIndex.saveObjects(
         batch.map(row => ({
           objectID: row.trialid,
-          ...row
+          ...row,
+          countries: (row.countries ?? "").split(";"),
+          therapeutic_classes: (row.therapeutic_classes ?? "").split(";"),
+          surrogate_outcome_extracted_: (
+            row.surrogate_outcome_extracted_ ?? ""
+          ).split(";"),
+          clinical_outcome_extracted_: (
+            row.clinical_outcome_extracted_ ?? ""
+          ).split(";")
         }))
       );
       console.log(`Sent ${batch.length} objects`);
