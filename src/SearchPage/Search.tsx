@@ -69,6 +69,7 @@ const StyledStats = styled(Stats)`
     font-size: 16px;
     line-height: 24px;
     font-weight: 500;
+    color: ${colors.DefaultText};
   }
 `;
 
@@ -90,6 +91,7 @@ const StyledHits = styled(Hits)`
     margin-bottom: 8px;
     padding: 0;
     width: 100%;
+    border: none;
   }
 `;
 
