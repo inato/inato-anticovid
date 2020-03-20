@@ -9,16 +9,38 @@ export const Facets = () => {
     <FacetsContainer>
       <Facet attribute="countries" title="Countries" />
       <Facet attribute="recruitment_status" title="Recruitment Status" />
-      <Facet attribute="study_type" title="Study Type" />
+      <Facet attribute="study_type" title="Study Type" showMore />
+      <Facet
+        attribute="therapeutic_classes"
+        title="Therapeutic Classes"
+        searchable
+        showMore
+      />
     </FacetsContainer>
   );
 };
 
-const Facet = ({ attribute, title }: { attribute: string; title: string }) => {
+const Facet = ({
+  attribute,
+  title,
+  searchable = false,
+  showMore = false
+}: {
+  attribute: string;
+  title: string;
+  searchable?: boolean;
+  showMore?: boolean;
+}) => {
   return (
     <FacetContainer>
       <h3>{title}</h3>
-      <RefinementList attribute={attribute} />
+      <RefinementList
+        attribute={attribute}
+        searchable={searchable}
+        showMore={showMore}
+        showMoreLimit={50}
+        limit={7}
+      />
     </FacetContainer>
   );
 };
