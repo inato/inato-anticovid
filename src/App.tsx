@@ -11,6 +11,7 @@ export default function App() {
       <Header>
         <Logo src={logo} alt="Inato Anti-Covid Logo" />
       </Header>
+      <Separator />
       <SearchPage />
     </Root>
   );
@@ -30,3 +31,8 @@ const Header = styled.div`
 `;
 
 const Logo = styled.img``;
+
+const Separator = styled.div`
+  background: ${colors.Separator};
+  height: 1px;
+`;
