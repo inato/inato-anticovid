@@ -10,6 +10,7 @@ import {
 import styled from "styled-components";
 
 import { colors } from "../ui";
+
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
 
 const applicationId = "QC98I887KP";
