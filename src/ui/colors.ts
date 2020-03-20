@@ -4,5 +4,8 @@ export enum colors {
 
   Primary = "#5928FA",
 
-  Separator = "#DCE3E9"
+  SecondaryText = "#647B91",
+
+  Separator = "#DCE3E9",
+  Border = "#eaedf1"
 }
