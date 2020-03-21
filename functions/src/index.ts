@@ -73,7 +73,7 @@ export const uploadToAlgolia = functions
     const trialRepository = new PostgresTrialRepository(client, tableName);
 
     const trials = await trialRepository.findAllTrials();
-
+    const trialsCount = trials.length;
     console.log(`Found ${trials.length}`);
 
     const batches = [];
@@ -93,5 +93,5 @@ export const uploadToAlgolia = functions
     console.log("Replaced all objects");
 
     await client.end();
-    response.send(`Indexed ${trials.length} rows`);
+    response.send(`Indexed ${trialsCount} trials`);
   });
