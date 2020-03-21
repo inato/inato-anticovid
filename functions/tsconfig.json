@@ -10,5 +10,6 @@
     "typeRoots": ["./node_modules/@types"]
   },
   "compileOnSave": true,
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["**/*.test.ts"]
 }
