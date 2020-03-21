@@ -69,8 +69,8 @@ export const uploadToAlgolia = functions
   })
   .https.onRequest(async (request, response) => {
     const client = await setupPostgresClient();
-    const trialRepository = new PostgresTrialRepository(client);
-    const algoliaIndex = setupAlgoliaIndex();
+    const tableName = functions.config().algolia.tablename;
+    const trialRepository = new PostgresTrialRepository(client, tableName);
 
     const trials = await trialRepository.findAllTrials();
 
@@ -82,6 +82,7 @@ export const uploadToAlgolia = functions
       batches.push(batch);
     }
 
+    const algoliaIndex = setupAlgoliaIndex();
     await algoliaIndex.clearObjects();
 
     await forEachSequence(batches, async batch => {
