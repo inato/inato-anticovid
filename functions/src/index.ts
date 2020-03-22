@@ -1,17 +1,14 @@
 import * as functions from "firebase-functions";
-import { Client } from "pg";
 import algoliasearch from "algoliasearch";
+import {
+  setupPostgresClient,
+  PostgresTrialRepository,
+  serialize
+} from "./infrastructure";
 
 const ALGOLIA_CLIENT_ID = "QC98I887KP";
 const ALGOLIA_API_KEY = functions.config().algolia.apikey;
 const ALGOLIA_INDEX_NAME = functions.config().algolia.index;
-const PG_IP = "***REMOVED***";
-const PG_PORT = 5432;
-const PG_USER = "app";
-const PG_PASSWORD = "***REMOVED***";
-const PG_DB = "postgres";
-
-const PG_CONNECTION_STRING = `postgresql://${PG_USER}:${PG_PASSWORD}@${PG_IP}:${PG_PORT}/${PG_DB}`;
 
 const _reduce = async <T, R>(
   array: ReadonlyArray<Promise<T> | T>,
@@ -52,16 +49,6 @@ export const forEachSequence = async <T, R>(
   );
 };
 
-const setupDBClient = async () => {
-  const client = new Client({
-    connectionString: PG_CONNECTION_STRING
-  });
-
-  await client.connect();
-
-  return client;
-};
-
 const setupAlgoliaIndex = () => {
   console.log(
     "setup Algolia index",
@@ -81,53 +68,30 @@ export const uploadToAlgolia = functions
     memory: "1GB"
   })
   .https.onRequest(async (request, response) => {
-    const client = await setupDBClient();
-    const algoliaIndex = setupAlgoliaIndex();
+    const client = await setupPostgresClient();
+    const tableName = functions.config().algolia.tablename;
+    const trialRepository = new PostgresTrialRepository(client, tableName);
 
-    const res = await client.query(
-      `SELECT * from covid.${functions.config().algolia.tablename}`
-    );
+    const trials = await trialRepository.findAllTrials();
+    const trialsCount = trials.length;
+    console.log(`Found ${trials.length}`);
 
-    console.log(`Found ${res.rows.length}`);
-
-    await algoliaIndex.clearObjects();
-
-    const rows = res.rows;
-    const totalNumberOfRows = res.rows.length;
     const batches = [];
-    while (rows.length) {
-      const batch = res.rows.splice(0, 50);
+    while (trials.length) {
+      const batch = trials.splice(0, 50);
       batches.push(batch);
     }
 
+    const algoliaIndex = setupAlgoliaIndex();
+    await algoliaIndex.clearObjects();
+
     await forEachSequence(batches, async batch => {
-      await algoliaIndex.saveObjects(
-        batch.map(row => ({
-          objectID: row.trialid,
-          ...row,
-          countries: (row.countries ?? "").split(";"),
-          therapeutic_classes: (row.therapeutic_classes ?? "").split(";"),
-          surrogate_outcome_extracted_: (
-            row.surrogate_outcome_extracted_ ?? ""
-          ).split(";"),
-          clinical_outcome_extracted_: (
-            row.clinical_outcome_extracted_ ?? ""
-          ).split(";"),
-          exclusion_criteria: ((row.exclusion_criteria ?? "") as string).slice(
-            0,
-            500
-          ),
-          inclusion_criteria: ((row.inclusion_criteria ?? "") as string).slice(
-            0,
-            500
-          )
-        }))
-      );
+      await algoliaIndex.saveObjects(batch.map(trial => serialize(trial)));
       console.log(`Sent ${batch.length} objects`);
     });
 
     console.log("Replaced all objects");
 
     await client.end();
-    response.send(`Indexed ${totalNumberOfRows} rows`);
+    response.send(`Indexed ${trialsCount} trials`);
   });
