@@ -2,16 +2,16 @@
 
 You will need to use node 10 (use nvm)
 
-You must first select an environment:
+Then, you must set the environment variables in a `.runtimeconfig.json` file:
 
 ```sh
-firebase use staging
-```
-
-Then, you must set the environment variables in a local file
-
-```sh
-firebase functions:config:get > .runtimeconfig.json
+{
+  "algolia": {
+    "apikey": "6938d009a19fe72f19e9aa01a35dea3f",
+    "tablename": "who_trial_staging",
+    "index": "dev_data"
+  }
+}
 ```
 
 Then you can run
