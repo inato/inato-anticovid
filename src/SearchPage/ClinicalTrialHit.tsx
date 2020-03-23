@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 import { colors } from "../ui";
-import { Space, Orientation } from "../ui/components";
 
 import {
   TrialStatus,
@@ -17,9 +16,7 @@ interface ClinicalTrialHit {
     web_address: string;
     recruitment_status: string;
     therapeutic_classes: Array<string>;
-    study_type: string;
     date_registration3: string;
-    ethics_review_status: string | null;
   };
 }
 
@@ -29,9 +26,7 @@ export const ClinicalTrialHit = ({
     web_address,
     recruitment_status,
     therapeutic_classes,
-    study_type,
-    date_registration3,
-    ethics_review_status
+    date_registration3
   }
 }: any) => (
   <Link href={web_address} target="_blank">
@@ -40,7 +35,6 @@ export const ClinicalTrialHit = ({
       <RightContainer>
         <RegistrationDate registrationDate={date_registration3} />
         <TrialStatus value={recruitment_status} />
-        <Space size={48} orientation={Orientation.horizontal} />
         <TherapeuticClasses value={therapeutic_classes} />
       </RightContainer>
     </Container>
