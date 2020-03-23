@@ -13,7 +13,7 @@ import styled from "styled-components";
 import qs from "qs";
 
 import config from "../config/config.json";
-import { colors } from "../ui";
+import { colors, device } from "../ui";
 import { Disclaimer } from "../Disclaimer";
 
 import { Facets } from "./Facets";
@@ -73,7 +73,7 @@ export const SearchPage = () => {
           <SearchContainter>
             <StyledSearchBox
               translations={{
-                placeholder: "Search for clinical trials on Covid-19"
+                placeholder: "Search by keyword, drug, ..."
               }}
             />
             <StyledStats
@@ -84,7 +84,7 @@ export const SearchPage = () => {
               }}
             />
             <StyledHits hitComponent={ClinicalTrialHit} />
-            <StyledPagination />
+            <StyledPagination showFirst={false} padding={2} />
             <Disclaimer />
           </SearchContainter>
         </Layout>
@@ -94,16 +94,21 @@ export const SearchPage = () => {
 };
 
 const Container = styled.div`
-  padding: 32px 120px;
+  padding: 32px 10vw;
   max-width: 1200px;
+  @media ${device.sm} {
+    padding: 32px 120px;
+  }
 `;
 
 const StyledSearchBox = styled(SearchBox)`
-  width: 50%;
-  min-width: 500px;
-
   .ais-SearchBox-input {
     height: 40px;
+  }
+
+  @media ${device.sm} {
+    width: 50%;
+    min-width: 500px;
   }
 `;
 
@@ -120,7 +125,6 @@ const StyledStats = styled(Stats)`
 
 const Layout = styled.div`
   display: flex;
-  margin-top: 24px;
 `;
 
 const SearchContainter = styled.div`
@@ -141,6 +145,8 @@ const StyledHits = styled(Hits)`
     border: none;
     box-shadow: none;
   }
+
+  max-width: 80vw;
 `;
 
 const StyledPagination = styled(Pagination)`

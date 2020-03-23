@@ -2,7 +2,7 @@ import React from "react";
 import { ClearRefinements, RefinementList } from "react-instantsearch-dom";
 import styled from "styled-components";
 
-import { colors } from "../ui";
+import { colors, device } from "../ui";
 
 export const Facets = () => {
   return (
@@ -106,6 +106,11 @@ const FacetsContainer = styled.div`
   }
   .ais-ClearRefinements-button--disabled {
     border: 1px solid ${colors.Border};
+  }
+
+  display: none;
+  @media ${device.sm} {
+    display: initial;
   }
 `;
 
