@@ -3,6 +3,7 @@ import { serialize } from "./serialize";
 
 describe("serialize", () => {
   it("should serialize all fields", () => {
+    const date = new Date();
     const trial = trialFactory({
       trialid: "trialid",
       public_title: "public_title",
@@ -10,7 +11,7 @@ describe("serialize", () => {
       web_address: "web_address",
       recruitment_status: "recruitment_status",
       therapeutic_classes: ["therapeutic_classes"],
-      date_registration3: "date_registration3"
+      date_registration3: date
     });
     expect(serialize(trial)).toStrictEqual({
       exclusion_criteria: "",
@@ -20,7 +21,7 @@ describe("serialize", () => {
       web_address: "web_address",
       recruitment_status: "recruitment_status",
       therapeutic_classes: ["therapeutic_classes"],
-      date_registration3: "date_registration3",
+      date_registration3: date,
       objectID: "trialid"
     });
   });

@@ -5,7 +5,7 @@ interface TrialConstructorArgs {
   web_address: string;
   recruitment_status: string;
   therapeutic_classes: Array<string>;
-  date_registration3: string;
+  date_registration3: Date;
   rest: any;
 }
 
@@ -16,7 +16,7 @@ export class Trial {
   public readonly web_address: string;
   public readonly recruitment_status: string;
   public readonly therapeutic_classes: Array<string>;
-  public readonly date_registration3: string;
+  public readonly date_registration3: Date;
   public readonly rest: any;
 
   constructor({

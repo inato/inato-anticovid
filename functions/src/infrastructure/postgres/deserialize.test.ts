@@ -8,6 +8,7 @@ describe("deserialize", () => {
     expect(() => deserialize(row)).toThrowError();
   });
   it("should make a Trial object from a query result row", () => {
+    const date = new Date();
     const row = {
       trialid: "trialid",
       public_title: "public_title",
@@ -15,7 +16,7 @@ describe("deserialize", () => {
       web_address: "web_address",
       recruitment_status: "recruitment_status",
       therapeutic_classes: ["therapeutic_classes"],
-      date_registration3: "date_registration3",
+      date_registration3: date,
       study_design: "study_design"
     };
     const trial = deserialize(row);
@@ -28,7 +29,7 @@ describe("deserialize", () => {
       web_address: "web_address",
       recruitment_status: "recruitment_status",
       therapeutic_classes: ["therapeutic_classes"],
-      date_registration3: "date_registration3",
+      date_registration3: date,
       study_design: "study_design"
     });
   });

@@ -7,7 +7,7 @@ export const trialFactory = ({
   web_address = "web_address",
   recruitment_status = "recruitment_status",
   therapeutic_classes = ["therapeutic_class"],
-  date_registration3 = "date_registration3",
+  date_registration3 = new Date(),
   rest = {}
 }: Partial<{
   trialid: string;
@@ -16,7 +16,7 @@ export const trialFactory = ({
   web_address: string;
   recruitment_status: string;
   therapeutic_classes: Array<string>;
-  date_registration3: string;
+  date_registration3: Date;
   rest: Object;
 }>) =>
   new Trial({
