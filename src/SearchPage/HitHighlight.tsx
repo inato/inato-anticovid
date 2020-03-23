@@ -76,4 +76,5 @@ const TherapeuticClass = styled.span`
 
 const TherapeuticClassesContainer = styled(HitHighlightContainer)`
   flex-wrap: wrap;
+  max-width: 205px; /* for IE11 */
 `;
