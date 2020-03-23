@@ -7,13 +7,9 @@ describe("serialize", () => {
       trialid: "trialid"
     });
     expect(serialize(trial)).toStrictEqual({
-      clinical_outcome_extracted_: [""],
-      countries: [""],
       exclusion_criteria: "",
       inclusion_criteria: "",
       objectID: "trialid",
-      surrogate_outcome_extracted_: [""],
-      therapeutic_classes: [""]
     });
   });
 
@@ -25,14 +21,10 @@ describe("serialize", () => {
       }
     });
     expect(serialize(trial)).toStrictEqual({
-      clinical_outcome_extracted_: [""],
-      countries: [""],
       exclusion_criteria: "",
       inclusion_criteria: "",
       objectID: "trialid",
       other: "other",
-      surrogate_outcome_extracted_: [""],
-      therapeutic_classes: [""]
     });
   });
 });
