@@ -2,11 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 import { colors } from "../ui";
-import { Space, Orientation } from "../ui/components";
 
-import { TrialStatus, TherapeuticClasses, StudyType } from "./HitHighlight";
-import { RegistrationDate } from "./RegistrationDate";
-import { PendingApproval } from "./PendingApproval";
+import {
+  TrialStatus,
+  TherapeuticClasses,
+  RegistrationDate
+} from "./HitHighlight";
 
 interface ClinicalTrialHit {
   hit: {
@@ -15,9 +16,7 @@ interface ClinicalTrialHit {
     web_address: string;
     recruitment_status: string;
     therapeutic_classes: Array<string>;
-    study_type: string;
     date_registration3: string;
-    ethics_review_status: string | null;
   };
 }
 
@@ -27,27 +26,16 @@ export const ClinicalTrialHit = ({
     web_address,
     recruitment_status,
     therapeutic_classes,
-    study_type,
-    date_registration3,
-    ethics_review_status
+    date_registration3
   }
 }: any) => (
   <Link href={web_address} target="_blank">
     <Container>
-      <div>
-        <TitleContainer>{public_title}</TitleContainer>
-        <Space size={8} orientation={Orientation.vertical} />
-        <Highlights>
-          <TrialStatus value={recruitment_status} />
-          <Space size={48} orientation={Orientation.horizontal} />
-          <TherapeuticClasses value={therapeutic_classes} />
-          <Space size={48} orientation={Orientation.horizontal} />
-          <StudyType value={study_type} />
-        </Highlights>
-      </div>
+      <TitleContainer>{public_title}</TitleContainer>
       <RightContainer>
         <RegistrationDate registrationDate={date_registration3} />
-        {ethics_review_status === null && <PendingApproval />}
+        <TrialStatus value={recruitment_status} />
+        <TherapeuticClasses value={therapeutic_classes} />
       </RightContainer>
     </Container>
   </Link>
@@ -65,25 +53,23 @@ const Container = styled.div`
   padding: 16px;
   flex-direction: row;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
 `;
 
 const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
 `;
 
 const TitleContainer = styled.div`
-  max-width: 600px;
+  width: 600px;
+  min-width: 600px;
   color: ${colors.DefaultText};
+  margin-right: 64px;
+  font-size: 16px;
+  font-weight: 500;
 `;
 
 const Link = styled.a`
   text-decoration: none;
-`;
-
-const Highlights = styled.div`
-  display: flex;
-  flex-direction: row;
 `;

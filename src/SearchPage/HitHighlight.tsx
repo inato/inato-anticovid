@@ -1,68 +1,79 @@
 import React from "react";
 import styled from "styled-components";
+import { format } from "date-fns";
 
-import { colors, Space, Orientation } from "../ui";
+import { colors, TimeClockIcon } from "../ui";
 
 export const TrialStatus = ({ value }: { value: string }) => (
   <HitHighlightContainer>
-    <Title>trial status</Title>
-    <div style={{ display: "flex" }}>
-      {value === "Recruiting" && (
-        <>
-          <GreenDot />
-          <Space size={8} orientation={Orientation.horizontal} />
-        </>
-      )}
-      <Value>{value}</Value>
-    </div>
+    {value === "Recruiting" ? <GreenDot /> : <GrayDot />}
+    {value}
   </HitHighlightContainer>
 );
 
-const GreenDot = styled.div`
-  width: 8px;
-  height: 8px;
-  background-color: ${colors.GreenDot};
-  border-radius: 4px;
-  align-self: center;
-`;
-
 export const TherapeuticClasses = ({ value }: { value: Array<string> }) => {
-  const classes = (
-    <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-      {value.map(therapeuticClass => (
-        <li key={therapeuticClass}>{therapeuticClass}</li>
-      ))}
-    </ul>
+  return (
+    <TherapeuticClassesContainer>
+      {value
+        .filter(therapeuticClass => therapeuticClass)
+        .map(therapeuticClass => (
+          <TherapeuticClass key={therapeuticClass}>
+            {therapeuticClass}
+          </TherapeuticClass>
+        ))}
+    </TherapeuticClassesContainer>
   );
+};
+
+export const RegistrationDate = ({
+  registrationDate
+}: {
+  registrationDate: string;
+}) => {
+  const formattedDate = format(new Date(registrationDate), "MMM dd yyyy");
   return (
     <HitHighlightContainer>
-      <Title>Therapeutic Class</Title>
-      <Value>{classes}</Value>
+      <StyledTimeClockIcon />
+      Registered on {formattedDate}
     </HitHighlightContainer>
   );
 };
 
-export const StudyType = ({ value }: { value: string }) => (
-  <HitHighlightContainer>
-    <Title>study type</Title>
-    <Value>{value}</Value>
-  </HitHighlightContainer>
-);
-
 const HitHighlightContainer = styled.div`
   display: flex;
-  flex-direction: column;
-`;
-
-const Title = styled.span`
+  color: ${colors.GreySecondaryText};
   font-size: 12px;
   line-height: 20px;
-  text-transform: uppercase;
-  color: ${colors.GreySecondaryText};
+  align-items: center;
 `;
 
-const Value = styled.span`
-  line-height: 24px;
-  font-size: 14px;
-  color: ${colors.DefaultText};
+const Dot = styled.div`
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+`;
+
+const GreenDot = styled(Dot)`
+  background-color: ${colors.GreenDot};
+`;
+
+const GrayDot = styled(Dot)`
+  background-color: ${colors.GrayDot};
+`;
+
+const StyledTimeClockIcon = styled(TimeClockIcon)`
+  margin-right: 8px;
+`;
+
+const TherapeuticClass = styled.span`
+  border-radius: 4px;
+  padding: 2px 8px;
+  background: #eaedf1;
+  white-space: nowrap;
+  margin: 4px 4px 0 0;
+`;
+
+const TherapeuticClassesContainer = styled(HitHighlightContainer)`
+  flex-wrap: wrap;
 `;
