@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import { colors } from "./ui";
 import { SearchPage } from "./SearchPage";
@@ -12,7 +13,16 @@ export default function App() {
         <Logo src={logo} alt="Inato Anti-Covid Logo" />
       </Header>
       <Separator />
-      <SearchPage />
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            {() => <Redirect to="/search" />}
+          </Route>
+          <Route path="/search">
+            <SearchPage />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </Root>
   );
 }
