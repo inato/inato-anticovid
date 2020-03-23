@@ -1,5 +1,7 @@
 # Run locally
 
+
+## Installation
 You will need to use node 10 (use nvm)
 
 
@@ -7,6 +9,13 @@ Make sure you have `firebase` installed and configured:
 ```
 $> brew install firebase
 $> firebase login
+```
+
+## Usage
+
+Configure firebase to use the project you want to use:
+
+```
 $> firebase use staging # to run staging cloud functions
 $> firebase use production # to run production cloud functions
 ```

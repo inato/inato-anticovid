@@ -16,8 +16,7 @@ $> yarn global add serve
 
 To build and run on localhost:5000
 ```
-$> yarn build
-$> serve -s build
+$> yarn start
 ```
 
 To configure the indices your local app connects to, modify `src/config/config.json`
