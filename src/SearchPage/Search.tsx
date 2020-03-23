@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo, createContext } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import algoliasearch from "algoliasearch";
 import {
@@ -37,6 +37,31 @@ const urlToSearchState = (
   location: ReturnType<typeof useHistory>["location"]
 ) => qs.parse(location.search.slice(1));
 
+const useBoolean = (initialValue: boolean) => {
+  const [isTrue, setState] = useState(() => initialValue);
+  const setToTrue = useCallback(() => setState(() => true), []);
+  const setToFalse = useCallback(() => setState(() => false), []);
+  const toggle = useCallback(() => setState(prev => !prev), []);
+
+  return useMemo(
+    () => ({
+      isTrue,
+      isFalse: !isTrue,
+      setToTrue,
+      setToFalse,
+      toggle
+    }),
+    [isTrue, setToFalse, setToTrue, toggle]
+  );
+};
+
+type FilteringContext = {
+  filtering: boolean;
+  toggleFiltering: () => void;
+};
+
+export const filteringContext = createContext<FilteringContext>(null as any); // FIX ME
+
 export const SearchPage = () => {
   const history = useHistory();
   const [searchState, setSearchState] = useState(
@@ -60,6 +85,8 @@ export const SearchPage = () => {
     [onSearchStateChangeDebounced]
   );
 
+  const { isTrue: filtering, toggle: toggleFiltering } = useBoolean(false);
+
   return (
     <Container>
       <InstantSearch
@@ -69,25 +96,34 @@ export const SearchPage = () => {
         searchState={searchState}
       >
         <Layout>
-          <Facets />
-          <SearchContainter>
-            <StyledSearchBox
-              translations={{
-                placeholder: "Search by keyword, drug, ..."
-              }}
-            />
-            <StyledStats
-              translations={{
-                stats(nbHits, timeSpentMS) {
-                  return `${nbHits} trials found`;
-                }
-              }}
-            />
-            <StyledHits hitComponent={ClinicalTrialHit} />
-            <StyledPagination showFirst={false} padding={2} />
-            <Disclaimer />
-          </SearchContainter>
+          <filteringContext.Provider value={{ filtering, toggleFiltering }}>
+            <Facets />
+            <SearchContainter>
+              <StyledSearchBox
+                translations={{
+                  placeholder: "Search by keyword, drug, ..."
+                }}
+              />
+              <StyledStats
+                translations={{
+                  stats(nbHits, timeSpentMS) {
+                    return `${nbHits} trials found`;
+                  }
+                }}
+              />
+              <StyledHits hitComponent={ClinicalTrialHit} />
+              <StyledPagination showFirst={false} padding={2} />
+              <Disclaimer />
+            </SearchContainter>
+          </filteringContext.Provider>
         </Layout>
+        <FilterButton
+          type="button"
+          onClick={toggleFiltering}
+          filtering={filtering}
+        >
+          filters
+        </FilterButton>
       </InstantSearch>
     </Container>
   );
@@ -159,4 +195,33 @@ const StyledPagination = styled(Pagination)`
     color: ${colors.SecondaryBackground};
     background: ${colors.Primary};
   }
+`;
+
+type FilterButtonProps = {
+  filtering: boolean;
+};
+const FilterButton = styled.button<FilterButtonProps>`
+  text-transform: uppercase;
+  align-items: center;
+  background-color: ${colors.Primary};
+  border: none;
+  border-radius: 4px;
+  bottom: 2rem;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  left: 50%;
+  min-height: 40px;
+  min-width: 112px;
+  position: fixed;
+  transform: translateX(-50%);
+  border: 1px solid #5928fa;
+
+  @media ${device.sm} {
+    display: none;
+  }
+  display: ${({ filtering }) => (filtering ? "none" : undefined)};
 `;

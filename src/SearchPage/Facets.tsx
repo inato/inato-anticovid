@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ClearRefinements, RefinementList } from "react-instantsearch-dom";
 import styled from "styled-components";
 
 import { colors, device } from "../ui";
 
+import { filteringContext } from "./Search";
+
 export const Facets = () => {
+  const { filtering } = useContext(filteringContext);
   return (
-    <FacetsContainer>
+    <FacetsContainer filtering={filtering}>
       <Header>
         <h1>Filters</h1>
         <ClearRefinements />
@@ -81,7 +84,8 @@ const FacetContainer = styled.div`
   }
 `;
 
-const FacetsContainer = styled.div`
+type FacetsContainerProps = { filtering: boolean };
+const FacetsContainer = styled.div<FacetsContainerProps>`
   align-self: flex-start;
   min-width: 265px;
   background: ${colors.SecondaryBackground};
@@ -108,9 +112,11 @@ const FacetsContainer = styled.div`
     border: 1px solid ${colors.Border};
   }
 
-  display: none;
+  display: ${({ filtering }) => (filtering ? undefined : "none")};
+  position: absolute;
   @media ${device.sm} {
     display: initial;
+    position: initial;
   }
 `;
 
