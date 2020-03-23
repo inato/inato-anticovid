@@ -3,5 +3,5 @@ export const breakpoints = {
 };
 
 export const device = {
-  sm: `(max-width: ${breakpoints.sm}px)`
+  sm: `(min-width: ${breakpoints.sm}px)`
 };

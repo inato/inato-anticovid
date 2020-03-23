@@ -108,8 +108,9 @@ const FacetsContainer = styled.div`
     border: 1px solid ${colors.Border};
   }
 
+  display: none;
   @media ${device.sm} {
-    display: none;
+    display: initial;
   }
 `;
 

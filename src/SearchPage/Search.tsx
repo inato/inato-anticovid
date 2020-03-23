@@ -94,24 +94,21 @@ export const SearchPage = () => {
 };
 
 const Container = styled.div`
-  padding: 32px 120px;
+  padding: 32px 10vw;
   max-width: 1200px;
   @media ${device.sm} {
-    padding: 32px 10vw;
+    padding: 32px 120px;
   }
 `;
 
 const StyledSearchBox = styled(SearchBox)`
-  width: 50%;
-  min-width: 500px;
-
   .ais-SearchBox-input {
     height: 40px;
   }
 
   @media ${device.sm} {
-    width: initial;
-    min-width: initial;
+    width: 50%;
+    min-width: 500px;
   }
 `;
 

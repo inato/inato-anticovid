@@ -34,17 +34,18 @@ const Root = styled.div`
 
 const Header = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
   background: ${colors.SecondaryBackground};
   height: 65px;
-  padding: 0 120px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 10vw;
+
   @media ${device.sm} {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 0 10vw;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 120px;
   }
 `;
 
