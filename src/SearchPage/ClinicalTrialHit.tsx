@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { colors } from "../ui";
+import { colors, device } from "../ui";
 
 import {
   TrialStatus,
@@ -51,9 +51,17 @@ const Container = styled.div`
   border: 1px solid ${colors.Border};
   border-radius: 4px;
   padding: 16px;
-  flex-direction: row;
+
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  @media ${device.sm} {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
 `;
 
 const RightContainer = styled.div`
@@ -62,12 +70,15 @@ const RightContainer = styled.div`
 `;
 
 const TitleContainer = styled.div`
-  width: 600px;
-  min-width: 600px;
   color: ${colors.DefaultText};
   margin-right: 64px;
   font-size: 16px;
   font-weight: 500;
+
+  @media ${device.sm} {
+    width: 600px;
+    min-width: 600px;
+  }
 `;
 
 const Link = styled.a`

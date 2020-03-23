@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
-import { colors } from "./ui";
+import { colors, device } from "./ui";
 import { SearchPage } from "./SearchPage";
 import logo from "./Logo.svg";
 
@@ -34,10 +34,19 @@ const Root = styled.div`
 
 const Header = styled.div`
   display: flex;
-  align-items: center;
   background: ${colors.SecondaryBackground};
   height: 65px;
-  padding: 0 120px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 10vw;
+
+  @media ${device.sm} {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 120px;
+  }
 `;
 
 const Logo = styled.img``;
