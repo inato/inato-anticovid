@@ -37,3 +37,5 @@ Please warn the app-team before changing the type of any of those data point.
   date_registration3: string;
 }
 ```
+
+All the data used in the Algolia Search is [here](https://www.algolia.com/apps/QC98I887KP/explorer/configuration/prod_data/searchable-attributes)
