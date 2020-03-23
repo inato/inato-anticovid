@@ -11,15 +11,20 @@ export const Facets = () => {
         <h1>Filters</h1>
         <ClearRefinements />
       </Header>
-      <Facet attribute="countries" title="Countries" />
-      <Facet attribute="recruitment_status" title="Recruitment Status" />
-      <Facet attribute="study_type" title="Study Type" showMore />
       <Facet
         attribute="therapeutic_classes"
         title="Therapeutic Classes"
         searchable
         showMore
       />
+      <Facet attribute="clinical_outcome_extracted_" title="Clinical Outcome" />
+      <Facet
+        attribute="surrogate_outcome_extracted_"
+        title="Surrogate Outcome"
+      />
+      <Facet attribute="recruitment_status" title="Recruitment Status" />
+      <Facet attribute="study_type" title="Study Type" showMore />
+      <Facet attribute="countries" title="Countries" />
     </FacetsContainer>
   );
 };
