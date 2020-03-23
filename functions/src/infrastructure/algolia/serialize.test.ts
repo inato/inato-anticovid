@@ -2,14 +2,26 @@ import { trialFactory } from "../../domain";
 import { serialize } from "./serialize";
 
 describe("serialize", () => {
-  it("should serialize an empty trial", () => {
+  it("should serialize all fields", () => {
     const trial = trialFactory({
-      trialid: "trialid"
+      trialid: "trialid",
+      public_title: "public_title",
+      intervention: "intervention",
+      web_address: "web_address",
+      recruitment_status: "recruitment_status",
+      therapeutic_classes: ["therapeutic_classes"],
+      date_registration3: "date_registration3"
     });
     expect(serialize(trial)).toStrictEqual({
       exclusion_criteria: "",
       inclusion_criteria: "",
-      objectID: "trialid",
+      public_title: "public_title",
+      intervention: "intervention",
+      web_address: "web_address",
+      recruitment_status: "recruitment_status",
+      therapeutic_classes: ["therapeutic_classes"],
+      date_registration3: "date_registration3",
+      objectID: "trialid"
     });
   });
 
@@ -20,11 +32,11 @@ describe("serialize", () => {
         other: "other"
       }
     });
-    expect(serialize(trial)).toStrictEqual({
+    expect(serialize(trial)).toMatchObject({
       exclusion_criteria: "",
       inclusion_criteria: "",
       objectID: "trialid",
-      other: "other",
+      other: "other"
     });
   });
 });
