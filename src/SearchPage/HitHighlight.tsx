@@ -5,12 +5,9 @@ import { colors, Space, Orientation } from "../ui";
 
 export const TrialStatus = ({ value }: { value: string }) => (
   <HitHighlightContainer>
-    <Title>trial status</Title>
-    <div style={{ display: "flex" }}>
-      {value === "Recruiting" ? <GreenDot /> : <GrayDot />}
-      <Space size={8} orientation={Orientation.horizontal} />
-      <Value>{value}</Value>
-    </div>
+    {value === "Recruiting" ? <GreenDot /> : <GrayDot />}
+    <Space size={8} orientation={Orientation.horizontal} />
+    {value}
   </HitHighlightContainer>
 );
 
@@ -30,35 +27,34 @@ const GrayDot = styled(Dot)`
 `;
 
 export const TherapeuticClasses = ({ value }: { value: Array<string> }) => {
-  const classes = (
-    <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-      {value.map(therapeuticClass => (
-        <li key={therapeuticClass}>{therapeuticClass}</li>
-      ))}
-    </ul>
-  );
   return (
-    <HitHighlightContainer>
-      <Title>Therapeutic Class</Title>
-      <Value>{classes}</Value>
-    </HitHighlightContainer>
+    <TherapeuticClassesContainer>
+      {value
+        .filter(therapeuticClass => therapeuticClass)
+        .map(therapeuticClass => (
+          <TherapeuticClass key={therapeuticClass}>
+            {therapeuticClass}
+          </TherapeuticClass>
+        ))}
+    </TherapeuticClassesContainer>
   );
 };
 
+const TherapeuticClass = styled.span`
+  border-radius: 4px;
+  padding: 2px 8px;
+  background: #eaedf1;
+  white-space: nowrap;
+  margin: 4px 4px 4px 0;
+`;
+
 const HitHighlightContainer = styled.div`
   display: flex;
-  flex-direction: column;
-`;
-
-const Title = styled.span`
+  color: ${colors.GreySecondaryText};
   font-size: 12px;
   line-height: 20px;
-  text-transform: uppercase;
-  color: ${colors.GreySecondaryText};
 `;
 
-const Value = styled.span`
-  line-height: 24px;
-  font-size: 14px;
-  color: ${colors.DefaultText};
+const TherapeuticClassesContainer = styled(HitHighlightContainer)`
+  flex-wrap: wrap;
 `;
