@@ -7,15 +7,13 @@ export enum Orientation {
 
 export const Space = ({
   size,
-  orientation,
-  className
+  orientation
 }: {
   size: number;
   orientation: Orientation;
-  className?: string;
 }) =>
   orientation === Orientation.vertical ? (
-    <div className={className} style={{ height: size }} />
+    <div style={{ height: size }} />
   ) : (
-    <div className={className} style={{ width: size }} />
+    <div style={{ width: size }} />
   );

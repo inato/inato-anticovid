@@ -37,10 +37,10 @@ export const ClinicalTrialHit = ({
   <Link href={web_address} target="_blank">
     <Container>
       <TitleContainer>{public_title}</TitleContainer>
-      <StyledSpace size={60} orientation={Orientation.horizontal} />
       <RightContainer>
         <RegistrationDate registrationDate={date_registration3} />
         <TrialStatus value={recruitment_status} />
+        <Space size={48} orientation={Orientation.horizontal} />
         <TherapeuticClasses value={therapeutic_classes} />
       </RightContainer>
     </Container>
@@ -71,14 +71,11 @@ const TitleContainer = styled.div`
   width: 600px;
   min-width: 600px;
   color: ${colors.DefaultText};
+  margin-right: 60px;
   font-size: 16px;
   font-weight: 500;
 `;
 
 const Link = styled.a`
   text-decoration: none;
-`;
-
-const StyledSpace = styled(Space)`
-  flex-shrink: 0;
 `;
