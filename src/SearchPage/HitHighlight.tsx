@@ -7,23 +7,26 @@ export const TrialStatus = ({ value }: { value: string }) => (
   <HitHighlightContainer>
     <Title>trial status</Title>
     <div style={{ display: "flex" }}>
-      {value === "Recruiting" && (
-        <>
-          <GreenDot />
-          <Space size={8} orientation={Orientation.horizontal} />
-        </>
-      )}
+      {value === "Recruiting" ? <GreenDot /> : <GrayDot />}
+      <Space size={8} orientation={Orientation.horizontal} />
       <Value>{value}</Value>
     </div>
   </HitHighlightContainer>
 );
 
-const GreenDot = styled.div`
+const Dot = styled.div`
   width: 8px;
   height: 8px;
-  background-color: ${colors.GreenDot};
   border-radius: 4px;
   align-self: center;
+`;
+
+const GreenDot = styled(Dot)`
+  background-color: ${colors.GreenDot};
+`;
+
+const GrayDot = styled(Dot)`
+  background-color: ${colors.GrayDot};
 `;
 
 export const TherapeuticClasses = ({ value }: { value: Array<string> }) => {
