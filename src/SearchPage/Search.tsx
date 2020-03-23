@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 import algoliasearch from "algoliasearch";
 import {
   InstantSearch,
@@ -7,7 +8,9 @@ import {
   Stats,
   Pagination
 } from "react-instantsearch-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import qs from "qs";
 
 import config from "../config/config.json";
 import { colors } from "../ui";
@@ -16,17 +19,44 @@ import { Disclaimer } from "../Disclaimer";
 import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
 
+const DEBOUNCE_SET_SEARCH_IN_MS = 1000;
+
 const searchClient = algoliasearch(
   config.algolia.applicationId,
   config.algolia.publicApiKey
 );
 
+const createURL = (state: unknown) => `?${qs.stringify(state)}`;
+
+const searchStateToUrl = (
+  location: ReturnType<typeof useHistory>["location"],
+  searchState: unknown
+) => (searchState ? `${location.pathname}${createURL(searchState)}` : "");
+
+const urlToSearchState = (
+  location: ReturnType<typeof useHistory>["location"]
+) => qs.parse(location.search.slice(1));
+
 export const SearchPage = () => {
+  const history = useHistory();
+  const [searchState, setSearchState] = useState(
+    urlToSearchState(history.location)
+  );
+  const [onSearchStateChange] = useDebouncedCallback((searchState: unknown) => {
+    setSearchState(searchState);
+    history.replace(
+      searchStateToUrl(history.location, searchState),
+      searchState as any
+    );
+  }, DEBOUNCE_SET_SEARCH_IN_MS);
+
   return (
     <Container>
       <InstantSearch
         searchClient={searchClient}
         indexName={config.algolia.index}
+        onSearchStateChange={onSearchStateChange}
+        searchState={searchState}
       >
         <Layout>
           <Facets />
