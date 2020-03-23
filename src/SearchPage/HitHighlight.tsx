@@ -2,12 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { format } from "date-fns";
 
-import { colors, Space, Orientation, TimeClockIcon } from "../ui";
+import { colors, TimeClockIcon } from "../ui";
 
 export const TrialStatus = ({ value }: { value: string }) => (
   <HitHighlightContainer>
     {value === "Recruiting" ? <GreenDot /> : <GrayDot />}
-    <Space size={8} orientation={Orientation.horizontal} />
     {value}
   </HitHighlightContainer>
 );
@@ -34,8 +33,7 @@ export const RegistrationDate = ({
   const formattedDate = format(new Date(registrationDate), "MMM dd yyyy");
   return (
     <HitHighlightContainer>
-      <TimeClockIcon />
-      <Space size={8} orientation={Orientation.horizontal} />
+      <StyledTimeClockIcon />
       Registered on {formattedDate}
     </HitHighlightContainer>
   );
@@ -53,6 +51,7 @@ const Dot = styled.div`
   width: 8px;
   height: 8px;
   border-radius: 4px;
+  margin-right: 8px;
 `;
 
 const GreenDot = styled(Dot)`
@@ -61,6 +60,10 @@ const GreenDot = styled(Dot)`
 
 const GrayDot = styled(Dot)`
   background-color: ${colors.GrayDot};
+`;
+
+const StyledTimeClockIcon = styled(TimeClockIcon)`
+  margin-right: 8px;
 `;
 
 const TherapeuticClass = styled.span`

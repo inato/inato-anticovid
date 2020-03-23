@@ -65,7 +65,7 @@ const TitleContainer = styled.div`
   width: 600px;
   min-width: 600px;
   color: ${colors.DefaultText};
-  margin-right: 60px;
+  margin-right: 64px;
   font-size: 16px;
   font-weight: 500;
 `;

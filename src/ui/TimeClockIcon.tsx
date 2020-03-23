@@ -1,8 +1,9 @@
 import React from "react";
 
-export const TimeClockIcon = () => {
+export const TimeClockIcon = ({ className }: { className?: string }) => {
   return (
     <svg
+      className={className}
       width="8"
       height="8"
       viewBox="0 0 8 8"
