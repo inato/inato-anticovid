@@ -42,13 +42,6 @@ export const TherapeuticClasses = ({ value }: { value: Array<string> }) => {
   );
 };
 
-export const StudyType = ({ value }: { value: string }) => (
-  <HitHighlightContainer>
-    <Title>study type</Title>
-    <Value>{value}</Value>
-  </HitHighlightContainer>
-);
-
 const HitHighlightContainer = styled.div`
   display: flex;
   flex-direction: column;

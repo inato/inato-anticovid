@@ -4,9 +4,8 @@ import styled from "styled-components";
 import { colors } from "../ui";
 import { Space, Orientation } from "../ui/components";
 
-import { TrialStatus, TherapeuticClasses, StudyType } from "./HitHighlight";
+import { TrialStatus, TherapeuticClasses } from "./HitHighlight";
 import { RegistrationDate } from "./RegistrationDate";
-import { PendingApproval } from "./PendingApproval";
 
 interface ClinicalTrialHit {
   hit: {
@@ -42,12 +41,10 @@ export const ClinicalTrialHit = ({
           <Space size={48} orientation={Orientation.horizontal} />
           <TherapeuticClasses value={therapeutic_classes} />
           <Space size={48} orientation={Orientation.horizontal} />
-          <StudyType value={study_type} />
         </Highlights>
       </div>
       <RightContainer>
         <RegistrationDate registrationDate={date_registration3} />
-        {ethics_review_status === null && <PendingApproval />}
       </RightContainer>
     </Container>
   </Link>
