@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import algoliasearch from "algoliasearch";
 import {
@@ -42,13 +42,23 @@ export const SearchPage = () => {
   const [searchState, setSearchState] = useState(
     urlToSearchState(history.location)
   );
-  const [onSearchStateChange] = useDebouncedCallback((searchState: unknown) => {
-    setSearchState(searchState);
-    history.replace(
-      searchStateToUrl(history.location, searchState),
-      searchState as any
-    );
-  }, DEBOUNCE_SET_SEARCH_IN_MS);
+  const [onSearchStateChangeDebounced] = useDebouncedCallback(
+    (searchState: unknown) => {
+      history.replace(
+        searchStateToUrl(history.location, searchState),
+        searchState as any
+      );
+    },
+    DEBOUNCE_SET_SEARCH_IN_MS
+  );
+
+  const onSearchStateChange = useCallback(
+    (searchState: unknown) => {
+      setSearchState(searchState);
+      onSearchStateChangeDebounced(searchState);
+    },
+    [onSearchStateChangeDebounced]
+  );
 
   return (
     <Container>
