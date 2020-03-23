@@ -3,7 +3,7 @@ name: CI
 on: push
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,10 +19,13 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - run: yarn install
+      - run: yarn install --frozen-lockfile && cd functions && yarn install --frozen-lockfile
       - run: yarn lint
-  firebase-deploy:
-    needs: lint
+      - run: yarn test --watchAll=false --passWithNoTests
+      - run: cd functions && yarn lint
+      - run: cd functions && yarn test
+  deploy:
+    needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
     steps:
