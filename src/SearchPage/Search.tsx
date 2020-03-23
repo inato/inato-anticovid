@@ -123,7 +123,9 @@ const Layout = styled.div`
   margin-top: 24px;
 `;
 
-const SearchContainter = styled.div``;
+const SearchContainter = styled.div`
+  width: 100%; /* for IE11 */
+`;
 
 const StyledHits = styled(Hits)`
   .ais-Hits-list {
