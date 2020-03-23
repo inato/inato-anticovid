@@ -47,13 +47,13 @@ const Root = styled.div`
 const Header = styled.div`
   display: flex;
   background: ${colors.SecondaryBackground};
-  height: 65px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: 0 10vw;
+  padding: 0;
 
   @media ${device.sm} {
+    height: 65px;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
@@ -63,6 +63,12 @@ const Header = styled.div`
 
 const Logo = styled.img`
   margin-right: 48px;
+
+  margin-left: 10vw;
+
+  @media ${device.sm} {
+    margin-left: 120px;
+  }
 `;
 
 const Separator = styled.div`
@@ -81,14 +87,26 @@ const HeaderLink = styled(NavLink)`
   text-decoration: none;
   margin-right: 33px;
   box-sizing: border-box;
+  padding-left: 10vw;
 
   &:hover,
   &.active {
     color: #5928fa;
-    border-bottom: 2px solid #5928fa;
+    border-bottom: none;
+    border-left: 5px solid #5928fa;
   }
 
   &:last-child {
     margin-right: 0;
+  }
+
+  @media ${device.sm} {
+    padding-left: 0;
+
+    &:hover,
+    &.active {
+      border-bottom: 2px solid #5928fa;
+      border-left: none;
+    }
   }
 `;
