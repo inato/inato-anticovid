@@ -4,8 +4,11 @@ import styled from "styled-components";
 import { colors } from "../ui";
 import { Space, Orientation } from "../ui/components";
 
-import { TrialStatus, TherapeuticClasses } from "./HitHighlight";
-import { RegistrationDate } from "./RegistrationDate";
+import {
+  TrialStatus,
+  TherapeuticClasses,
+  RegistrationDate
+} from "./HitHighlight";
 
 interface ClinicalTrialHit {
   hit: {
@@ -56,6 +59,7 @@ const Container = styled.div`
   padding: 16px;
   flex-direction: row;
   display: flex;
+  align-items: center;
 `;
 
 const RightContainer = styled.div`
@@ -68,6 +72,8 @@ const TitleContainer = styled.div`
   min-width: 600px;
   color: ${colors.DefaultText};
   margin-right: 60px;
+  font-size: 16px;
+  font-weight: 500;
 `;
 
 const Link = styled.a`
