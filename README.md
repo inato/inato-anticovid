@@ -4,6 +4,24 @@ This project contains 2 main parts:
 - a cloud function that pulls data from a PG database to insert it into an Algolia index
 - a web application that queries this Algolia index
 
+
+# Development
+
+## Local app
+
+Make sure `serve` is globally set:
+```
+$> yarn global add serve
+```
+
+To build and run on localhost:5000
+```
+$> yarn build
+$> serve -s build
+```
+
+To configure the indices your local app connects to, modify `src/config/config.json`
+
 # Deployment
 
 Everything is deployed to Firebase.
