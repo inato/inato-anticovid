@@ -9,11 +9,6 @@ This project contains 2 main parts:
 
 ## Local app
 
-Make sure `serve` is globally set:
-```
-$> yarn global add serve
-```
-
 To build and run on localhost:5000
 ```
 $> yarn start
