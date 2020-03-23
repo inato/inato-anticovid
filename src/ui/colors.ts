@@ -3,6 +3,7 @@ export enum colors {
   SecondaryBackground = "#FFFFFF",
   LightGreyBackground = "#F9FAFB",
   GreenDot = "#23D7C8",
+  GrayDot = "#BDC7D1",
   OrangeText = "#CC9D00",
   BoxShadow = "#e3e5ec",
 
