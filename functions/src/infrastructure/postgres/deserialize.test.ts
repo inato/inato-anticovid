@@ -5,11 +5,7 @@ describe("deserialize", () => {
     const row = {
       trialid: "trialid"
     };
-    try {
-      deserialize(row);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    expect(() => deserialize(row)).toThrowError();
   });
   it("should make a Trial object from a query result row", () => {
     const row = {
