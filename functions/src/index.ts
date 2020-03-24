@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import algoliasearch from "algoliasearch";
+
 import {
   setupPostgresClient,
   PostgresTrialRepository,

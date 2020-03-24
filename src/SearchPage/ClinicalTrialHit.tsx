@@ -12,9 +12,8 @@ import {
 interface ClinicalTrialHit {
   hit: {
     public_title: string;
-    intervention: string;
     web_address: string;
-    recruitment_status: string;
+    recruitment_status: string | null;
     therapeutic_classes: Array<string>;
     date_registration3: string;
   };
