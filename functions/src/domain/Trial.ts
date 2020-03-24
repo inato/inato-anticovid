@@ -1,7 +1,6 @@
 interface TrialConstructorArgs {
   trialid: string;
   public_title: string;
-  intervention: string;
   web_address: string;
   recruitment_status: string;
   therapeutic_classes: Array<string>;
@@ -12,7 +11,6 @@ interface TrialConstructorArgs {
 export class Trial {
   public readonly trialid: string;
   public readonly public_title: string;
-  public readonly intervention: string;
   public readonly web_address: string;
   public readonly recruitment_status: string;
   public readonly therapeutic_classes: Array<string>;
@@ -22,7 +20,6 @@ export class Trial {
   constructor({
     trialid,
     public_title,
-    intervention,
     web_address,
     recruitment_status,
     therapeutic_classes,
@@ -31,7 +28,6 @@ export class Trial {
   }: TrialConstructorArgs) {
     this.trialid = trialid;
     this.public_title = public_title;
-    this.intervention = intervention;
     this.web_address = web_address;
     this.recruitment_status = recruitment_status;
     this.therapeutic_classes = therapeutic_classes;

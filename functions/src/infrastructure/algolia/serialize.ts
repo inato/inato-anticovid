@@ -5,7 +5,6 @@ export const serialize = (trial: Trial): Object => {
     ...trial.rest,
     objectID: trial.trialid,
     public_title: trial.public_title,
-    intervention: trial.intervention,
     web_address: trial.web_address,
     recruitment_status: trial.recruitment_status,
     therapeutic_classes: trial.therapeutic_classes,

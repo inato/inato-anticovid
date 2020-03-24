@@ -12,7 +12,6 @@ describe("deserialize", () => {
     const row = {
       trialid: "trialid",
       public_title: "public_title",
-      intervention: "intervention",
       web_address: "web_address",
       recruitment_status: "recruitment_status",
       therapeutic_classes: ["therapeutic_classes"],
@@ -21,11 +20,10 @@ describe("deserialize", () => {
     };
     const trial = deserialize(row);
     expect(trial.trialid).toBe("trialid");
-    expect(trial.intervention).toBe("intervention");
+    expect(trial.web_address).toBe("web_address");
     expect(trial.rest).toStrictEqual({
       trialid: "trialid",
       public_title: "public_title",
-      intervention: "intervention",
       web_address: "web_address",
       recruitment_status: "recruitment_status",
       therapeutic_classes: ["therapeutic_classes"],

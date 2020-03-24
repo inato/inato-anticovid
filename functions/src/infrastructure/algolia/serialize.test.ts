@@ -7,7 +7,6 @@ describe("serialize", () => {
     const trial = trialFactory({
       trialid: "trialid",
       public_title: "public_title",
-      intervention: "intervention",
       web_address: "web_address",
       recruitment_status: "recruitment_status",
       therapeutic_classes: ["therapeutic_classes"],
@@ -17,7 +16,6 @@ describe("serialize", () => {
       exclusion_criteria: "",
       inclusion_criteria: "",
       public_title: "public_title",
-      intervention: "intervention",
       web_address: "web_address",
       recruitment_status: "recruitment_status",
       therapeutic_classes: ["therapeutic_classes"],
