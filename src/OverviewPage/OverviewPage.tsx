@@ -2,9 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import TableauReport from "tableau-react";
 
-import { device } from "../ui";
+import { devices } from "../ui";
 
 import { Disclaimer } from "./Disclaimer";
+import { CTAFooter } from "./CTAFooter";
 import { Introduction } from "./Introduction";
 
 const TableauURL =
@@ -14,6 +15,7 @@ export const OverviewPage = () => (
   <Container>
     <Introduction />
     <TableauReport url={TableauURL} />
+    <StyledCTAFooter />
     <Disclaimer />
   </Container>
 );
@@ -28,7 +30,11 @@ const Container = styled.div`
     border-radius: 4px;
   }
 
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     padding: 32px 120px;
   }
+`;
+
+const StyledCTAFooter = styled(CTAFooter)`
+  margin-top: 16px;
 `;

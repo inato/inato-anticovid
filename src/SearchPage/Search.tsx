@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import qs from "qs";
 
-import { colors, device, Button } from "../ui";
+import { colors, devices, Button } from "../ui";
 import config from "../config";
 
 import { Disclaimer } from "./Disclaimer";
@@ -134,7 +134,7 @@ export const SearchPage = () => {
 const Container = styled.div`
   padding: 32px 10vw;
   max-width: 1200px;
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     padding: 32px 120px;
   }
 `;
@@ -144,7 +144,7 @@ const StyledSearchBox = styled(SearchBox)`
     height: 40px;
   }
 
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     width: 50%;
     min-width: 500px;
   }
@@ -205,7 +205,7 @@ const FilterButton = styled(Button)`
   position: fixed;
   transform: translateX(-50%);
 
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     display: none;
   }
 `;
