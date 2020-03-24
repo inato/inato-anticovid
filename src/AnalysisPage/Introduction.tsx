@@ -20,31 +20,37 @@ export const Introduction = () => (
       needs as fast as possible
     </Paragraph>
     <Accordion title="Where does the data come from">
-      Most of the data comes from public sources that are duly cited in the
-      dedicated section of the website. Data is updated every day.
-      <br />
-      Anticovid will soon enhance its content with high quality data in
-      particular from clinical investigators around the globe that are committed
-      to support research against SARS-CoV 2, as well as pharmaceutical
-      manufacturers already engaged or about to do so in vaccine or therapeutic
-      trials.
+      <Paragraph>
+        Most of the data comes from public sources that are duly cited in the
+        dedicated section of the website. Data is updated every day.
+      </Paragraph>
+      <Paragraph>
+        Anticovid will soon enhance its content with high quality data in
+        particular from clinical investigators around the globe that are
+        committed to support research against SARS-CoV 2, as well as
+        pharmaceutical manufacturers already engaged or about to do so in
+        vaccine or therapeutic trials.
+      </Paragraph>
     </Accordion>
     <Accordion title="Who are we">
-      Anticovid is provided by{" "}
-      <a href="https://inato.com/" target="_blank" rel="noopener noreferrer">
-        Inato
-      </a>
-      .
-      <br />
-      Inato is a platform that increases the pool of available patients for
-      trials by:
-      <ul>
-        <li>Matching the best sites for any given study</li>
-        <li>
-          Ensuring that site partners in our marketplace are successfully
-          delivering trials.
-        </li>
-      </ul>
+      <Paragraph>
+        Anticovid is provided by{" "}
+        <a href="https://inato.com/" target="_blank" rel="noopener noreferrer">
+          Inato
+        </a>
+        .
+      </Paragraph>
+      <Paragraph>
+        Inato is a platform that increases the pool of available patients for
+        trials by:
+        <ul>
+          <li>Matching the best sites for any given study</li>
+          <li>
+            Ensuring that site partners in our marketplace are successfully
+            delivering trials.
+          </li>
+        </ul>
+      </Paragraph>
     </Accordion>
   </Container>
 );
