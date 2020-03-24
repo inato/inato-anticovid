@@ -11,6 +11,8 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 if (config.ga.id) {
+  // eslint-disable-next-line
+  console.log("GA initialized with tag", config.ga.id);
   ReactGA.initialize(config.ga.id);
 }
 
