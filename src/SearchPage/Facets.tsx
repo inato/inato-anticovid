@@ -6,7 +6,7 @@ import {
 } from "react-instantsearch-dom";
 import styled from "styled-components";
 
-import { colors, device, Button, Semantic } from "../ui";
+import { colors, device, Button } from "../ui";
 
 import { filteringContext } from "./Search";
 
