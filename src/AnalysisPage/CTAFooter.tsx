@@ -113,6 +113,12 @@ const Input = styled.input`
     animation: 0.1s cubic-bezier(0.4, 0, 1, 1) 0s 1 normal none running dtOkaS;
     box-shadow: rgba(90, 40, 250, 0.2) 0px 0px 0px 2px;
   }
+  margin-bottom: 8px;
+  width: calc(100% - 30px);
+  @media ${devices.Desktop} {
+    width: 240px;
+    margin-bottom: inherit;
+  }
 `;
 
 const Button = styled.button`
