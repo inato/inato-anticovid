@@ -41,10 +41,13 @@ export const ClinicalTrialHit = ({
 );
 
 const Container = styled.div`
-  :hover {
+  &:hover {
     background-color: ${colors.LightGreyBackground};
     cursor: pointer;
-    box-shadow: 0 2px 5px 0px ${colors.BoxShadow};
+
+    transform: scale(1.002);
+    transition-duration: 100ms;
+    box-shadow: hsla(0, 0%, 94%, 1) 4px 4px 6px 0px;
   }
   background-color: ${colors.SecondaryBackground};
   border: 1px solid ${colors.Border};
