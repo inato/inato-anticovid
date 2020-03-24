@@ -10,9 +10,9 @@ import { SearchPage } from "./SearchPage";
 import logo from "./Logo.svg";
 import { OverviewPage } from "./OverviewPage";
 
-export default function App() {
-  const history = createBrowserHistory();
+const history = createBrowserHistory();
 
+export default function App() {
   useEffect(() => {
     if (config.ga.id) {
       ReactGA.pageview(history.location.pathname + history.location.search);
