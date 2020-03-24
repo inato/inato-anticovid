@@ -8,6 +8,7 @@ export enum colors {
   BoxShadow = "#e3e5ec",
 
   Primary = "#5928FA",
+  PrimaryHover = "#3C05EA",
 
   SecondaryText = "#647B91",
 

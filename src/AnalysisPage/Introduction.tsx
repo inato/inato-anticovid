@@ -58,7 +58,7 @@ const Container = styled.div`
 
 const Title = styled.h1`
   font-size: ${fontSize.Big};
-  font-weight: ${fontWeight.Bold};
+  font-weight: ${fontWeight.SemiBold};
   line-height: ${lineHeight.Big};
   margin: 0 0 4px 0;
 `;
