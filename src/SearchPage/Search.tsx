@@ -12,8 +12,8 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import qs from "qs";
 
-import config from "../config/config.json";
 import { colors, device, Button } from "../ui";
+import config from "../config";
 
 import { Disclaimer } from "./Disclaimer";
 import { Facets } from "./Facets";
