@@ -2,7 +2,7 @@ import React from "react";
 import { ClearRefinements, RefinementList } from "react-instantsearch-dom";
 import styled from "styled-components";
 
-import { colors, device } from "../ui";
+import { colors, devices } from "../ui";
 
 export const Facets = () => {
   return (
@@ -109,7 +109,7 @@ const FacetsContainer = styled.div`
   }
 
   display: none;
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     display: initial;
   }
 `;

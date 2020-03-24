@@ -8,7 +8,7 @@ import {
   NavLink
 } from "react-router-dom";
 
-import { colors, device } from "./ui";
+import { colors, devices } from "./ui";
 import { SearchPage } from "./SearchPage";
 import logo from "./Logo.svg";
 import { OverviewPage } from "./OverviewPage";
@@ -52,7 +52,7 @@ const Header = styled.div`
   justify-content: center;
   padding: 0;
 
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     height: 65px;
     flex-direction: row;
     align-items: center;
@@ -66,7 +66,7 @@ const Logo = styled.img`
 
   margin-left: 10vw;
 
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     margin-left: 120px;
   }
 `;
@@ -100,7 +100,7 @@ const HeaderLink = styled(NavLink)`
     margin-right: 0;
   }
 
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     padding-left: 0;
 
     &:hover,

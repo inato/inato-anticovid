@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { colors, device } from "../ui";
+import { colors, devices } from "../ui";
 
 import {
   TrialStatus,
@@ -57,7 +57,7 @@ const Container = styled.div`
   align-items: flex-start;
   justify-content: center;
 
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
@@ -75,7 +75,7 @@ const TitleContainer = styled.div`
   font-size: 16px;
   font-weight: 500;
 
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     width: 600px;
     min-width: 600px;
   }

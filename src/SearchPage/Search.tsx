@@ -13,7 +13,7 @@ import styled from "styled-components";
 import qs from "qs";
 
 import config from "../config/config.json";
-import { colors, device } from "../ui";
+import { colors, devices } from "../ui";
 
 import { Disclaimer } from "./Disclaimer";
 import { Facets } from "./Facets";
@@ -96,7 +96,7 @@ export const SearchPage = () => {
 const Container = styled.div`
   padding: 32px 10vw;
   max-width: 1200px;
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     padding: 32px 120px;
   }
 `;
@@ -106,7 +106,7 @@ const StyledSearchBox = styled(SearchBox)`
     height: 40px;
   }
 
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     width: 50%;
     min-width: 500px;
   }
