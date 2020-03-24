@@ -15,8 +15,12 @@ export const Facets = () => {
   return (
     <FacetsContainer filtering={filtering}>
       <Header>
-        <h1>Filters</h1>
-        <ClearRefinements />
+        <HeaderTitle>Filters</HeaderTitle>
+        <ClearRefinements
+          translations={{
+            reset: "Reset filters"
+          }}
+        />
       </Header>
       <Facet attribute="recruitment_status" title="Recruitment Status" />
       <Facet
@@ -153,6 +157,12 @@ const Header = styled.div`
   justify-content: space-between;
   margin-bottom: 24px;
   font-size: 16px;
+  align-items: flex-end;
+`;
+
+const HeaderTitle = styled.span`
+  font-size: 14px;
+  line-height: 24px;
 `;
 
 const Footer = styled.div`
