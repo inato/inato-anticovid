@@ -6,7 +6,7 @@ import {
 } from "react-instantsearch-dom";
 import styled from "styled-components";
 
-import { colors, device, Button } from "../ui";
+import { colors, devices, Button } from "../ui";
 
 import { filteringContext } from "./Search";
 
@@ -127,7 +127,7 @@ const FacetsContainer = styled.div<FacetsContainerProps>`
   left: 0;
   width: 100%;
   z-index: 2;
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     display: initial;
     position: initial;
     top: auto;
@@ -164,7 +164,7 @@ const Footer = styled.div`
   background-color: ${colors.SecondaryBackground};
   justify-content: center;
   display: flex;
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     display: none;
   }
 `;

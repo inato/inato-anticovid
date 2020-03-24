@@ -5,7 +5,7 @@ import { Router, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import config from "./config";
-import { colors, device } from "./ui";
+import { colors, devices } from "./ui";
 import { SearchPage } from "./SearchPage";
 import logo from "./Logo.svg";
 import { OverviewPage } from "./OverviewPage";
@@ -64,7 +64,7 @@ const Header = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
 
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     height: 65px;
     padding: 0 120px;
   }
@@ -74,7 +74,7 @@ const Logo = styled.img`
   height: 65px;
   flex-basis: 100%;
 
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     margin-right: 48px;
     height: initial;
     flex-basis: initial;
@@ -110,7 +110,7 @@ const HeaderLink = styled(NavLink)`
     margin-right: 0;
   }
 
-  @media ${device.sm} {
+  @media ${devices.Desktop} {
     margin-right: 33px;
     padding-left: 10vw;
     padding-left: 0;

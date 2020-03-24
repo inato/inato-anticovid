@@ -1,7 +1,9 @@
 export const breakpoints = {
-  sm: 1200
+  Tablet: 768,
+  Desktop: 1200
 };
 
-export const device = {
-  sm: `(min-width: ${breakpoints.sm}px)`
+export const devices = {
+  Tablet: `(min-width: ${breakpoints.Tablet}px)`,
+  Desktop: `(min-width: ${breakpoints.Desktop}px)`
 };
