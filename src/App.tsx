@@ -73,8 +73,10 @@ const Header = styled.div`
 const Logo = styled.img`
   height: 65px;
   flex-basis: 100%;
+  width: 100%; /* FOR IE11*/
 
   @media ${devices.Desktop} {
+    width: auto;
     margin-right: 48px;
     height: auto;
     flex-basis: inherit;
