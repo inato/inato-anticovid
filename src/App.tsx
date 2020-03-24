@@ -73,11 +73,13 @@ const Header = styled.div`
 const Logo = styled.img`
   height: 65px;
   flex-basis: 100%;
+  width: 100%; /* FOR IE11*/
 
   @media ${devices.Desktop} {
+    width: auto;
     margin-right: 48px;
-    height: initial;
-    flex-basis: initial;
+    height: auto;
+    flex-basis: inherit;
   }
 `;
 
@@ -114,7 +116,7 @@ const HeaderLink = styled(NavLink)`
     margin-right: 33px;
     padding-left: 10vw;
     padding-left: 0;
-    flex-grow: initial;
-    text-align: initial;
+    flex-grow: inherit;
+    text-align: inherit;
   }
 `;
