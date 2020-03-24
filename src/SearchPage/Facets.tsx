@@ -37,26 +37,11 @@ export const Facets = () => {
       <Facet attribute="study_type" title="Study Type" showMore />
       <Facet attribute="countries" title="Countries" />
       <Footer>
-        <CancelButton onClick={closeFiltering} semantic={Semantic.neutral}>
-          Cancel
-        </CancelButton>
-        <SeeTrialsButton onClick={closeFiltering} />
+        <StyledSeeTrialsButton onClick={closeFiltering} />
       </Footer>
     </FacetsContainer>
   );
 };
-
-const CancelButton = styled(Button)`
-  visibility: hidden; /* until the Cancel button does the job */
-`;
-
-const formatTrialsString = (nbHits: number) =>
-  nbHits === 1 ? "1 trial" : `${nbHits} trials`;
-const SeeTrialsButton = connectStats(
-  ({ nbHits, onClick }: { nbHits: number; onClick: () => void }) => (
-    <Button onClick={onClick}>See {formatTrialsString(nbHits)}</Button>
-  )
-);
 
 const Facet = ({
   attribute,
@@ -177,15 +162,30 @@ const Footer = styled.div`
   padding: 16px;
   border-top: 1px solid ${colors.Border};
   background-color: ${colors.SecondaryBackground};
-
+  justify-content: center;
   display: flex;
   @media ${device.sm} {
     display: none;
   }
-  ${Button} {
-    width: calc(50% - 4px);
-    &:not(:last-child) {
-      margin-right: 8px;
-    }
-  }
+`;
+
+const formatTrialsString = (nbHits: number) =>
+  nbHits === 1 ? "1 trial" : `${nbHits} trials`;
+const SeeTrialsButton = connectStats(
+  ({
+    nbHits,
+    onClick,
+    className
+  }: {
+    nbHits: number;
+    onClick: () => void;
+    className?: string;
+  }) => (
+    <Button onClick={onClick} className={className}>
+      See {formatTrialsString(nbHits)}
+    </Button>
+  )
+);
+const StyledSeeTrialsButton = styled(SeeTrialsButton)`
+  padding: 0 24px;
 `;
