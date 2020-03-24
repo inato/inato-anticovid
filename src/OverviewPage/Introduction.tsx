@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import { colors, fontSize, fontWeight, lineHeight } from "../ui";
 
+import { Accordion } from "./Accordion";
+
 export const Introduction = () => (
   <Container>
     <Title>What is Anticovid?</Title>
@@ -18,6 +20,27 @@ export const Introduction = () => (
       to optimize resource allocation and address unmet needs as fast as
       possible.
     </Paragraph>
+    <Accordion title="+ Where does the data come from">
+      Most of the data come from public sources that are duly cited in the
+      dedicated section of the website. Data are updated every day. Anticovid
+      will soon enhance its content with high quality data in particular from
+      clinical investigators around the globe that are committed to support
+      research against SARS-CoV 2, as well as pharmaceutical manufacturers
+      already engaged or about to do so in vaccine or therapeutic trials.
+    </Accordion>
+    <Accordion title="+ Who are we">
+      Anticovid is provided by Inato.
+      <br />
+      Inato is a platform that increases the pool of available patients for
+      trials by:
+      <ul>
+        <li>Matching the best sites for any given study</li>
+        <li>
+          Ensuring that site partners in our marketplace are successfully
+          delivering trials.
+        </li>
+      </ul>
+    </Accordion>
   </Container>
 );
 
