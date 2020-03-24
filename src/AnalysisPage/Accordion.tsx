@@ -1,6 +1,9 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
+import { ArrowDownIcon } from "../ui/ArrowDownIcon";
+import { ArrowRightIcon } from "../ui/ArrowRightIcon";
+
 type AccordionProps = {
   title: string;
 };
@@ -21,7 +24,10 @@ export const Accordion: React.FunctionComponent<AccordionProps> = props => {
 
   return (
     <AccordionSection>
-      <AccordionTitle onClick={toggleAccordion}>{props.title}</AccordionTitle>
+      <TitleContainer onClick={toggleAccordion}>
+        {isActive ? <StyledArrowDownIcon /> : <StyledArrowRightIcon />}
+        <AccordionTitle>{props.title}</AccordionTitle>
+      </TitleContainer>
       <AccordionContent
         ref={accordionContent}
         style={{ maxHeight: `${height}` }}
@@ -34,12 +40,25 @@ export const Accordion: React.FunctionComponent<AccordionProps> = props => {
 
 const AccordionSection = styled.div``;
 
-const AccordionTitle = styled.div`
+const TitleContainer = styled.div`
+  display: flex;
   margin-top: 16px;
-  font-weight: 500;
+  align-items: center;
   cursor: pointer;
+`;
+
+const AccordionTitle = styled.div`
+  font-weight: 500;
 `;
 
 const AccordionContent = styled.div`
   overflow: hidden;
+  transition: max-height 0.1s linear;
+`;
+
+const StyledArrowDownIcon = styled(ArrowDownIcon)`
+  margin-right: 4px;
+`;
+const StyledArrowRightIcon = styled(ArrowRightIcon)`
+  margin-right: 5px;
 `;

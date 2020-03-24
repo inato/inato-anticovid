@@ -19,7 +19,7 @@ export const Introduction = () => (
       believe this is critical to optimize resource allocation and address unmet
       needs as fast as possible
     </Paragraph>
-    <Accordion title="+ Where does the data come from">
+    <Accordion title="Where does the data come from">
       Most of the data comes from public sources that are duly cited in the
       dedicated section of the website. Data is updated every day. Anticovid
       will soon enhance its content with high quality data in particular from
@@ -27,7 +27,7 @@ export const Introduction = () => (
       research against SARS-CoV 2, as well as pharmaceutical manufacturers
       already engaged or about to do so in vaccine or therapeutic trials.
     </Accordion>
-    <Accordion title="+ Who are we">
+    <Accordion title="Who are we">
       Anticovid is provided by{" "}
       <a href="https://inato.com/" target="_blank" rel="noopener noreferrer">
         Inato
