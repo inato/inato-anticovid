@@ -8,7 +8,7 @@ import config from "./config";
 import { colors, devices } from "./ui";
 import { SearchPage } from "./SearchPage";
 import logo from "./Logo.svg";
-import { OverviewPage } from "./OverviewPage";
+import { AnalysisPage } from "./AnalysisPage";
 
 const history = createBrowserHistory();
 
@@ -30,20 +30,18 @@ export default function App() {
       <Router history={history}>
         <Header>
           <Logo src={logo} alt="Inato Anti-Covid Logo" />
-          <HeaderLink to="/overview">Overview</HeaderLink>
+          <HeaderLink to="/analysis">Analysis</HeaderLink>
           <HeaderLink to="/search">Search trials</HeaderLink>
         </Header>
         <Separator />
         <Switch>
-          <Route exact path="/">
-            {() => <Redirect to="/overview" />}
-          </Route>
-          <Route exact path="/overview">
-            <OverviewPage />
+          <Route exact path="/analysis">
+            <AnalysisPage />
           </Route>
           <Route exact path="/search">
             <SearchPage />
           </Route>
+          <Redirect to="/analysis" />
         </Switch>
       </Router>
     </Root>
