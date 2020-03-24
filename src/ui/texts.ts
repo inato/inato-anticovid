@@ -8,6 +8,7 @@ export enum fontWeight {
 
 export enum fontSize {
   Default = "14px",
+  Medium = "24px",
   Big = "36px"
 }
 
