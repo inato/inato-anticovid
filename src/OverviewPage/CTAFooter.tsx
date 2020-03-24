@@ -72,12 +72,15 @@ const Card = styled.div`
   background-color: ${colors.SecondaryBackground};
   border-radius: 4px;
   padding: 16px;
-  margin-bottom: 16px;
 `;
 
 const LeftCard = styled(Card)``;
+
 const RightCard = styled(Card)`
+  margin-top: 16px;
+
   @media ${devices.Tablet} {
+    margin-top: 0;
     margin-left: 16px;
   }
 `;
