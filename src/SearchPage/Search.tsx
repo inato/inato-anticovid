@@ -85,7 +85,11 @@ export const SearchPage = () => {
     [onSearchStateChangeDebounced]
   );
 
-  const { isTrue: filtering, toggle: toggleFiltering } = useBoolean(false);
+  const {
+    isTrue: filtering,
+    setToFalse: closeFiltering,
+    setToTrue: openFiltering
+  } = useBoolean(false);
 
   return (
     <Container>
