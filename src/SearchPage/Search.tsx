@@ -12,10 +12,9 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import qs from "qs";
 
-import { colors, devices, Button, fontWeight } from "../ui";
+import { colors, devices, Button, fontWeight, Disclaimer } from "../ui";
 import config from "../config";
 
-import { Disclaimer } from "./Disclaimer";
 import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
 import { FilteringProps } from "./FilteringProps";
