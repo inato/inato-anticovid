@@ -5,6 +5,7 @@ import { colors } from "../ui";
 
 export const Disclaimer = () => (
   <Container>
+    <Line>DISCLAIMER</Line>
     <Line>
       This platform is operated free of charge, for the immediate benefit of the
       scientific and medical community in the context of the Covid-19 outbreak
