@@ -18,6 +18,7 @@ import config from "../config";
 import { Disclaimer } from "./Disclaimer";
 import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
+import { FilteringProps } from "./FilteringProps";
 
 const DEBOUNCE_SET_SEARCH_IN_MS = 1000;
 
@@ -102,25 +103,23 @@ export const SearchPage = () => {
         <Layout>
           <filteringContext.Provider value={{ filtering, closeFiltering }}>
             <Facets />
-            {!filtering && (
-              <SearchContainter>
-                <StyledSearchBox
-                  translations={{
-                    placeholder: "Search by keyword, drug, ..."
-                  }}
-                />
-                <StyledStats
-                  translations={{
-                    stats(nbHits, timeSpentMS) {
-                      return `${nbHits} trials found`;
-                    }
-                  }}
-                />
-                <StyledHits hitComponent={ClinicalTrialHit} />
-                <StyledPagination showFirst={false} padding={2} />
-                <Disclaimer />
-              </SearchContainter>
-            )}
+            <SearchContainter filtering={filtering}>
+              <StyledSearchBox
+                translations={{
+                  placeholder: "Search by keyword, drug, ..."
+                }}
+              />
+              <StyledStats
+                translations={{
+                  stats(nbHits, timeSpentMS) {
+                    return `${nbHits} trials found`;
+                  }
+                }}
+              />
+              <StyledHits hitComponent={ClinicalTrialHit} />
+              <StyledPagination showFirst={false} padding={2} />
+              <Disclaimer />
+            </SearchContainter>
           </filteringContext.Provider>
         </Layout>
         <FilterButton type="button" onClick={openFiltering}>
@@ -165,8 +164,9 @@ const Layout = styled.div`
   display: flex;
 `;
 
-const SearchContainter = styled.div`
+const SearchContainter = styled.div<FilteringProps>`
   width: 100%; /* for IE11 */
+  display: ${({ filtering }) => (filtering ? "none" : undefined)};
 `;
 
 const StyledHits = styled(Hits)`
