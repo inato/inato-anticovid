@@ -90,8 +90,6 @@ const FacetsContainer = styled.div<FacetsContainerProps>`
   min-width: 265px;
   background: ${colors.SecondaryBackground};
   padding: 16px;
-  margin-right: 32px;
-  margin-bottom: 8px;
   border: 1px solid ${colors.Border};
   box-sizing: border-box;
   border-radius: 4px;
@@ -114,9 +112,19 @@ const FacetsContainer = styled.div<FacetsContainerProps>`
 
   display: ${({ filtering }) => (filtering ? undefined : "none")};
   position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
   @media ${device.sm} {
     display: initial;
     position: initial;
+    top: auto;
+    left: auto;
+    width: auto;
+    z-index: 0;
+    margin-bottom: 8px;
+    margin-right: 32px;
   }
 `;
 

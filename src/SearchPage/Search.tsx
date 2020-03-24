@@ -98,30 +98,28 @@ export const SearchPage = () => {
         <Layout>
           <filteringContext.Provider value={{ filtering, toggleFiltering }}>
             <Facets />
-            <SearchContainter>
-              <StyledSearchBox
-                translations={{
-                  placeholder: "Search by keyword, drug, ..."
-                }}
-              />
-              <StyledStats
-                translations={{
-                  stats(nbHits, timeSpentMS) {
-                    return `${nbHits} trials found`;
-                  }
-                }}
-              />
-              <StyledHits hitComponent={ClinicalTrialHit} />
-              <StyledPagination showFirst={false} padding={2} />
-              <Disclaimer />
-            </SearchContainter>
+            {!filtering && (
+              <SearchContainter>
+                <StyledSearchBox
+                  translations={{
+                    placeholder: "Search by keyword, drug, ..."
+                  }}
+                />
+                <StyledStats
+                  translations={{
+                    stats(nbHits, timeSpentMS) {
+                      return `${nbHits} trials found`;
+                    }
+                  }}
+                />
+                <StyledHits hitComponent={ClinicalTrialHit} />
+                <StyledPagination showFirst={false} padding={2} />
+                <Disclaimer />
+              </SearchContainter>
+            )}
           </filteringContext.Provider>
         </Layout>
-        <FilterButton
-          type="button"
-          onClick={toggleFiltering}
-          filtering={filtering}
-        >
+        <FilterButton type="button" onClick={toggleFiltering}>
           filters
         </FilterButton>
       </InstantSearch>
@@ -197,10 +195,7 @@ const StyledPagination = styled(Pagination)`
   }
 `;
 
-type FilterButtonProps = {
-  filtering: boolean;
-};
-const FilterButton = styled.button<FilterButtonProps>`
+const FilterButton = styled.button`
   text-transform: uppercase;
   align-items: center;
   background-color: ${colors.Primary};
@@ -223,5 +218,4 @@ const FilterButton = styled.button<FilterButtonProps>`
   @media ${device.sm} {
     display: none;
   }
-  display: ${({ filtering }) => (filtering ? "none" : undefined)};
 `;
