@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { ArrowDownIcon } from "../ui/ArrowDownIcon";
 import { ArrowRightIcon } from "../ui/ArrowRightIcon";
@@ -41,11 +41,14 @@ export const Accordion: React.FunctionComponent<AccordionProps> = props => {
 
 const AccordionSection = styled.div``;
 
-const StyledArrowDownIcon = styled(ArrowDownIcon)`
+const arrowIconsStyle = css`
   margin-right: 4px;
 `;
+const StyledArrowDownIcon = styled(ArrowDownIcon)`
+  ${arrowIconsStyle};
+`;
 const StyledArrowRightIcon = styled(ArrowRightIcon)`
-  margin-right: 5px;
+  ${arrowIconsStyle};
 `;
 
 const AccordionTitle = styled.div`
@@ -66,7 +69,7 @@ const TitleContainer = styled.div`
     }
     ${StyledArrowRightIcon} {
       margin-left: 2px;
-      margin-right: 3px;
+      margin-right: 2px;
       stroke: ${colors.GreySecondaryText};
     }
   }
