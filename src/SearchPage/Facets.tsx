@@ -97,6 +97,13 @@ const FacetContainer = styled.div`
     margin: 0;
     padding: 0;
   }
+
+  .ais-RefinementList-count {
+    background-color: ${colors.Border};
+    color: ${colors.GreySecondaryText};
+    margin-left: 2px;
+  }
+
   .ais-RefinementList-showMore--disabled {
     border: 1px solid ${colors.Border};
   }
@@ -124,12 +131,6 @@ const FacetsContainer = styled.div<FilteringProps>`
   border: 1px solid ${colors.Border};
   box-sizing: border-box;
   border-radius: 4px;
-
-  /* h1 {
-    font-size: 18px;
-    font-weight: normal;
-    margin: 0;
-  } */
 
   display: ${({ filtering }) => (filtering ? undefined : "none")};
   position: absolute;
