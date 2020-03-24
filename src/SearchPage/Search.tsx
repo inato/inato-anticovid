@@ -196,6 +196,7 @@ const StyledPagination = styled(Pagination)`
 `;
 
 const FilterButton = styled(Button)`
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
   left: 50%;
   position: fixed;
   transform: translateX(-50%);

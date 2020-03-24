@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { ClearRefinements, RefinementList } from "react-instantsearch-dom";
 import styled from "styled-components";
 
-import { colors, device, Button } from "../ui";
+import { colors, device, Button, Semantic } from "../ui";
 
 import { filteringContext } from "./Search";
 
@@ -29,7 +29,9 @@ export const Facets = () => {
       <Facet attribute="study_type" title="Study Type" showMore />
       <Facet attribute="countries" title="Countries" />
       <Footer>
-        <Button onClick={closeFiltering}>Cancel</Button>
+        <Button onClick={closeFiltering} semantic={Semantic.neutral}>
+          Cancel
+        </Button>
         <Button onClick={closeFiltering}>Close</Button>
       </Footer>
     </FacetsContainer>

@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
-import { colors } from "./colors";
+import { Semantic, semanticColors, semanticTextColors } from "./colors";
 
-export const Button = styled.button`
+export const Button = styled.button<{ semantic?: Semantic }>`
   text-transform: uppercase;
   align-items: center;
-  background-color: ${colors.Primary};
+  background-color: ${({ semantic = Semantic.primary }) =>
+    semanticColors[semantic]};
   border: none;
   border-radius: 4px;
   bottom: 2rem;
   box-sizing: border-box;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-  color: #fff;
+  color: ${({ semantic = Semantic.primary }) => semanticTextColors[semantic]};
   cursor: pointer;
   display: flex;
   justify-content: center;
