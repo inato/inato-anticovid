@@ -1,14 +1,11 @@
 import React, { useContext } from "react";
-import {
-  ClearRefinements,
-  RefinementList,
-  connectStats
-} from "react-instantsearch-dom";
+import { RefinementList, connectStats } from "react-instantsearch-dom";
 import styled from "styled-components";
 
 import { colors, devices, Button } from "../ui";
 
 import { filteringContext } from "./Search";
+import { ResetFilters } from "./ResetFilters";
 import { FilteringProps } from "./FilteringProps";
 
 export const Facets = () => {
@@ -16,12 +13,8 @@ export const Facets = () => {
   return (
     <FacetsContainer filtering={filtering}>
       <Header>
-        <HeaderTitle>Filters</HeaderTitle>
-        <ClearRefinements
-          translations={{
-            reset: "Reset filters"
-          }}
-        />
+        Filters
+        <ResetFilters />
       </Header>
       <Facet attribute="recruitment_status" title="Recruitment Status" />
       <Facet
@@ -111,16 +104,6 @@ const FacetsContainer = styled.div<FilteringProps>`
     margin: 0;
   }
 
-  .ais-ClearRefinements-button {
-    background: inherit;
-    color: ${colors.DefaultText};
-    border: 1px solid ${colors.DefaultText};
-    font-size: 12px;
-  }
-  .ais-ClearRefinements-button--disabled {
-    border: 1px solid ${colors.Border};
-  }
-
   display: ${({ filtering }) => (filtering ? undefined : "none")};
   position: absolute;
   top: 0;
@@ -145,11 +128,7 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;
-  font-size: 16px;
   align-items: flex-end;
-`;
-
-const HeaderTitle = styled.span`
   font-size: 14px;
   line-height: 24px;
 `;

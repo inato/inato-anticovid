@@ -122,7 +122,13 @@ export const SearchPage = () => {
             </SearchContainter>
           </filteringContext.Provider>
         </Layout>
-        <FilterButton type="button" onClick={openFiltering}>
+        <FilterButton
+          type="button"
+          onClick={() => {
+            window.scrollTo(0, 0);
+            openFiltering();
+          }}
+        >
           filters
         </FilterButton>
       </InstantSearch>
