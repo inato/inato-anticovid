@@ -51,7 +51,7 @@ const CancelButton = styled(Button)`
 `;
 
 const formatTrialsString = (nbHits: number) =>
-  nbHits === 1 ? " 1 trial" : `${nbHits} trials`;
+  nbHits === 1 ? "1 trial" : `${nbHits} trials`;
 const SeeTrialsButton = connectStats(
   ({ nbHits, onClick }: { nbHits: number; onClick: () => void }) => (
     <Button onClick={onClick}>See {formatTrialsString(nbHits)}</Button>
