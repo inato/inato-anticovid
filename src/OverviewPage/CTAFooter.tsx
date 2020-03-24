@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
@@ -27,29 +27,31 @@ export const CTAFooter = ({ className }: { className?: string }) => (
 
 const Form = () => {
   const [isFormSent, setFormSent] = useState(false);
+
+  const onSubmit = useCallback(
+    async event => {
+      event.preventDefault();
+
+      const target = event.target as HTMLFormElement;
+      const body = {
+        email:
+          (target.elements.namedItem("email") as HTMLInputElement).value ?? ""
+      };
+      await fetch(ZappierHookUrl, {
+        method: "POST",
+        body: JSON.stringify(body)
+      });
+      setFormSent(true);
+    },
+    [setFormSent]
+  );
+
   if (isFormSent) {
     return <Paragraph>You have been successfully suscribed!</Paragraph>;
   }
 
   return (
-    <form
-      method="POST"
-      action="#"
-      onSubmit={async event => {
-        event.preventDefault();
-
-        const target = event.target as HTMLFormElement;
-        const body = {
-          email:
-            (target.elements.namedItem("email") as HTMLInputElement).value ?? ""
-        };
-        await fetch(ZappierHookUrl, {
-          method: "POST",
-          body: JSON.stringify(body)
-        });
-        setFormSent(true);
-      }}
-    >
+    <form method="POST" action="#" onSubmit={onSubmit}>
       <Input type="email" name="email" placeholder="Your email..." />
       <Button type="submit">Suscribe</Button>
     </form>
