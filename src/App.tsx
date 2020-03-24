@@ -36,7 +36,7 @@ export default function App() {
         <Separator />
         <Switch>
           <Route exact path="/">
-            {() => <Redirect to="/search" />}
+            {() => <Redirect to="/overview" />}
           </Route>
           <Route exact path="/overview">
             <OverviewPage />
