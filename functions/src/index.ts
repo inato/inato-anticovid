@@ -77,19 +77,15 @@ export const uploadToAlgolia = functions
     const trialsCount = trials.length;
     console.log(`Found ${trials.length}`);
 
-    const batches = [];
-    while (trials.length) {
-      const batch = trials.splice(0, 50);
-      batches.push(batch);
-    }
-
     const algoliaIndex = setupAlgoliaIndex();
-    await algoliaIndex.clearObjects();
 
-    await forEachSequence(batches, async batch => {
-      await algoliaIndex.saveObjects(batch.map(trial => serialize(trial)));
-      console.log(`Sent ${batch.length} objects`);
-    });
+    await algoliaIndex.replaceAllObjects(
+      trials.map(trial => serialize(trial)),
+      {
+        safe: true,
+        batchSize: 50
+      }
+    );
 
     console.log("Replaced all objects");
 
