@@ -4,6 +4,7 @@ import ReactGA from "react-ga";
 import { Router, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
+import config from "./config";
 import { colors, device } from "./ui";
 import { SearchPage } from "./SearchPage";
 import logo from "./Logo.svg";
@@ -13,11 +14,15 @@ export default function App() {
   const history = createBrowserHistory();
 
   useEffect(() => {
-    ReactGA.pageview(history.location.pathname + history.location.search);
+    if (config.ga.id) {
+      ReactGA.pageview(history.location.pathname + history.location.search);
+    }
   });
 
   history.listen(location => {
-    ReactGA.pageview(location.pathname + location.search);
+    if (config.ga.id) {
+      ReactGA.pageview(location.pathname + location.search);
+    }
   });
 
   return (
