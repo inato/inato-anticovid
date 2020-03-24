@@ -6,12 +6,14 @@ import { devices } from "../ui";
 
 import { Disclaimer } from "./Disclaimer";
 import { CTAFooter } from "./CTAFooter";
+import { Introduction } from "./Introduction";
 
 const TableauURL =
   "https://public.tableau.com/views/Who_15849588323430/ClinicalResearchforCOVID-19";
 
 export const OverviewPage = () => (
   <Container>
+    <Introduction />
     <TableauReport url={TableauURL} />
     <StyledCTAFooter />
     <Disclaimer />
@@ -20,6 +22,13 @@ export const OverviewPage = () => (
 
 const Container = styled.div`
   padding: 32px;
+
+  > div:not(:last-child) {
+    margin-bottom: 16px;
+  }
+  > div {
+    border-radius: 4px;
+  }
 
   @media ${devices.Desktop} {
     padding: 32px 120px;

@@ -1,16 +1,28 @@
-import React from "react";
-import { ClearRefinements, RefinementList } from "react-instantsearch-dom";
+import React, { useContext } from "react";
+import {
+  ClearRefinements,
+  RefinementList,
+  connectStats
+} from "react-instantsearch-dom";
 import styled from "styled-components";
 
-import { colors, devices } from "../ui";
+import { colors, devices, Button } from "../ui";
+
+import { filteringContext } from "./Search";
 
 export const Facets = () => {
+  const { filtering, closeFiltering } = useContext(filteringContext);
   return (
-    <FacetsContainer>
+    <FacetsContainer filtering={filtering}>
       <Header>
-        <h1>Filters</h1>
-        <ClearRefinements />
+        <HeaderTitle>Filters</HeaderTitle>
+        <ClearRefinements
+          translations={{
+            reset: "Reset filters"
+          }}
+        />
       </Header>
+      <Facet attribute="recruitment_status" title="Recruitment Status" />
       <Facet
         attribute="therapeutic_classes"
         title="Therapeutic Classes"
@@ -22,9 +34,11 @@ export const Facets = () => {
         attribute="surrogate_outcome_extracted_"
         title="Surrogate Outcome"
       />
-      <Facet attribute="recruitment_status" title="Recruitment Status" />
       <Facet attribute="study_type" title="Study Type" showMore />
       <Facet attribute="countries" title="Countries" />
+      <Footer>
+        <StyledSeeTrialsButton onClick={closeFiltering} />
+      </Footer>
     </FacetsContainer>
   );
 };
@@ -81,13 +95,12 @@ const FacetContainer = styled.div`
   }
 `;
 
-const FacetsContainer = styled.div`
+type FacetsContainerProps = { filtering: boolean };
+const FacetsContainer = styled.div<FacetsContainerProps>`
   align-self: flex-start;
   min-width: 265px;
   background: ${colors.SecondaryBackground};
-  padding: 16px;
-  margin-right: 32px;
-  margin-bottom: 8px;
+  padding: 16px 16px 80px 16px;
   border: 1px solid ${colors.Border};
   box-sizing: border-box;
   border-radius: 4px;
@@ -108,9 +121,22 @@ const FacetsContainer = styled.div`
     border: 1px solid ${colors.Border};
   }
 
-  display: none;
+  display: ${({ filtering }) => (filtering ? undefined : "none")};
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
   @media ${devices.Desktop} {
     display: initial;
+    position: initial;
+    top: auto;
+    left: auto;
+    width: auto;
+    z-index: 0;
+    margin-bottom: 8px;
+    margin-right: 32px;
+    padding: 16px;
   }
 `;
 
@@ -118,6 +144,48 @@ const Header = styled.div`
   color: ${colors.DefaultText};
   display: flex;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   font-size: 16px;
+  align-items: flex-end;
+`;
+
+const HeaderTitle = styled.span`
+  font-size: 14px;
+  line-height: 24px;
+`;
+
+const Footer = styled.div`
+  position: fixed;
+  width: calc(100% - 32px);
+  left: 0;
+  bottom: 0;
+  padding: 16px;
+  border-top: 1px solid ${colors.Border};
+  background-color: ${colors.SecondaryBackground};
+  justify-content: center;
+  display: flex;
+  @media ${devices.Desktop} {
+    display: none;
+  }
+`;
+
+const formatTrialsString = (nbHits: number) =>
+  nbHits === 1 ? "1 trial" : `${nbHits} trials`;
+const SeeTrialsButton = connectStats(
+  ({
+    nbHits,
+    onClick,
+    className
+  }: {
+    nbHits: number;
+    onClick: () => void;
+    className?: string;
+  }) => (
+    <Button onClick={onClick} className={className}>
+      See {formatTrialsString(nbHits)}
+    </Button>
+  )
+);
+const StyledSeeTrialsButton = styled(SeeTrialsButton)`
+  padding: 0 24px;
 `;

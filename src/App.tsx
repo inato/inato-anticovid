@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Redirect,
-  NavLink
-} from "react-router-dom";
+import ReactGA from "react-ga";
+import { Router, Switch, Route, Redirect, NavLink } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
+import config from "./config";
 import { colors, devices } from "./ui";
 import { SearchPage } from "./SearchPage";
 import logo from "./Logo.svg";
 import { OverviewPage } from "./OverviewPage";
 
+const history = createBrowserHistory();
+
 export default function App() {
+  useEffect(() => {
+    if (config.ga.id) {
+      ReactGA.pageview(history.location.pathname + history.location.search);
+    }
+  });
+
+  history.listen(location => {
+    if (config.ga.id) {
+      ReactGA.pageview(location.pathname + location.search);
+    }
+  });
+
   return (
     <Root>
-      <BrowserRouter>
+      <Router history={history}>
         <Header>
           <Logo src={logo} alt="Inato Anti-Covid Logo" />
           <HeaderLink to="/overview">Overview</HeaderLink>
@@ -34,7 +45,7 @@ export default function App() {
             <SearchPage />
           </Route>
         </Switch>
-      </BrowserRouter>
+      </Router>
     </Root>
   );
 }
@@ -47,27 +58,26 @@ const Root = styled.div`
 const Header = styled.div`
   display: flex;
   background: ${colors.SecondaryBackground};
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 0;
+  padding: 0 10vw;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 
   @media ${devices.Desktop} {
     height: 65px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
     padding: 0 120px;
   }
 `;
 
 const Logo = styled.img`
-  margin-right: 48px;
-
-  margin-left: 10vw;
+  height: 65px;
+  flex-basis: 100%;
 
   @media ${devices.Desktop} {
-    margin-left: 120px;
+    margin-right: 48px;
+    height: initial;
+    flex-basis: initial;
   }
 `;
 
@@ -85,15 +95,15 @@ const HeaderLink = styled(NavLink)`
   text-transform: uppercase;
   color: #647b91;
   text-decoration: none;
-  margin-right: 33px;
   box-sizing: border-box;
-  padding-left: 10vw;
+  text-align: center;
+
+  flex-grow: 1;
 
   &:hover,
   &.active {
     color: #5928fa;
-    border-bottom: none;
-    border-left: 5px solid #5928fa;
+    border-bottom: 2px solid #5928fa;
   }
 
   &:last-child {
@@ -101,12 +111,10 @@ const HeaderLink = styled(NavLink)`
   }
 
   @media ${devices.Desktop} {
+    margin-right: 33px;
+    padding-left: 10vw;
     padding-left: 0;
-
-    &:hover,
-    &.active {
-      border-bottom: 2px solid #5928fa;
-      border-left: none;
-    }
+    flex-grow: initial;
+    text-align: initial;
   }
 `;
