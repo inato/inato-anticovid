@@ -22,16 +22,19 @@ const StyledUndoIcon = styled(UndoIcon)`
   margin-right: 4px;
 `;
 
-export const ResetFilters = styled(
-  connectCurrentRefinements(ResetFiltersComponent)
-)`
+const ConnectedResetFiltersComponent = connectCurrentRefinements(
+  ResetFiltersComponent
+);
+export const ResetFilters = styled(ConnectedResetFiltersComponent)`
   background: inherit;
   outline: none;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 24px;
   border: none;
   color: ${colors.DefaultText};
   cursor: pointer;
+  text-transform: uppercase;
+  padding: 0;
   :disabled {
     color: ${colors.SecondaryText};
     cursor: normal;

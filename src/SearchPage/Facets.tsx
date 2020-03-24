@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { RefinementList, connectStats } from "react-instantsearch-dom";
 import styled from "styled-components";
 
-import { colors, devices, Button } from "../ui";
+import { colors, devices, Button, fontWeight } from "../ui";
 
 import { filteringContext } from "./Search";
 import { ResetFilters } from "./ResetFilters";
@@ -68,7 +68,7 @@ const FacetContainer = styled.div`
   h3 {
     margin: 0;
     margin-bottom: 4px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: normal;
     color: ${colors.SecondaryText};
     text-transform: uppercase;
@@ -76,16 +76,43 @@ const FacetContainer = styled.div`
 
   .ais-RefinementList-item {
     font-size: 14px;
+    line-height: 28px;
+  }
+
+  .ais-RefinementList-labelText {
+    padding-left: 6px;
+    color: ${colors.DefaultText};
+  }
+
+  .ais-RefinementList-checkbox {
+    margin: 0;
   }
 
   .ais-RefinementList-showMore {
-    font-size: 12px;
+    font-size: 10px;
     background: inherit;
-    color: ${colors.DefaultText};
-    border: 1px solid ${colors.DefaultText};
+    color: ${colors.GreySecondaryText};
+    text-transform: uppercase;
+    font-weight: ${fontWeight.SemiBold};
+    margin: 0;
+    padding: 0;
   }
   .ais-RefinementList-showMore--disabled {
     border: 1px solid ${colors.Border};
+  }
+
+  .ais-SearchBox-input {
+    height: 40px;
+    border-radius: 4px;
+    outline: none;
+    color: ${colors.DefaultText};
+    font-weight: ${fontWeight.Regular};
+    &:focus {
+      border: 1px solid ${colors.Primary};
+      transition: border 0.1s cubic-bezier(0.4, 0, 1, 1) 0s;
+      animation: 0.1s cubic-bezier(0.4, 0, 1, 1) 0s 1 normal none running dtOkaS;
+      box-shadow: rgba(90, 40, 250, 0.2) 0px 0px 0px 2px;
+    }
   }
 `;
 
@@ -98,11 +125,11 @@ const FacetsContainer = styled.div<FilteringProps>`
   box-sizing: border-box;
   border-radius: 4px;
 
-  h1 {
+  /* h1 {
     font-size: 18px;
     font-weight: normal;
     margin: 0;
-  }
+  } */
 
   display: ${({ filtering }) => (filtering ? undefined : "none")};
   position: absolute;
@@ -131,6 +158,7 @@ const Header = styled.div`
   align-items: flex-end;
   font-size: 14px;
   line-height: 24px;
+  font-weight: ${fontWeight.Medium};
 `;
 
 const Footer = styled.div`
