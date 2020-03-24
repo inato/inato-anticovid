@@ -2,9 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import TableauReport from "tableau-react";
 
-import { devices } from "../ui";
+import { devices, Disclaimer } from "../ui";
 
-import { Disclaimer } from "./Disclaimer";
 import { CTAFooter } from "./CTAFooter";
 import { Introduction } from "./Introduction";
 

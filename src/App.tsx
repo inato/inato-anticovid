@@ -72,10 +72,11 @@ const Logo = styled.img`
   height: 65px;
   flex-basis: 100%;
   width: 100%; /* FOR IE11*/
+  margin: 32px auto 16px auto;
 
   @media ${devices.Desktop} {
     width: auto;
-    margin-right: 48px;
+    margin: 0 48px 0 0;
     height: auto;
     flex-basis: inherit;
   }
@@ -91,7 +92,7 @@ const HeaderLink = styled(NavLink)`
   line-height: 20px;
   height: 100%;
   vertical-align: middle;
-  line-height: 65px;
+  line-height: 48px;
   text-transform: uppercase;
   color: ${colors.GreySecondaryText};
   text-decoration: none;
@@ -119,5 +120,6 @@ const HeaderLink = styled(NavLink)`
     padding-left: 0;
     flex-grow: inherit;
     text-align: inherit;
+    line-height: 65px;
   }
 `;

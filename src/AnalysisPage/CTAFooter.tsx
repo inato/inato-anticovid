@@ -2,23 +2,20 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
-import { colors, devices } from "../ui";
+import { colors, devices, fontWeight } from "../ui";
 import config from "../config";
 
 export const CTAFooter = ({ className }: { className?: string }) => (
   <Container className={className}>
     <LeftCard>
       <Title>Stay updated with new analysis</Title>
-      <SecondaryParagraph>
-        No spam, at most twice a week, unsubscribe anytime
-      </SecondaryParagraph>
+      <Paragraph>No spam, at most twice a week, unsubscribe anytime</Paragraph>
       <Form />
     </LeftCard>
     <RightCard>
       <Title>Want to go further?</Title>
       <Paragraph>
-        Make your own analysis by{" "}
-        <NavLink to="/search">searching trials</NavLink>.
+        Make your own analysis by <Link to="/search">searching trials</Link>
       </Paragraph>
     </RightCard>
   </Container>
@@ -89,29 +86,39 @@ const RightCard = styled(Card)`
 const Title = styled.h1`
   color: ${colors.DefaultText};
   font-size: 14px;
-  font-weight: normal;
+  font-weight: ${fontWeight.Medium};
   margin: 0;
 `;
 
 const Paragraph = styled.p`
-  color: black;
-  font-size: 14px;
-  font-weight: normal;
-  margin: 0;
-`;
-
-const SecondaryParagraph = styled.p`
   color: ${colors.GreySecondaryText};
-  font-size: 12px;
-  font-weight: normal;
-  margin: 0;
+  font-size: 14px;
+  font-weight: ${fontWeight.Regular};
+  margin: 0 0 8px 0;
 `;
 
 const Input = styled.input`
   border-radius: 4px;
   border: 1px solid ${colors.Border};
-  padding: 8px 16px;
+  padding: 7px 15px;
+  font-size: 14px;
+  line-height: 24px;
   margin-right: 8px;
+  outline: none;
+  color: ${colors.DefaultText};
+  font-weight: ${fontWeight.Regular};
+  &:focus {
+    border: 1px solid ${colors.Primary};
+    transition: border 0.1s cubic-bezier(0.4, 0, 1, 1) 0s;
+    animation: 0.1s cubic-bezier(0.4, 0, 1, 1) 0s 1 normal none running dtOkaS;
+    box-shadow: rgba(90, 40, 250, 0.2) 0px 0px 0px 2px;
+  }
+  margin-bottom: 8px;
+  width: calc(100% - 30px);
+  @media ${devices.Desktop} {
+    width: 240px;
+    margin-bottom: inherit;
+  }
 `;
 
 const Button = styled.button`
@@ -119,4 +126,16 @@ const Button = styled.button`
   padding: 8px 16px;
   color: ${colors.SecondaryBackground};
   background-color: ${colors.Primary};
+  height: 40px;
+  font-size: 12px;
+  text-transform: uppercase;
+  &:hover {
+    cursor: pointer;
+    background-color: ${colors.PrimaryHover};
+    box-shadow: rgba(60, 5, 234, 0.2) 0px 0px 0px 2px;
+  }
+`;
+
+const Link = styled(NavLink)`
+  color: ${colors.Primary};
 `;

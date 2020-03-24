@@ -12,13 +12,13 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import qs from "qs";
 
-import { colors, devices, Button } from "../ui";
+import { colors, devices, Button, fontWeight, Disclaimer } from "../ui";
 import config from "../config";
 
-import { Disclaimer } from "./Disclaimer";
 import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
 import { FilteringProps } from "./FilteringProps";
+import icon from "./Filter.svg";
 
 const DEBOUNCE_SET_SEARCH_IN_MS = 1000;
 
@@ -129,6 +129,7 @@ export const SearchPage = () => {
             openFiltering();
           }}
         >
+          <FilterIcon src={icon} />
           filters
         </FilterButton>
       </InstantSearch>
@@ -147,6 +148,16 @@ const Container = styled.div`
 const StyledSearchBox = styled(SearchBox)`
   .ais-SearchBox-input {
     height: 40px;
+    border-radius: 4px;
+    outline: none;
+    color: ${colors.DefaultText};
+    font-weight: ${fontWeight.Regular};
+    &:focus {
+      border: 1px solid ${colors.Primary};
+      transition: border 0.1s cubic-bezier(0.4, 0, 1, 1) 0s;
+      animation: 0.1s cubic-bezier(0.4, 0, 1, 1) 0s 1 normal none running dtOkaS;
+      box-shadow: rgba(90, 40, 250, 0.2) 0px 0px 0px 2px;
+    }
   }
 
   @media ${devices.Desktop} {
@@ -214,4 +225,10 @@ const FilterButton = styled(Button)`
   @media ${devices.Desktop} {
     display: none;
   }
+`;
+
+const FilterIcon = styled.img`
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
 `;
