@@ -14,8 +14,8 @@ import qs from "qs";
 
 import config from "../config/config.json";
 import { colors, device } from "../ui";
-import { Disclaimer } from "../Disclaimer";
 
+import { Disclaimer } from "./Disclaimer";
 import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
 
