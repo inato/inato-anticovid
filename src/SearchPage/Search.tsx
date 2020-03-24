@@ -13,7 +13,7 @@ import styled from "styled-components";
 import qs from "qs";
 
 import config from "../config/config.json";
-import { colors, device } from "../ui";
+import { colors, device, Button } from "../ui";
 
 import { Disclaimer } from "./Disclaimer";
 import { Facets } from "./Facets";
@@ -57,7 +57,7 @@ const useBoolean = (initialValue: boolean) => {
 
 type FilteringContext = {
   filtering: boolean;
-  toggleFiltering: () => void;
+  closeFiltering: () => void;
 };
 
 export const filteringContext = createContext<FilteringContext>(null as any); // FIX ME
@@ -96,7 +96,7 @@ export const SearchPage = () => {
         searchState={searchState}
       >
         <Layout>
-          <filteringContext.Provider value={{ filtering, toggleFiltering }}>
+          <filteringContext.Provider value={{ filtering, closeFiltering }}>
             <Facets />
             {!filtering && (
               <SearchContainter>
@@ -119,7 +119,7 @@ export const SearchPage = () => {
             )}
           </filteringContext.Provider>
         </Layout>
-        <FilterButton type="button" onClick={toggleFiltering}>
+        <FilterButton type="button" onClick={openFiltering}>
           filters
         </FilterButton>
       </InstantSearch>
@@ -195,25 +195,10 @@ const StyledPagination = styled(Pagination)`
   }
 `;
 
-const FilterButton = styled.button`
-  text-transform: uppercase;
-  align-items: center;
-  background-color: ${colors.Primary};
-  border: none;
-  border-radius: 4px;
-  bottom: 2rem;
-  box-sizing: border-box;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
+const FilterButton = styled(Button)`
   left: 50%;
-  min-height: 40px;
-  min-width: 112px;
   position: fixed;
   transform: translateX(-50%);
-  border: 1px solid #5928fa;
 
   @media ${device.sm} {
     display: none;
