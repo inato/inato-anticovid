@@ -76,8 +76,8 @@ const Logo = styled.img`
 
   @media ${devices.Desktop} {
     margin-right: 48px;
-    height: initial;
-    flex-basis: initial;
+    height: auto;
+    flex-basis: inherit;
   }
 `;
 
@@ -114,7 +114,7 @@ const HeaderLink = styled(NavLink)`
     margin-right: 33px;
     padding-left: 10vw;
     padding-left: 0;
-    flex-grow: initial;
-    text-align: initial;
+    flex-grow: inherit;
+    text-align: inherit;
   }
 `;
