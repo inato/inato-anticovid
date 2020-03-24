@@ -37,14 +37,18 @@ export const Facets = () => {
       <Facet attribute="study_type" title="Study Type" showMore />
       <Facet attribute="countries" title="Countries" />
       <Footer>
-        <Button onClick={closeFiltering} semantic={Semantic.neutral}>
+        <CancelButton onClick={closeFiltering} semantic={Semantic.neutral}>
           Cancel
-        </Button>
+        </CancelButton>
         <SeeTrialsButton onClick={closeFiltering} />
       </Footer>
     </FacetsContainer>
   );
 };
+
+const CancelButton = styled(Button)`
+  visibility: hidden; /* until the Cancel button does the job */
+`;
 
 const formatTrialsString = (nbHits: number) =>
   nbHits === 1 ? " 1 trial" : `${nbHits} trials`;
