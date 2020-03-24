@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { colors, fontSize, fontWeight, lineHeight } from "../ui";
+import { colors, fontSize, fontWeight, lineHeight, devices } from "../ui";
 
 import { Accordion } from "./Accordion";
 
@@ -49,18 +49,25 @@ export const Introduction = () => (
 
 const Container = styled.div`
   background: ${colors.SecondaryBackground};
-  border-left: 8px solid ${colors.GreySecondaryText};
   color: ${colors.DefaultText};
   display: flex;
   flex-direction: column;
-  padding: 16px 32px;
+  padding: 16px;
+  @media ${devices.Desktop} {
+    border-left: 8px solid ${colors.GreySecondaryText};
+    padding: 16px 32px;
+  }
 `;
 
 const Title = styled.h1`
-  font-size: ${fontSize.Big};
-  font-weight: ${fontWeight.Bold};
+  font-size: ${fontSize.Medium};
+  font-weight: ${fontWeight.SemiBold};
   line-height: ${lineHeight.Big};
   margin: 0 0 4px 0;
+
+  @media ${devices.Desktop} {
+    font-size: ${fontSize.Big};
+  }
 `;
 
 const Paragraph = styled.p`
