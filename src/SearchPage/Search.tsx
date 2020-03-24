@@ -18,6 +18,7 @@ import config from "../config";
 import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
 import { FilteringProps } from "./FilteringProps";
+import icon from "./Filter.svg";
 
 const DEBOUNCE_SET_SEARCH_IN_MS = 1000;
 
@@ -128,6 +129,7 @@ export const SearchPage = () => {
             openFiltering();
           }}
         >
+          <FilterIcon src={icon} />
           filters
         </FilterButton>
       </InstantSearch>
@@ -223,4 +225,10 @@ const FilterButton = styled(Button)`
   @media ${devices.Desktop} {
     display: none;
   }
+`;
+
+const FilterIcon = styled.img`
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
 `;

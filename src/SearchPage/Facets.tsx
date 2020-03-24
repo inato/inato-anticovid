@@ -189,7 +189,7 @@ const SeeTrialsButton = connectStats(
     className?: string;
   }) => (
     <Button onClick={onClick} className={className}>
-      See {formatTrialsString(nbHits)}
+      Filter ({formatTrialsString(nbHits)})
     </Button>
   )
 );
