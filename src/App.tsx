@@ -93,17 +93,20 @@ const HeaderLink = styled(NavLink)`
   vertical-align: middle;
   line-height: 65px;
   text-transform: uppercase;
-  color: #647b91;
+  color: ${colors.GreySecondaryText};
   text-decoration: none;
   box-sizing: border-box;
   text-align: center;
 
   flex-grow: 1;
 
-  &:hover,
+  &:hover {
+    border-bottom: 2px solid ${colors.GreySecondaryText};
+  }
+
   &.active {
-    color: #5928fa;
-    border-bottom: 2px solid #5928fa;
+    color: ${colors.Primary};
+    border-bottom: 2px solid ${colors.Primary};
   }
 
   &:last-child {
