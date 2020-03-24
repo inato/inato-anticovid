@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Semantic, semanticColors, semanticTextColors } from "./colors";
+import { Semantic, semanticColors, semanticTextColors, colors } from "./colors";
 
 export const Button = styled.button<{ semantic?: Semantic }>`
   text-transform: uppercase;
@@ -17,5 +17,5 @@ export const Button = styled.button<{ semantic?: Semantic }>`
   justify-content: center;
   min-height: 40px;
   min-width: 112px;
-  border: 1px solid #5928fa;
+  border: 1px solid ${colors.Primary};
 `;
