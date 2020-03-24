@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 import { colors, devices } from "../ui";
-
-const ZappierHookUrl = "https://hooks.zapier.com/hooks/catch/6538069/o1x0ecd/";
+import config from "../config";
 
 export const CTAFooter = ({ className }: { className?: string }) => (
   <Container className={className}>
@@ -37,7 +36,7 @@ const Form = () => {
         email:
           (target.elements.namedItem("email") as HTMLInputElement).value ?? ""
       };
-      await fetch(ZappierHookUrl, {
+      await fetch(config.emailSuscribeHookUrl, {
         method: "POST",
         body: JSON.stringify(body)
       });
