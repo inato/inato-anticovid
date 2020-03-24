@@ -25,9 +25,11 @@ export const Accordion: React.FunctionComponent<AccordionProps> = props => {
 
   return (
     <AccordionSection>
-      <TitleContainer onClick={toggleAccordion}>
-        {isActive ? <StyledArrowDownIcon /> : <StyledArrowRightIcon />}
-        <AccordionTitle>{props.title}</AccordionTitle>
+      <TitleContainer>
+        <ClickableContainer onClick={toggleAccordion}>
+          {isActive ? <StyledArrowDownIcon /> : <StyledArrowRightIcon />}
+          <AccordionTitle>{props.title}</AccordionTitle>
+        </ClickableContainer>
       </TitleContainer>
       <AccordionContent
         ref={accordionContent}
@@ -56,8 +58,13 @@ const AccordionTitle = styled.div`
 `;
 
 const TitleContainer = styled.div`
-  display: flex;
   margin-top: 16px;
+  display: flex;
+  justify-content: flex-start;
+`;
+
+const ClickableContainer = styled.div`
+  display: flex;
   align-items: center;
   cursor: pointer;
   :hover {
