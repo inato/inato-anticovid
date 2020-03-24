@@ -4,10 +4,10 @@ import { format } from "date-fns";
 
 import { colors, TimeClockIcon } from "../ui";
 
-export const TrialStatus = ({ value }: { value: string }) => (
+export const TrialStatus = ({ value }: { value: string | null }) => (
   <HitHighlightContainer>
     {value === "Recruiting" ? <GreenDot /> : <GrayDot />}
-    {value}
+    {value !== null ? value : "N/A"}
   </HitHighlightContainer>
 );
 

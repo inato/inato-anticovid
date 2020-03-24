@@ -12,6 +12,6 @@ export class PostgresTrialRepository implements TrialRepository {
     const queryResult = await this.client.query(
       `SELECT * from covid.${this.tableName}`
     );
-    return queryResult.rows.map(row => deserialize(row));
+    return queryResult.rows.map((row: unknown) => deserialize(row));
   }
 }
