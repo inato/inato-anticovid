@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { ArrowDownIcon } from "../ui/ArrowDownIcon";
 import { ArrowRightIcon } from "../ui/ArrowRightIcon";
+import { colors } from "../ui";
 
 type AccordionProps = {
   title: string;
@@ -40,25 +41,38 @@ export const Accordion: React.FunctionComponent<AccordionProps> = props => {
 
 const AccordionSection = styled.div``;
 
-const TitleContainer = styled.div`
-  display: flex;
-  margin-top: 16px;
-  align-items: center;
-  cursor: pointer;
+const StyledArrowDownIcon = styled(ArrowDownIcon)`
+  margin-right: 4px;
+`;
+const StyledArrowRightIcon = styled(ArrowRightIcon)`
+  margin-right: 5px;
 `;
 
 const AccordionTitle = styled.div`
   font-weight: 500;
 `;
 
+const TitleContainer = styled.div`
+  display: flex;
+  margin-top: 16px;
+  align-items: center;
+  cursor: pointer;
+  :hover {
+    ${AccordionTitle} {
+      color: ${colors.GreySecondaryText};
+    }
+    ${StyledArrowDownIcon} {
+      stroke: ${colors.GreySecondaryText};
+    }
+    ${StyledArrowRightIcon} {
+      margin-left: 2px;
+      margin-right: 3px;
+      stroke: ${colors.GreySecondaryText};
+    }
+  }
+`;
+
 const AccordionContent = styled.div`
   overflow: hidden;
   transition: max-height 0.1s linear;
-`;
-
-const StyledArrowDownIcon = styled(ArrowDownIcon)`
-  margin-right: 4px;
-`;
-const StyledArrowRightIcon = styled(ArrowRightIcon)`
-  margin-right: 5px;
 `;

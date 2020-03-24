@@ -21,11 +21,13 @@ export const Introduction = () => (
     </Paragraph>
     <Accordion title="Where does the data come from">
       Most of the data comes from public sources that are duly cited in the
-      dedicated section of the website. Data is updated every day. Anticovid
-      will soon enhance its content with high quality data in particular from
-      clinical investigators around the globe that are committed to support
-      research against SARS-CoV 2, as well as pharmaceutical manufacturers
-      already engaged or about to do so in vaccine or therapeutic trials.
+      dedicated section of the website. Data is updated every day.
+      <br />
+      Anticovid will soon enhance its content with high quality data in
+      particular from clinical investigators around the globe that are committed
+      to support research against SARS-CoV 2, as well as pharmaceutical
+      manufacturers already engaged or about to do so in vaccine or therapeutic
+      trials.
     </Accordion>
     <Accordion title="Who are we">
       Anticovid is provided by{" "}
