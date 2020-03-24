@@ -23,6 +23,7 @@ export const Introduction = () => (
 
 const Container = styled.div`
   background: ${colors.SecondaryBackground};
+  border-left: 8px solid ${colors.GreySecondaryText};
   color: ${colors.DefaultText};
   display: flex;
   flex-direction: column;
