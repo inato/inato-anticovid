@@ -24,6 +24,15 @@ describe("serialize", () => {
     });
   });
 
+  it("should serialize a null recruitment status", () => {
+    const trial = trialFactory({
+      recruitment_status: null
+    });
+    expect(serialize(trial)).toMatchObject({
+      recruitment_status: null
+    });
+  });
+
   it("should serialize a trial with additional parameters", () => {
     const trial = trialFactory({
       trialid: "trialid",

@@ -31,7 +31,7 @@ Please warn the app-team before changing the type of any of those data point.
 {
   public_title: string;
   web_address: string;
-  recruitment_status: string;
+  recruitment_status: string | null;
   therapeutic_classes: Array<string>;
   date_registration3: string;
 }
