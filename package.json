@@ -78,6 +78,7 @@
     "tableau-react": "^1.2.2",
     "terser-webpack-plugin": "2.3.4",
     "ts-pnp": "1.1.5",
+    "tslint": "^6.1.0",
     "typescript": "~3.7.2",
     "url-loader": "2.3.0",
     "use-debounce": "^3.4.0",
