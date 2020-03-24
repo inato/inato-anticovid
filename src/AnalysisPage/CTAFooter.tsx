@@ -8,7 +8,7 @@ import config from "../config";
 export const CTAFooter = ({ className }: { className?: string }) => (
   <Container className={className}>
     <LeftCard>
-      <Title>Stay updated with new analyses</Title>
+      <Title>Stay updated with new analysis</Title>
       <SecondaryParagraph>
         No spam, at most twice a week, unsubscribe anytime
       </SecondaryParagraph>
@@ -36,7 +36,7 @@ const Form = () => {
         email:
           (target.elements.namedItem("email") as HTMLInputElement).value ?? ""
       };
-      await fetch(config.emailSuscribeHookUrl, {
+      await fetch(config.emailSubscribeHookUrl, {
         method: "POST",
         body: JSON.stringify(body)
       });
@@ -46,13 +46,13 @@ const Form = () => {
   );
 
   if (isFormSent) {
-    return <Paragraph>You have been successfully suscribed!</Paragraph>;
+    return <Paragraph>You have been successfully subscribed!</Paragraph>;
   }
 
   return (
     <form method="POST" action="#" onSubmit={onSubmit}>
       <Input type="email" name="email" placeholder="Your email..." />
-      <Button type="submit">Suscribe</Button>
+      <Button type="submit">Subscribe</Button>
     </form>
   );
 };

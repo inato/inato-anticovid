@@ -11,7 +11,7 @@ import { Introduction } from "./Introduction";
 const TableauURL =
   "https://public.tableau.com/views/Who_15849588323430/ClinicalResearchforCOVID-19";
 
-export const OverviewPage = () => (
+export const AnalysisPage = () => (
   <Container>
     <Introduction />
     <TableauReport url={TableauURL} />

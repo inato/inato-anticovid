@@ -6,6 +6,7 @@ import { colors, devices, Button } from "../ui";
 
 import { filteringContext } from "./Search";
 import { ResetFilters } from "./ResetFilters";
+import { FilteringProps } from "./FilteringProps";
 
 export const Facets = () => {
   const { filtering, closeFiltering } = useContext(filteringContext);
@@ -88,8 +89,7 @@ const FacetContainer = styled.div`
   }
 `;
 
-type FacetsContainerProps = { filtering: boolean };
-const FacetsContainer = styled.div<FacetsContainerProps>`
+const FacetsContainer = styled.div<FilteringProps>`
   align-self: flex-start;
   min-width: 265px;
   background: ${colors.SecondaryBackground};
