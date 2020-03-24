@@ -29,7 +29,11 @@ export const Introduction = () => (
       already engaged or about to do so in vaccine or therapeutic trials.
     </Accordion>
     <Accordion title="+ Who are we">
-      Anticovid is provided by Inato.
+      Anticovid is provided by{" "}
+      <a href="https://inato.com/" target="_blank" rel="noopener noreferrer">
+        Inato
+      </a>
+      .
       <br />
       Inato is a platform that increases the pool of available patients for
       trials by:
