@@ -1,12 +1,18 @@
 import "react-app-polyfill/ie11";
 import React from "react";
 import ReactDOM from "react-dom";
+import ReactGA from "react-ga";
 
 import "instantsearch.css/themes/algolia.css";
 import "./index.css";
 
+import config from "./config";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+
+if (config.ga.id) {
+  ReactGA.initialize(config.ga.id);
+}
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

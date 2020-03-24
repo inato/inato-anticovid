@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Redirect,
-  NavLink
-} from "react-router-dom";
+import ReactGA from "react-ga";
+import { Router, Switch, Route, Redirect, NavLink } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
+import config from "./config";
 import { colors, device } from "./ui";
 import { SearchPage } from "./SearchPage";
 import logo from "./Logo.svg";
 import { OverviewPage } from "./OverviewPage";
 
+const history = createBrowserHistory();
+
 export default function App() {
+  useEffect(() => {
+    if (config.ga.id) {
+      ReactGA.pageview(history.location.pathname + history.location.search);
+    }
+  });
+
+  history.listen(location => {
+    if (config.ga.id) {
+      ReactGA.pageview(location.pathname + location.search);
+    }
+  });
+
   return (
     <Root>
-      <BrowserRouter>
+      <Router history={history}>
         <Header>
           <Logo src={logo} alt="Inato Anti-Covid Logo" />
           <HeaderLink to="/overview">Overview</HeaderLink>
@@ -34,7 +45,7 @@ export default function App() {
             <SearchPage />
           </Route>
         </Switch>
-      </BrowserRouter>
+      </Router>
     </Root>
   );
 }
