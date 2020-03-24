@@ -1,5 +1,9 @@
 import React, { useContext } from "react";
-import { ClearRefinements, RefinementList } from "react-instantsearch-dom";
+import {
+  ClearRefinements,
+  RefinementList,
+  connectStats
+} from "react-instantsearch-dom";
 import styled from "styled-components";
 
 import { colors, device, Button, Semantic } from "../ui";
@@ -32,11 +36,19 @@ export const Facets = () => {
         <Button onClick={closeFiltering} semantic={Semantic.neutral}>
           Cancel
         </Button>
-        <Button onClick={closeFiltering}>Close</Button>
+        <SeeTrialsButton onClick={closeFiltering} />
       </Footer>
     </FacetsContainer>
   );
 };
+
+const formatTrialsString = (nbHits: number) =>
+  nbHits === 1 ? " 1 trial" : `${nbHits} trials`;
+const SeeTrialsButton = connectStats(
+  ({ nbHits, onClick }: { nbHits: number; onClick: () => void }) => (
+    <Button onClick={onClick}>See {formatTrialsString(nbHits)}</Button>
+  )
+);
 
 const Facet = ({
   attribute,
