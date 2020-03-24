@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo, createContext } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import algoliasearch from "algoliasearch";
 import {
@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import qs from "qs";
 
-import { colors, device } from "../ui";
+import { colors, device, Button } from "../ui";
 import config from "../config";
 
 import { Disclaimer } from "./Disclaimer";
@@ -37,6 +37,31 @@ const urlToSearchState = (
   location: ReturnType<typeof useHistory>["location"]
 ) => qs.parse(location.search.slice(1));
 
+const useBoolean = (initialValue: boolean) => {
+  const [isTrue, setState] = useState(() => initialValue);
+  const setToTrue = useCallback(() => setState(() => true), []);
+  const setToFalse = useCallback(() => setState(() => false), []);
+  const toggle = useCallback(() => setState(prev => !prev), []);
+
+  return useMemo(
+    () => ({
+      isTrue,
+      isFalse: !isTrue,
+      setToTrue,
+      setToFalse,
+      toggle
+    }),
+    [isTrue, setToFalse, setToTrue, toggle]
+  );
+};
+
+type FilteringContext = {
+  filtering: boolean;
+  closeFiltering: () => void;
+};
+
+export const filteringContext = createContext<FilteringContext>(null as any); // FIX ME
+
 export const SearchPage = () => {
   const history = useHistory();
   const [searchState, setSearchState] = useState(
@@ -60,6 +85,12 @@ export const SearchPage = () => {
     [onSearchStateChangeDebounced]
   );
 
+  const {
+    isTrue: filtering,
+    setToFalse: closeFiltering,
+    setToTrue: openFiltering
+  } = useBoolean(false);
+
   return (
     <Container>
       <InstantSearch
@@ -69,25 +100,32 @@ export const SearchPage = () => {
         searchState={searchState}
       >
         <Layout>
-          <Facets />
-          <SearchContainter>
-            <StyledSearchBox
-              translations={{
-                placeholder: "Search by keyword, drug, ..."
-              }}
-            />
-            <StyledStats
-              translations={{
-                stats(nbHits, timeSpentMS) {
-                  return `${nbHits} trials found`;
-                }
-              }}
-            />
-            <StyledHits hitComponent={ClinicalTrialHit} />
-            <StyledPagination showFirst={false} padding={2} />
-            <Disclaimer />
-          </SearchContainter>
+          <filteringContext.Provider value={{ filtering, closeFiltering }}>
+            <Facets />
+            {!filtering && (
+              <SearchContainter>
+                <StyledSearchBox
+                  translations={{
+                    placeholder: "Search by keyword, drug, ..."
+                  }}
+                />
+                <StyledStats
+                  translations={{
+                    stats(nbHits, timeSpentMS) {
+                      return `${nbHits} trials found`;
+                    }
+                  }}
+                />
+                <StyledHits hitComponent={ClinicalTrialHit} />
+                <StyledPagination showFirst={false} padding={2} />
+                <Disclaimer />
+              </SearchContainter>
+            )}
+          </filteringContext.Provider>
         </Layout>
+        <FilterButton type="button" onClick={openFiltering}>
+          filters
+        </FilterButton>
       </InstantSearch>
     </Container>
   );
@@ -158,5 +196,16 @@ const StyledPagination = styled(Pagination)`
   .ais-Pagination-link--selected {
     color: ${colors.SecondaryBackground};
     background: ${colors.Primary};
+  }
+`;
+
+const FilterButton = styled(Button)`
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%);
+
+  @media ${device.sm} {
+    display: none;
   }
 `;

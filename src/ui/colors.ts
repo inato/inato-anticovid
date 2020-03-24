@@ -16,3 +16,18 @@ export enum colors {
   GreySecondaryText = "#647B91",
   DefaultText = "#124469"
 }
+
+export enum Semantic {
+  primary = "primary",
+  neutral = "neutral"
+}
+
+export const semanticColors: Record<Semantic, colors> = {
+  [Semantic.primary]: colors.Primary,
+  [Semantic.neutral]: colors.SecondaryBackground
+};
+
+export const semanticTextColors: Record<Semantic, colors> = {
+  [Semantic.primary]: colors.SecondaryBackground,
+  [Semantic.neutral]: colors.Primary
+};
