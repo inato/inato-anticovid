@@ -9,20 +9,19 @@ export const Introduction = () => (
   <Container>
     <Title>What is Anticovid?</Title>
     <Paragraph>
-      Anticovid is an open access platform gathering virtually all available
-      information in a transparent manner regarding clinical research worldwide
-      against SARS-CoV 2 (which is the virus responsible for COVID-19)
+      Anticovid is an open-access platform gathering all available information
+      on clinical research worldwide against SARS-CoV 2 (the virus responsible
+      for COVID-19)
     </Paragraph>
     <Paragraph>
-      The purpose of Anticovid is to help the global healthcare community to get
-      access to the needed information in a comprehensive way, especially given
-      that the landscape is evolving at an unprecedented pace. This is critical
-      to optimize resource allocation and address unmet needs as fast as
-      possible.
+      The purpose of Anticovid is to provide access to helpful information to
+      the global healthcare community, in a constantly evolving landscape. We
+      believe this is critical to optimize resource allocation and address unmet
+      needs as fast as possible
     </Paragraph>
     <Accordion title="+ Where does the data come from">
-      Most of the data come from public sources that are duly cited in the
-      dedicated section of the website. Data are updated every day. Anticovid
+      Most of the data comes from public sources that are duly cited in the
+      dedicated section of the website. Data is updated every day. Anticovid
       will soon enhance its content with high quality data in particular from
       clinical investigators around the globe that are committed to support
       research against SARS-CoV 2, as well as pharmaceutical manufacturers
