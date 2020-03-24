@@ -85,4 +85,7 @@ const ClickableContainer = styled.div`
 const AccordionContent = styled.div`
   overflow: hidden;
   transition: max-height 0.1s linear;
+  ul {
+    margin-top: 0;
+  }
 `;
