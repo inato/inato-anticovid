@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { colors } from "../ui";
+import { colors } from ".";
 
 export const Disclaimer = () => (
   <Container>
