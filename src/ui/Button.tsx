@@ -22,6 +22,7 @@ export const SearchButton = styled.button<{ semantic?: Semantic }>`
 
   &:hover {
     text-decoration: none;
+    box-shadow: #b2a6d8 0px 0px 0px 2px;
   }
 `;
 
@@ -40,7 +41,7 @@ export const Button = styled.button`
 
   &:hover {
     cursor: pointer;
-    background-color: ${colors.PrimaryHover};
+    box-shadow: #b2a6d8 0px 0px 0px 2px;
   }
 `;
 
