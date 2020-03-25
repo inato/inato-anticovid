@@ -1,0 +1,9 @@
+{
+  "algolia": {
+    "apikey": "6938d009a19fe72f19e9aa01a35dea3f",
+    "index": "dev_data"
+  },
+  "pg": {
+    "tablename": "who_trial_staging"
+  }
+}
