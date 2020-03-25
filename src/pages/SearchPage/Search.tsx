@@ -120,7 +120,7 @@ export const SearchPage = () => {
 };
 
 const StyledSendUsFeedbackCard = styled(SendUsFeedbackCard)`
-  margin-top: 16px;
+  margin-top: 56px;
 
   @media ${devices.Desktop} {
     display: none;
@@ -192,7 +192,7 @@ const StyledHits = styled(Hits)`
 `;
 
 const StyledPagination = styled(Pagination)`
-  padding: 24px 0;
+  margin-top: 24px;
   .ais-Pagination-link {
     color: ${colors.Primary};
     border-color: ${colors.Separator};
