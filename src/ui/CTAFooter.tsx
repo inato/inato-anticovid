@@ -54,7 +54,7 @@ const Form = () => {
   return (
     <form method="POST" action="#" onSubmit={onSubmit}>
       <Input type="email" name="email" placeholder="Your email..." required />
-      <Button type="submit">Subscribe</Button>
+      <SubscribeButton type="submit">Subscribe</SubscribeButton>
     </form>
   );
 };
@@ -123,6 +123,13 @@ const Input = styled.input`
   max-width: 290px;
   @media ${devices.Desktop} {
     max-width: 240px;
+  }
+`;
+
+export const SubscribeButton = styled(Button)`
+  margin-top: 8px;
+  @media ${devices.Tablet} {
+    margin-top: 0;
   }
 `;
 

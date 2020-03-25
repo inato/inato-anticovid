@@ -5,9 +5,9 @@ import styled from "styled-components";
 import {
   colors,
   devices,
-  SearchButton,
   fontWeight,
-  Newsletter
+  Newsletter,
+  SubscribeButton
 } from "../../ui";
 
 import { ResetFilters } from "./ResetFilters";
@@ -144,6 +144,10 @@ const FacetsContainer = styled.div``;
 
 const StyledNewsletter = styled(Newsletter)`
   display: none;
+
+  ${SubscribeButton} {
+    margin-top: 8px;
+  }
 
   @media ${devices.Desktop} {
     display: inherit;
