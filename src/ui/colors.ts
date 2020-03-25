@@ -19,7 +19,8 @@ export enum colors {
   Separator = "#DCE3E9",
   Border = "#eaedf1",
   GreySecondaryText = "#647B91",
-  DefaultText = "#413078",
+  DefaultText = "#433C59",
+
   DefaultTextHover = "#9E9EB4"
 }
 

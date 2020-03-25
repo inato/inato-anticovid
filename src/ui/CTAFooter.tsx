@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 
 import config from "../config";
 
+import { H1 } from "./typography";
+
 import { colors, devices, fontWeight, Button } from ".";
 
 export const CTAFooter = ({ className }: { className?: string }) => (
@@ -88,8 +90,7 @@ const RightCard = styled(Card)`
   }
 `;
 
-const Title = styled.h1`
-  color: ${colors.DefaultText};
+const Title = styled(H1)`
   font-size: 14px;
   font-weight: ${fontWeight.Medium};
   margin: 0;

@@ -49,7 +49,7 @@ const AccordionSection = styled.div``;
 const arrowIconsStyle = css`
   margin-right: 4px;
   transition-duration: 150ms;
-  stroke: ${colors.DefaultText};
+  stroke: ${colors.Primary};
 `;
 const StyledArrowDownIcon = styled(ArrowDownIcon)`
   ${arrowIconsStyle};
@@ -65,6 +65,7 @@ const AccordionTitle = styled.div`
 const TitleContainer = styled.div`
   display: flex;
   justify-content: flex-start;
+  color: ${colors.Primary};
 `;
 
 const ClickableContainer = styled.div`

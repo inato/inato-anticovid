@@ -7,6 +7,7 @@ import { LinkButton } from "./Button";
 import { fontWeight } from "./texts";
 import { colors } from "./colors";
 import { devices } from "./media";
+import { H1 } from "./typography";
 
 export const SendUsFeedbackCard = ({ className }: { className?: string }) => (
   <SendUsFeedbackCardContainer className={className}>
@@ -15,8 +16,7 @@ export const SendUsFeedbackCard = ({ className }: { className?: string }) => (
   </SendUsFeedbackCardContainer>
 );
 
-const Title = styled.h1`
-  color: ${colors.DefaultText};
+const Title = styled(H1)`
   font-size: 14px;
   font-weight: ${fontWeight.Medium};
   margin: 0;
