@@ -29,18 +29,18 @@ export const Button = styled.button`
   display: inline-block;
   border-radius: 4px;
   padding: 8px 16px;
-  color: ${colors.SecondaryBackground};
+  color: ${colors.ButtonText};
   background-color: ${colors.Primary};
   height: 40px;
   font-size: 12px;
   text-transform: uppercase;
   box-sizing: border-box;
   text-decoration: none;
+  border: none;
 
   &:hover {
     cursor: pointer;
     background-color: ${colors.PrimaryHover};
-    box-shadow: rgba(60, 5, 234, 0.2) 0px 0px 0px 2px;
   }
 `;
 
