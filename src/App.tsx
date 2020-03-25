@@ -12,9 +12,6 @@ import { AnalysisPage } from "./pages/AnalysisPage";
 
 const history = createBrowserHistory();
 
-const FEEDBACK_LINK =
-  "mailto:anticovid@inato.com?subject=Feedback%20Anticovid%20platform&body=Would%20you%20recommend%20the%20Anticovid%20platform%20to%20a%20colleague%20or%20a%20peer%3F%0A%0A%0AIf%20not%2C%20what%20is%20missing%3F%0A%0A%0AWhat%20is%20the%20most%20useful%20feature%20to%20you%20%3F%0A%0A%0AAny%20other%20comments%3F";
-
 export default function App() {
   useEffect(() => {
     if (config.ga.id) {
@@ -36,7 +33,7 @@ export default function App() {
             <Logo src={logo} alt="Inato Anti-Covid Logo" />
             <HeaderLink to="/analysis">Analysis</HeaderLink>
             <HeaderLink to="/search">Search trials</HeaderLink>
-            <SendUsFeedbackLink href={FEEDBACK_LINK}>
+            <SendUsFeedbackLink href={config.feedbackUrl}>
               Send us feedback
             </SendUsFeedbackLink>
           </Header>

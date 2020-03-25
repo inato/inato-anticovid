@@ -46,6 +46,7 @@ export const Button = styled.button`
 export const LinkButton = (props: {
   semantic?: Semantic;
   children: React.ReactNode;
+  href: string;
 }) => (
   <Button
     {...props}
