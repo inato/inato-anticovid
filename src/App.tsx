@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ReactGA from "react-ga";
 import { Router, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { createBrowserHistory } from "history";
@@ -11,6 +11,9 @@ import logo from "./Logo.svg";
 import { AnalysisPage } from "./AnalysisPage";
 
 const history = createBrowserHistory();
+
+const FEEDBACK_LINK =
+  "mailto:anticovid@inato.com?subject=Feedback%20Anticovid%20platform&body=Would%20you%20recommend%20the%20Anticovid%20platform%20to%20a%20colleague%20or%20a%20peer%3F%0A%0A%0AIf%20not%2C%20what%20is%20missing%3F%0A%0A%0AWhat%20is%20the%20most%20useful%20feature%20to%20you%20%3F%0A%0A%0AAny%20other%20comments%3F";
 
 export default function App() {
   useEffect(() => {
@@ -33,6 +36,9 @@ export default function App() {
             <Logo src={logo} alt="Inato Anti-Covid Logo" />
             <HeaderLink to="/analysis">Analysis</HeaderLink>
             <HeaderLink to="/search">Search trials</HeaderLink>
+            <SendUsFeedbackLink href={FEEDBACK_LINK}>
+              Send us feedback
+            </SendUsFeedbackLink>
           </Header>
         </HeaderContainer>
         <Separator />
@@ -77,6 +83,7 @@ const Header = styled.div`
 
 const Logo = styled.img`
   height: 65px;
+  display: block;
   flex-basis: 100%;
   width: 100%; /* FOR IE11*/
   margin: 32px auto 16px auto;
@@ -94,17 +101,16 @@ const Separator = styled.div`
   height: 1px;
 `;
 
-const HeaderLink = styled(NavLink)`
+const linkMixin = css`
+  display: block;
   font-size: 16px;
-  line-height: 20px;
   height: 100%;
-  vertical-align: middle;
   line-height: 48px;
   text-transform: uppercase;
   color: ${colors.GreySecondaryText};
   text-decoration: none;
-  box-sizing: border-box;
   text-align: center;
+  border-bottom: 2px solid transparent;
 
   flex-basis: 50%;
 
@@ -125,6 +131,33 @@ const HeaderLink = styled(NavLink)`
     margin-right: 33px;
     flex-basis: inherit;
     text-align: inherit;
-    line-height: 65px;
+    line-height: 63px;
+  }
+`;
+
+const HeaderLink = styled(NavLink)`
+  ${linkMixin}
+`;
+
+const SendUsFeedbackLink = styled.a`
+  display: none;
+  margin-left: auto;
+  line-height: 42px;
+  text-align: center;
+  display: block;
+  padding: 0 17px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 16px;
+  color: ${colors.GreySecondaryText};
+  border-radius: 4px;
+
+  &:hover {
+    background-color: ${colors.LightPurpleBackground};
+    color: ${colors.Primary};
+  }
+
+  @media ${devices.Desktop} {
+    display: block;
   }
 `;
