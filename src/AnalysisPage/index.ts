@@ -1,2 +1,2 @@
 export * from "./AnalysisPage";
-export * from "./CTAFooter";
+export * from "../ui/CTAFooter";

@@ -2,16 +2,13 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
-import { colors, devices, fontWeight } from "../ui";
 import config from "../config";
+
+import { colors, devices, fontWeight } from ".";
 
 export const CTAFooter = ({ className }: { className?: string }) => (
   <Container className={className}>
-    <LeftCard>
-      <Title>Stay updated with new analysis</Title>
-      <Paragraph>No spam, at most twice a week, unsubscribe anytime</Paragraph>
-      <Form />
-    </LeftCard>
+    <Newsletter />
     <RightCard>
       <Title>Want to go further?</Title>
       <Paragraph>
@@ -19,6 +16,16 @@ export const CTAFooter = ({ className }: { className?: string }) => (
       </Paragraph>
     </RightCard>
   </Container>
+);
+
+// we need to use the className in order to override style later on
+// see: https://github.com/styled-components/styled-components/issues/8#issuecomment-262276155
+export const Newsletter = (props: { className?: string }) => (
+  <LeftCard className={props.className}>
+    <Title>Stay updated with new analysis</Title>
+    <Paragraph>No spam, at most twice a week, unsubscribe anytime</Paragraph>
+    <Form />
+  </LeftCard>
 );
 
 const Form = () => {
@@ -94,7 +101,7 @@ const Paragraph = styled.p`
   color: ${colors.GreySecondaryText};
   font-size: 14px;
   font-weight: ${fontWeight.Regular};
-  margin: 0 0 8px 0;
+  margin: 0;
 `;
 
 const Input = styled.input`
@@ -113,11 +120,11 @@ const Input = styled.input`
     animation: 0.1s cubic-bezier(0.4, 0, 1, 1) 0s 1 normal none running dtOkaS;
     box-shadow: rgba(90, 40, 250, 0.2) 0px 0px 0px 2px;
   }
-  margin-bottom: 8px;
+  margin-top: 8px;
   width: calc(100% - 30px);
+  max-width: 290px;
   @media ${devices.Desktop} {
-    width: 240px;
-    margin-bottom: inherit;
+    max-width: 240px;
   }
 `;
 
@@ -129,6 +136,7 @@ const Button = styled.button`
   height: 40px;
   font-size: 12px;
   text-transform: uppercase;
+  margin-top: 8px;
   &:hover {
     cursor: pointer;
     background-color: ${colors.PrimaryHover};
