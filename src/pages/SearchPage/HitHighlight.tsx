@@ -59,7 +59,7 @@ const GreenDot = styled(Dot)`
 `;
 
 const GrayDot = styled(Dot)`
-  background-color: ${colors.GrayDot};
+  background-color: ${colors.GreyBackground};
 `;
 
 const StyledTimeClockIcon = styled(TimeClockIcon)`
