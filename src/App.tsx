@@ -6,9 +6,9 @@ import { createBrowserHistory } from "history";
 
 import config from "./config";
 import { colors, devices } from "./ui";
-import { SearchPage } from "./SearchPage";
+import { SearchPage } from "./pages/SearchPage";
 import logo from "./Logo.svg";
-import { AnalysisPage } from "./AnalysisPage";
+import { AnalysisPage } from "./pages/AnalysisPage";
 
 const history = createBrowserHistory();
 
@@ -144,7 +144,6 @@ const SendUsFeedbackLink = styled.a`
   margin-left: auto;
   line-height: 42px;
   text-align: center;
-  display: block;
   padding: 0 17px;
   text-transform: uppercase;
   text-decoration: none;
