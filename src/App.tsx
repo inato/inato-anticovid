@@ -56,11 +56,12 @@ const Root = styled.div`
 `;
 
 const HeaderContainer = styled.div`
-  background: ${colors.SecondaryBackground};
+  background: ${colors.Primary};
+  padding: 32px 0 18px 0;
 
   @media ${devices.Desktop} {
     height: 65px;
-    padding: 0 16px;
+    padding: 0;
   }
 `;
 
@@ -70,6 +71,7 @@ const Header = styled.div`
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
+  height: 100%;
 
   max-width: 1200px;
   margin: auto;
@@ -79,11 +81,11 @@ const Logo = styled.img`
   height: 65px;
   flex-basis: 100%;
   width: 100%; /* FOR IE11*/
-  margin: 32px auto 16px auto;
+  margin: 0 auto 26px auto;
 
   @media ${devices.Desktop} {
+    margin: 0 110px 0 0;
     width: auto;
-    margin: 0 48px 0 0;
     height: auto;
     flex-basis: inherit;
   }
@@ -95,26 +97,36 @@ const Separator = styled.div`
 `;
 
 const HeaderLink = styled(NavLink)`
-  font-size: 16px;
+  font-size: 18px;
   line-height: 20px;
-  height: 100%;
   vertical-align: middle;
-  line-height: 48px;
-  text-transform: uppercase;
-  color: ${colors.GreySecondaryText};
+  position: relative;
+  color: ${colors.SecondaryBackground};
   text-decoration: none;
   box-sizing: border-box;
   text-align: center;
 
   flex-basis: 50%;
 
-  &:hover {
-    border-bottom: 2px solid ${colors.GreySecondaryText};
+  &:after {
+    opacity: 0;
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: ${colors.SecondaryBackground};
+    left: 0;
+    bottom: -10px;
+    transition: opacity 0.2s, bottom 0.2s;
   }
 
+  &:hover,
   &.active {
-    color: ${colors.Primary};
-    border-bottom: 2px solid ${colors.Primary};
+    &:after {
+      border-bottom: 2px solid ${colors.SecondaryBackground};
+      opacity: 1;
+      bottom: -18px;
+    }
   }
 
   &:last-child {
@@ -125,6 +137,11 @@ const HeaderLink = styled(NavLink)`
     margin-right: 33px;
     flex-basis: inherit;
     text-align: inherit;
-    line-height: 65px;
+    &:hover,
+    &.active {
+      &:after {
+        bottom: -22px;
+      }
+    }
   }
 `;

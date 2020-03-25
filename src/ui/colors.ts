@@ -1,5 +1,5 @@
 export enum colors {
-  MainBackground = "#F6F7FA",
+  MainBackground = "#F5F5FA",
   SecondaryBackground = "#FFFFFF",
   LightGreyBackground = "#F9FAFB",
   GreenDot = "#23D7C8",
@@ -7,7 +7,7 @@ export enum colors {
   OrangeText = "#CC9D00",
   BoxShadow = "#e3e5ec",
 
-  Primary = "#5928FA",
+  Primary = "#413078",
   PrimaryHover = "#3C05EA",
 
   SecondaryText = "#647B91",
@@ -15,7 +15,7 @@ export enum colors {
   Separator = "#DCE3E9",
   Border = "#eaedf1",
   GreySecondaryText = "#647B91",
-  DefaultText = "#124469"
+  DefaultText = "#413078"
 }
 
 export enum Semantic {
