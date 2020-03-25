@@ -65,6 +65,12 @@ const Container = styled.div`
     border-left: 8px solid ${colors.GreySecondaryText};
     padding: 16px 32px;
   }
+  & ${Accordion} {
+    margin-top: 8px;
+    :first-of-type {
+      margin-top: 16px;
+    }
+  }
 `;
 
 const Title = styled.h1`
