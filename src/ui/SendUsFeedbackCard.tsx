@@ -23,7 +23,7 @@ const Title = styled.h1`
   padding-bottom: 8px;
 `;
 
-export const SendUsFeedbackCardContainer = styled.div`
+const SendUsFeedbackCardContainer = styled.div`
   background: white;
   display: block;
   padding: 16px;

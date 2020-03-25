@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import ReactGA from "react-ga";
 import { Router, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { createBrowserHistory } from "history";

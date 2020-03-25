@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { colors, fontSize, fontWeight, lineHeight, devices } from "../../ui";
 
 import { Accordion } from "./Accordion";
-import icon from "./laboratory.svg";
 import { LaboratoryIcon } from "./LaboratoryIcon";
 
 export const Introduction = () => (
