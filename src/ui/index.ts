@@ -6,3 +6,4 @@ export * from "./Button";
 export * from "./texts";
 export * from "./Disclaimer";
 export * from "./CTAFooter";
+export * from "./SendUsFeedbackCard";
