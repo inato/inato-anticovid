@@ -35,6 +35,7 @@ export const Button = styled.button`
   font-size: 12px;
   text-transform: uppercase;
   box-sizing: border-box;
+  text-decoration: none;
 
   &:hover {
     cursor: pointer;
