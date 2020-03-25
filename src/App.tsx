@@ -106,7 +106,7 @@ const HeaderLink = styled(NavLink)`
   line-height: 20px;
   vertical-align: middle;
   position: relative;
-  color: ${colors.SecondaryBackground};
+  color: ${colors.HeaderInactiveText};
   text-decoration: none;
   text-align: center;
   border-bottom: 2px solid transparent;
@@ -119,7 +119,7 @@ const HeaderLink = styled(NavLink)`
     content: "";
     width: 100%;
     height: 2px;
-    background-color: ${colors.SecondaryBackground};
+    background-color: ${colors.ButtonText};
     left: 0;
     bottom: -10px;
     transition: opacity 0.2s, bottom 0.2s;
@@ -127,15 +127,12 @@ const HeaderLink = styled(NavLink)`
 
   &:hover,
   &.active {
+    color: ${colors.ButtonText};
     &:after {
-      border-bottom: 2px solid ${colors.SecondaryBackground};
+      border-bottom: 2px solid ${colors.ButtonText};
       opacity: 1;
       bottom: -20px;
     }
-  }
-
-  &:last-child {
-    margin-right: 0;
   }
 
   @media ${devices.Desktop} {
@@ -160,12 +157,11 @@ const SendUsFeedbackLink = styled.a`
   text-transform: uppercase;
   text-decoration: none;
   font-size: 16px;
-  color: ${colors.GreySecondaryText};
+  color: ${colors.ButtonText};
   border-radius: 4px;
 
   &:hover {
-    background-color: ${colors.LightPurpleBackground};
-    color: ${colors.Primary};
+    background-color: ${colors.PrimaryHover};
   }
 
   @media ${devices.Desktop} {
