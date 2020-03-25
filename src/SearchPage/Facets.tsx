@@ -6,6 +6,7 @@ import { colors, devices, Button, fontWeight } from "../ui";
 
 import { ResetFilters } from "./ResetFilters";
 import { FilteringProps } from "./FilteringProps";
+import { FilterTrialsButton } from "./FilterTrialsButton";
 
 export const Facets = ({
   filtering,
@@ -35,7 +36,7 @@ export const Facets = ({
       <Facet attribute="study_type" title="Study Type" showMore />
       <Facet attribute="countries" title="Countries" />
       <Footer>
-        <StyledSeeTrialsButton onClick={closeFiltering} />
+        <FilterTrialsButton onClick={closeFiltering} />
       </Footer>
     </FacetsContainer>
   );
@@ -179,25 +180,4 @@ const Footer = styled.div`
   @media ${devices.Desktop} {
     display: none;
   }
-`;
-
-const formatTrialsString = (nbHits: number) =>
-  nbHits === 1 ? "1 trial" : `${nbHits} trials`;
-const SeeTrialsButton = connectStats(
-  ({
-    nbHits,
-    onClick,
-    className
-  }: {
-    nbHits: number;
-    onClick: () => void;
-    className?: string;
-  }) => (
-    <Button onClick={onClick} className={className}>
-      Filter ({formatTrialsString(nbHits)})
-    </Button>
-  )
-);
-const StyledSeeTrialsButton = styled(SeeTrialsButton)`
-  padding: 0 24px;
 `;
