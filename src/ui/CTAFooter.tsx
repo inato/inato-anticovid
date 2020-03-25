@@ -79,6 +79,15 @@ const Card = styled.div`
 
 const LeftCard = styled(Card)``;
 
+const RightCard = styled(Card)`
+  margin-top: 16px;
+
+  @media ${devices.Tablet} {
+    margin-top: 0;
+    margin-left: 16px;
+  }
+`;
+
 const Title = styled.h1`
   color: ${colors.DefaultText};
   font-size: 14px;

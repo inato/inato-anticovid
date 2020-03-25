@@ -2,7 +2,7 @@ import React from "react";
 import { connectStats } from "react-instantsearch-dom";
 import styled from "styled-components";
 
-import { Button } from "../ui";
+import { Button } from "../../ui";
 
 const formatTrialsString = (nbHits: number) =>
   nbHits === 1 ? "1 trial" : `${nbHits} trials`;
