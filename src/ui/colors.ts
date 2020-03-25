@@ -4,9 +4,10 @@ export enum colors {
   LightGreyBackground = "#F9FAFB",
   LightPurpleBackground = "#F3EFFF",
   GreenDot = "#23D7C8",
-  GrayDot = "#BDC7D1",
+  GreyBackground = "#BDC7D1",
   OrangeText = "#CC9D00",
   BoxShadow = "#e3e5ec",
+  PurpleBoxShadow = "rgba(89, 40, 250, 0.4)",
 
   DarkGray = "#333333",
 

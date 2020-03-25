@@ -7,7 +7,8 @@ import {
   devices,
   fontWeight,
   Newsletter,
-  SubscribeButton
+  SubscribeButton,
+  CheckboxMixin
 } from "../../ui";
 
 import { ResetFilters } from "./ResetFilters";
@@ -103,7 +104,8 @@ const FacetContainer = styled.div`
   }
 
   .ais-RefinementList-checkbox {
-    margin: 0;
+    top: 4px;
+    ${CheckboxMixin}
   }
 
   .ais-RefinementList-showMore {
