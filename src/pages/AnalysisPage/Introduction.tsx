@@ -19,7 +19,7 @@ export const Introduction = () => (
       believe this is critical to optimize resource allocation and address unmet
       needs as fast as possible
     </Paragraph>
-    <Accordion title="Where does the data come from">
+    <Accordion title="Where the data comes from">
       <Paragraph>
         Most of the data comes from public sources that are duly cited in the
         dedicated section of the website. Data is updated every day.
@@ -32,7 +32,7 @@ export const Introduction = () => (
         vaccine or therapeutic trials.
       </Paragraph>
     </Accordion>
-    <Accordion title="Who are we">
+    <Accordion title="Who we are">
       <Paragraph>
         Anticovid is provided by{" "}
         <a href="https://inato.com/" target="_blank" rel="noopener noreferrer">
