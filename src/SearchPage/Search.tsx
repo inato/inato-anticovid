@@ -1,4 +1,4 @@
-import React, { useState, useCallback, createContext } from "react";
+import React, { useState, useCallback } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import algoliasearch from "algoliasearch";
 import {
@@ -39,13 +39,6 @@ const urlToSearchState = (
   location: ReturnType<typeof useHistory>["location"]
 ) => qs.parse(location.search.slice(1));
 
-type FilteringContext = {
-  filtering: boolean;
-  closeFiltering: () => void;
-};
-
-export const filteringContext = createContext<FilteringContext>(null as any); // FIX ME
-
 export const SearchPage = () => {
   const history = useHistory();
   const [searchState, setSearchState] = useState(
@@ -84,26 +77,24 @@ export const SearchPage = () => {
         searchState={searchState}
       >
         <Layout>
-          <filteringContext.Provider value={{ filtering, closeFiltering }}>
-            <Facets />
-            <SearchContainter filtering={filtering}>
-              <StyledSearchBox
-                translations={{
-                  placeholder: "Search by keyword, drug, ..."
-                }}
-              />
-              <StyledStats
-                translations={{
-                  stats(nbHits, timeSpentMS) {
-                    return `${nbHits} trials found`;
-                  }
-                }}
-              />
-              <StyledHits hitComponent={ClinicalTrialHit} />
-              <StyledPagination showFirst={false} padding={2} />
-              <Disclaimer />
-            </SearchContainter>
-          </filteringContext.Provider>
+          <Facets filtering={filtering} closeFiltering={closeFiltering} />
+          <SearchContainter filtering={filtering}>
+            <StyledSearchBox
+              translations={{
+                placeholder: "Search by keyword, drug, ..."
+              }}
+            />
+            <StyledStats
+              translations={{
+                stats(nbHits, timeSpentMS) {
+                  return `${nbHits} trials found`;
+                }
+              }}
+            />
+            <StyledHits hitComponent={ClinicalTrialHit} />
+            <StyledPagination showFirst={false} padding={2} />
+            <Disclaimer />
+          </SearchContainter>
         </Layout>
         <FilterButton
           type="button"

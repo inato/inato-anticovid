@@ -1,15 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
 import { RefinementList, connectStats } from "react-instantsearch-dom";
 import styled from "styled-components";
 
 import { colors, devices, Button, fontWeight } from "../ui";
 
-import { filteringContext } from "./Search";
 import { ResetFilters } from "./ResetFilters";
 import { FilteringProps } from "./FilteringProps";
 
-export const Facets = () => {
-  const { filtering, closeFiltering } = useContext(filteringContext);
+export const Facets = ({
+  filtering,
+  closeFiltering
+}: {
+  filtering: boolean;
+  closeFiltering: () => void;
+}) => {
   return (
     <FacetsContainer filtering={filtering}>
       <Header>
