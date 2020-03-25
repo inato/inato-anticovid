@@ -1,39 +1,48 @@
-# Run locally
+# Functions
 
+## Run locally
 
-## Installation
+### Installation
+
 You will need to use node 10 (use nvm)
 
-
 Make sure you have `firebase` installed and configured:
+
 ```
 $> brew install firebase
 $> firebase login
 ```
 
-## Usage
-
-Configure firebase to use the project you want to use:
+Even though we're running the function locally, firebase requires you to choose an environment. It doesn't really matter which though because it will use a local configuration file.
 
 ```
-$> firebase use staging # to run staging cloud functions
-$> firebase use production # to run production cloud functions
+$> firebase use staging
+# or
+$> firebase use default # production
 ```
 
-Then, you must set the environment variables in a `.runtimeconfig.json` file:
+The local configuration is stored in `.runtimeconfig.json`
 
-```sh
-{
-  "algolia": {
-    "apikey": "***REMOVED***",
-    "tablename": "who_trial_staging",
-    "index": "dev_data"
-  }
-}
-```
+### Usage
 
-Then you can run
+Run:
 
 ```
-yarn shell
+$> yarn shell
+```
+
+It will open a firebase shell in which you can type `uploadToAlgolia()` to run the function.
+
+## Add a new environment variable
+
+First choose the environment you want to add the variable to:
+
+```
+$> firebase use default
+```
+
+Then you can set it:
+
+```
+$> firebase functions:config:set algolia.index=prod_data
 ```

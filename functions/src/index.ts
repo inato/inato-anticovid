@@ -70,7 +70,7 @@ export const uploadToAlgolia = functions
   })
   .https.onRequest(async (request, response) => {
     const client = await setupPostgresClient();
-    const tableName = functions.config().algolia.tablename;
+    const tableName = functions.config().pg.tablename;
     const trialRepository = new PostgresTrialRepository(client, tableName);
 
     const trials = await trialRepository.findAllTrials();

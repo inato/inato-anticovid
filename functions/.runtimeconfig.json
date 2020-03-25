@@ -1,0 +1,9 @@
+{
+  "algolia": {
+    "apikey": "***REMOVED***",
+    "index": "dev_data"
+  },
+  "pg": {
+    "tablename": "who_trial_staging"
+  }
+}
