@@ -48,7 +48,7 @@ const Form = () => {
 
   return (
     <form method="POST" action="#" onSubmit={onSubmit}>
-      <Input type="email" name="email" placeholder="Your email..." />
+      <Input type="email" name="email" placeholder="Your email..." required />
       <Button type="submit">Subscribe</Button>
     </form>
   );
