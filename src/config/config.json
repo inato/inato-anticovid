@@ -2,7 +2,7 @@
   "algolia": {
     "applicationId": "QC98I887KP",
     "publicApiKey": "8675d3f84bdc4dd1412aa3baa1854319",
-    "index": "dev_data"
+    "index": "prod_data"
   },
   "ga": {
     "id": null
