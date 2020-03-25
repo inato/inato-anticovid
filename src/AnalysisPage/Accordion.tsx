@@ -7,39 +7,42 @@ import { colors } from "../ui";
 
 type AccordionProps = {
   title: string;
+  className?: string;
 };
 
-export const Accordion: React.FunctionComponent<AccordionProps> = props => {
-  const [isActive, setActive] = useState("");
-  const [height, setHeight] = useState("0px");
+export const Accordion = styled(
+  (props: React.PropsWithChildren<AccordionProps>) => {
+    const [isActive, setActive] = useState("");
+    const [height, setHeight] = useState("0px");
 
-  const accordionContent = useRef(null);
+    const accordionContent = useRef(null);
 
-  function toggleAccordion() {
-    setActive(isActive === "" ? "active" : "");
-    // eslint-disable-next-line
-    // @ts-ignore
-    const contentHeight = accordionContent.current.scrollHeight;
-    setHeight(isActive === "active" ? "0px" : `${contentHeight}px`);
+    function toggleAccordion() {
+      setActive(isActive === "" ? "active" : "");
+      // eslint-disable-next-line
+      // @ts-ignore
+      const contentHeight = accordionContent.current.scrollHeight;
+      setHeight(isActive === "active" ? "0px" : `${contentHeight}px`);
+    }
+
+    return (
+      <AccordionSection className={props.className}>
+        <TitleContainer>
+          <ClickableContainer onClick={toggleAccordion}>
+            {isActive ? <StyledArrowDownIcon /> : <StyledArrowRightIcon />}
+            <AccordionTitle>{props.title}</AccordionTitle>
+          </ClickableContainer>
+        </TitleContainer>
+        <AccordionContent
+          ref={accordionContent}
+          style={{ maxHeight: `${height}` }}
+        >
+          {props.children}
+        </AccordionContent>
+      </AccordionSection>
+    );
   }
-
-  return (
-    <AccordionSection>
-      <TitleContainer>
-        <ClickableContainer onClick={toggleAccordion}>
-          {isActive ? <StyledArrowDownIcon /> : <StyledArrowRightIcon />}
-          <AccordionTitle>{props.title}</AccordionTitle>
-        </ClickableContainer>
-      </TitleContainer>
-      <AccordionContent
-        ref={accordionContent}
-        style={{ maxHeight: `${height}` }}
-      >
-        {props.children}
-      </AccordionContent>
-    </AccordionSection>
-  );
-};
+)``;
 
 const AccordionSection = styled.div``;
 
@@ -58,7 +61,6 @@ const AccordionTitle = styled.div`
 `;
 
 const TitleContainer = styled.div`
-  margin-top: 16px;
   display: flex;
   justify-content: flex-start;
 `;
