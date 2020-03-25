@@ -136,6 +136,14 @@ const FacetContainer = styled.div`
 
 const FacetsContainer = styled.div``;
 
+const StyledNewsletter = styled(Newsletter)`
+  display: none;
+
+  @media ${devices.Desktop} {
+    display: inherit;
+  }
+`;
+
 const LeftPanel = styled.div<FilteringProps>`
   align-self: flex-start;
   min-width: 265px;
@@ -147,7 +155,7 @@ const LeftPanel = styled.div<FilteringProps>`
   width: 100%;
   z-index: 2;
 
-  > div {
+  ${FacetsContainer}, ${StyledNewsletter} {
     background: ${colors.SecondaryBackground};
     padding: 16px 16px 80px 16px;
     border: 1px solid ${colors.Border};
@@ -155,7 +163,7 @@ const LeftPanel = styled.div<FilteringProps>`
     border-radius: 4px;
   }
 
-  > div:not(:last-child) {
+  ${FacetsContainer} {
     margin-bottom: 16px;
   }
 
@@ -167,18 +175,10 @@ const LeftPanel = styled.div<FilteringProps>`
     width: auto;
     z-index: 0;
 
-    > div {
+    ${FacetsContainer}, ${StyledNewsletter} {
       margin-right: 32px;
       padding: 16px;
     }
-  }
-`;
-
-const StyledNewsletter = styled(Newsletter)`
-  display: none;
-
-  @media ${devices.Desktop} {
-    display: inherit;
   }
 `;
 

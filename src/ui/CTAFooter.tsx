@@ -18,10 +18,8 @@ export const CTAFooter = ({ className }: { className?: string }) => (
   </Container>
 );
 
-// we need to use the className in order to override style later on
-// see: https://github.com/styled-components/styled-components/issues/8#issuecomment-262276155
-export const Newsletter = (props: { className?: string }) => (
-  <LeftCard className={props.className}>
+export const Newsletter = ({ className }: { className?: string }) => (
+  <LeftCard className={className}>
     <Title>Stay updated with new analysis</Title>
     <Paragraph>No spam, at most twice a week, unsubscribe anytime</Paragraph>
     <Form />
