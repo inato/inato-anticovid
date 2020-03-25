@@ -98,7 +98,7 @@ const Separator = styled.div`
   height: 1px;
 `;
 
-const linkMixin = css`
+const HeaderLink = styled(NavLink)`
   display: block;
   font-size: 16px;
   height: 100%;
@@ -130,10 +130,6 @@ const linkMixin = css`
     text-align: inherit;
     line-height: 63px;
   }
-`;
-
-const HeaderLink = styled(NavLink)`
-  ${linkMixin}
 `;
 
 const SendUsFeedbackLink = styled.a`
