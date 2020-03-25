@@ -30,7 +30,9 @@ export default function App() {
       <Router history={history}>
         <HeaderContainer>
           <Header>
-            <Logo src={logo} alt="Inato Anti-Covid Logo" />
+            <LogoLink to="/">
+              <img src={logo} alt="Inato Anti-Covid Logo" />
+            </LogoLink>
             <HeaderLink to="/analysis">Analysis</HeaderLink>
             <HeaderLink to="/search">Search trials</HeaderLink>
             <SendUsFeedbackLink href={config.feedbackUrl}>
@@ -78,15 +80,18 @@ const Header = styled.div`
 
   max-width: 1200px;
   margin: auto;
-  padding: 0 16px;
+  @media ${devices.Desktop} {
+    padding: 0 16px;
+  }
 `;
 
-const Logo = styled.img`
+const LogoLink = styled(NavLink)`
   height: 65px;
   display: block;
   flex-basis: 100%;
   width: 100%; /* FOR IE11*/
   margin: 0 auto 26px auto;
+  text-align: center;
 
   @media ${devices.Desktop} {
     margin: 0 110px 0 0;
@@ -137,6 +142,7 @@ const HeaderLink = styled(NavLink)`
 
   @media ${devices.Desktop} {
     margin-right: 33px;
+    padding: 0 8px;
     flex-basis: inherit;
     text-align: inherit;
     &:hover,

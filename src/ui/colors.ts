@@ -12,13 +12,15 @@ export enum colors {
   PrimaryHover = "#726798",
 
   ButtonText = "#FFFFFF",
+  ButtonHoverShadow = "#b2a6d8",
   HeaderInactiveText = "#DADAE7",
   SecondaryText = "#647B91",
 
   Separator = "#DCE3E9",
   Border = "#eaedf1",
   GreySecondaryText = "#647B91",
-  DefaultText = "#413078"
+  DefaultText = "#413078",
+  DefaultTextHover = "#9E9EB4"
 }
 
 export enum Semantic {

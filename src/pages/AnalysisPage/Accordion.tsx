@@ -49,6 +49,7 @@ const AccordionSection = styled.div``;
 const arrowIconsStyle = css`
   margin-right: 4px;
   transition-duration: 150ms;
+  stroke: ${colors.DefaultText};
 `;
 const StyledArrowDownIcon = styled(ArrowDownIcon)`
   ${arrowIconsStyle};
@@ -72,15 +73,15 @@ const ClickableContainer = styled.div`
   cursor: pointer;
   :hover {
     ${AccordionTitle} {
-      color: ${colors.GreySecondaryText};
+      color: ${colors.DefaultTextHover};
     }
     ${StyledArrowDownIcon} {
-      stroke: ${colors.GreySecondaryText};
+      stroke: ${colors.DefaultTextHover};
     }
     ${StyledArrowRightIcon} {
       margin-left: 2px;
       margin-right: 2px;
-      stroke: ${colors.GreySecondaryText};
+      stroke: ${colors.DefaultTextHover};
     }
   }
 `;
