@@ -2,7 +2,7 @@ import React from "react";
 import { RefinementList, connectStats } from "react-instantsearch-dom";
 import styled from "styled-components";
 
-import { colors, devices, Button, fontWeight } from "../ui";
+import { colors, devices, Button, fontWeight, Newsletter } from "../ui";
 
 import { ResetFilters } from "./ResetFilters";
 import { FilteringProps } from "./FilteringProps";
@@ -16,29 +16,35 @@ export const Facets = ({
   closeFiltering: () => void;
 }) => {
   return (
-    <FacetsContainer filtering={filtering}>
-      <Header>
-        Filters
-        <ResetFilters />
-      </Header>
-      <Facet attribute="recruitment_status" title="Recruitment Status" />
-      <Facet
-        attribute="therapeutic_classes"
-        title="Therapeutic Classes"
-        searchable
-        showMore
-      />
-      <Facet attribute="clinical_outcome_extracted_" title="Clinical Outcome" />
-      <Facet
-        attribute="surrogate_outcome_extracted_"
-        title="Surrogate Outcome"
-      />
-      <Facet attribute="study_type" title="Study Type" showMore />
-      <Facet attribute="countries" title="Countries" />
-      <Footer>
-        <FilterTrialsButton onClick={closeFiltering} />
-      </Footer>
-    </FacetsContainer>
+    <LeftPanel filtering={filtering}>
+      <FacetsContainer>
+        <Header>
+          Filters
+          <ResetFilters />
+        </Header>
+        <Facet attribute="recruitment_status" title="Recruitment Status" />
+        <Facet
+          attribute="therapeutic_classes"
+          title="Therapeutic Classes"
+          searchable
+          showMore
+        />
+        <Facet
+          attribute="clinical_outcome_extracted_"
+          title="Clinical Outcome"
+        />
+        <Facet
+          attribute="surrogate_outcome_extracted_"
+          title="Surrogate Outcome"
+        />
+        <Facet attribute="study_type" title="Study Type" showMore />
+        <Facet attribute="countries" title="Countries" />
+        <Footer>
+          <FilterTrialsButton onClick={closeFiltering} />
+        </Footer>
+      </FacetsContainer>
+      <StyledNewsletter />
+    </LeftPanel>
   );
 };
 
@@ -128,14 +134,19 @@ const FacetContainer = styled.div`
   }
 `;
 
-const FacetsContainer = styled.div<FilteringProps>`
+const FacetsContainer = styled.div``;
+
+const StyledNewsletter = styled(Newsletter)`
+  display: none;
+
+  @media ${devices.Desktop} {
+    display: inherit;
+  }
+`;
+
+const LeftPanel = styled.div<FilteringProps>`
   align-self: flex-start;
   min-width: 265px;
-  background: ${colors.SecondaryBackground};
-  padding: 16px 16px 80px 16px;
-  border: 1px solid ${colors.Border};
-  box-sizing: border-box;
-  border-radius: 4px;
 
   display: ${({ filtering }) => (filtering ? undefined : "none")};
   position: absolute;
@@ -143,6 +154,19 @@ const FacetsContainer = styled.div<FilteringProps>`
   left: 0;
   width: 100%;
   z-index: 2;
+
+  ${FacetsContainer}, ${StyledNewsletter} {
+    background: ${colors.SecondaryBackground};
+    padding: 16px 16px 80px 16px;
+    border: 1px solid ${colors.Border};
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
+
+  ${FacetsContainer} {
+    margin-bottom: 16px;
+  }
+
   @media ${devices.Desktop} {
     display: initial;
     position: initial;
@@ -150,9 +174,11 @@ const FacetsContainer = styled.div<FilteringProps>`
     left: auto;
     width: auto;
     z-index: 0;
-    margin-bottom: 8px;
-    margin-right: 32px;
-    padding: 16px;
+
+    ${FacetsContainer}, ${StyledNewsletter} {
+      margin-right: 32px;
+      padding: 16px;
+    }
   }
 `;
 
