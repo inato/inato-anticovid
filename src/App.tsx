@@ -28,11 +28,13 @@ export default function App() {
   return (
     <Root>
       <Router history={history}>
-        <Header>
-          <Logo src={logo} alt="Inato Anti-Covid Logo" />
-          <HeaderLink to="/analysis">Analysis</HeaderLink>
-          <HeaderLink to="/search">Search trials</HeaderLink>
-        </Header>
+        <HeaderContainer>
+          <Header>
+            <Logo src={logo} alt="Inato Anti-Covid Logo" />
+            <HeaderLink to="/analysis">Analysis</HeaderLink>
+            <HeaderLink to="/search">Search trials</HeaderLink>
+          </Header>
+        </HeaderContainer>
         <Separator />
         <Switch>
           <Route exact path="/analysis">
@@ -53,19 +55,24 @@ const Root = styled.div`
   height: 100%;
 `;
 
+const HeaderContainer = styled.div`
+  background: ${colors.SecondaryBackground};
+
+  @media ${devices.Desktop} {
+    height: 65px;
+    padding: 0 16px;
+  }
+`;
+
 const Header = styled.div`
   display: flex;
-  background: ${colors.SecondaryBackground};
-  padding: 0 10vw;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
 
-  @media ${devices.Desktop} {
-    height: 65px;
-    padding: 0 120px;
-  }
+  max-width: 1200px;
+  margin: auto;
 `;
 
 const Logo = styled.img`
@@ -99,7 +106,7 @@ const HeaderLink = styled(NavLink)`
   box-sizing: border-box;
   text-align: center;
 
-  flex-grow: 1;
+  flex-basis: 50%;
 
   &:hover {
     border-bottom: 2px solid ${colors.GreySecondaryText};
@@ -116,9 +123,7 @@ const HeaderLink = styled(NavLink)`
 
   @media ${devices.Desktop} {
     margin-right: 33px;
-    padding-left: 10vw;
-    padding-left: 0;
-    flex-grow: inherit;
+    flex-basis: inherit;
     text-align: inherit;
     line-height: 65px;
   }
