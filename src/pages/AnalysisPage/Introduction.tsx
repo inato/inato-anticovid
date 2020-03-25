@@ -94,6 +94,7 @@ const TextContainer = styled.div`
 `;
 
 const Title = styled.h1`
+  font-family: Lora, Georgia;
   font-size: ${fontSize.Medium};
   font-weight: ${fontWeight.SemiBold};
   line-height: ${lineHeight.Big};
