@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ReactGA from "react-ga";
 import { Router, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import config from "./config";
 import { colors, devices } from "./ui";
-import { SearchPage } from "./SearchPage";
+import { SearchPage } from "./pages/SearchPage";
 import logo from "./Logo.svg";
-import { AnalysisPage } from "./AnalysisPage";
+import { AnalysisPage } from "./pages/AnalysisPage";
 
 const history = createBrowserHistory();
 
@@ -33,6 +33,9 @@ export default function App() {
             <Logo src={logo} alt="Inato Anti-Covid Logo" />
             <HeaderLink to="/analysis">Analysis</HeaderLink>
             <HeaderLink to="/search">Search trials</HeaderLink>
+            <SendUsFeedbackLink href={config.feedbackUrl}>
+              Send us feedback
+            </SendUsFeedbackLink>
           </Header>
         </HeaderContainer>
         <Separator />
@@ -77,6 +80,7 @@ const Header = styled.div`
 
 const Logo = styled.img`
   height: 65px;
+  display: block;
   flex-basis: 100%;
   width: 100%; /* FOR IE11*/
   margin: 32px auto 16px auto;
@@ -95,16 +99,15 @@ const Separator = styled.div`
 `;
 
 const HeaderLink = styled(NavLink)`
+  display: block;
   font-size: 16px;
-  line-height: 20px;
   height: 100%;
-  vertical-align: middle;
   line-height: 48px;
   text-transform: uppercase;
   color: ${colors.GreySecondaryText};
   text-decoration: none;
-  box-sizing: border-box;
   text-align: center;
+  border-bottom: 2px solid transparent;
 
   flex-basis: 50%;
 
@@ -125,6 +128,28 @@ const HeaderLink = styled(NavLink)`
     margin-right: 33px;
     flex-basis: inherit;
     text-align: inherit;
-    line-height: 65px;
+    line-height: 63px;
+  }
+`;
+
+const SendUsFeedbackLink = styled.a`
+  display: none;
+  margin-left: auto;
+  line-height: 42px;
+  text-align: center;
+  padding: 0 17px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 16px;
+  color: ${colors.GreySecondaryText};
+  border-radius: 4px;
+
+  &:hover {
+    background-color: ${colors.LightPurpleBackground};
+    color: ${colors.Primary};
+  }
+
+  @media ${devices.Desktop} {
+    display: block;
   }
 `;

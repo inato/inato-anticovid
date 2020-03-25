@@ -2,6 +2,7 @@ export enum colors {
   MainBackground = "#F6F7FA",
   SecondaryBackground = "#FFFFFF",
   LightGreyBackground = "#F9FAFB",
+  LightPurpleBackground = "#F3EFFF",
   GreenDot = "#23D7C8",
   GrayDot = "#BDC7D1",
   OrangeText = "#CC9D00",

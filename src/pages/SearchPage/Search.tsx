@@ -12,9 +12,16 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import qs from "qs";
 
-import { colors, devices, Button, fontWeight, Disclaimer } from "../ui";
-import config from "../config";
-import { useBoolean } from "../hooks";
+import {
+  colors,
+  devices,
+  SearchButton,
+  fontWeight,
+  Disclaimer,
+  SendUsFeedbackCard
+} from "../../ui";
+import config from "../../config";
+import { useBoolean } from "../../hooks";
 
 import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
@@ -93,6 +100,7 @@ export const SearchPage = () => {
             />
             <StyledHits hitComponent={ClinicalTrialHit} />
             <StyledPagination showFirst={false} padding={2} />
+            <StyledSendUsFeedbackCard />
             <Disclaimer />
           </SearchContainter>
         </Layout>
@@ -110,6 +118,14 @@ export const SearchPage = () => {
     </Container>
   );
 };
+
+const StyledSendUsFeedbackCard = styled(SendUsFeedbackCard)`
+  margin-top: 56px;
+
+  @media ${devices.Desktop} {
+    display: none;
+  }
+`;
 
 const Container = styled.div`
   padding: 32px 16px;
@@ -176,7 +192,7 @@ const StyledHits = styled(Hits)`
 `;
 
 const StyledPagination = styled(Pagination)`
-  padding: 24px 0;
+  margin-top: 24px;
   .ais-Pagination-link {
     color: ${colors.Primary};
     border-color: ${colors.Separator};
@@ -187,7 +203,7 @@ const StyledPagination = styled(Pagination)`
   }
 `;
 
-const FilterButton = styled(Button)`
+const FilterButton = styled(SearchButton)`
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
   left: 50%;
   position: fixed;

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import TableauReport from "tableau-react";
 
-import { devices, Disclaimer, CTAFooter } from "../ui";
+import { Disclaimer, CTAFooter, SendUsFeedbackCard, devices } from "../../ui";
 
 import { Introduction } from "./Introduction";
 
@@ -13,6 +13,7 @@ export const AnalysisPage = () => (
   <Container>
     <Introduction />
     <TableauReport url={TableauURL} />
+    <StyledSendUsFeedbackCard />
     <StyledCTAFooter />
     <Disclaimer />
   </Container>
@@ -28,6 +29,14 @@ const Container = styled.div`
   }
   > div {
     border-radius: 4px;
+  }
+`;
+
+const StyledSendUsFeedbackCard = styled(SendUsFeedbackCard)`
+  margin-top: 16px;
+
+  @media ${devices.Desktop} {
+    display: none;
   }
 `;
 
