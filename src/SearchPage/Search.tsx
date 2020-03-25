@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, createContext } from "react";
+import React, { useState, useCallback, createContext } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import algoliasearch from "algoliasearch";
 import {
@@ -14,6 +14,7 @@ import qs from "qs";
 
 import { colors, devices, Button, fontWeight, Disclaimer } from "../ui";
 import config from "../config";
+import { useBoolean } from "../hooks";
 
 import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
@@ -37,24 +38,6 @@ const searchStateToUrl = (
 const urlToSearchState = (
   location: ReturnType<typeof useHistory>["location"]
 ) => qs.parse(location.search.slice(1));
-
-const useBoolean = (initialValue: boolean) => {
-  const [isTrue, setState] = useState(() => initialValue);
-  const setToTrue = useCallback(() => setState(() => true), []);
-  const setToFalse = useCallback(() => setState(() => false), []);
-  const toggle = useCallback(() => setState(prev => !prev), []);
-
-  return useMemo(
-    () => ({
-      isTrue,
-      isFalse: !isTrue,
-      setToTrue,
-      setToFalse,
-      toggle
-    }),
-    [isTrue, setToFalse, setToTrue, toggle]
-  );
-};
 
 type FilteringContext = {
   filtering: boolean;
