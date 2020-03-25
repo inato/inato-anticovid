@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import config from "../config";
+
 import { LinkButton } from "./Button";
 import { fontWeight } from "./texts";
 import { colors } from "./colors";
@@ -9,7 +11,7 @@ import { devices } from "./media";
 export const SendUsFeedbackCard = ({ className }: { className?: string }) => (
   <SendUsFeedbackCardContainer className={className}>
     <Title>Any questions or comments?</Title>
-    <LinkButton>Send us feedback</LinkButton>
+    <LinkButton href={config.feedbackUrl}>Send us feedback</LinkButton>
   </SendUsFeedbackCardContainer>
 );
 
