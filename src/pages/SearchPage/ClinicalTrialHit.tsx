@@ -72,7 +72,7 @@ const RightContainer = styled.div`
 `;
 
 const TitleContainer = styled.div`
-  color: ${colors.DefaultText};
+  color: ${colors.DarkGray};
   margin-right: 64px;
   font-size: 16px;
   font-weight: 500;

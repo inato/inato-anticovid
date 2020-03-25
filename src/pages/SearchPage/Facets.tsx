@@ -5,9 +5,9 @@ import styled from "styled-components";
 import {
   colors,
   devices,
-  SearchButton,
   fontWeight,
-  Newsletter
+  Newsletter,
+  SubscribeButton
 } from "../../ui";
 
 import { ResetFilters } from "./ResetFilters";
@@ -81,6 +81,7 @@ const Facet = ({
 
 const FacetContainer = styled.div`
   padding-bottom: 24px;
+  color: ${colors.DarkGray};
 
   h3 {
     margin: 0;
@@ -145,6 +146,10 @@ const FacetsContainer = styled.div``;
 const StyledNewsletter = styled(Newsletter)`
   display: none;
 
+  ${SubscribeButton} {
+    margin-top: 8px;
+  }
+
   @media ${devices.Desktop} {
     display: inherit;
   }
@@ -189,7 +194,7 @@ const LeftPanel = styled.div<FilteringProps>`
 `;
 
 const Header = styled.div`
-  color: ${colors.DefaultText};
+  color: ${colors.Primary};
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;

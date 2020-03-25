@@ -162,7 +162,7 @@ const StyledStats = styled(Stats)`
     font-size: 16px;
     line-height: 24px;
     font-weight: 500;
-    color: ${colors.DefaultText};
+    color: ${colors.Primary};
   }
 `;
 
