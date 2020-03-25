@@ -5,3 +5,4 @@ export * from "./media";
 export * from "./Button";
 export * from "./texts";
 export * from "./Disclaimer";
+export * from "./CTAFooter";
