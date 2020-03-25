@@ -2,7 +2,13 @@ import React from "react";
 import { RefinementList, connectStats } from "react-instantsearch-dom";
 import styled from "styled-components";
 
-import { colors, devices, Button, fontWeight, Newsletter } from "../ui";
+import {
+  colors,
+  devices,
+  SearchButton,
+  fontWeight,
+  Newsletter
+} from "../../ui";
 
 import { ResetFilters } from "./ResetFilters";
 import { FilteringProps } from "./FilteringProps";

@@ -2,7 +2,7 @@ import React from "react";
 import { connectCurrentRefinements } from "react-instantsearch-dom";
 import styled from "styled-components";
 
-import { UndoIcon, colors } from "../ui";
+import { UndoIcon, colors } from "../../ui";
 
 const ResetFiltersComponent = ({ items, refine, className }: any) => (
   <button

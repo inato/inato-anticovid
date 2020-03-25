@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { format } from "date-fns";
 
-import { colors, TimeClockIcon } from "../ui";
+import { colors, TimeClockIcon } from "../../ui";
 
 export const TrialStatus = ({ value }: { value: string | null }) => (
   <HitHighlightContainer>
