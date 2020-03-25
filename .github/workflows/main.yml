@@ -7,67 +7,78 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        name: Checkout code
       - uses: actions/setup-node@master
+        name: Setup node
         with:
           node-version: "10.x"
       - id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - uses: actions/cache@v1
+        name: Cache dependencies
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - run: yarn install --frozen-lockfile && cd functions && yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile --prefer-offline && cd functions && yarn install --frozen-lockfile --prefer-offline
+        name: Install dependencies
       - run: yarn lint
+        name: Lint app
       - run: yarn test --watchAll=false --passWithNoTests
+        name: Test app
       - run: cd functions && yarn lint
+        name: Lint functions
       - run: cd functions && yarn test
+        name: Test functions
   deploy:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
     steps:
       - uses: actions/checkout@v2
+        name: Checkout code
       - uses: actions/setup-node@master
+        name: Setup node
         with:
           node-version: "10.x"
       - id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - uses: actions/cache@v1
         id: yarn-cache
+        name: Cache dependencies
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - run: cd functions && yarn install
-      - run: yarn install
+      - run: yarn install --frozen-lockfile --prefer-offline && cd functions && yarn install --frozen-lockfile --prefer-offline
+        name: Install dependencies
       - if: github.ref == 'refs/heads/staging'
         run: cp src/config/config.staging.json src/config/config.json
+        name: Set staging configuration
       - if: github.ref == 'refs/heads/master'
         run: cp src/config/config.prod.json src/config/config.json
+        name: Set production configuration
       - run: yarn build
+        name: Build the app
       - uses: w9jds/firebase-action@master
+        name: Use firebase production environment
         if: github.ref == 'refs/heads/master'
         with:
           args: use default
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - uses: w9jds/firebase-action@master
+        name: Set firebase staging environment
         if: github.ref == 'refs/heads/staging'
         with:
           args: use staging
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - uses: w9jds/firebase-action@master
-        if: github.ref == 'master'
-        with:
-          args: use default
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      - uses: w9jds/firebase-action@master
+        name: Deploy to firebase
         with:
           args: deploy
         env:
