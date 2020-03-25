@@ -9,8 +9,10 @@ export enum colors {
   BoxShadow = "#e3e5ec",
 
   Primary = "#413078",
-  PrimaryHover = "#3C05EA",
+  PrimaryHover = "#726798",
 
+  ButtonText = "#FFFFFF",
+  HeaderInactiveText = "#DADAE7",
   SecondaryText = "#647B91",
 
   Separator = "#DCE3E9",
@@ -26,10 +28,10 @@ export enum Semantic {
 
 export const semanticColors: Record<Semantic, colors> = {
   [Semantic.primary]: colors.Primary,
-  [Semantic.neutral]: colors.SecondaryBackground
+  [Semantic.neutral]: colors.ButtonText
 };
 
 export const semanticTextColors: Record<Semantic, colors> = {
-  [Semantic.primary]: colors.SecondaryBackground,
+  [Semantic.primary]: colors.ButtonText,
   [Semantic.neutral]: colors.Primary
 };
