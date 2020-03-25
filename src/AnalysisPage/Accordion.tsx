@@ -48,6 +48,7 @@ const AccordionSection = styled.div``;
 
 const arrowIconsStyle = css`
   margin-right: 4px;
+  transition-duration: 150ms;
 `;
 const StyledArrowDownIcon = styled(ArrowDownIcon)`
   ${arrowIconsStyle};
