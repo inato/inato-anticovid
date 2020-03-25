@@ -20,17 +20,15 @@ export const AnalysisPage = () => (
 );
 
 const Container = styled.div`
-  padding: 32px;
+  padding: 32px 16px;
+  max-width: 1200px;
+  margin: auto;
 
   > div:not(:last-child) {
     margin-bottom: 16px;
   }
   > div {
     border-radius: 4px;
-  }
-
-  @media ${devices.Desktop} {
-    padding: 32px 120px;
   }
 `;
 

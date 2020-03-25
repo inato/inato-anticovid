@@ -138,11 +138,9 @@ export const SearchPage = () => {
 };
 
 const Container = styled.div`
-  padding: 32px 10vw;
+  padding: 32px 16px;
   max-width: 1200px;
-  @media ${devices.Desktop} {
-    padding: 32px 120px;
-  }
+  margin: auto;
 `;
 
 const StyledSearchBox = styled(SearchBox)`
@@ -160,6 +158,7 @@ const StyledSearchBox = styled(SearchBox)`
     }
   }
 
+  width: 100%;
   @media ${devices.Desktop} {
     width: 50%;
     min-width: 500px;
@@ -200,8 +199,6 @@ const StyledHits = styled(Hits)`
     border: none;
     box-shadow: none;
   }
-
-  max-width: 80vw;
 `;
 
 const StyledPagination = styled(Pagination)`
