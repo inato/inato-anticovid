@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { colors, devices } from "../ui";
+import { colors, devices } from "../../ui";
 
 import {
   TrialStatus,

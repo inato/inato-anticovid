@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ReactGA from "react-ga";
 import { Router, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import config from "./config";
 import { colors, devices } from "./ui";
-import { SearchPage } from "./SearchPage";
+import { SearchPage } from "./pages/SearchPage";
 import logo from "./Logo.svg";
-import { AnalysisPage } from "./AnalysisPage";
+import { AnalysisPage } from "./pages/AnalysisPage";
 
 const history = createBrowserHistory();
 
@@ -33,6 +33,9 @@ export default function App() {
             <Logo src={logo} alt="Inato Anti-Covid Logo" />
             <HeaderLink to="/analysis">Analysis</HeaderLink>
             <HeaderLink to="/search">Search trials</HeaderLink>
+            <SendUsFeedbackLink href={config.feedbackUrl}>
+              Send us feedback
+            </SendUsFeedbackLink>
           </Header>
         </HeaderContainer>
         <Separator />
@@ -75,10 +78,12 @@ const Header = styled.div`
 
   max-width: 1200px;
   margin: auto;
+  padding: 0 16px;
 `;
 
 const Logo = styled.img`
   height: 65px;
+  display: block;
   flex-basis: 100%;
   width: 100%; /* FOR IE11*/
   margin: 0 auto 26px auto;
@@ -103,8 +108,8 @@ const HeaderLink = styled(NavLink)`
   position: relative;
   color: ${colors.SecondaryBackground};
   text-decoration: none;
-  box-sizing: border-box;
   text-align: center;
+  border-bottom: 2px solid transparent;
 
   flex-basis: 50%;
 
@@ -125,7 +130,7 @@ const HeaderLink = styled(NavLink)`
     &:after {
       border-bottom: 2px solid ${colors.SecondaryBackground};
       opacity: 1;
-      bottom: -18px;
+      bottom: -20px;
     }
   }
 
@@ -140,8 +145,30 @@ const HeaderLink = styled(NavLink)`
     &:hover,
     &.active {
       &:after {
-        bottom: -22px;
+        bottom: -23px;
       }
     }
+  }
+`;
+
+const SendUsFeedbackLink = styled.a`
+  display: none;
+  margin-left: auto;
+  line-height: 42px;
+  text-align: center;
+  padding: 0 17px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 16px;
+  color: ${colors.GreySecondaryText};
+  border-radius: 4px;
+
+  &:hover {
+    background-color: ${colors.LightPurpleBackground};
+    color: ${colors.Primary};
+  }
+
+  @media ${devices.Desktop} {
+    display: block;
   }
 `;

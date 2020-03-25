@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 import config from "../config";
 
-import { colors, devices, fontWeight } from ".";
+import { colors, devices, fontWeight, Button } from ".";
 
 export const CTAFooter = ({ className }: { className?: string }) => (
   <Container className={className}>
@@ -123,22 +123,6 @@ const Input = styled.input`
   max-width: 290px;
   @media ${devices.Desktop} {
     max-width: 240px;
-  }
-`;
-
-const Button = styled.button`
-  border-radius: 4px;
-  padding: 8px 16px;
-  color: ${colors.SecondaryBackground};
-  background-color: ${colors.Primary};
-  height: 40px;
-  font-size: 12px;
-  text-transform: uppercase;
-  margin-top: 8px;
-  &:hover {
-    cursor: pointer;
-    background-color: ${colors.PrimaryHover};
-    box-shadow: rgba(60, 5, 234, 0.2) 0px 0px 0px 2px;
   }
 `;
 

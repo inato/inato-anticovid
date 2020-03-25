@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { colors, fontSize, fontWeight, lineHeight, devices } from "../ui";
+import { colors, fontSize, fontWeight, lineHeight, devices } from "../../ui";
 
 import { Accordion } from "./Accordion";
 
