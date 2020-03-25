@@ -81,6 +81,7 @@ const Facet = ({
 
 const FacetContainer = styled.div`
   padding-bottom: 24px;
+  color: ${colors.DarkGray};
 
   h3 {
     margin: 0;
@@ -193,7 +194,7 @@ const LeftPanel = styled.div<FilteringProps>`
 `;
 
 const Header = styled.div`
-  color: ${colors.DefaultText};
+  color: ${colors.Primary};
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;

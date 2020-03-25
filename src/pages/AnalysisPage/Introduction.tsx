@@ -1,14 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import {
-  colors,
-  fontSize,
-  fontWeight,
-  lineHeight,
-  devices,
-  H1
-} from "../../ui";
+import { colors, fontSize, fontWeight, lineHeight, devices } from "../../ui";
 
 import { Accordion } from "./Accordion";
 import { LaboratoryIcon } from "./LaboratoryIcon";
@@ -99,8 +92,9 @@ const TextContainer = styled.div`
   }
 `;
 
-const Title = styled(H1)`
+const Title = styled.h1`
   font-family: Lora, Georgia;
+  color: ${colors.Primary};
   font-size: ${fontSize.Medium};
   font-weight: ${fontWeight.SemiBold};
   line-height: ${lineHeight.Big};

@@ -8,6 +8,8 @@ export enum colors {
   OrangeText = "#CC9D00",
   BoxShadow = "#e3e5ec",
 
+  DarkGray = "#333333",
+
   Primary = "#413078",
   PrimaryHover = "#726798",
 
