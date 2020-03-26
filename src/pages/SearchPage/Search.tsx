@@ -93,7 +93,7 @@ export const SearchPage = () => {
             />
             <StyledStats
               translations={{
-                stats(nbHits, timeSpentMS) {
+                stats(nbHits) {
                   return `${nbHits} trials found`;
                 }
               }}

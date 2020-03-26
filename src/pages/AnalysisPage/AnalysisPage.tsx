@@ -7,9 +7,7 @@ import {
   CTAFooter,
   SendUsFeedbackCard,
   devices,
-  colors,
-  fontSize,
-  fontWeight
+  colors
 } from "../../ui";
 import { useBoolean } from "../../hooks";
 import config from "../../config";
