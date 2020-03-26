@@ -15,4 +15,10 @@ export class AlgoliaIndexingService implements IndexingService {
       }
     );
   }
+
+  async setSearchableAttributes(attributes: Array<string> ) {
+      await this.algoliaIndex.setSettings({
+          searchableAttributes: attributes
+      });
+  }
 }

@@ -29,3 +29,4 @@ export const uploadToAlgolia = functions
     await client.end();
     response.send(`Indexed ${trialsCount} trials`);
   });
+

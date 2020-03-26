@@ -9,7 +9,7 @@ describe("refreshTrialIndex", () => {
         return Promise.resolve(trials);
       }
     };
-    const indexingService = {
+    const indexingService: any = {
       indexTrials: jest.fn()
     };
     await refreshTrialIndex({ trialRepository, indexingService });
