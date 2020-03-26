@@ -88,7 +88,7 @@ export const SearchPage = () => {
           <SearchContainter filtering={filtering}>
             <StyledSearchBox
               translations={{
-                placeholder: "Search by keyword, drug, ..."
+                placeholder: "Search by keyword, drug, NCTID, ..."
               }}
             />
             <StyledStats
