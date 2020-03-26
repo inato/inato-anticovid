@@ -10,7 +10,7 @@ describe("serialize", () => {
       webAddress: "web_address",
       recruitmentStatus: "recruitment_status",
       therapeuticClasses: ["therapeutic_classes"],
-      dateRegistration3: date
+      registrationDate: date
     });
     expect(serialize(trial)).toStrictEqual({
       exclusion_criteria: "",

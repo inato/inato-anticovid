@@ -4,7 +4,7 @@ interface TrialConstructorArgs {
   webAddress: string;
   recruitmentStatus: string | null;
   therapeuticClasses: Array<string>;
-  dateRegistration3: Date;
+  registrationDate: Date;
   rest: any;
 }
 
@@ -14,7 +14,7 @@ export class Trial {
   public readonly webAddress: string;
   public readonly recruitmentStatus: string | null;
   public readonly therapeuticClasses: Array<string>;
-  public readonly dateRegistration3: Date;
+  public readonly registrationDate: Date;
   public readonly rest: any;
 
   constructor({
@@ -23,7 +23,7 @@ export class Trial {
     webAddress,
     recruitmentStatus,
     therapeuticClasses,
-    dateRegistration3,
+    registrationDate,
     rest
   }: TrialConstructorArgs) {
     this.trialId = trialId;
@@ -31,7 +31,7 @@ export class Trial {
     this.webAddress = webAddress;
     this.recruitmentStatus = recruitmentStatus;
     this.therapeuticClasses = therapeuticClasses;
-    this.dateRegistration3 = dateRegistration3;
+    this.registrationDate = registrationDate;
     this.rest = rest;
   }
 }

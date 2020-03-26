@@ -6,7 +6,7 @@ export const trialFactory = ({
   webAddress = "webAddress",
   recruitmentStatus = "recruitmentStatus",
   therapeuticClasses = ["therapeuticClass"],
-  dateRegistration3 = new Date(),
+  registrationDate = new Date(),
   rest = {}
 }: Partial<{
   trialId: string;
@@ -14,7 +14,7 @@ export const trialFactory = ({
   webAddress: string;
   recruitmentStatus: string | null;
   therapeuticClasses: Array<string>;
-  dateRegistration3: Date;
+  registrationDate: Date;
   rest: Object;
 }>) =>
   new Trial({
@@ -23,6 +23,6 @@ export const trialFactory = ({
     webAddress,
     recruitmentStatus,
     therapeuticClasses,
-    dateRegistration3,
+    registrationDate,
     rest
   });
