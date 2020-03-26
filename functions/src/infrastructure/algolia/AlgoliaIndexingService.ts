@@ -7,13 +7,14 @@ export class AlgoliaIndexingService implements IndexingService {
   constructor(private readonly algoliaIndex: SearchIndex) {}
 
   async indexTrials(trials: Array<Trial>) {
-    await this.algoliaIndex.replaceAllObjects(
+    const result = await this.algoliaIndex.replaceAllObjects(
       trials.map(trial => serialize(trial)),
       {
         safe: true,
         batchSize: 50
       }
     );
+    return result.objectIDs;
   }
 
   async setSearchableAttributes(attributes: Array<string>) {
