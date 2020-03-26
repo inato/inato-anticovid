@@ -1,14 +1,12 @@
 import { refreshTrialIndex } from "./refreshTrialIndex";
-import { trialFactory } from "./domain";
+import { trialFactory, trialRepositoryFactory } from "./domain";
 
 describe("refreshTrialIndex", () => {
   it("should index all trials found in the repository", async () => {
     const trials = [trialFactory()];
-    const trialRepository = {
-      findAllTrials() {
-        return Promise.resolve(trials);
-      }
-    };
+    const trialRepository = trialRepositoryFactory({
+      findAllTrials: () => Promise.resolve(trials)
+    });
     const indexingService: any = {
       indexTrials: jest.fn()
     };
