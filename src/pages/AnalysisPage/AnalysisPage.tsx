@@ -12,7 +12,13 @@ const TableauURL =
 export const AnalysisPage = () => (
   <Container>
     <Introduction />
-    <TableauReport url={TableauURL} />
+    <TableauReport
+      url={TableauURL}
+      options={{
+        width: "100%",
+        height: "100%"
+      }}
+    />
     <StyledSendUsFeedbackCard />
     <StyledCTAFooter />
     <Disclaimer />
@@ -29,6 +35,9 @@ const Container = styled.div`
   }
   > div {
     border-radius: 4px;
+  }
+  > div:nth-child(2) {
+    height: 827px;
   }
 `;
 
