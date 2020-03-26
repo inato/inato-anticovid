@@ -1,5 +1,6 @@
 import { refreshTrialIndex } from "./refreshTrialIndex";
 import { trialFactory, trialRepositoryFactory } from "./domain";
+import { indexingServiceFactory } from "./application";
 
 describe("refreshTrialIndex", () => {
   it("should index all trials found in the repository", async () => {
@@ -7,10 +8,11 @@ describe("refreshTrialIndex", () => {
     const trialRepository = trialRepositoryFactory({
       findAllTrials: () => Promise.resolve(trials)
     });
-    const indexingService: any = {
-      indexTrials: jest.fn()
-    };
+    const indexTrials = jest.fn();
+    const indexingService = indexingServiceFactory({
+      indexTrials
+    });
     await refreshTrialIndex({ trialRepository, indexingService });
-    expect(indexingService.indexTrials).toHaveBeenCalledWith(trials);
+    expect(indexTrials).toHaveBeenCalledWith(trials);
   });
 });
