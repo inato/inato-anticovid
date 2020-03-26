@@ -1,5 +1,5 @@
 import React from "react";
-import { RefinementList, connectStats } from "react-instantsearch-dom";
+import { RefinementList } from "react-instantsearch-dom";
 import styled from "styled-components";
 
 import {
