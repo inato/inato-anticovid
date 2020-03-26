@@ -1,18 +1,18 @@
-import { Trial } from "./domain";
 import { refreshTrialIndex } from "./refreshTrialIndex";
+import { trialFactory } from "./domain";
 
 describe("refreshTrialIndex", () => {
-  it("should index all trials found in the repository", () => {
+  it("should index all trials found in the repository", async () => {
+    const trials = [trialFactory()];
     const trialRepository = {
       findAllTrials() {
-        return Promise.resolve([]);
+        return Promise.resolve(trials);
       }
     };
     const indexingService = {
-      indexTrials(trials: Array<Trial>) {
-        return Promise.resolve();
-      }
+      indexTrials: jest.fn()
     };
-    expect(refreshTrialIndex({ trialRepository, indexingService }));
+    await refreshTrialIndex({ trialRepository, indexingService });
+    expect(indexingService.indexTrials).toHaveBeenCalledWith(trials);
   });
 });
