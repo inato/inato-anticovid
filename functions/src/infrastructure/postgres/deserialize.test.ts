@@ -19,8 +19,8 @@ describe("deserialize", () => {
       study_design: "study_design"
     };
     const trial = deserialize(row);
-    expect(trial.trialid).toBe("trialid");
-    expect(trial.web_address).toBe("web_address");
+    expect(trial.trialId).toBe("trialid");
+    expect(trial.webAddress).toBe("web_address");
     expect(trial.rest).toStrictEqual({
       trialid: "trialid",
       public_title: "public_title",

@@ -75,7 +75,7 @@ export const uploadToAlgolia = functions
 
     const trials = await trialRepository.findAllTrials();
     const trialsCount = trials.length;
-    console.log(`Found ${trials.length}`);
+    console.log(`Found ${trialsCount} trials`);
 
     const algoliaIndex = setupAlgoliaIndex();
 

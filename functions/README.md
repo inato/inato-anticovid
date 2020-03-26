@@ -9,7 +9,7 @@ You will need to use node 10 (use nvm)
 Make sure you have `firebase` installed and configured:
 
 ```
-$> brew install firebase
+$> brew install firebase-cli
 $> firebase login
 ```
 

@@ -3,18 +3,18 @@ import * as decod from "decod";
 
 export const deserialize = (row: unknown): Trial => {
   const trialMandatoryProps = decod.props({
-    trialid: decod.at(["trialid"], decod.string),
-    public_title: decod.at(["public_title"], decod.string),
-    web_address: decod.at(["web_address"], decod.string),
-    recruitment_status: decod.at(
+    trialId: decod.at(["trialid"], decod.string),
+    publicTitle: decod.at(["public_title"], decod.string),
+    webAddress: decod.at(["web_address"], decod.string),
+    recruitmentStatus: decod.at(
       ["recruitment_status"],
       decod.nullable(decod.string)
     ),
-    therapeutic_classes: decod.at(
+    therapeuticClasses: decod.at(
       ["therapeutic_classes"],
       decod.array(decod.string)
     ),
-    date_registration3: decod.at(["date_registration3"], decod.date)
+    registrationDate: decod.at(["date_registration3"], decod.date)
   })(row);
 
   return new Trial({
