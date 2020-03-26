@@ -2,28 +2,54 @@ import React from "react";
 import styled from "styled-components";
 import TableauReport from "tableau-react";
 
-import { Disclaimer, CTAFooter, SendUsFeedbackCard, devices } from "../../ui";
+import {
+  Disclaimer,
+  CTAFooter,
+  SendUsFeedbackCard,
+  devices,
+  colors,
+  fontSize,
+  fontWeight
+} from "../../ui";
+import { useBoolean } from "../../hooks";
 
 import { Introduction } from "./Introduction";
+import { Title } from "./Title";
 
 const TableauURL =
   "https://public.tableau.com/views/Who_15849588323430/ClinicalResearchforCOVID-19";
 
-export const AnalysisPage = () => (
-  <Container>
-    <Introduction />
-    <TableauReport
-      url={TableauURL}
-      options={{
-        width: "100%",
-        height: "100%"
-      }}
-    />
-    <StyledSendUsFeedbackCard />
-    <StyledCTAFooter />
-    <Disclaimer />
-  </Container>
-);
+export const AnalysisPage = () => {
+  const {
+    setToTrue: displayTableauTitle,
+    isTrue: isTableauTitleDisplayed
+  } = useBoolean(false);
+
+  return (
+    <Container>
+      <Introduction />
+      <TableauContainer>
+        {isTableauTitleDisplayed && (
+          <StyledTitle>
+            Clinical research for <UnbreakableWord>Covid-19</UnbreakableWord>
+          </StyledTitle>
+        )}
+
+        <TableauReport
+          url={TableauURL}
+          options={{
+            width: "100%",
+            height: "100%",
+            onFirstVizSizeKnown: displayTableauTitle
+          }}
+        />
+      </TableauContainer>
+      <StyledSendUsFeedbackCard />
+      <StyledCTAFooter />
+      <Disclaimer />
+    </Container>
+  );
+};
 
 const Container = styled.div`
   padding: 32px 16px;
@@ -36,9 +62,26 @@ const Container = styled.div`
   > div {
     border-radius: 4px;
   }
-  > div:nth-child(2) {
+`;
+
+const TableauContainer = styled.div`
+  > div {
     height: 827px;
   }
+`;
+
+const StyledTitle = styled(Title)`
+  background-color: ${colors.SecondaryBackground};
+  margin: 0;
+  padding: 16px 16px 0 16px;
+
+  @media ${devices.Desktop} {
+    padding: 16px 32px 0 32px;
+  }
+`;
+
+const UnbreakableWord = styled.span`
+  white-space: nowrap;
 `;
 
 const StyledSendUsFeedbackCard = styled(SendUsFeedbackCard)`

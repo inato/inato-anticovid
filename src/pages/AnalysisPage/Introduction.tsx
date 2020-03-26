@@ -5,11 +5,12 @@ import { colors, fontSize, fontWeight, lineHeight, devices } from "../../ui";
 
 import { Accordion } from "./Accordion";
 import { LaboratoryIcon } from "./LaboratoryIcon";
+import { Title } from "./Title";
 
 export const Introduction = () => (
   <Container>
     <TextContainer>
-      <Title>What is Anticovid?</Title>
+      <StyledTitle>What is Anticovid?</StyledTitle>
       <Paragraph>
         Anticovid is an open access platform gathering virtually all available
         information in a transparent manner regarding clinical research
@@ -92,17 +93,8 @@ const TextContainer = styled.div`
   }
 `;
 
-const Title = styled.h1`
-  font-family: Lora, Georgia;
-  color: ${colors.Primary};
-  font-size: ${fontSize.Medium};
-  font-weight: ${fontWeight.SemiBold};
-  line-height: ${lineHeight.Big};
+const StyledTitle = styled(Title)`
   margin: 0 0 4px 0;
-
-  @media ${devices.Desktop} {
-    font-size: ${fontSize.Big};
-  }
 `;
 
 const Paragraph = styled.p`
