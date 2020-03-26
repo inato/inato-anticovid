@@ -12,12 +12,10 @@ import {
   fontWeight
 } from "../../ui";
 import { useBoolean } from "../../hooks";
+import config from "../../config";
 
 import { Introduction } from "./Introduction";
 import { Title } from "./Title";
-
-const TableauURL =
-  "https://public.tableau.com/views/Who_15849588323430/ClinicalResearchforCOVID-19";
 
 export const AnalysisPage = () => {
   const {
@@ -36,7 +34,7 @@ export const AnalysisPage = () => {
         )}
 
         <TableauReport
-          url={TableauURL}
+          url={config.TableauUrl}
           options={{
             width: "100%",
             height: "100%",
