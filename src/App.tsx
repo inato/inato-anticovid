@@ -122,12 +122,16 @@ const HeaderLink = styled(NavLink)`
     opacity: 0;
     position: absolute;
     content: "";
-    width: 100%;
+    width: 0;
     height: 2px;
     background-color: ${colors.ButtonText};
     left: 0;
     bottom: -10px;
     transition: opacity 0.2s, bottom 0.2s;
+  }
+
+  &:hover::after {
+    width: 100%;
   }
 
   &:hover,
@@ -137,6 +141,7 @@ const HeaderLink = styled(NavLink)`
       border-bottom: 2px solid ${colors.ButtonText};
       opacity: 1;
       bottom: -20px;
+      width: 100%;
     }
   }
 
