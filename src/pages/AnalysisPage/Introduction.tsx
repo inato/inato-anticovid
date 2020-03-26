@@ -112,6 +112,7 @@ const Paragraph = styled.p`
 const IconContainer = styled.div`
   display: flex;
   align-self: center;
+  min-width: 250px; /* For IE11. Without it, the icon is not displayed on small screens */
   @media ${devices.Desktop} {
     align-self: flex-end;
     width: 100%;
