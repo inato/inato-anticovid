@@ -25,8 +25,6 @@ export const uploadToAlgolia = functions
       indexingService,
       trialRepository
     });
-    console.log("Replaced all objects");
     await client.end();
     response.send(`Indexed ${trialsCount} trials`);
   });
-

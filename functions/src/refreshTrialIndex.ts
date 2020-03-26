@@ -9,9 +9,7 @@ export const refreshTrialIndex = async ({
   trialRepository: TrialRepository;
 }) => {
   const trials = await trialRepository.findAllTrials();
-  const trialsCount = trials.length;
-  console.log(`Found ${trialsCount} trials`);
-
-  await indexingService.indexTrials(trials);
-  return trialsCount;
+  console.log(`Found ${trials.length} trials`);
+  const indexedObjectIds = await indexingService.indexTrials(trials);
+  return indexedObjectIds.length;
 };
