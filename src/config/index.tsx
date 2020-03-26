@@ -5,4 +5,5 @@ export default config as {
   ga: { id: string | null };
   emailSubscribeHookUrl: string;
   feedbackUrl: string;
+  TableauUrl: string;
 };

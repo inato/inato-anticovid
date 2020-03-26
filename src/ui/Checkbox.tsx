@@ -1,6 +1,5 @@
 import * as React from "react";
 import { keyframes, css } from "styled-components";
-import { renderToStaticMarkup } from "react-dom/server";
 
 import { colors } from "./colors";
 
