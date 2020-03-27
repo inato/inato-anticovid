@@ -10,20 +10,21 @@ import { Title } from "./Title";
 export const Introduction = () => (
   <Container>
     <TextContainer>
-      <StyledTitle>What is Anticovid?</StyledTitle>
+      <StyledTitle>What is anticovid?</StyledTitle>
       <Paragraph>
-        Anticovid is an open access platform gathering virtually all available
-        information in a transparent manner regarding clinical research
-        worldwide against SARS-CoV 2 (which is the virus responsible for
-        COVID-19).
+        Anticovid is an open access platform which gathers all available
+        information regarding global clinical trials for SARS-CoV 2 (the virus
+        responsible for COVID-19).
       </Paragraph>
       <Paragraph>
-        The purpose of Anticovid is to provide access to helpful information to
-        the global healthcare community, in a constantly evolving landscape. We
-        believe this is critical to optimize resource allocation and address
-        unmet needs as fast as possible
+        The purpose of Anticovid is to help the global healthcare community
+        access essential and comprehensive COVID-19 trial information and
+        research trends. Given that the research landscape is evolving at an
+        unprecedented pace, this pooling of information is critical for
+        optimizing resource allocation, and addressing unmet needs as quickly as
+        possible.
       </Paragraph>
-      <Accordion title="Where does the data come from">
+      <Accordion title="Where the data comes from">
         <Paragraph>
           Most of the data comes from public sources that are duly cited in the
           dedicated section of the website. Data is updated every day.
@@ -36,7 +37,7 @@ export const Introduction = () => (
           vaccine or therapeutic trials.
         </Paragraph>
       </Accordion>
-      <Accordion title="Who are we">
+      <Accordion title="Who we are">
         <Paragraph>
           Anticovid is provided by{" "}
           <a
