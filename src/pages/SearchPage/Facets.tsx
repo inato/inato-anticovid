@@ -116,6 +116,10 @@ const FacetContainer = styled.div`
     font-weight: ${fontWeight.SemiBold};
     margin: 0;
     padding: 0;
+
+    &.ais-RefinementList-showMore--disabled {
+      display: none;
+    }
   }
 
   .ais-RefinementList-count {
