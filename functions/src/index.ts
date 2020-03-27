@@ -1,9 +1,12 @@
 import * as functions from "firebase-functions";
 
-import { setupPostgresClient, PostgresTrialRepository } from "./infrastructure";
-import { AlgoliaIndexingService } from "./infrastructure/algolia/AlgoliaIndexingService";
-import { refreshTrialIndex } from "./refreshTrialIndex";
-import { setupAlgoliaIndex } from "./infrastructure/algolia/setupAlgoliaIndex";
+import {
+  setupPostgresClient,
+  PostgresTrialRepository,
+  AlgoliaIndexingService,
+  setupAlgoliaIndex
+} from "./infrastructure";
+import { refreshTrialIndex } from "./application";
 
 export const uploadToAlgolia = functions
   .runWith({
@@ -49,6 +52,7 @@ export const setAlgoliaSettings = functions.https.onRequest(
         "clinical_outcome_extracted_",
         "countries",
         "recruitment_status",
+        "registration_timestamp",
         "study_type",
         "surrogate_outcome_extracted_",
         "searchable(therapeutic_classes)"

@@ -1,4 +1,4 @@
-import { Trial } from "../domain";
+import { Trial } from "../../domain";
 
 export interface IndexingService {
   indexTrials(trials: Array<Trial>): Promise<readonly string[]>;

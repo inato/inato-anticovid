@@ -1,2 +1,2 @@
-export * from "./IndexingService";
-export * from "./indexingServiceFactory";
+export * from "./services";
+export * from "./usecases";
