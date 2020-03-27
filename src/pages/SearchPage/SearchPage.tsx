@@ -76,6 +76,10 @@ export const SearchPage = () => {
     setToTrue: openFiltering
   } = useBoolean(false);
 
+  const [defaultRefinementState, setDefaultRefinementState] = useState({
+    name: "Initial Search Suggestion"
+  });
+
   return (
     <Container>
       <InstantSearch
@@ -85,14 +89,20 @@ export const SearchPage = () => {
         searchState={searchState}
       >
         <Layout>
-          <Facets filtering={filtering} closeFiltering={closeFiltering} />
+          <Facets
+            defaultRefinementState={defaultRefinementState}
+            filtering={filtering}
+            closeFiltering={closeFiltering}
+          />
           <SearchContainter filtering={filtering}>
             <StyledSearchBox
               translations={{
                 placeholder: "Search by keyword, drug, NCTID, ..."
               }}
             />
-            <SearchSuggestions />
+            <SearchSuggestions
+              setDefaultRefinementState={setDefaultRefinementState}
+            />
             <StyledStats
               translations={{
                 stats(nbHits) {

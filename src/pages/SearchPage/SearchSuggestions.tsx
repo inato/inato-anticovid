@@ -7,18 +7,23 @@ import { colors } from "../../ui";
 
 const searchSuggestionCollection = "suggestions";
 
-interface Suggestion {
+export interface SearchSuggestion {
   name: string;
-  study_type: Array<string>;
+  study_type?: Array<string>;
+  recruitment_status?: Array<string>;
 }
 
-export const SearchSuggestions = () => {
-  const [searchSuggestions, setSearchSuggestions] = useState<Array<Suggestion>>(
-    []
-  );
+export const SearchSuggestions = ({
+  setDefaultRefinementState
+}: {
+  setDefaultRefinementState: (s: SearchSuggestion) => void;
+}) => {
+  const [searchSuggestions, setSearchSuggestions] = useState<
+    Array<SearchSuggestion>
+  >([]);
 
   useEffect(() => {
-    const suggestions: Array<Suggestion> = [];
+    const suggestions: Array<SearchSuggestion> = [];
     const fetchSuggestions = async () => {
       const app = initializeApp(config.firebase);
       const docs = await app
@@ -29,7 +34,7 @@ export const SearchSuggestions = () => {
         suggestions.push({
           ...suggestion.data(),
           name: suggestion.id
-        } as Suggestion)
+        } as SearchSuggestion)
       );
       setSearchSuggestions(suggestions);
     };
@@ -39,9 +44,12 @@ export const SearchSuggestions = () => {
   return (
     <Container>
       <SecondaryText>or try our suggestions: </SecondaryText>
-      {searchSuggestions.map((s, index) => (
-        <Suggestion>
-          {s.name}
+      {searchSuggestions.map((searchSuggestion, index) => (
+        <Suggestion
+          key={searchSuggestion.name}
+          onClick={() => setDefaultRefinementState(searchSuggestion)}
+        >
+          {searchSuggestion.name}
           {index < searchSuggestions.length - 1 ? "," : null}{" "}
         </Suggestion>
       ))}
