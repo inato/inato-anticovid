@@ -7,9 +7,13 @@ describe("AlgoliaIndexingService", () => {
         setSettings: jest.fn()
       };
       const indexingService = new AlgoliaIndexingService(indexMock);
-      await indexingService.setSearchableAttributes(["attribute1"]);
+      await indexingService.setSettings({
+        searchableAttributes: ["attribute1"],
+        attributesForFaceting: []
+      });
       expect(indexMock.setSettings).toHaveBeenCalledWith({
-        searchableAttributes: ["attribute1"]
+        searchableAttributes: ["attribute1"],
+        attributesForFaceting: []
       });
     });
   });

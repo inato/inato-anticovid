@@ -17,9 +17,16 @@ export class AlgoliaIndexingService implements IndexingService {
     return result.objectIDs;
   }
 
-  async setSearchableAttributes(attributes: Array<string>) {
+  async setSettings({
+    searchableAttributes,
+    attributesForFaceting
+  }: {
+    searchableAttributes: ReadonlyArray<string>;
+    attributesForFaceting: ReadonlyArray<string>;
+  }) {
     await this.algoliaIndex.setSettings({
-      searchableAttributes: attributes
+      searchableAttributes,
+      attributesForFaceting
     });
   }
 }
