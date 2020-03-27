@@ -66,6 +66,7 @@
     "postcss-safe-parser": "4.0.1",
     "prettier": "^1.19.1",
     "qs": "^6.9.2",
+    "rc-slider": "^9.2.4",
     "react": "^16.13.0",
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.0",
@@ -171,5 +172,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "@types/rc-slider": "^8.6.5"
   }
 }
