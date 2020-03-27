@@ -27,6 +27,7 @@ import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
 import { FilteringProps } from "./FilteringProps";
 import icon from "./Filter.svg";
+import { SearchSuggestions } from "./SearchSuggestions";
 
 const DEBOUNCE_SET_SEARCH_IN_MS = 1000;
 
@@ -91,6 +92,7 @@ export const SearchPage = () => {
                 placeholder: "Search by keyword, drug, NCTID, ..."
               }}
             />
+            <SearchSuggestions />
             <StyledStats
               translations={{
                 stats(nbHits) {
