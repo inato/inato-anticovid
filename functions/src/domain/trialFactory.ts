@@ -16,7 +16,7 @@ export const trialFactory = ({
   therapeuticClasses: Array<string>;
   registrationDate: Date;
   rest: Object;
-}>) =>
+}> = {}) =>
   new Trial({
     trialId,
     publicTitle,
