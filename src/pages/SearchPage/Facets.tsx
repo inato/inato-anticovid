@@ -185,8 +185,8 @@ const LeftPanel = styled.div<FilteringProps>`
   }
 
   @media ${devices.Desktop} {
-    display: initial;
-    position: initial;
+    display: block;
+    position: static;
     top: auto;
     left: auto;
     width: auto;

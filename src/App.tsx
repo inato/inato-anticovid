@@ -57,7 +57,7 @@ export default function App() {
 
 const Root = styled.div`
   background: ${colors.MainBackground};
-  height: 100%;
+  min-height: 100vh;
 `;
 
 const HeaderContainer = styled.div`
