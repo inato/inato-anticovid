@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from "react";
-import { useDebouncedCallback } from "use-debounce";
+import React, { useCallback } from "react";
 import algoliasearch from "algoliasearch";
 import {
   InstantSearch,
@@ -29,8 +28,6 @@ import { FilteringProps } from "./FilteringProps";
 import icon from "./Filter.svg";
 import { SearchSuggestions } from "./SearchSuggestions";
 
-const DEBOUNCE_SET_SEARCH_IN_MS = 1000;
-
 const searchClient = algoliasearch(
   config.algolia.applicationId,
   config.algolia.publicApiKey
@@ -38,7 +35,7 @@ const searchClient = algoliasearch(
 
 const createURL = (state: unknown) => `?${qs.stringify(state)}`;
 
-const searchStateToUrl = (
+export const searchStateToUrl = (
   location: ReturnType<typeof useHistory>["location"],
   searchState: unknown
 ) => (searchState ? `${location.pathname}${createURL(searchState)}` : "");
@@ -49,25 +46,16 @@ const urlToSearchState = (
 
 export const SearchPage = () => {
   const history = useHistory();
-  const [searchState, setSearchState] = useState(
-    urlToSearchState(history.location)
-  );
-  const [onSearchStateChangeDebounced] = useDebouncedCallback(
+  const searchState = urlToSearchState(history.location);
+
+  const onSearchStateChange = useCallback(
     (searchState: unknown) => {
       history.replace(
         searchStateToUrl(history.location, searchState),
         searchState as any
       );
     },
-    DEBOUNCE_SET_SEARCH_IN_MS
-  );
-
-  const onSearchStateChange = useCallback(
-    (searchState: unknown) => {
-      setSearchState(searchState);
-      onSearchStateChangeDebounced(searchState);
-    },
-    [onSearchStateChangeDebounced]
+    [history]
   );
 
   const {
@@ -75,10 +63,6 @@ export const SearchPage = () => {
     setToFalse: closeFiltering,
     setToTrue: openFiltering
   } = useBoolean(false);
-
-  const [defaultRefinementState, setDefaultRefinementState] = useState({
-    name: "Initial Search Suggestion"
-  });
 
   return (
     <Container>
@@ -89,20 +73,14 @@ export const SearchPage = () => {
         searchState={searchState}
       >
         <Layout>
-          <Facets
-            defaultRefinementState={defaultRefinementState}
-            filtering={filtering}
-            closeFiltering={closeFiltering}
-          />
+          <Facets filtering={filtering} closeFiltering={closeFiltering} />
           <SearchContainter filtering={filtering}>
             <StyledSearchBox
               translations={{
                 placeholder: "Search by keyword, drug, NCTID, ..."
               }}
             />
-            <SearchSuggestions
-              setDefaultRefinementState={setDefaultRefinementState}
-            />
+            <SearchSuggestions />
             <StyledStats
               translations={{
                 stats(nbHits) {

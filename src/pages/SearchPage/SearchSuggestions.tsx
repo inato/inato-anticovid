@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { initializeApp } from "firebase";
 import styled from "styled-components";
+import { Link, useHistory } from "react-router-dom";
 
 import config from "../../config";
 import { colors } from "../../ui";
+
+import { searchStateToUrl } from "./SearchPage";
 
 const searchSuggestionCollection = "suggestions";
 
@@ -13,11 +16,7 @@ export interface SearchSuggestion {
   recruitment_status?: Array<string>;
 }
 
-export const SearchSuggestions = ({
-  setDefaultRefinementState
-}: {
-  setDefaultRefinementState: (s: SearchSuggestion) => void;
-}) => {
+export const SearchSuggestions = () => {
   const [searchSuggestions, setSearchSuggestions] = useState<
     Array<SearchSuggestion>
   >([]);
@@ -41,23 +40,29 @@ export const SearchSuggestions = ({
     fetchSuggestions();
   }, []);
 
-  return (
+  const history = useHistory();
+
+  return searchSuggestions.length > 0 ? (
     <Container>
       <SecondaryText>or try our suggestions: </SecondaryText>
       {searchSuggestions.map((searchSuggestion, index) => (
         <Suggestion
+          to={searchStateToUrl(history.location, {
+            refinementList: searchSuggestion
+          })}
           key={searchSuggestion.name}
-          onClick={() => setDefaultRefinementState(searchSuggestion)}
         >
           {searchSuggestion.name}
           {index < searchSuggestions.length - 1 ? "," : null}{" "}
         </Suggestion>
       ))}
     </Container>
-  );
+  ) : null;
 };
 
-const Suggestion = styled.button`
+const Suggestion = styled(Link)`
+  display: inline-block;
+  text-decoration: none;
   padding: 2px;
   color: ${colors.Primary};
   border: none;
