@@ -1,12 +1,6 @@
 import React, { useCallback } from "react";
 import algoliasearch from "algoliasearch";
-import {
-  InstantSearch,
-  SearchBox,
-  Hits,
-  Stats,
-  Pagination
-} from "react-instantsearch-dom";
+import { InstantSearch, SearchBox, Stats } from "react-instantsearch-dom";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import qs from "qs";
@@ -23,10 +17,10 @@ import config from "../../config";
 import { useBoolean } from "../../hooks";
 
 import { Facets } from "./Facets";
-import { ClinicalTrialHit } from "./ClinicalTrialHit";
 import { FilteringProps } from "./FilteringProps";
 import icon from "./Filter.svg";
 import { SearchSuggestions } from "./SearchSuggestions";
+import { SearchResults } from "./SearchResults";
 
 const searchClient = algoliasearch(
   config.algolia.applicationId,
@@ -88,8 +82,7 @@ export const SearchPage = () => {
                 }
               }}
             />
-            <StyledHits hitComponent={ClinicalTrialHit} />
-            <StyledPagination showFirst={false} padding={2} />
+            <SearchResults />
             <StyledSendUsFeedbackCard />
             <Disclaimer />
           </SearchContainter>
@@ -148,6 +141,8 @@ const StyledSearchBox = styled(SearchBox)`
 const StyledStats = styled(Stats)`
   padding-top: 18px;
 
+  margin-bottom: 24px;
+
   .ais-Stats-text {
     font-size: 16px;
     line-height: 24px;
@@ -163,34 +158,6 @@ const Layout = styled.div`
 const SearchContainter = styled.div<FilteringProps>`
   width: 100%; /* for IE11 */
   display: ${({ filtering }) => (filtering ? "none" : undefined)};
-`;
-
-const StyledHits = styled(Hits)`
-  .ais-Hits-list {
-    margin: 0;
-    margin-top: 24px;
-  }
-
-  .ais-Hits-item {
-    margin: 0;
-    margin-bottom: 8px;
-    padding: 0;
-    width: 100%;
-    border: none;
-    box-shadow: none;
-  }
-`;
-
-const StyledPagination = styled(Pagination)`
-  margin-top: 24px;
-  .ais-Pagination-link {
-    color: ${colors.Primary};
-    border-color: ${colors.Separator};
-  }
-  .ais-Pagination-link--selected {
-    color: ${colors.SecondaryBackground};
-    background: ${colors.Primary};
-  }
 `;
 
 const FilterButton = styled(SearchButton)`
