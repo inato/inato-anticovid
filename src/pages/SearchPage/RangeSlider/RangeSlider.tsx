@@ -1,6 +1,8 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { connectRange } from "react-instantsearch-dom";
-import { Range } from "rc-slider";
+import { Range, createSliderWithTooltip } from "rc-slider";
+import styled from "styled-components";
+import { format } from "date-fns";
 
 import { colors } from "../../../ui";
 
@@ -16,6 +18,18 @@ interface Props {
   refine: (refinement: Refinement) => void;
   canRefine: boolean;
 }
+
+const RangeWithTooltip = createSliderWithTooltip(Range);
+
+const RangeContainer = styled.div`
+  margin-top: 35px;
+
+  .rc-slider-tooltip {
+    background-color: none;
+  }
+`;
+
+const formatTip = (timestamp: number) => format(new Date(timestamp), "LLL d");
 
 const computeValue = (currentRefinement: Refinement) =>
   currentRefinement.min && currentRefinement.max
@@ -45,18 +59,21 @@ export const RangeSlider = connectRange(
     );
 
     return (
-      <Range
-        min={min}
-        max={max}
-        value={value}
-        onAfterChange={handlAfterChange}
-        onChange={handlChange}
-        trackStyle={[{ backgroundColor: colors.Primary }]}
-        handleStyle={[
-          { borderColor: colors.Primary, boxShadow: "none" },
-          { borderColor: colors.Primary, boxShadow: "none" }
-        ]}
-      />
+      <RangeContainer>
+        <RangeWithTooltip
+          min={min}
+          max={max}
+          value={value}
+          onAfterChange={handlAfterChange}
+          onChange={handlChange}
+          trackStyle={[{ backgroundColor: colors.Primary }]}
+          handleStyle={[
+            { borderColor: colors.Primary, boxShadow: "none" },
+            { borderColor: colors.Primary, boxShadow: "none" }
+          ]}
+          tipFormatter={formatTip}
+        />
+      </RangeContainer>
     );
   }
 );
