@@ -1,7 +1,7 @@
 import { AlgoliaIndexingService } from "./AlgoliaIndexingService";
 
 describe("AlgoliaIndexingService", () => {
-  describe("setSearchableAttributes", () => {
+  describe("setSettings", () => {
     it("should call setSettings index method", async () => {
       const indexMock: any = {
         setSettings: jest.fn()
