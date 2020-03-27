@@ -6,7 +6,8 @@ import {
   SearchBox,
   Hits,
   Stats,
-  Pagination
+  Pagination,
+  connectStats
 } from "react-instantsearch-dom";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -27,6 +28,7 @@ import { Facets } from "./Facets";
 import { ClinicalTrialHit } from "./ClinicalTrialHit";
 import { FilteringProps } from "./FilteringProps";
 import icon from "./Filter.svg";
+import { EmptyResults } from "./EmptyResults";
 
 const DEBOUNCE_SET_SEARCH_IN_MS = 1000;
 
@@ -98,8 +100,7 @@ export const SearchPage = () => {
                 }
               }}
             />
-            <StyledHits hitComponent={ClinicalTrialHit} />
-            <StyledPagination showFirst={false} padding={2} />
+            <SearchResults />
             <StyledSendUsFeedbackCard />
             <Disclaimer />
           </SearchContainter>
@@ -118,6 +119,17 @@ export const SearchPage = () => {
     </Container>
   );
 };
+
+const SearchResults = connectStats(({ nbHits }: { nbHits: number }) =>
+  nbHits === 0 ? (
+    <EmptyResults />
+  ) : (
+    <>
+      <StyledHits hitComponent={ClinicalTrialHit} />
+      <StyledPagination showFirst={false} padding={2} />
+    </>
+  )
+);
 
 const StyledSendUsFeedbackCard = styled(SendUsFeedbackCard)`
   margin-top: 56px;
@@ -158,6 +170,8 @@ const StyledSearchBox = styled(SearchBox)`
 const StyledStats = styled(Stats)`
   padding-top: 18px;
 
+  margin-bottom: 24px;
+
   .ais-Stats-text {
     font-size: 16px;
     line-height: 24px;
@@ -178,7 +192,6 @@ const SearchContainter = styled.div<FilteringProps>`
 const StyledHits = styled(Hits)`
   .ais-Hits-list {
     margin: 0;
-    margin-top: 24px;
   }
 
   .ais-Hits-item {
