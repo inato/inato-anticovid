@@ -1,6 +1,7 @@
 import React from "react";
 import { RefinementList } from "react-instantsearch-dom";
 import styled from "styled-components";
+import get from "lodash/get";
 
 import {
   colors,
@@ -14,11 +15,14 @@ import {
 import { ResetFilters } from "./ResetFilters";
 import { FilteringProps } from "./FilteringProps";
 import { FilterTrialsButton } from "./FilterTrialsButton";
+import { SearchSuggestion } from "./SearchSuggestions";
 
 export const Facets = ({
+  defaultRefinementState,
   filtering,
   closeFiltering
 }: {
+  defaultRefinementState: SearchSuggestion;
   filtering: boolean;
   closeFiltering: () => void;
 }) => {
@@ -29,23 +33,39 @@ export const Facets = ({
           Filters
           <ResetFilters />
         </Header>
-        <Facet attribute="recruitment_status" title="Recruitment Status" />
+        <Facet
+          attribute="recruitment_status"
+          title="Recruitment Status"
+          defaultRefinementState={defaultRefinementState}
+        />
         <Facet
           attribute="therapeutic_classes"
           title="Therapeutic Classes"
+          defaultRefinementState={defaultRefinementState}
           searchable
           showMore
         />
         <Facet
           attribute="clinical_outcome_extracted_"
           title="Clinical Outcome"
+          defaultRefinementState={defaultRefinementState}
         />
         <Facet
           attribute="surrogate_outcome_extracted_"
           title="Surrogate Outcome"
+          defaultRefinementState={defaultRefinementState}
         />
-        <Facet attribute="study_type" title="Study Type" showMore />
-        <Facet attribute="countries" title="Countries" />
+        <Facet
+          attribute="study_type"
+          title="Study Type"
+          showMore
+          defaultRefinementState={defaultRefinementState}
+        />
+        <Facet
+          attribute="countries"
+          title="Countries"
+          defaultRefinementState={defaultRefinementState}
+        />
         <Footer>
           <FilterTrialsButton onClick={closeFiltering} />
         </Footer>
@@ -57,11 +77,13 @@ export const Facets = ({
 
 const Facet = ({
   attribute,
+  defaultRefinementState,
   title,
   searchable = false,
   showMore = false
 }: {
   attribute: string;
+  defaultRefinementState: SearchSuggestion;
   title: string;
   searchable?: boolean;
   showMore?: boolean;
@@ -71,6 +93,7 @@ const Facet = ({
       <h3>{title}</h3>
       <RefinementList
         attribute={attribute}
+        defaultRefinement={get(defaultRefinementState, attribute)}
         searchable={searchable}
         showMore={showMore}
         showMoreLimit={30}
