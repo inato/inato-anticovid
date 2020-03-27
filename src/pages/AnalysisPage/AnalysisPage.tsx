@@ -17,26 +17,26 @@ import { Title } from "./Title";
 
 export const AnalysisPage = () => {
   const {
-    setToTrue: displayTableauTitle,
-    isTrue: isTableauTitleDisplayed
-  } = useBoolean(false);
+    setToFalse: hideTableauSkeleton,
+    isTrue: isTableauSkeletonDisplayed
+  } = useBoolean(true);
 
   return (
     <Container>
       <Introduction />
       <TableauContainer>
-        {isTableauTitleDisplayed && (
-          <StyledTitle>
-            Clinical research for <UnbreakableWord>Covid-19</UnbreakableWord>
-          </StyledTitle>
-        )}
+        <StyledTitle>
+          Clinical research for <UnbreakableWord>Covid-19</UnbreakableWord>
+        </StyledTitle>
+
+        {isTableauSkeletonDisplayed && <TableauSkeleton />}
 
         <TableauReport
           url={config.TableauUrl}
           options={{
             width: "100%",
             height: "100%",
-            onFirstVizSizeKnown: displayTableauTitle
+            onFirstVizSizeKnown: hideTableauSkeleton
           }}
         />
       </TableauContainer>
@@ -64,6 +64,10 @@ const TableauContainer = styled.div`
   > div {
     height: 827px;
   }
+`;
+
+const TableauSkeleton = styled.div`
+  background-color: ${colors.SecondaryBackground};
 `;
 
 const StyledTitle = styled(Title)`
