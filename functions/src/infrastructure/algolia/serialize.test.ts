@@ -3,7 +3,7 @@ import { serialize } from "./serialize";
 
 describe("serialize", () => {
   it("should serialize all fields", () => {
-    const date = new Date();
+    const date = new Date("Fri, 27 Mar 2020 10:45:59 GMT");
     const trial = trialFactory({
       trialId: "trialid",
       publicTitle: "public_title",
@@ -20,6 +20,7 @@ describe("serialize", () => {
       recruitment_status: "recruitment_status",
       therapeutic_classes: ["therapeutic_classes"],
       date_registration3: date,
+      registration_timestamp: 1585305959000,
       objectID: "trialid"
     });
   });
