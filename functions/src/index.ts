@@ -10,12 +10,12 @@ export const uploadToAlgolia = functions
     timeoutSeconds: 500,
     memory: "1GB"
   })
-  .https.onRequest(async (request, response) => {
+  .https.onRequest(async (_request, response) => {
     const client = await setupPostgresClient();
     const tableName = functions.config().pg.tablename;
     const trialRepository = new PostgresTrialRepository(client, tableName);
 
-    const algoliaIndex = setupAlgoliaIndex({
+    const algoliaIndex = await setupAlgoliaIndex({
       apiKey: functions.config().algolia.apikey,
       indexName: functions.config().algolia.index
     });
