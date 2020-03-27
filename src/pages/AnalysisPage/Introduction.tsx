@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import { colors, devices } from "../../ui";
+import { colors, devices, LaboratoryIcon } from "../../ui";
 
 import { Accordion } from "./Accordion";
-import { LaboratoryIcon } from "./LaboratoryIcon";
 import { Title } from "./Title";
 
 export const Introduction = () => (
