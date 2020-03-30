@@ -72,7 +72,11 @@ const Suggestion = styled(Link)`
   &:hover,
   &:focus {
     cursor: pointer;
-    opacity: 0.8;
+    opacity: 0.7;
+  }
+
+  &:active {
+    opacity: 1;
   }
 
   &::after {
