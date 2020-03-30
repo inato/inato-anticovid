@@ -9,6 +9,7 @@ export const setIndexSettings = ({
     searchableAttributes: [
       "scientific_title",
       "public_title",
+      "acronym",
       "unordered(therapeutic_classes)",
       "intervention",
       "trialid"
