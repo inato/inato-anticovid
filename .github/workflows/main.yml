@@ -12,26 +12,40 @@ jobs:
         name: Setup node
         with:
           node-version: "10.x"
-      - id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
       - uses: actions/cache@v1
-        name: Cache dependencies
-        id: yarn-cache
+        name: Cache app dependencies
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: node_modules
+          key: ${{ runner.os }}-app-v1.0-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
-      - run: yarn install --frozen-lockfile --prefer-offline && yarn --cwd functions install --frozen-lockfile --prefer-offline
-        name: Install dependencies
+            ${{ runner.os }}-app-v1.0-
+      - run: yarn install --frozen-lockfile --prefer-offline
+        name: Install app dependencies
       - run: yarn lint
         name: Lint app
+      - run: yarn build
+        name: Build app
       - run: yarn test --watchAll=false --passWithNoTests
         name: Test app
-      - run: yarn --cwd functions lint
+      - uses: actions/cache@v1
+        name: Cache functions dependencies
+        with:
+          path: functions/node_modules
+          key: ${{ runner.os }}-functions-v1.0-${{ hashFiles('functions/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-functions-v1.0-
+      - run: yarn install --frozen-lockfile --prefer-offline
+        name: Install functions dependencies
+        working-directory: functions
+      - run: yarn lint
         name: Lint functions
-      - run: yarn --cwd functions test
+        working-directory: functions
+      - run: yarn build
+        name: Build functions
+        working-directory: functions
+      - run: yarn test
         name: Test functions
+        working-directory: functions
   deploy:
     needs: test
     runs-on: ubuntu-latest
@@ -43,18 +57,25 @@ jobs:
         name: Setup node
         with:
           node-version: "10.x"
-      - id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
       - uses: actions/cache@v1
-        id: yarn-cache
-        name: Cache dependencies
+        name: Cache app dependencies
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: node_modules
+          key: ${{ runner.os }}-app-v1.0-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
-      - run: yarn install --frozen-lockfile --prefer-offline && cd functions && yarn install --frozen-lockfile --prefer-offline
-        name: Install dependencies
+            ${{ runner.os }}-app-v1.0-
+      - run: yarn install --frozen-lockfile --prefer-offline
+        name: Install app dependencies
+      - uses: actions/cache@v1
+        name: Cache functions dependencies
+        with:
+          path: functions/node_modules
+          key: ${{ runner.os }}-functions-v1.0-${{ hashFiles('functions/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-functions-v1.0-
+      - run: yarn install --frozen-lockfile --prefer-offline
+        name: Install functions dependencies
+        working-directory: functions
       - if: github.ref == 'refs/heads/staging'
         name: Set staging configuration
         run: cp src/config/config.staging.json src/config/config.json
