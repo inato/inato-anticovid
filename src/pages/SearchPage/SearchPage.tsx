@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import algoliasearch from "algoliasearch";
 import { InstantSearch, SearchBox, Stats } from "react-instantsearch-dom";
 import { useHistory } from "react-router-dom";
@@ -40,7 +40,9 @@ const urlToSearchState = (
 
 export const SearchPage = () => {
   const history = useHistory();
-  const searchState = urlToSearchState(history.location);
+  const searchState = useMemo(urlToSearchState(history.location), [
+    history.location
+  ]);
 
   const onSearchStateChange = useCallback(
     (searchState: unknown) => {
