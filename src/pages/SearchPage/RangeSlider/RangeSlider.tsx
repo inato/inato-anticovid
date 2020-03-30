@@ -44,14 +44,14 @@ export const RangeSlider = connectRange(
       setValue(computeValue(currentRefinement));
     }, [setValue, currentRefinement]);
 
-    const handlAfterChange = useCallback(
+    const handleAfterChange = useCallback(
       ([min, max]: Array<number>) => {
         refine({ min, max });
       },
       [refine]
     );
 
-    const handlChange = useCallback(
+    const handldChange = useCallback(
       ([min, max]: Array<number>) => {
         setValue([min, max]);
       },
@@ -64,8 +64,8 @@ export const RangeSlider = connectRange(
           min={min}
           max={max}
           value={value}
-          onAfterChange={handlAfterChange}
-          onChange={handlChange}
+          onAfterChange={handleAfterChange}
+          onChange={handldChange}
           trackStyle={[{ backgroundColor: colors.Primary }]}
           handleStyle={[
             { borderColor: colors.Primary, boxShadow: "none" },
