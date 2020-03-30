@@ -9,11 +9,13 @@ describe("AlgoliaIndexingService", () => {
       const indexingService = new AlgoliaIndexingService(indexMock);
       await indexingService.setSettings({
         searchableAttributes: ["attribute1"],
-        attributesForFaceting: []
+        attributesForFaceting: [],
+        customRanking: []
       });
       expect(indexMock.setSettings).toHaveBeenCalledWith({
         searchableAttributes: ["attribute1"],
-        attributesForFaceting: []
+        attributesForFaceting: [],
+        customRanking: []
       });
     });
   });
