@@ -40,7 +40,7 @@ const urlToSearchState = (
 
 export const SearchPage = () => {
   const history = useHistory();
-  const searchState = useMemo(urlToSearchState(history.location), [
+  const searchState = useMemo(() => urlToSearchState(history.location), [
     history.location
   ]);
 
