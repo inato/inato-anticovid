@@ -1,31 +1,21 @@
-import { refreshTrialIndex } from "../../application";
 import * as functions from "firebase-functions";
 
-import {
-  AlgoliaIndexingService,
-  setupAlgoliaIndex,
-  setupPostgresClient,
-  PostgresTrialRepository
-} from "../../infrastructure";
+import { refreshTrialIndex, IndexingService } from "../../application";
+import { TrialRepository } from "../../domain";
 
-export const uploadToAlgoliaHandler = async (
+export const uploadToAlgoliaHandler = ({
+  trialRepository,
+  indexingService
+}: {
+  trialRepository: TrialRepository;
+  indexingService: IndexingService;
+}) => async (
   _request: functions.https.Request,
   response: functions.Response
 ) => {
-  const client = await setupPostgresClient();
-  const tableName = functions.config().pg.tablename;
-  const trialRepository = new PostgresTrialRepository(client, tableName);
-
-  const algoliaIndex = setupAlgoliaIndex({
-    apiKey: functions.config().algolia.apikey,
-    indexName: functions.config().algolia.index
-  });
-  const indexingService = new AlgoliaIndexingService(algoliaIndex);
-
   const trialsCount = await refreshTrialIndex({
-    indexingService,
-    trialRepository
+    trialRepository,
+    indexingService
   });
-  await client.end();
   response.send(`Indexed ${trialsCount} trials`);
 };
