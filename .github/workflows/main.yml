@@ -23,6 +23,8 @@ jobs:
         name: Install app dependencies
       - run: yarn lint
         name: Lint app
+      - run: yarn build
+        name: Build app
       - run: yarn test --watchAll=false --passWithNoTests
         name: Test app
       - uses: actions/cache@v1
@@ -37,6 +39,9 @@ jobs:
         working-directory: functions
       - run: yarn lint
         name: Lint functions
+        working-directory: functions
+      - run: yarn build
+        name: Build functions
         working-directory: functions
       - run: yarn test
         name: Test functions
