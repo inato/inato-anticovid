@@ -22,15 +22,15 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - run: yarn install --frozen-lockfile --prefer-offline && cd functions && yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile --prefer-offline && yarn --cwd functions install --frozen-lockfile --prefer-offline
         name: Install dependencies
       - run: yarn lint
         name: Lint app
       - run: yarn test --watchAll=false --passWithNoTests
         name: Test app
-      - run: cd functions && yarn lint
+      - run: yarn --cwd functions lint
         name: Lint functions
-      - run: cd functions && yarn test
+      - run: yarn --cwd functions test
         name: Test functions
   deploy:
     needs: test
@@ -56,22 +56,22 @@ jobs:
       - run: yarn install --frozen-lockfile --prefer-offline && cd functions && yarn install --frozen-lockfile --prefer-offline
         name: Install dependencies
       - if: github.ref == 'refs/heads/staging'
-        run: cp src/config/config.staging.json src/config/config.json
         name: Set staging configuration
+        run: cp src/config/config.staging.json src/config/config.json
       - if: github.ref == 'refs/heads/master'
-        run: cp src/config/config.prod.json src/config/config.json
         name: Set production configuration
+        run: cp src/config/config.prod.json src/config/config.json
       - run: yarn build
         name: Build the app
       - uses: w9jds/firebase-action@master
         name: Use firebase production environment
         if: github.ref == 'refs/heads/master'
         with:
-          args: use default
+          args: use production
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - uses: w9jds/firebase-action@master
-        name: Set firebase staging environment
+        name: Use firebase staging environment
         if: github.ref == 'refs/heads/staging'
         with:
           args: use staging
@@ -83,3 +83,9 @@ jobs:
           args: deploy
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      - name: Set Algolia settings for staging
+        if: github.ref == 'refs/heads/staging'
+        run: curl https://us-central1-anticovid-staging.cloudfunctions.net/setAlgoliaSettings && curl https://us-central1-anticovid-staging.cloudfunctions.net/uploadToAlgolia
+      - name: Set Algolia settings for production
+        if: github.ref == 'refs/heads/master'
+        run: curl https://us-central1-anticovid.cloudfunctions.net/setAlgoliaSettings && curl https://us-central1-anticovid.cloudfunctions.net/uploadToAlgolia

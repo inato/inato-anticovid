@@ -8,17 +8,17 @@ You will need to use node 10 (use nvm)
 
 Make sure you have `firebase` installed and configured:
 
-```
-$> brew install firebase-cli
-$> firebase login
+```sh
+brew install firebase-cli
+firebase login
 ```
 
 Even though we're running the function locally, firebase requires you to choose an environment. It doesn't really matter which though because it will use a local configuration file.
 
-```
-$> firebase use staging
+```sh
+firebase use staging
 # or
-$> firebase use default # production
+firebase use production
 ```
 
 The local configuration is stored in `.runtimeconfig.json`
@@ -27,8 +27,8 @@ The local configuration is stored in `.runtimeconfig.json`
 
 Run:
 
-```
-$> yarn shell
+```sh
+yarn shell
 ```
 
 It will open a firebase shell in which you can type `uploadToAlgolia()` to run the function.
@@ -37,12 +37,12 @@ It will open a firebase shell in which you can type `uploadToAlgolia()` to run t
 
 First choose the environment you want to add the variable to:
 
-```
-$> firebase use default
+```sh
+firebase use production
 ```
 
 Then you can set it:
 
-```
-$> firebase functions:config:set algolia.index=prod_data
+```sh
+firebase functions:config:set algolia.index=prod_data
 ```

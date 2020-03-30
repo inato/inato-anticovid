@@ -1,9 +1,12 @@
 import * as functions from "firebase-functions";
 
-import { setupPostgresClient, PostgresTrialRepository } from "./infrastructure";
-import { AlgoliaIndexingService } from "./infrastructure/algolia/AlgoliaIndexingService";
-import { refreshTrialIndex } from "./refreshTrialIndex";
-import { setupAlgoliaIndex } from "./infrastructure/algolia/setupAlgoliaIndex";
+import {
+  setupPostgresClient,
+  PostgresTrialRepository,
+  AlgoliaIndexingService,
+  setupAlgoliaIndex
+} from "./infrastructure";
+import { refreshTrialIndex, setIndexSettings } from "./application";
 
 export const uploadToAlgolia = functions
   .runWith({
@@ -15,7 +18,7 @@ export const uploadToAlgolia = functions
     const tableName = functions.config().pg.tablename;
     const trialRepository = new PostgresTrialRepository(client, tableName);
 
-    const algoliaIndex = await setupAlgoliaIndex({
+    const algoliaIndex = setupAlgoliaIndex({
       apiKey: functions.config().algolia.apikey,
       indexName: functions.config().algolia.index
     });
@@ -28,3 +31,17 @@ export const uploadToAlgolia = functions
     await client.end();
     response.send(`Indexed ${trialsCount} trials`);
   });
+
+export const setAlgoliaSettings = functions.https.onRequest(
+  async (_request, response) => {
+    const algoliaIndex = setupAlgoliaIndex({
+      apiKey: functions.config().algolia.apikey,
+      indexName: functions.config().algolia.index
+    });
+    const indexingService = new AlgoliaIndexingService(algoliaIndex);
+
+    await setIndexSettings({ indexingService });
+
+    response.send(`Algolia settings have been set`);
+  }
+);
