@@ -46,11 +46,11 @@ jobs:
       - run: yarn test
         name: Test functions
         working-directory: functions
-      - name: Cypress run
+      - name: E2E tests
         uses: cypress-io/github-action@v1
         with:
+          install: false
           start: yarn serve -s build -p 3000
-          # quote the url to be safe against YML parsing surprises
           wait-on: "http://localhost:3000"
   deploy:
     needs: test
