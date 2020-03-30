@@ -6,7 +6,7 @@ import {
   AlgoliaIndexingService,
   setupAlgoliaIndex
 } from "./infrastructure";
-import { refreshTrialIndex } from "./application";
+import { refreshTrialIndex, setIndexSettings } from "./application";
 
 export const uploadToAlgolia = functions
   .runWith({
@@ -40,24 +40,7 @@ export const setAlgoliaSettings = functions.https.onRequest(
     });
     const indexingService = new AlgoliaIndexingService(algoliaIndex);
 
-    await indexingService.setSettings({
-      searchableAttributes: [
-        "scientific_title",
-        "public_title",
-        "unordered(therapeutic_classes)",
-        "intervention",
-        "trialid"
-      ],
-      attributesForFaceting: [
-        "clinical_outcome_extracted_",
-        "countries",
-        "recruitment_status",
-        "registration_timestamp",
-        "study_type",
-        "surrogate_outcome_extracted_",
-        "searchable(therapeutic_classes)"
-      ]
-    });
+    await setIndexSettings({ indexingService });
 
     response.send(`Algolia settings have been set`);
   }
