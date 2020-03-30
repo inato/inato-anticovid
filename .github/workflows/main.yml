@@ -13,21 +13,25 @@ jobs:
         with:
           node-version: "10.x"
       - uses: actions/cache@v1
-        name: Cache dependencies
-        id: yarn-cache
+        name: Cache app dependencies
         with:
-          path: |
-            node_modules
-            functions/node_modules
-          key: ${{ runner.os }}-yarn-v1.0-${{ hashFiles('**/yarn.lock') }}
+          path: node_modules
+          key: ${{ runner.os }}-app-v1.0-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-v1.0-
-      - run: yarn install --frozen-lockfile --prefer-offline && cd functions && yarn install --frozen-lockfile --prefer-offline
+            ${{ runner.os }}-app-v1.0-
+      - run: yarn install --frozen-lockfile --prefer-offline
         name: Install app dependencies
       - run: yarn lint
         name: Lint app
       - run: yarn test --watchAll=false --passWithNoTests
         name: Test app
+      - uses: actions/cache@v1
+        name: Cache functions dependencies
+        with:
+          path: functions/node_modules
+          key: ${{ runner.os }}-functions-v1.0-${{ hashFiles('functions/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-functions-v1.0-
       - run: yarn install --frozen-lockfile --prefer-offline
         name: Install functions dependencies
         working-directory: functions
