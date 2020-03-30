@@ -1,5 +1,5 @@
-import { IndexingService } from "./application";
-import { TrialRepository } from "./domain";
+import { IndexingService } from "..";
+import { TrialRepository } from "../../domain";
 
 export const refreshTrialIndex = async ({
   indexingService,

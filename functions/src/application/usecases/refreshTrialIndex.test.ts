@@ -1,6 +1,6 @@
 import { refreshTrialIndex } from "./refreshTrialIndex";
-import { trialFactory, trialRepositoryFactory } from "./domain";
-import { indexingServiceFactory } from "./application";
+import { trialFactory, trialRepositoryFactory } from "../../domain";
+import { indexingServiceFactory } from "..";
 
 describe("refreshTrialIndex", () => {
   it("should index all trials found in the repository", async () => {
