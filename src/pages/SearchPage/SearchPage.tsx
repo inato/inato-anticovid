@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from "react";
-import { useDebouncedCallback } from "use-debounce";
+import React, { useCallback, useMemo } from "react";
 import algoliasearch from "algoliasearch";
 import { InstantSearch, SearchBox, Stats } from "react-instantsearch-dom";
 import { useHistory } from "react-router-dom";
@@ -20,9 +19,8 @@ import { useBoolean } from "../../hooks";
 import { Facets } from "./Facets";
 import { FilteringProps } from "./FilteringProps";
 import icon from "./Filter.svg";
+import { SearchSuggestions } from "./SearchSuggestions";
 import { SearchResults } from "./SearchResults";
-
-const DEBOUNCE_SET_SEARCH_IN_MS = 1000;
 
 const searchClient = algoliasearch(
   config.algolia.applicationId,
@@ -31,7 +29,7 @@ const searchClient = algoliasearch(
 
 const createURL = (state: unknown) => `?${qs.stringify(state)}`;
 
-const searchStateToUrl = (
+export const searchStateToUrl = (
   location: ReturnType<typeof useHistory>["location"],
   searchState: unknown
 ) => (searchState ? `${location.pathname}${createURL(searchState)}` : "");
@@ -42,25 +40,18 @@ const urlToSearchState = (
 
 export const SearchPage = () => {
   const history = useHistory();
-  const [searchState, setSearchState] = useState(
-    urlToSearchState(history.location)
-  );
-  const [onSearchStateChangeDebounced] = useDebouncedCallback(
+  const searchState = useMemo(() => urlToSearchState(history.location), [
+    history.location
+  ]);
+
+  const onSearchStateChange = useCallback(
     (searchState: unknown) => {
       history.replace(
         searchStateToUrl(history.location, searchState),
         searchState as any
       );
     },
-    DEBOUNCE_SET_SEARCH_IN_MS
-  );
-
-  const onSearchStateChange = useCallback(
-    (searchState: unknown) => {
-      setSearchState(searchState);
-      onSearchStateChangeDebounced(searchState);
-    },
-    [onSearchStateChangeDebounced]
+    [history]
   );
 
   const {
@@ -85,6 +76,7 @@ export const SearchPage = () => {
                 placeholder: "Search by keyword, drug, NCTID, ..."
               }}
             />
+            <SearchSuggestions />
             <StyledStats
               translations={{
                 stats(nbHits) {
