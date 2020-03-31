@@ -26,8 +26,8 @@ const ConnectedResetFiltersComponent = connectCurrentRefinements(
   ResetFiltersComponent
 );
 export const ResetFilters = styled(ConnectedResetFiltersComponent)`
-  background-color: ${colors.SecondaryBackground}; /* For IE11 */
   background: inherit;
+  background-color: ${colors.SecondaryBackground}; /* For IE11 */
   outline: none;
   font-size: 12px;
   line-height: 24px;
