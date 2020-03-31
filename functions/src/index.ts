@@ -21,7 +21,7 @@ interface Services {
 const feedServices = <Ret, Argument1, Argument2>(
   callback: (
     services: Services
-  ) => (arg1: Argument1, arg2: Argument2, ...rest: any[]) => Ret
+  ) => (arg1: Argument1, arg2: Argument2, ...rest: any[]) => Promise<Ret>
 ) => async (arg1: Argument1, arg2: Argument2, ...rest: any[]): Promise<Ret> => {
   const algoliaIndex = setupAlgoliaIndex({
     apiKey: functions.config().algolia.apikey,
@@ -34,7 +34,15 @@ const feedServices = <Ret, Argument1, Argument2>(
   const tableName = functions.config().pg.tablename;
   const trialRepository = new PostgresTrialRepository(client, tableName);
 
-  return callback({ indexingService, trialRepository })(arg1, arg2, ...rest);
+  const result = await callback({ indexingService, trialRepository })(
+    arg1,
+    arg2,
+    ...rest
+  );
+
+  await client.end();
+
+  return result;
 };
 
 export const refreshAlgoliaTrialIndex = functions
