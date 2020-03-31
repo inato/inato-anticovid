@@ -1,6 +1,13 @@
 import { Client } from "pg";
 import { Trial, TrialRepository } from "../../domain";
 import { deserialize } from "./deserialize";
+import * as TaskEither from "fp-ts/lib/TaskEither";
+import {
+  GenericError,
+  GenericErrorType,
+  unknownError
+} from "../../domain/errors";
+import { pipe } from "fp-ts/lib/pipeable";
 
 export class PostgresTrialRepository implements TrialRepository {
   constructor(
@@ -8,10 +15,21 @@ export class PostgresTrialRepository implements TrialRepository {
     private readonly tableName: string
   ) {}
 
-  async findAllTrials(): Promise<Array<Trial>> {
-    const queryResult = await this.client.query(
-      `SELECT * from covid.${this.tableName}`
+  findAllTrials(): TaskEither.TaskEither<
+    GenericError<GenericErrorType.UnknownError>,
+    ReadonlyArray<Trial>
+  > {
+    return pipe(
+      TaskEither.tryCatch(
+        () => this.client.query(`SELECT * from covid.${this.tableName}`),
+        e =>
+          unknownError(
+            e instanceof Error ? e.message : "Unknown pg query error"
+          )
+      ),
+      TaskEither.map(queryResult =>
+        queryResult.rows.map((row: unknown) => deserialize(row))
+      )
     );
-    return queryResult.rows.map((row: unknown) => deserialize(row));
   }
 }

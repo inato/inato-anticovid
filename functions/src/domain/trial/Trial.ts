@@ -1,5 +1,7 @@
+import { TrialId } from "./TrialId";
+
 interface TrialConstructorArgs {
-  trialId: string;
+  trialId: TrialId;
   publicTitle: string;
   webAddress: string;
   recruitmentStatus: string | null;
@@ -9,7 +11,7 @@ interface TrialConstructorArgs {
 }
 
 export class Trial {
-  public readonly trialId: string;
+  public readonly trialId: TrialId;
   public readonly publicTitle: string;
   public readonly webAddress: string;
   public readonly recruitmentStatus: string | null;

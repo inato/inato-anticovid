@@ -3,7 +3,7 @@ import { Trial } from "../../domain";
 export const serialize = (trial: Trial): Object => {
   return {
     ...trial.rest,
-    objectID: trial.trialId,
+    objectID: trial.trialId.toString(),
     public_title: trial.publicTitle,
     web_address: trial.webAddress,
     recruitment_status: trial.recruitmentStatus,
