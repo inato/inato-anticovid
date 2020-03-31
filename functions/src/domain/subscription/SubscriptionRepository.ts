@@ -6,7 +6,9 @@ export interface SubscriptionRepository {
   findAllSubscriptionsLastEmailSentAfter(
     date: Date
   ): TaskEither.TaskEither<
-    GenericError<GenericErrorType.UnknownError>,
+    GenericError<
+      GenericErrorType.UnknownError | GenericErrorType.InvalidInformationError
+    >,
     ReadonlyArray<Subscription>
   >;
   store(
