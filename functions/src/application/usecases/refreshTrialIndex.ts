@@ -1,15 +1,21 @@
 import { IndexingService } from "..";
 import { TrialRepository } from "../../domain";
 
-export const refreshTrialIndex = async ({
+import * as TaskEither from "fp-ts/lib/TaskEither";
+import { pipe } from "fp-ts/lib/pipeable";
+
+export const refreshTrialIndex = ({
   indexingService,
   trialRepository
 }: {
   indexingService: IndexingService;
   trialRepository: TrialRepository;
-}) => {
-  const trials = await trialRepository.findAllTrials();
-  console.log(`Found ${trials.length} trials`);
-  const indexedObjectIds = await indexingService.indexTrials(trials);
-  return indexedObjectIds.length;
-};
+}) =>
+  pipe(
+    trialRepository.findAllTrials(),
+    TaskEither.chain(trials => {
+      console.log(`Found ${trials.length} trials`);
+      return indexingService.indexTrials(trials);
+    }),
+    TaskEither.map(indexedObjectIds => indexedObjectIds.length)
+  );
