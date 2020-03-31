@@ -77,16 +77,17 @@ export const ClinicalTrialHit = ({
           <PublicationsTitle>Result publications</PublicationsTitle>
 
           {results_publications.map((publication: Publication) => (
-            <PublicationContainer key={publication.url}>
+            <PublicationLink
+              key={publication.url}
+              href={publication.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <StyledBookmarkIcon />
-              <PublicationLink
-                href={publication.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <PublicationTitle>
                 {publication.title || publication.url}
-              </PublicationLink>
-            </PublicationContainer>
+              </PublicationTitle>
+            </PublicationLink>
           ))}
         </PublicationsContainer>
       )}
@@ -200,11 +201,20 @@ const PublicationsContainer = styled.div`
   }
 `;
 
-const PublicationContainer = styled.div`
+const PublicationLink = styled.a`
   display: flex;
+  :not(:first-child) {
+    margin-top: 4px;
+  }
+
+  @media ${devices.Desktop} {
+    :not(:first-child) {
+      margin-top: 0;
+    }
+  }
 `;
 
-const PublicationLink = styled.a`
+const PublicationTitle = styled.a`
   color: ${colors.Primary};
   @media ${devices.Desktop} {
     max-width: 575px;
