@@ -16,11 +16,13 @@ jobs:
         name: Cache app dependencies
         with:
           path: node_modules
-          key: ${{ runner.os }}-app-v1.0-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-app-v1.2-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-app-v1.0-
+            ${{ runner.os }}-app-v1.2-
       - run: yarn install --frozen-lockfile --prefer-offline
         name: Install app dependencies
+        env:
+          CYPRESS_CACHE_FOLDER: node_modules/cypress_bin
       - run: yarn lint
         name: Lint app
       - run: yarn build
@@ -47,11 +49,12 @@ jobs:
         name: Test functions
         working-directory: functions
       - name: E2E tests
-        uses: cypress-io/github-action@v1
-        with:
-          install: false
-          start: yarn serve -s build -p 3000
-          wait-on: "http://localhost:3000"
+        run: |
+          yarn serve -s build -p 3000 &
+          yarn wait-on "http://localhost:3000"
+          yarn cypress run
+        env:
+          CYPRESS_CACHE_FOLDER: node_modules/cypress_bin
   deploy:
     needs: test
     runs-on: ubuntu-latest
@@ -67,9 +70,9 @@ jobs:
         name: Cache app dependencies
         with:
           path: node_modules
-          key: ${{ runner.os }}-app-v1.0-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-app-v1.2-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-app-v1.0-
+            ${{ runner.os }}-app-v1.2-
       - run: yarn install --frozen-lockfile --prefer-offline
         name: Install app dependencies
       - uses: actions/cache@v1
