@@ -1,4 +1,3 @@
-/* tslint:disable:no-empty */
 import * as TaskEither from "fp-ts/lib/TaskEither";
 
 import { IndexingService } from "./IndexingService";

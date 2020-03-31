@@ -1,5 +1,3 @@
-/* tslint:disable:no-empty */
-
 import { SubscriptionRepository } from "./SubscriptionRepository";
 import * as TaskEither from "fp-ts/lib/TaskEither";
 
