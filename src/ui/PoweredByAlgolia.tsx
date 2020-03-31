@@ -28,7 +28,7 @@ export const PoweredByAlgolia = ({ className }: { className?: string }) => (
       Search powered by
     </PoweredByText>
     <PoweredByLink
-      href="https://www.algolia.com"
+      href="https://www.algolia.com/?utm_source=instantsearch.js&utm_medium=website&utm_content=anticovid.inato.com&utm_campaign=poweredby"
       className="ais-PoweredBy-link"
       aria-label="Algolia"
     >
