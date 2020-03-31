@@ -11,7 +11,7 @@ describe("AlgoliaIndexingService", () => {
         searchableAttributes: ["attribute1"],
         attributesForFaceting: [],
         customRanking: []
-      });
+      })();
       expect(indexMock.setSettings).toHaveBeenCalledWith({
         searchableAttributes: ["attribute1"],
         attributesForFaceting: [],
