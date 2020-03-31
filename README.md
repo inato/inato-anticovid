@@ -10,7 +10,7 @@ This project contains 2 main parts:
 
 ## Local app
 
-To build and run on localhost:5000
+To build and run on localhost:3000
 ```
 $> yarn start
 ```
