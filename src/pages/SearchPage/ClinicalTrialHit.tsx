@@ -17,6 +17,7 @@ interface ClinicalTrialHit {
     therapeutic_classes: Array<string>;
     date_registration3: string;
     objectID: string;
+    acronym: string | null;
   };
 }
 
@@ -27,14 +28,17 @@ export const ClinicalTrialHit = ({
     recruitment_status,
     therapeutic_classes,
     date_registration3,
-    objectID
+    objectID,
+    acronym
   }
 }: any) => (
   <Link href={web_address} target="_blank">
     <Container>
       <LeftContainer>
         {objectID}
-        <Title>{public_title}</Title>
+        <TitleContainer>
+          <Title>{public_title}</Title> <Acronym>{acronym}</Acronym>
+        </TitleContainer>
       </LeftContainer>
       <RightContainer>
         <RegistrationDate registrationDate={date_registration3} />
@@ -77,10 +81,17 @@ const RightContainer = styled.div`
   flex-direction: column;
 `;
 
-const Title = styled.div`
-  color: ${colors.DarkGray};
+const TitleContainer = styled.div`
   font-size: 16px;
   font-weight: 500;
+`;
+
+const Title = styled.span`
+  color: ${colors.DarkGray};
+`;
+
+const Acronym = styled.span`
+  white-space: nowrap;
 `;
 
 const LeftContainer = styled.div`
