@@ -9,6 +9,7 @@ export const setIndexSettings = ({
     searchableAttributes: [
       "scientific_title",
       "public_title",
+      "acronym",
       "unordered(therapeutic_classes)",
       "intervention",
       "trialid"
@@ -21,5 +22,6 @@ export const setIndexSettings = ({
       "study_type",
       "surrogate_outcome_extracted_",
       "searchable(therapeutic_classes)"
-    ]
+    ],
+    customRanking: ["desc(registration_timestamp)"]
   });

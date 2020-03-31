@@ -1,8 +1,12 @@
+/* tslint:disable:no-empty */
+
 import { IndexingService } from "./IndexingService";
+import { Trial } from "../../domain";
 
 export const indexingServiceFactory = ({
-  indexTrials = () => Promise.resolve([]),
-  setSettings = () => Promise.resolve()
+  indexTrials = async (trials: ReadonlyArray<Trial>) =>
+    trials.map(trial => trial.trialId),
+  setSettings = async () => {}
 }: Partial<IndexingService> = {}) => ({
   indexTrials,
   setSettings
