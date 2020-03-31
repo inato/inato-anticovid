@@ -12,6 +12,10 @@ import {
   Outcome
 } from "./HitHighlight";
 
+interface Publication {
+  title?: string;
+  url: string;
+}
 interface ClinicalTrialHit {
   hit: {
     public_title: string;
@@ -25,6 +29,7 @@ interface ClinicalTrialHit {
     countries: Array<string>;
     clinical_outcome_extracted_: Array<string>;
     surrogate_outcome_extracted_: Array<string>;
+    results_publications: Array<Publication>;
   };
 }
 
@@ -40,64 +45,54 @@ export const ClinicalTrialHit = ({
     total_recruitment_size,
     countries,
     clinical_outcome_extracted_,
-    surrogate_outcome_extracted_
+    surrogate_outcome_extracted_,
+    results_publications
   }
-}: any) => {
-  const publications: Array<{ title?: string; url: string }> = [
-    {
-      title:
-        "This is an example of a very long result publication title where you could have a Carama eiuo a sjdfoi",
-      url: "http://tata"
-    },
-    {
-      title:
-        "This is an example of a very long result publication title where you could have a Carama eiuo a sjdfoi",
-      url: "http://tata"
-    },
-    {
-      url: "http://tata"
-    }
-  ];
+}: any) => (
+  <Link href={web_address} target="_blank">
+    <Container hasPublications={results_publications.length > 0}>
+      <TopContainer>
+        <LeftContainer>
+          {trialid}
+          <TitleContainer>
+            <Title>{public_title}</Title> <Acronym>{acronym}</Acronym>
+          </TitleContainer>
+          <RegistrationAndOutcomeContainer>
+            <RegistrationDate registrationDate={date_registration3} />
+            <Outcome
+              hasClinicalOutcome={clinical_outcome_extracted_.length > 0}
+              hasSurrogateOutcome={surrogate_outcome_extracted_.length > 0}
+            />
+          </RegistrationAndOutcomeContainer>
+        </LeftContainer>
+        <RightContainer>
+          <TrialStatus value={recruitment_status} />
+          <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
+          <Countries countries={countries} />
+          <TherapeuticClasses value={therapeutic_classes} />
+        </RightContainer>
+      </TopContainer>
+      {results_publications.length > 0 && (
+        <PublicationsContainer>
+          <PublicationsTitle>Result publications</PublicationsTitle>
 
-  return (
-    <Link href={web_address} target="_blank">
-      <Container hasPublications={publications.length > 0}>
-        <TopContainer>
-          <LeftContainer>
-            {trialid}
-            <TitleContainer>
-              <Title>{public_title}</Title> <Acronym>{acronym}</Acronym>
-            </TitleContainer>
-            <RegistrationAndOutcomeContainer>
-              <RegistrationDate registrationDate={date_registration3} />
-              <Outcome
-                hasClinicalOutcome={clinical_outcome_extracted_.length > 0}
-                hasSurrogateOutcome={surrogate_outcome_extracted_.length > 0}
-              />
-            </RegistrationAndOutcomeContainer>
-          </LeftContainer>
-          <RightContainer>
-            <TrialStatus value={recruitment_status} />
-            <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
-            <Countries countries={countries} />
-            <TherapeuticClasses value={therapeutic_classes} />
-          </RightContainer>
-        </TopContainer>
-        {publications.length > 0 && (
-          <PublicationsContainer>
-            <PublicationsTitle>Result publications</PublicationsTitle>
-
-            {publications.map(publication => (
-              <div key={publication.url}>
-                <BookmarkIcon /> {publication.title || publication.url}
-              </div>
-            ))}
-          </PublicationsContainer>
-        )}
-      </Container>
-    </Link>
-  );
-};
+          {results_publications.map((publication: Publication) => (
+            <PublicationContainer key={publication.url}>
+              <StyledBookmarkIcon />
+              <PublicationLink
+                href={publication.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {publication.title || publication.url}
+              </PublicationLink>
+            </PublicationContainer>
+          ))}
+        </PublicationsContainer>
+      )}
+    </Container>
+  </Link>
+);
 
 const PublicationsTitle = styled.div`
   font-size: 12px;
@@ -198,4 +193,29 @@ const Link = styled.a`
   text-decoration: none;
 `;
 
-const PublicationsContainer = styled.div``;
+const PublicationsContainer = styled.div`
+  margin-top: 18px;
+  @media ${devices.Desktop} {
+    margin-top: 0;
+  }
+`;
+
+const PublicationContainer = styled.div`
+  display: flex;
+`;
+
+const PublicationLink = styled.a`
+  color: ${colors.Primary};
+  @media ${devices.Desktop} {
+    max-width: 575px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+`;
+
+const StyledBookmarkIcon = styled(BookmarkIcon)`
+  margin-right: 8px;
+  flex-shrink: 0;
+  margin-top: 3px;
+`;
