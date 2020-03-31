@@ -117,7 +117,7 @@ const Container = styled.div<{ hasPublications: boolean }>`
       min-height: 144px;
       justify-content: space-between;
       ${LeftContainer} {
-        margin-bottom: 15px;
+        margin-bottom: 16px;
       }
       border-left: 4px solid ${colors.Primary};
     `}
@@ -179,10 +179,12 @@ const RegistrationAndOutcomeContainer = styled.div`
 `;
 
 const LeftContainer = styled.div`
+  margin-bottom: 16px;
   @media ${devices.Desktop} {
     width: 600px;
     min-width: 600px;
     margin-right: 64px;
+    margin-bottom: 0;
   }
 `;
 
@@ -191,7 +193,7 @@ const Link = styled.a`
 `;
 
 const PublicationsContainer = styled.div`
-  margin-top: 18px;
+  margin-top: 16px;
   @media ${devices.Desktop} {
     margin-top: 0;
   }
