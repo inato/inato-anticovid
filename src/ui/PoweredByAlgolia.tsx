@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { colors } from "./colors";
-import { AlgoliaIcon } from "./icons/AlgoliaLogo";
+import { AlgoliaIcon } from "./icons";
 
 const StyledAlgoliaIcon = styled(AlgoliaIcon)`
   height: 16px;
