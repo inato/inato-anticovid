@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { format } from "date-fns";
 
-import { colors, TimeClockIcon, PatientsIcon } from "../../ui";
+import { colors, TimeClockIcon, PatientsIcon, EarthIcon } from "../../ui";
 
 export const TrialStatus = ({ value }: { value: string | null }) => (
   <HitHighlightContainer>
@@ -52,6 +52,15 @@ export const TargetedPatients = ({
   );
 };
 
+export const Countries = ({ countries }: { countries: Array<string> }) => {
+  return (
+    <HitHighlightContainer>
+      <StyledEarthIcon />
+      {countries.join(", ")}
+    </HitHighlightContainer>
+  );
+};
+
 const HitHighlightContainer = styled.div`
   display: flex;
   font-size: 12px;
@@ -79,6 +88,10 @@ const StyledTimeClockIcon = styled(TimeClockIcon)`
 `;
 
 const StyledPatientsIcon = styled(PatientsIcon)`
+  margin-right: 8px;
+`;
+
+const StyledEarthIcon = styled(EarthIcon)`
   margin-right: 8px;
 `;
 
