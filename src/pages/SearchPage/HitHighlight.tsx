@@ -2,7 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { format } from "date-fns";
 
-import { colors, TimeClockIcon, PatientsIcon, EarthIcon } from "../../ui";
+import {
+  colors,
+  PatientsIcon,
+  EarthIcon,
+  TimeClockIcon,
+  MedicalKitIcon
+} from "../../ui";
 
 export const TrialStatus = ({ value }: { value: string | null }) => (
   <HitHighlightContainer>
@@ -33,11 +39,15 @@ export const RegistrationDate = ({
   const formattedDate = format(new Date(registrationDate), "MMM dd yyyy");
   return (
     <HitHighlightContainer>
-      <StyledTimeClockIcon />
-      Registered on {formattedDate}
+      <TimeClockIcon />
+      <RegistrationDateText>Registered on {formattedDate}</RegistrationDateText>
     </HitHighlightContainer>
   );
 };
+
+const RegistrationDateText = styled.span`
+  width: 162px;
+`;
 
 export const TargetedPatients = ({
   targetedPatientsNumber
@@ -46,7 +56,7 @@ export const TargetedPatients = ({
 }) => {
   return (
     <HitHighlightContainer>
-      <StyledPatientsIcon />
+      <PatientsIcon />
       {targetedPatientsNumber} patiens targeted
     </HitHighlightContainer>
   );
@@ -55,8 +65,39 @@ export const TargetedPatients = ({
 export const Countries = ({ countries }: { countries: Array<string> }) => {
   return (
     <HitHighlightContainer>
-      <StyledEarthIcon />
+      <EarthIcon />
       {countries.join(", ")}
+    </HitHighlightContainer>
+  );
+};
+
+interface OutcomeProps {
+  hasClinicalOutcome: boolean;
+  hasSurrogateOutcome: boolean;
+}
+
+const getOutcomeLabelsToDisplay = ({
+  hasClinicalOutcome,
+  hasSurrogateOutcome
+}: OutcomeProps) => {
+  if (!hasClinicalOutcome && !hasSurrogateOutcome) {
+    return [];
+  }
+  const outcomes = hasClinicalOutcome ? ["Clinical outcome"] : [];
+  if (hasSurrogateOutcome) {
+    outcomes.push(
+      outcomes.length > 0 ? "surrogate outcome" : "Surrogate outcome"
+    );
+  }
+  return outcomes;
+};
+
+export const Outcome = (props: OutcomeProps) => {
+  const outcomes = getOutcomeLabelsToDisplay(props);
+  return outcomes.length === 0 ? null : (
+    <HitHighlightContainer>
+      <MedicalKitIcon />
+      {outcomes.join(", ")}
     </HitHighlightContainer>
   );
 };
@@ -66,13 +107,17 @@ const HitHighlightContainer = styled.div`
   font-size: 12px;
   line-height: 20px;
   align-items: center;
+
+  svg {
+    margin-right: 4px;
+  }
 `;
 
 const Dot = styled.div`
   width: 8px;
   height: 8px;
   border-radius: 4px;
-  margin-right: 8px;
+  margin-right: 4px;
 `;
 
 const GreenDot = styled(Dot)`
@@ -81,18 +126,6 @@ const GreenDot = styled(Dot)`
 
 const GrayDot = styled(Dot)`
   background-color: ${colors.GreyBackground};
-`;
-
-const StyledTimeClockIcon = styled(TimeClockIcon)`
-  margin-right: 8px;
-`;
-
-const StyledPatientsIcon = styled(PatientsIcon)`
-  margin-right: 8px;
-`;
-
-const StyledEarthIcon = styled(EarthIcon)`
-  margin-right: 8px;
 `;
 
 const TherapeuticClass = styled.span`
