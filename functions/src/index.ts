@@ -18,9 +18,11 @@ interface Services {
   trialRepository: TrialRepository;
 }
 
-const feedServices = (callback: (services: Services) => any) => async (
-  ...args: any
-) => {
+const feedServices = <Ret, Argument1, Argument2>(
+  callback: (
+    services: Services
+  ) => (arg1: Argument1, arg2: Argument2, ...rest: any[]) => Ret
+) => async (arg1: Argument1, arg2: Argument2, ...rest: any[]): Promise<Ret> => {
   const algoliaIndex = setupAlgoliaIndex({
     apiKey: functions.config().algolia.apikey,
     indexName: functions.config().algolia.index
@@ -32,7 +34,7 @@ const feedServices = (callback: (services: Services) => any) => async (
   const tableName = functions.config().pg.tablename;
   const trialRepository = new PostgresTrialRepository(client, tableName);
 
-  return callback({ indexingService, trialRepository })(args);
+  return callback({ indexingService, trialRepository })(arg1, arg2, ...rest);
 };
 
 export const uploadToAlgolia = functions
