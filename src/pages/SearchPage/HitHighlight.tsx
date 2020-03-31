@@ -148,6 +148,8 @@ const TherapeuticClass = styled.span`
   background: #eaedf1;
   white-space: nowrap;
   margin: 4px 4px 0 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 const TherapeuticClassesContainer = styled(HitHighlightContainer)`
