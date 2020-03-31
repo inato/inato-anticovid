@@ -6,7 +6,8 @@ import { colors, devices } from "../../ui";
 import {
   TrialStatus,
   TherapeuticClasses,
-  RegistrationDate
+  RegistrationDate,
+  TargetedPatients
 } from "./HitHighlight";
 
 interface ClinicalTrialHit {
@@ -18,6 +19,7 @@ interface ClinicalTrialHit {
     date_registration3: string;
     objectID: string;
     acronym: string | null;
+    total_recruitment_size: number;
   };
 }
 
@@ -29,7 +31,8 @@ export const ClinicalTrialHit = ({
     therapeutic_classes,
     date_registration3,
     objectID,
-    acronym
+    acronym,
+    total_recruitment_size
   }
 }: any) => (
   <Link href={web_address} target="_blank">
@@ -43,6 +46,7 @@ export const ClinicalTrialHit = ({
       <RightContainer>
         <RegistrationDate registrationDate={date_registration3} />
         <TrialStatus value={recruitment_status} />
+        <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
         <TherapeuticClasses value={therapeutic_classes} />
       </RightContainer>
     </Container>
