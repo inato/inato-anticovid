@@ -10,6 +10,7 @@ import {
   SubscribeButton,
   CheckboxMixin
 } from "../../ui";
+import { PoweredByAlgolia } from "../../ui/PoweredByAlgolia";
 
 import { ResetFilters } from "./ResetFilters";
 import { FilteringProps } from "./FilteringProps";
@@ -51,6 +52,7 @@ export const Facets = ({
         </Footer>
       </FacetsContainer>
       <StyledNewsletter />
+      <DesktopPoweredByAlgolia />
     </LeftPanel>
   );
 };
@@ -158,6 +160,16 @@ const StyledNewsletter = styled(Newsletter)`
 
   @media ${devices.Desktop} {
     display: inherit;
+  }
+`;
+
+const DesktopPoweredByAlgolia = styled(PoweredByAlgolia)`
+  display: none;
+
+  @media ${devices.Desktop} {
+    display: flex;
+    margin-right: 32px;
+    margin-top: 12px;
   }
 `;
 
