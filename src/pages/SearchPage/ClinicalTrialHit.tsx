@@ -19,7 +19,7 @@ interface ClinicalTrialHit {
     recruitment_status: string | null;
     therapeutic_classes: Array<string>;
     date_registration3: string;
-    objectID: string;
+    trialid: string;
     acronym: string | null;
     total_recruitment_size: number;
     countries: Array<string>;
@@ -35,7 +35,7 @@ export const ClinicalTrialHit = ({
     recruitment_status,
     therapeutic_classes,
     date_registration3,
-    objectID,
+    trialid,
     acronym,
     total_recruitment_size,
     countries,
@@ -46,7 +46,7 @@ export const ClinicalTrialHit = ({
   <Link href={web_address} target="_blank">
     <Container>
       <LeftContainer>
-        {objectID}
+        {trialid}
         <TitleContainer>
           <Title>{public_title}</Title> <Acronym>{acronym}</Acronym>
         </TitleContainer>
