@@ -30,7 +30,7 @@ interface ClinicalTrialHit {
     countries: Array<string>;
     clinical_outcome_extracted_: Array<string>;
     surrogate_outcome_extracted_: Array<string>;
-    results_publications: Array<ClinicalTrialHitPublication>;
+    results_publications?: Array<ClinicalTrialHitPublication>;
   };
 }
 
@@ -51,7 +51,9 @@ export const ClinicalTrialHit = ({
   }
 }: any) => (
   <Link href={web_address} target="_blank">
-    <Container hasPublications={results_publications.length > 0}>
+    <Container
+      hasPublications={results_publications && results_publications.length > 0}
+    >
       <TopContainer>
         <LeftContainer>
           {trialid}
@@ -73,7 +75,7 @@ export const ClinicalTrialHit = ({
           <TherapeuticClasses value={therapeutic_classes} />
         </RightContainer>
       </TopContainer>
-      {results_publications.length > 0 && (
+      {results_publications && results_publications.length > 0 && (
         <PublicationsContainer>
           <PublicationsTitle>Result publications</PublicationsTitle>
 
