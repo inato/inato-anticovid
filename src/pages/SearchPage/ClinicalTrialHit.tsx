@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import { colors, devices, BookmarkIcon } from "../../ui";
+import { colors, devices } from "../../ui";
 
 import {
   TrialStatus,
@@ -11,8 +11,9 @@ import {
   RegistrationDate,
   Outcome
 } from "./HitHighlight";
+import { Publication } from "./Publication";
 
-interface Publication {
+export interface ClinicalTrialHitPublication {
   title?: string;
   url: string;
 }
@@ -29,7 +30,7 @@ interface ClinicalTrialHit {
     countries: Array<string>;
     clinical_outcome_extracted_: Array<string>;
     surrogate_outcome_extracted_: Array<string>;
-    results_publications: Array<Publication>;
+    results_publications: Array<ClinicalTrialHitPublication>;
   };
 }
 
@@ -76,19 +77,11 @@ export const ClinicalTrialHit = ({
         <PublicationsContainer>
           <PublicationsTitle>Result publications</PublicationsTitle>
 
-          {results_publications.map((publication: Publication) => (
-            <PublicationLink
-              key={publication.url}
-              href={publication.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <StyledBookmarkIcon />
-              <PublicationTitle>
-                {publication.title || publication.url}
-              </PublicationTitle>
-            </PublicationLink>
-          ))}
+          {results_publications.map(
+            (publication: ClinicalTrialHitPublication) => (
+              <Publication publication={publication} />
+            )
+          )}
         </PublicationsContainer>
       )}
     </Container>
@@ -200,33 +193,4 @@ const PublicationsContainer = styled.div`
   @media ${devices.Desktop} {
     margin-top: 0;
   }
-`;
-
-const PublicationLink = styled.a`
-  display: flex;
-  :not(:first-child) {
-    margin-top: 4px;
-  }
-
-  @media ${devices.Desktop} {
-    :not(:first-child) {
-      margin-top: 0;
-    }
-  }
-`;
-
-const PublicationTitle = styled.a`
-  color: ${colors.Primary};
-  @media ${devices.Desktop} {
-    max-width: 575px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-`;
-
-const StyledBookmarkIcon = styled(BookmarkIcon)`
-  margin-right: 8px;
-  flex-shrink: 0;
-  margin-top: 3px;
 `;
