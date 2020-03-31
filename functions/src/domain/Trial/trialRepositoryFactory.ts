@@ -1,7 +1,7 @@
 import { TrialRepository } from "./TrialRepository";
 
 export const trialRepositoryFactory = ({
-  findAllTrials = () => Promise.resolve([])
-}: Partial<TrialRepository> = {}) => ({
+  findAllTrials = async () => []
+}: Partial<TrialRepository> = {}): TrialRepository => ({
   findAllTrials
 });
