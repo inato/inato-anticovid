@@ -1,9 +1,11 @@
-import { Trial } from "../../domain";
+import { Trial, toTrialId } from "../../domain";
 import * as decod from "decod";
+
+export const decodeTrialId = (value: unknown) => toTrialId(decod.string(value));
 
 export const deserialize = (row: unknown): Trial => {
   const trialMandatoryProps = decod.props({
-    trialId: decod.at(["trialid"], decod.string),
+    trialId: decod.at(["trialid"], decodeTrialId),
     publicTitle: decod.at(["public_title"], decod.string),
     webAddress: decod.at(["web_address"], decod.string),
     recruitmentStatus: decod.at(
