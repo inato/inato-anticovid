@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { initializeApp } from "firebase";
+import * as firebase from "firebase";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 
@@ -24,8 +24,11 @@ export const SearchSuggestions = () => {
   useEffect(() => {
     const suggestions: Array<SearchSuggestion> = [];
     const fetchSuggestions = async () => {
-      const app = initializeApp(config.firebase);
-      const docs = await app
+      if (!firebase.apps.length) {
+        firebase.initializeApp(config.firebase);
+      }
+
+      const docs = await firebase
         .firestore()
         .collection(searchSuggestionCollection)
         .get();
@@ -57,7 +60,9 @@ export const SearchSuggestions = () => {
         </Suggestion>
       ))}
     </Container>
-  ) : null;
+  ) : (
+    <Container />
+  );
 };
 
 const Suggestion = styled(Link)`
@@ -97,6 +102,7 @@ const Suggestion = styled(Link)`
 
 const Container = styled.div`
   margin-top: 4px;
+  min-height: 30px;
 `;
 const SecondaryText = styled.span`
   color: ${colors.SecondaryText};
