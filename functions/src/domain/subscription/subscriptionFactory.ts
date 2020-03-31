@@ -6,5 +6,5 @@ export const subscriptionFactory = ({
   search = {},
   searchResults = [],
   lastEmailSentDate = new Date("2020-03-30")
-}: Partial<SubscriptionConstructorArgs>) =>
+}: Partial<SubscriptionConstructorArgs> = {}) =>
   new Subscription({ email, search, searchResults, lastEmailSentDate });
