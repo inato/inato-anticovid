@@ -106,7 +106,14 @@ export const SearchPage = () => {
   );
 };
 
-const MobilePoweredByAlgolia = styled(PoweredByAlgolia)``;
+const MobilePoweredByAlgolia = styled(PoweredByAlgolia)`
+  justify-content: center;
+  margin-top: 56px;
+
+  @media ${devices.Desktop} {
+    display: none;
+  }
+`;
 
 const StyledSendUsFeedbackCard = styled(SendUsFeedbackCard)`
   margin-top: 48px;
@@ -159,15 +166,6 @@ const StyledStats = styled(Stats)`
 
 const Layout = styled.div`
   display: flex;
-
-  ${MobilePoweredByAlgolia} {
-    justify-content: center;
-    margin-top: 56px;
-
-    @media ${devices.Desktop} {
-      display: none;
-    }
-  }
 `;
 
 const SearchContainter = styled.div<FilteringProps>`
