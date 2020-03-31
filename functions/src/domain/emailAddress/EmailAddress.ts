@@ -1,9 +1,9 @@
-import isEmail from 'isemail';
-import { Either, right, left } from '@inato/fp';
+import * as isEmail from "isemail";
+import { pipe } from "fp-ts/lib/pipeable";
+import * as Either from "fp-ts/lib/Either";
 
-import { GenericError } from '../errors';
-
-import { EmailAddressError, invalidEmailAddressError } from './error';
+import { EmailAddressError, invalidEmailAddressError } from "./error";
+import { GenericError } from "../errors";
 
 export class EmailAddress {
   private readonly _value: string;
@@ -29,23 +29,28 @@ export class EmailAddress {
   }
 
   private static parse(
-    value: string,
-  ): Either<GenericError<EmailAddressError.Invalid>, EmailAddress> {
+    value: string
+  ): Either.Either<GenericError<EmailAddressError.Invalid>, EmailAddress> {
     if (!EmailAddress.validate(value)) {
-      return left(invalidEmailAddressError(value));
+      return Either.left(invalidEmailAddressError(value));
     }
-    return right(new EmailAddress(value));
+    return Either.right(new EmailAddress(value));
   }
 
   static tryParse(
-    value: string,
-  ): Either<GenericError<EmailAddressError.Invalid>, EmailAddress> {
+    value: string
+  ): Either.Either<GenericError<EmailAddressError.Invalid>, EmailAddress> {
     return EmailAddress.parse(EmailAddress.sanitize(value));
   }
 
   static unsafe_parse(value: string): EmailAddress {
-    return EmailAddress.parse(value).getOrElse(error => {
-      throw error.toError();
-    });
+    return pipe(
+      EmailAddress.parse(value),
+      Either.getOrElse<GenericError<EmailAddressError.Invalid>, EmailAddress>(
+        error => {
+          throw error.toError();
+        }
+      )
+    );
   }
 }
