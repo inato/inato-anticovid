@@ -64,7 +64,7 @@ export const TargetedPatients = ({
   return (
     <HitHighlightContainer>
       <PatientsIcon />
-      {targetedPatientsNumber} patiens targeted
+      {targetedPatientsNumber} patients targeted
     </HitHighlightContainer>
   );
 };
