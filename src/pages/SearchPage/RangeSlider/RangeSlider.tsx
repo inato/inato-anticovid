@@ -70,7 +70,7 @@ const StyledRheostat = styled(Rheostat)`
   overflow: visible;
 
   .rheostat-background {
-    background: #dce0e0;
+    background: ${colors.Separator};
     border-radius: 2px;
     height: 4px;
     position: relative;
@@ -84,14 +84,6 @@ const StyledRheostat = styled(Rheostat)`
     font-size: 12px;
     justify-content: space-between;
     color: ${colors.SecondaryText};
-  }
-
-  .rheostat--disabled .rheostat-progress {
-    background-color: ${colors.GreyBackground};
-  }
-
-  .rheostat--disabled .rheostat-handle {
-    cursor: default;
   }
 
   .rheostat-progress {
@@ -110,13 +102,35 @@ const StyledRheostat = styled(Rheostat)`
     -webkit-box-shadow: 0 2px 4px ${colors.BoxShadow};
     -moz-box-shadow: 0 2px 4px ${colors.BoxShadow};
     box-shadow: 0 2px 4px ${colors.BoxShadow};
-    cursor: pointer;
     height: 16px;
     margin-left: -8px;
     position: absolute;
     z-index: 2;
     width: 16px;
     font-size: 0;
+  }
+
+  .rheostat-handle::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 32px;
+    height: 32px;
+    cursor: grab;
+  }
+
+  .rheostat-handle:active::before {
+    cursor: grabbing;
+  }
+
+  .rheostat-handle:hover {
+    box-shadow: 0px 0px 4px ${colors.PurpleBoxShadow};
+  }
+
+  .rheostat-handle:active {
+    box-shadow: none;
   }
 `;
 
