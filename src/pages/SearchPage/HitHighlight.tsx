@@ -70,6 +70,10 @@ export const TargetedPatients = ({
 };
 
 export const Countries = ({ countries }: { countries: Array<string> }) => {
+  if (countries.length === 0) {
+    return null;
+  }
+
   const countriesToDisplay = countries.join(", ");
   return (
     <HitHighlightContainer>

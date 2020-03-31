@@ -61,7 +61,7 @@ export const ClinicalTrialHit = ({
       <RightContainer>
         <TrialStatus value={recruitment_status} />
         <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
-        {countries.length > 0 && <Countries countries={countries} />}
+        <Countries countries={countries} />
         <TherapeuticClasses value={therapeutic_classes} />
       </RightContainer>
     </Container>
