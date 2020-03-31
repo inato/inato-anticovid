@@ -10,6 +10,7 @@ import {
   SubscribeButton,
   CheckboxMixin
 } from "../../ui";
+import { PoweredByAlgolia } from "../../ui/PoweredByAlgolia";
 
 import { ResetFilters } from "./ResetFilters";
 import { FilteringProps } from "./FilteringProps";
@@ -51,6 +52,7 @@ export const Facets = ({
         </Footer>
       </FacetsContainer>
       <StyledNewsletter />
+      <DesktopPoweredByAlgolia />
     </LeftPanel>
   );
 };
@@ -161,6 +163,14 @@ const StyledNewsletter = styled(Newsletter)`
   }
 `;
 
+const DesktopPoweredByAlgolia = styled(PoweredByAlgolia)`
+  display: none;
+
+  @media ${devices.Desktop} {
+    display: flex;
+  }
+`;
+
 const LeftPanel = styled.div<FilteringProps>`
   align-self: flex-start;
   min-width: 265px;
@@ -195,6 +205,10 @@ const LeftPanel = styled.div<FilteringProps>`
     ${FacetsContainer}, ${StyledNewsletter} {
       margin-right: 32px;
       padding: 16px;
+    }
+    ${DesktopPoweredByAlgolia} {
+      margin-right: 32px;
+      margin-top: 12px;
     }
   }
 `;
