@@ -19,7 +19,7 @@ jobs:
           key: ${{ runner.os }}-app-v1.0-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-app-v1.0-
-      - run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile
         name: Install app dependencies
       - run: yarn lint
         name: Lint app
@@ -34,7 +34,7 @@ jobs:
           key: ${{ runner.os }}-functions-v1.0-${{ hashFiles('functions/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-functions-v1.0-
-      - run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile
         name: Install functions dependencies
         working-directory: functions
       - run: yarn lint
@@ -64,7 +64,7 @@ jobs:
           key: ${{ runner.os }}-app-v1.0-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-app-v1.0-
-      - run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile
         name: Install app dependencies
       - uses: actions/cache@v1
         name: Cache functions dependencies
@@ -73,7 +73,7 @@ jobs:
           key: ${{ runner.os }}-functions-v1.0-${{ hashFiles('functions/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-functions-v1.0-
-      - run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile
         name: Install functions dependencies
         working-directory: functions
       - if: github.ref == 'refs/heads/staging'
