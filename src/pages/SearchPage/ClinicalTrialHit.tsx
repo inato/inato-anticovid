@@ -7,7 +7,8 @@ import {
   TrialStatus,
   TherapeuticClasses,
   RegistrationDate,
-  TargetedPatients
+  TargetedPatients,
+  Countries
 } from "./HitHighlight";
 
 interface ClinicalTrialHit {
@@ -20,6 +21,7 @@ interface ClinicalTrialHit {
     objectID: string;
     acronym: string | null;
     total_recruitment_size: number;
+    countries: Array<string>;
   };
 }
 
@@ -32,7 +34,8 @@ export const ClinicalTrialHit = ({
     date_registration3,
     objectID,
     acronym,
-    total_recruitment_size
+    total_recruitment_size,
+    countries
   }
 }: any) => (
   <Link href={web_address} target="_blank">
@@ -47,6 +50,7 @@ export const ClinicalTrialHit = ({
         <RegistrationDate registrationDate={date_registration3} />
         <TrialStatus value={recruitment_status} />
         <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
+        {countries.length > 0 && <Countries countries={countries} />}
         <TherapeuticClasses value={therapeutic_classes} />
       </RightContainer>
     </Container>
