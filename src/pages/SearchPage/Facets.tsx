@@ -168,6 +168,8 @@ const DesktopPoweredByAlgolia = styled(PoweredByAlgolia)`
 
   @media ${devices.Desktop} {
     display: flex;
+    margin-right: 32px;
+    margin-top: 12px;
   }
 `;
 
@@ -205,10 +207,6 @@ const LeftPanel = styled.div<FilteringProps>`
     ${FacetsContainer}, ${StyledNewsletter} {
       margin-right: 32px;
       padding: 16px;
-    }
-    ${DesktopPoweredByAlgolia} {
-      margin-right: 32px;
-      margin-top: 12px;
     }
   }
 `;
