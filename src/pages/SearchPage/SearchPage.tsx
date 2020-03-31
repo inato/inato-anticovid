@@ -15,6 +15,7 @@ import {
 } from "../../ui";
 import config from "../../config";
 import { useBoolean } from "../../hooks";
+import { PoweredByAlgolia } from "../../ui/PoweredByAlgolia";
 
 import { Facets } from "./Facets";
 import { FilteringProps } from "./FilteringProps";
@@ -85,6 +86,7 @@ export const SearchPage = () => {
               }}
             />
             <SearchResults />
+            <MobilePoweredByAlgolia />
             <StyledSendUsFeedbackCard />
             <Disclaimer />
           </SearchContainter>
@@ -104,8 +106,17 @@ export const SearchPage = () => {
   );
 };
 
-const StyledSendUsFeedbackCard = styled(SendUsFeedbackCard)`
+const MobilePoweredByAlgolia = styled(PoweredByAlgolia)`
+  justify-content: center;
   margin-top: 56px;
+
+  @media ${devices.Desktop} {
+    display: none;
+  }
+`;
+
+const StyledSendUsFeedbackCard = styled(SendUsFeedbackCard)`
+  margin-top: 48px;
 
   @media ${devices.Desktop} {
     display: none;
