@@ -41,7 +41,6 @@ export const RegistrationDate = ({
 
 const HitHighlightContainer = styled.div`
   display: flex;
-  color: ${colors.GreySecondaryText};
   font-size: 12px;
   line-height: 20px;
   align-items: center;
