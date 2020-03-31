@@ -1,3 +1,4 @@
+export * from "./AlgoliaLogo";
 export * from "./BookmarkIcon";
 export * from "./EarthIcon";
 export * from "./LaboratoryIcon";

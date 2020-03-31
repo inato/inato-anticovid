@@ -1,7 +1,11 @@
 import { Trial } from "./Trial";
+import { TrialId, toTrialId } from "./TrialId";
+
+export const trialIdFactory = (trialId: string = "trialId") =>
+  toTrialId(trialId);
 
 export const trialFactory = ({
-  trialId = "trialId",
+  trialId = trialIdFactory(),
   publicTitle = "publicTitle",
   webAddress = "webAddress",
   recruitmentStatus = "recruitmentStatus",
@@ -9,7 +13,7 @@ export const trialFactory = ({
   registrationDate = new Date(),
   rest = {}
 }: Partial<{
-  trialId: string;
+  trialId: TrialId;
   publicTitle: string;
   webAddress: string;
   recruitmentStatus: string | null;
