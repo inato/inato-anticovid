@@ -8,14 +8,17 @@ import {
   AlgoliaIndexingService,
   setupAlgoliaIndex,
   PostgresTrialRepository,
-  setupPostgresClient
+  setupPostgresClient,
+  setupFirestore,
+  FirestoreSubscriptionRepository
 } from "./infrastructure";
 import { IndexingService } from "./application";
-import { TrialRepository } from "./domain";
+import { TrialRepository, SubscriptionRepository } from "./domain";
 
 interface Services {
   indexingService: IndexingService;
   trialRepository: TrialRepository;
+  subscriptionRepository: SubscriptionRepository;
 }
 
 const feedServices = <Ret, Argument1, Argument2>(
@@ -27,20 +30,27 @@ const feedServices = <Ret, Argument1, Argument2>(
     apiKey: functions.config().algolia.apikey,
     indexName: functions.config().algolia.index
   });
+  const postgresClient = await setupPostgresClient();
+  const firestore = setupFirestore({
+    config: functions.firebaseConfig() ?? undefined
+  });
 
   const indexingService = new AlgoliaIndexingService(algoliaIndex);
 
-  const client = await setupPostgresClient();
-  const tableName = functions.config().pg.tablename;
-  const trialRepository = new PostgresTrialRepository(client, tableName);
-
-  const result = await callback({ indexingService, trialRepository })(
-    arg1,
-    arg2,
-    ...rest
+  const trialRepository = new PostgresTrialRepository(
+    postgresClient,
+    functions.config().pg.tablename
   );
 
-  await client.end();
+  const subscriptionRepository = new FirestoreSubscriptionRepository(firestore);
+
+  const result = await callback({
+    indexingService,
+    trialRepository,
+    subscriptionRepository
+  })(arg1, arg2, ...rest);
+
+  await postgresClient.end();
 
   return result;
 };
