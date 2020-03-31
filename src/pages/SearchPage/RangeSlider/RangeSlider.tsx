@@ -3,6 +3,9 @@ import React, { useCallback, useState, useEffect } from "react";
 import { connectRange } from "react-instantsearch-dom";
 import styled from "styled-components";
 import Rheostat, { PublicState } from "rheostat";
+import { format } from "date-fns";
+
+import { colors } from "../../../ui";
 
 interface Refinement {
   min: number;
@@ -16,14 +19,6 @@ interface Props {
   refine: (refinement: Refinement) => void;
   canRefine: boolean;
 }
-
-const RangeContainer = styled.div`
-  margin-top: 35px;
-
-  .rc-slider-tooltip {
-    background-color: none;
-  }
-`;
 
 export const RangeSlider = connectRange(
   ({ currentRefinement, min, max, refine }: Props) => {
@@ -52,15 +47,78 @@ export const RangeSlider = connectRange(
     );
 
     return (
-      <RangeContainer>
-        <Rheostat
-          min={rheostatState?.min}
-          max={rheostatState?.max}
-          values={rheostatState?.values}
-          onChange={onChange}
-          onValuesUpdated={onValuesUpdated}
-        />
-      </RangeContainer>
+      <StyledRheostat
+        min={rheostatState?.min}
+        max={rheostatState?.max}
+        values={rheostatState?.values}
+        onChange={onChange}
+        onValuesUpdated={onValuesUpdated}
+      >
+        <div className="rheostat-values">
+          <div>{formatDate(rheostatState?.values[0])}</div>
+          <div>{formatDate(rheostatState?.values[1])}</div>
+        </div>
+      </StyledRheostat>
     );
   }
 );
+
+const StyledRheostat = styled(Rheostat)`
+  margin: 0 4px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+
+  .rheostat-background {
+    background: #dce0e0;
+    border-radius: 2px;
+    height: 4px;
+    position: relative;
+    top: 10px;
+    width: 100%;
+  }
+
+  .rheostat-values {
+    display: flex;
+    margin-top: 14px;
+    font-size: 12px;
+    justify-content: space-between;
+    color: ${colors.SecondaryText};
+  }
+
+  .rheostat--disabled .rheostat-progress {
+    background-color: ${colors.GreyBackground};
+  }
+
+  .rheostat--disabled .rheostat-handle {
+    cursor: default;
+  }
+
+  .rheostat-progress {
+    background-color: ${colors.Primary};
+    height: 4px;
+    position: absolute;
+    top: 10px;
+  }
+
+  .rheostat-handle {
+    border: 1px solid ${colors.Primary};
+    background: ${colors.SecondaryBackground};
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    -webkit-box-shadow: 0 2px 4px ${colors.BoxShadow};
+    -moz-box-shadow: 0 2px 4px ${colors.BoxShadow};
+    box-shadow: 0 2px 4px ${colors.BoxShadow};
+    cursor: pointer;
+    height: 16px;
+    margin-left: -8px;
+    position: absolute;
+    z-index: 2;
+    width: 16px;
+    font-size: 0;
+  }
+`;
+
+const formatDate = (timestamp?: number) =>
+  timestamp ? format(new Date(timestamp), "MMM d, uu") : "";
