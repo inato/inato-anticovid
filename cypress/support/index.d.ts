@@ -8,6 +8,12 @@ declare namespace Cypress {
      * Custom command to select DOM element by data-cy attribute.
      * @example cy.dataCy('greeting')
      */
+    dataCy(label: string): Chainable<Element>;
+
+    /**
+     * Custom command to set the viewport to a known device type.
+     * @example cy.device('small')
+     */
     device(type: DeviceType): Chainable<Element>;
   }
 }

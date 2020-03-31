@@ -35,3 +35,5 @@ Cypress.Commands.add("device", (type: "small" | "medium" | "large") => {
       return cy.viewport(320, 568);
   }
 });
+
+Cypress.Commands.add("dataCy", (attr: string) => cy.get(`[data-cy="${attr}"]`));
