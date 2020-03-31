@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import { colors, devices } from "../../ui";
+import { colors, devices, BookmarkIcon } from "../../ui";
 
 import {
   TrialStatus,
@@ -43,10 +43,18 @@ export const ClinicalTrialHit = ({
     surrogate_outcome_extracted_
   }
 }: any) => {
-  const publications: Array<{ title: string; url: string }> = [
+  const publications: Array<{ title?: string; url: string }> = [
     {
       title:
         "This is an example of a very long result publication title where you could have a Carama eiuo a sjdfoi",
+      url: "http://tata"
+    },
+    {
+      title:
+        "This is an example of a very long result publication title where you could have a Carama eiuo a sjdfoi",
+      url: "http://tata"
+    },
+    {
       url: "http://tata"
     }
   ];
@@ -76,10 +84,15 @@ export const ClinicalTrialHit = ({
           </RightContainer>
         </TopContainer>
         {publications.length > 0 && (
-          <PublicationContainer>
+          <PublicationsContainer>
             <PublicationsTitle>Result publications</PublicationsTitle>
-            {publications[0].title}
-          </PublicationContainer>
+
+            {publications.map(publication => (
+              <div key={publication.url}>
+                <BookmarkIcon /> {publication.title || publication.url}
+              </div>
+            ))}
+          </PublicationsContainer>
         )}
       </Container>
     </Link>
@@ -185,4 +198,4 @@ const Link = styled.a`
   text-decoration: none;
 `;
 
-const PublicationContainer = styled.div``;
+const PublicationsContainer = styled.div``;
