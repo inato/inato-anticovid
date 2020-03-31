@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 import ReactGA from "react-ga";
 import "instantsearch.css/themes/algolia.css";
 import "./index.css";
-import "rc-slider/assets/index.css";
 
 import config from "./config";
 import App from "./App";
