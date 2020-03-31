@@ -42,32 +42,44 @@ export const ClinicalTrialHit = ({
     clinical_outcome_extracted_,
     surrogate_outcome_extracted_
   }
-}: any) => (
-  <Link href={web_address} target="_blank">
-    <Container>
-      <LeftContainer>
-        {trialid}
-        <TitleContainer>
-          <Title>{public_title}</Title> <Acronym>{acronym}</Acronym>
-        </TitleContainer>
-        <RegistrationAndOutcomeContainer>
-          <RegistrationDate registrationDate={date_registration3} />
-          <Outcome
-            hasClinicalOutcome={clinical_outcome_extracted_.length > 0}
-            hasSurrogateOutcome={surrogate_outcome_extracted_.length > 0}
-          />
-        </RegistrationAndOutcomeContainer>
-      </LeftContainer>
-      <RightContainer>
-        <TrialStatus value={recruitment_status} />
-        <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
-        <Countries countries={countries} />
-        <TherapeuticClasses value={therapeutic_classes} />
-      </RightContainer>
-    </Container>
-  </Link>
-);
+}: any) => {
+  const publications = [
+    {
+      title:
+        "This is an example of a very long result publication title where you could have a Carama eiuo a sjdfoi",
+      url: "http://tata"
+    }
+  ];
 
+  return (
+    <Link href={web_address} target="_blank">
+      <Container>
+        <TopContainer>
+          <LeftContainer>
+            {trialid}
+            <TitleContainer>
+              <Title>{public_title}</Title> <Acronym>{acronym}</Acronym>
+            </TitleContainer>
+            <RegistrationAndOutcomeContainer>
+              <RegistrationDate registrationDate={date_registration3} />
+              <Outcome
+                hasClinicalOutcome={clinical_outcome_extracted_.length > 0}
+                hasSurrogateOutcome={surrogate_outcome_extracted_.length > 0}
+              />
+            </RegistrationAndOutcomeContainer>
+          </LeftContainer>
+          <RightContainer>
+            <TrialStatus value={recruitment_status} />
+            <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
+            <Countries countries={countries} />
+            <TherapeuticClasses value={therapeutic_classes} />
+          </RightContainer>
+        </TopContainer>
+        <PublicationContainer>{publications[0].title}</PublicationContainer>
+      </Container>
+    </Link>
+  );
+};
 const Container = styled.div`
   color: ${colors.GreySecondaryText};
   &:hover {
@@ -83,6 +95,11 @@ const Container = styled.div`
   border-radius: 4px;
   padding: 16px;
 
+  display: flex;
+  flex-direction: column;
+`;
+
+const TopContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -148,3 +165,5 @@ const LeftContainer = styled.div`
 const Link = styled.a`
   text-decoration: none;
 `;
+
+const PublicationContainer = styled.div``;
