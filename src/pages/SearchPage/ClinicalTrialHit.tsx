@@ -6,9 +6,10 @@ import { colors, devices } from "../../ui";
 import {
   TrialStatus,
   TherapeuticClasses,
-  RegistrationDate,
   TargetedPatients,
-  Countries
+  Countries,
+  RegistrationDate,
+  Outcome
 } from "./HitHighlight";
 
 interface ClinicalTrialHit {
@@ -22,6 +23,8 @@ interface ClinicalTrialHit {
     acronym: string | null;
     total_recruitment_size: number;
     countries: Array<string>;
+    clinical_outcome_extracted_: Array<string>;
+    surrogate_outcome_extracted_: Array<string>;
   };
 }
 
@@ -35,7 +38,9 @@ export const ClinicalTrialHit = ({
     objectID,
     acronym,
     total_recruitment_size,
-    countries
+    countries,
+    clinical_outcome_extracted_,
+    surrogate_outcome_extracted_
   }
 }: any) => (
   <Link href={web_address} target="_blank">
@@ -45,9 +50,15 @@ export const ClinicalTrialHit = ({
         <TitleContainer>
           <Title>{public_title}</Title> <Acronym>{acronym}</Acronym>
         </TitleContainer>
+        <RegistrationAndOutcomeContainer>
+          <RegistrationDate registrationDate={date_registration3} />
+          <Outcome
+            hasClinicalOutcome={clinical_outcome_extracted_.length > 0}
+            hasSurrogateOutcome={surrogate_outcome_extracted_.length > 0}
+          />
+        </RegistrationAndOutcomeContainer>
       </LeftContainer>
       <RightContainer>
-        <RegistrationDate registrationDate={date_registration3} />
         <TrialStatus value={recruitment_status} />
         <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
         {countries.length > 0 && <Countries countries={countries} />}
@@ -87,6 +98,14 @@ const Container = styled.div`
 const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
+  > div:not(:last-child) {
+    margin-top: 4px;
+  }
+  @media ${devices.Desktop} {
+    > div:not(:last-child):not(:first-child) {
+      margin-top: 4px;
+    }
+  }
 `;
 
 const TitleContainer = styled.div`
@@ -102,12 +121,27 @@ const Acronym = styled.span`
   white-space: nowrap;
 `;
 
-const LeftContainer = styled.div`
-  margin-right: 64px;
+const RegistrationAndOutcomeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  > div {
+    margin-top: 5px;
+  }
 
+  @media ${devices.Desktop} {
+    flex-direction: row;
+    margin-top: 2px;
+    > div {
+      margin-top: 0;
+    }
+  }
+`;
+
+const LeftContainer = styled.div`
   @media ${devices.Desktop} {
     width: 600px;
     min-width: 600px;
+    margin-right: 64px;
   }
 `;
 
