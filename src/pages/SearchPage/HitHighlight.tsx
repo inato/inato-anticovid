@@ -49,6 +49,13 @@ const RegistrationDateText = styled.span`
   width: 162px;
 `;
 
+const EllipsisStyledText = styled.span`
+  max-width: 212px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
 export const TargetedPatients = ({
   targetedPatientsNumber
 }: {
@@ -63,10 +70,13 @@ export const TargetedPatients = ({
 };
 
 export const Countries = ({ countries }: { countries: Array<string> }) => {
+  const countriesToDisplay = countries.join(", ");
   return (
     <HitHighlightContainer>
       <EarthIcon />
-      {countries.join(", ")}
+      <EllipsisStyledText title={countriesToDisplay}>
+        {countriesToDisplay}
+      </EllipsisStyledText>
     </HitHighlightContainer>
   );
 };
