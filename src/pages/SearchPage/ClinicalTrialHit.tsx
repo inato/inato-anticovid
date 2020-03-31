@@ -124,6 +124,7 @@ const Container = styled.div<{ hasPublications: boolean }>`
       ${LeftContainer} {
         margin-bottom: 15px;
       }
+      border-left: 4px solid ${colors.Primary};
     `}
 `;
 
