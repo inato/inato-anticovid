@@ -1,10 +1,8 @@
+/* eslint-disable no-console */
 import React, { useCallback, useState, useEffect } from "react";
 import { connectRange } from "react-instantsearch-dom";
-import { Range, createSliderWithTooltip } from "rc-slider";
 import styled from "styled-components";
-import { format } from "date-fns";
-
-import { colors } from "../../../ui";
+import Rheostat, { PublicState } from "rheostat";
 
 interface Refinement {
   min: number;
@@ -19,8 +17,6 @@ interface Props {
   canRefine: boolean;
 }
 
-const RangeWithTooltip = createSliderWithTooltip(Range);
-
 const RangeContainer = styled.div`
   margin-top: 35px;
 
@@ -29,49 +25,40 @@ const RangeContainer = styled.div`
   }
 `;
 
-const formatTip = (timestamp: number) => format(new Date(timestamp), "LLL d");
-
-const computeValue = (currentRefinement: Refinement) =>
-  currentRefinement.min && currentRefinement.max
-    ? [currentRefinement.min, currentRefinement.max]
-    : undefined;
-
 export const RangeSlider = connectRange(
   ({ currentRefinement, min, max, refine }: Props) => {
-    const [value, setValue] = useState(computeValue(currentRefinement));
+    const [rheostatState, setRheostatState] = useState<PublicState>();
 
     useEffect(() => {
-      setValue(computeValue(currentRefinement));
-    }, [setValue, currentRefinement]);
+      setRheostatState({
+        min: min ?? currentRefinement.min,
+        max: max ?? currentRefinement.max,
+        values: [currentRefinement.min, currentRefinement.max]
+      });
+    }, [setRheostatState, currentRefinement, min, max]);
 
-    const handleAfterChange = useCallback(
-      ([min, max]: Array<number>) => {
-        refine({ min, max });
+    const onChange = useCallback(
+      ({ values: [min, max] }: PublicState) => {
+        if (min && max) {
+          refine({ min, max });
+        }
       },
       [refine]
     );
 
-    const handldChange = useCallback(
-      ([min, max]: Array<number>) => {
-        setValue([min, max]);
-      },
-      [setValue]
+    const onValuesUpdated = useCallback(
+      (state: PublicState) => setRheostatState(state),
+      []
     );
 
     return (
       <RangeContainer>
-        <RangeWithTooltip
-          min={min}
-          max={max}
-          value={value}
-          onAfterChange={handleAfterChange}
-          onChange={handldChange}
-          trackStyle={[{ backgroundColor: colors.Primary }]}
-          handleStyle={[
-            { borderColor: colors.Primary, boxShadow: "none" },
-            { borderColor: colors.Primary, boxShadow: "none" }
-          ]}
-          tipFormatter={formatTip}
+        <Rheostat
+          min={rheostatState?.min}
+          max={rheostatState?.max}
+          values={rheostatState?.values}
+          onChange={onChange}
+          onValuesUpdated={onValuesUpdated}
         />
       </RangeContainer>
     );
