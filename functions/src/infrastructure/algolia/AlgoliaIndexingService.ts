@@ -21,7 +21,12 @@ export class AlgoliaIndexingService implements IndexingService {
                 batchSize: 50
               }
             ))(),
-        e => unknownError(e instanceof Error ? e.message : "Unknown error")
+        e =>
+          unknownError(
+            e instanceof Error
+              ? e.message
+              : "Unknown algolia replacing all objects error"
+          )
       ),
       TaskEither.map(({ objectIDs }) => objectIDs)
     );
@@ -45,7 +50,12 @@ export class AlgoliaIndexingService implements IndexingService {
               attributesForFaceting,
               customRanking
             }))(),
-        e => unknownError(e instanceof Error ? e.message : "Unknown error")
+        e =>
+          unknownError(
+            e instanceof Error
+              ? e.message
+              : "Unknown algolia set settings error"
+          )
       ),
       TaskEither.map(() => undefined)
     );
