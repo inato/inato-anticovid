@@ -3,13 +3,16 @@ export class GenericError<T extends string> {
 
   readonly reason: string;
 
+  readonly error: Error;
+
   constructor(props: { type: T; reason: string }) {
     this.type = props.type;
     this.reason = props.reason;
+    this.error = new Error(props.reason);
   }
 
   toError() {
-    return new Error(this.reason);
+    return this.error;
   }
 }
 
