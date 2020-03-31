@@ -12,6 +12,9 @@ describe("Analysis page", () => {
   devices.forEach(deviceType => {
     describe(deviceType, () => {
       beforeEach(() => {
+        cy.on("window:before:load", win => {
+          delete win.fetch;
+        });
         cy.device(deviceType);
         cy.visit("/");
       });
@@ -51,11 +54,29 @@ describe("Analysis page", () => {
           cy.contains("Clinical research for Covid-19");
         });
 
+        // Should have a feeback section
+        getFeedback()
+          .within(() => {
+            cy.contains("Any questions or comments?");
+            cy.contains("a", "Send us feedback");
+          })
+          .then(e =>
+            cy.wrap(e).then($elt => {
+              // is not visible on large device
+              const isVisible = deviceType !== "large";
+              cy.wrap($elt.is(":visible")).should("eq", isVisible);
+            })
+          );
+
         // Should have footer section
         getFooter().within(() => {
+          cy.server();
+          cy.route("POST", /hooks\.zapier\.com/, { status: "success" });
+
           cy.contains("Stay updated with new analysis");
           cy.get("input").type("hello@mail.co");
-          // cy.get("button").click();
+          cy.get("button").click();
+          cy.contains("You have been successfully subscribed");
 
           cy.contains("Want to go further?");
           cy.contains("searching trials").click();

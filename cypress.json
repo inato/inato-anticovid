@@ -2,5 +2,6 @@
   "baseUrl": "http://localhost:3000",
   "supportFile": "cypress/support/index.ts",
   "fixturesFolder": false,
-  "video": false
+  "video": false,
+  "blacklistHosts": "www.google-analytics.com"
 }
