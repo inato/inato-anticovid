@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { colors, devices } from "../../ui";
 
@@ -43,7 +43,7 @@ export const ClinicalTrialHit = ({
     surrogate_outcome_extracted_
   }
 }: any) => {
-  const publications = [
+  const publications: Array<{ title: string; url: string }> = [
     {
       title:
         "This is an example of a very long result publication title where you could have a Carama eiuo a sjdfoi",
@@ -53,7 +53,7 @@ export const ClinicalTrialHit = ({
 
   return (
     <Link href={web_address} target="_blank">
-      <Container>
+      <Container hasPublications={publications.length > 0}>
         <TopContainer>
           <LeftContainer>
             {trialid}
@@ -75,12 +75,22 @@ export const ClinicalTrialHit = ({
             <TherapeuticClasses value={therapeutic_classes} />
           </RightContainer>
         </TopContainer>
-        <PublicationContainer>{publications[0].title}</PublicationContainer>
+        {publications.length > 0 && (
+          <PublicationContainer>
+            <PublicationsTitle>Result publications</PublicationsTitle>
+            {publications[0].title}
+          </PublicationContainer>
+        )}
       </Container>
     </Link>
   );
 };
-const Container = styled.div`
+
+const PublicationsTitle = styled.div`
+  font-size: 12px;
+`;
+
+const Container = styled.div<{ hasPublications: boolean }>`
   color: ${colors.GreySecondaryText};
   &:hover {
     background-color: ${colors.LightGreyBackground};
@@ -97,6 +107,15 @@ const Container = styled.div`
 
   display: flex;
   flex-direction: column;
+  ${({ hasPublications }) =>
+    hasPublications &&
+    css`
+      min-height: 144px;
+      justify-content: space-between;
+      ${LeftContainer} {
+        margin-bottom: 15px;
+      }
+    `}
 `;
 
 const TopContainer = styled.div`
