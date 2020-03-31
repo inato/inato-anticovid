@@ -22,7 +22,10 @@ export class PostgresTrialRepository implements TrialRepository {
     return pipe(
       TaskEither.tryCatch(
         () => this.client.query(`SELECT * from covid.${this.tableName}`),
-        e => unknownError(e instanceof Error ? e.message : "Unknown error")
+        e =>
+          unknownError(
+            e instanceof Error ? e.message : "Unknown pg query error"
+          )
       ),
       TaskEither.map(queryResult =>
         queryResult.rows.map((row: unknown) => deserialize(row))
