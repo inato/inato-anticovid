@@ -4,6 +4,7 @@ import { format } from "date-fns";
 
 import {
   colors,
+  devices,
   PatientsIcon,
   EarthIcon,
   TimeClockIcon,
@@ -148,6 +149,11 @@ const TherapeuticClass = styled.span`
   background: #eaedf1;
   white-space: nowrap;
   margin: 4px 4px 0 0;
+
+  @media ${devices.Desktop} {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 `;
 
 const TherapeuticClassesContainer = styled(HitHighlightContainer)`
