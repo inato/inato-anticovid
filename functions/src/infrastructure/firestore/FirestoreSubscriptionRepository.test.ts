@@ -1,25 +1,30 @@
+import { v4 as uuid } from "uuid";
+import { firestore } from "firebase-admin";
+import * as Either from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/pipeable";
+
 import { FirestoreSubscriptionRepository } from "./FirestoreSubscriptionRepository";
 import {
   subscriptionFactory,
   emailAddressFactory,
   trialIdFactory,
   Subscription,
-  EmailAddress
+  EmailAddress,
+  subscriptionIdFactory
 } from "../../domain";
-import * as Either from "fp-ts/lib/Either";
 import { GenericErrorType } from "../../domain/errors";
-import { pipe } from "fp-ts/lib/pipeable";
-import { firestore } from "firebase-admin";
 
 const firestoreMock = ({
   set = () => Promise.resolve(),
   email,
+  id = uuid(),
   date = new Date(),
   search = {},
   search_results = []
 }: Partial<{
   set: Function;
   email: string;
+  id: string;
   date: Date;
   search: Object;
   search_results: ReadonlyArray<string>;
@@ -32,6 +37,7 @@ const firestoreMock = ({
           Promise.resolve({
             docs: [
               {
+                id,
                 data() {
                   return {
                     email,
@@ -80,11 +86,13 @@ describe("FirestoreSubscriptionRepository", () => {
     it("should find subscriptions", async () => {
       const date = new Date();
       const email = "email@inato.com";
+      const id = uuid();
 
       const repository = new FirestoreSubscriptionRepository(
         firestoreMock({
           email,
           date,
+          id,
           search: {},
           search_results: ["trialId"]
         })
@@ -97,6 +105,7 @@ describe("FirestoreSubscriptionRepository", () => {
       expect(results).toStrictEqual(
         Either.right([
           new Subscription({
+            id: subscriptionIdFactory(id),
             email: EmailAddress.unsafe_parse(email),
             search: {},
             searchResults: [trialIdFactory("trialId")],

@@ -41,5 +41,3 @@ export const subscribeToUpdatesHandler = ({
       }
     )
   )();
-
-// SHOULD ADD ID
