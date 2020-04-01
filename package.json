@@ -101,7 +101,9 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "lint": "eslint --config ./.eslintrc.js './src/**/*.ts' './src/**/*.tsx'"
+    "lint": "eslint --config ./.eslintrc.js './src/**/*.ts' './src/**/*.tsx'",
+    "e2e": "cypress run",
+    "e2e:dev": "cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"
