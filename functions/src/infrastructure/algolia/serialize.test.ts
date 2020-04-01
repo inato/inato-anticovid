@@ -15,7 +15,6 @@ describe("serialize", () => {
     expect(serialize(trial)).toStrictEqual({
       exclusion_criteria: "",
       inclusion_criteria: "",
-      has_publications: false,
       public_title: "public_title",
       web_address: "web_address",
       recruitment_status: "recruitment_status",
@@ -47,17 +46,6 @@ describe("serialize", () => {
       inclusion_criteria: "",
       objectID: "trialid",
       other: "other"
-    });
-  });
-
-  it("should serialize a trial with published results", () => {
-    const trial = trialFactory({
-      rest: {
-        results_publications_count: 2
-      }
-    });
-    expect(serialize(trial)).toMatchObject({
-      has_publications: true
     });
   });
 });
