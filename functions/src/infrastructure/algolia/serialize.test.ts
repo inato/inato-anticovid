@@ -15,6 +15,7 @@ describe("serialize", () => {
     expect(serialize(trial)).toStrictEqual({
       exclusion_criteria: "",
       inclusion_criteria: "",
+      has_results_publications: false,
       public_title: "public_title",
       web_address: "web_address",
       recruitment_status: "recruitment_status",
