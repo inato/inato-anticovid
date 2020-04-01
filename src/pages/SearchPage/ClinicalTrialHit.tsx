@@ -96,14 +96,6 @@ const PublicationsTitle = styled.div`
 
 const Container = styled.div<{ hasPublications: boolean }>`
   color: ${colors.GreySecondaryText};
-  &:hover {
-    background-color: ${colors.LightGreyBackground};
-    cursor: pointer;
-
-    transform: scale(1.002);
-    transition-duration: 100ms;
-    box-shadow: hsla(0, 0%, 94%, 1) 4px 4px 6px 0px;
-  }
   background-color: ${colors.SecondaryBackground};
   border: 1px solid ${colors.Border};
   border-radius: 4px;
