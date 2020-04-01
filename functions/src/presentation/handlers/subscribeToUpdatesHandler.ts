@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import { pipe } from "fp-ts/lib/pipeable";
 import * as TaskEither from "fp-ts/lib/TaskEither";
+import * as Either from "fp-ts/lib/Either";
 import * as Task from "fp-ts/lib/Task";
 import * as decod from "decod";
 import { SubscriptionRepository, EmailAddress } from "../../domain";
@@ -19,8 +20,9 @@ export const subscribeToUpdatesHandler = ({
   response: functions.Response<any>
 ) =>
   pipe(
-    request.query,
+    request,
     getFacetFiltersQueryFromRequest,
+    TaskEither.fromEither,
     TaskEither.map(query =>
       subscribeToUpdates({
         indexingService,
@@ -45,8 +47,8 @@ export const subscribeToUpdatesHandler = ({
   )();
 
 const getFacetFiltersQueryFromRequest = ({ query }: functions.https.Request) =>
-  TaskEither.tryCatch(
-    async () => ({
+  Either.tryCatch(
+    () => ({
       email: decod.at("email", decodeEmailAddress)(query),
       searchQuery: decod.at("searchQuery", decodeSearchQuery)(query),
       facetFilters: decod.props({
