@@ -24,7 +24,7 @@ export const TherapeuticClasses = ({ value }: { value: Array<string> }) => {
       {value
         .filter(therapeuticClass => therapeuticClass)
         .map(therapeuticClass => (
-          <TherapeuticClass key={therapeuticClass}>
+          <TherapeuticClass key={therapeuticClass} title={therapeuticClass}>
             {therapeuticClass}
           </TherapeuticClass>
         ))}
