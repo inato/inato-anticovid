@@ -9,6 +9,7 @@ import {
 import * as Either from "fp-ts/lib/Either";
 import { GenericErrorType } from "../../domain/errors";
 import { pipe } from "fp-ts/lib/pipeable";
+import { firestore } from "firebase-admin";
 
 const firestoreMock = ({
   set = () => Promise.resolve(),
@@ -34,7 +35,10 @@ const firestoreMock = ({
                 data() {
                   return {
                     email,
-                    last_email_sent_date: date,
+                    last_email_sent_date: new firestore.Timestamp(
+                      Math.floor(date.getTime() / 1000),
+                      0
+                    ),
                     search,
                     search_results
                   };
@@ -78,7 +82,12 @@ describe("FirestoreSubscriptionRepository", () => {
       const email = "email@inato.com";
 
       const repository = new FirestoreSubscriptionRepository(
-        firestoreMock({ email, date, search: {}, search_results: ["trialId"] })
+        firestoreMock({
+          email,
+          date,
+          search: {},
+          search_results: ["trialId"]
+        })
       );
 
       const results = await repository.findAllSubscriptionsLastEmailSentAfter(
@@ -91,7 +100,9 @@ describe("FirestoreSubscriptionRepository", () => {
             email: EmailAddress.unsafe_parse(email),
             search: {},
             searchResults: [trialIdFactory("trialId")],
-            lastEmailSentDate: date
+            lastEmailSentDate: new Date(
+              Math.floor(date.getTime() / 1000) * 1000
+            )
           })
         ])
       );
