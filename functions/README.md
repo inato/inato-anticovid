@@ -35,7 +35,7 @@ Run:
 yarn shell
 ```
 
-It will open a firebase shell in which you can type `uploadToAlgolia()` to run the function.
+It will open a firebase shell in which you can type `refreshAlgoliaTrialIndex()` to run the function.
 
 ## Add a new environment variable
 
