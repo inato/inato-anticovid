@@ -63,34 +63,6 @@ export class AlgoliaIndexingService implements IndexingService {
     );
   }
 
-  stringifyFacetFilters({
-    recruitment_status = [],
-    therapeutic_classes = [],
-    clinical_outcome_extracted_ = [],
-    surrogate_outcome_extracted_ = [],
-    study_type = [],
-    countries = []
-  }: Partial<FacetFilters>) {
-    return [
-      recruitment_status.map(
-        recruitmentStatus => `recruitment_status:${recruitmentStatus}`
-      ),
-      therapeutic_classes.map(
-        therapeuticClass => `therapeutic_classes:${therapeuticClass}`
-      ),
-      clinical_outcome_extracted_.map(
-        clinicalOutcomeExtracted =>
-          `clinical_outcome_extracted_:${clinicalOutcomeExtracted}`
-      ),
-      surrogate_outcome_extracted_.map(
-        surrogateOutcomeExtracted =>
-          `surrogate_outcome_extracted_:${surrogateOutcomeExtracted}`
-      ),
-      study_type.map(studyType => `study_type:${studyType}`),
-      countries.map(country => `countries:${country}`)
-    ];
-  }
-
   searchTrials({
     searchQuery,
     facetFilters
@@ -98,7 +70,7 @@ export class AlgoliaIndexingService implements IndexingService {
     searchQuery: Option<string>;
     facetFilters: Partial<FacetFilters>;
   }) {
-    const facetFiltersToSearch = this.stringifyFacetFilters(facetFilters);
+    const facetFiltersToSearch = serializeFacetFilters(facetFilters);
     return pipe(
       TaskEither.tryCatch(
         () =>
@@ -116,3 +88,31 @@ export class AlgoliaIndexingService implements IndexingService {
     );
   }
 }
+
+const serializeFacetFilters = ({
+  recruitment_status = [],
+  therapeutic_classes = [],
+  clinical_outcome_extracted_ = [],
+  surrogate_outcome_extracted_ = [],
+  study_type = [],
+  countries = []
+}: Partial<FacetFilters>) => {
+  return [
+    recruitment_status.map(
+      recruitmentStatus => `recruitment_status:${recruitmentStatus}`
+    ),
+    therapeutic_classes.map(
+      therapeuticClass => `therapeutic_classes:${therapeuticClass}`
+    ),
+    clinical_outcome_extracted_.map(
+      clinicalOutcomeExtracted =>
+        `clinical_outcome_extracted_:${clinicalOutcomeExtracted}`
+    ),
+    surrogate_outcome_extracted_.map(
+      surrogateOutcomeExtracted =>
+        `surrogate_outcome_extracted_:${surrogateOutcomeExtracted}`
+    ),
+    study_type.map(studyType => `study_type:${studyType}`),
+    countries.map(country => `countries:${country}`)
+  ];
+};
