@@ -38,11 +38,11 @@ The local configuration is stored in `.runtimeconfig.json`
 Run:
 
 ```sh
-yarn build
-firebase emulators:start
+yarn serve
 ```
 
-It will emulate all Firebase services we use (functions, hosting, firestore) locally.
+It will build then emulate all Firebase services we use (functions, hosting, firestore) locally.
+It doesn't watch your changes so you need to restart it every time you make a change.
 
 ## Add a new environment variable
 
