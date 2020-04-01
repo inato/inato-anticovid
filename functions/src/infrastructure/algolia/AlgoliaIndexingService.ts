@@ -1,5 +1,5 @@
-import { IndexingService, FacetFilters } from "../../application";
-import { Trial } from "../../domain";
+import { IndexingService } from "../../application";
+import { Trial, FacetFilters, Facets } from "../../domain";
 import { serialize } from "./serialize";
 import { SearchIndex } from "algoliasearch";
 import * as TaskEither from "fp-ts/lib/TaskEither";
@@ -68,7 +68,7 @@ export class AlgoliaIndexingService implements IndexingService {
     facetFilters
   }: {
     searchQuery: Option<string>;
-    facetFilters: Partial<FacetFilters>;
+    facetFilters: FacetFilters;
   }) {
     const facetFiltersToSearch = serializeFacetFilters(facetFilters);
     return pipe(
@@ -90,29 +90,27 @@ export class AlgoliaIndexingService implements IndexingService {
 }
 
 const serializeFacetFilters = ({
-  recruitment_status = [],
-  therapeutic_classes = [],
-  clinical_outcome_extracted_ = [],
-  surrogate_outcome_extracted_ = [],
-  study_type = [],
+  recruitmentStatus = [],
+  therapeuticClasses = [],
+  clinicalOutcomesExtracted = [],
+  surrogateOutcomesExtracted = [],
+  studyTypes = [],
   countries = []
-}: Partial<FacetFilters>) => {
+}: FacetFilters) => {
   return [
-    recruitment_status.map(
-      recruitmentStatus => `recruitment_status:${recruitmentStatus}`
+    recruitmentStatus.map(status => `${Facets.recruitmentStatus}:${status}`),
+    therapeuticClasses.map(
+      therapeuticClass => `${Facets.therapeuticClasses}:${therapeuticClass}`
     ),
-    therapeutic_classes.map(
-      therapeuticClass => `therapeutic_classes:${therapeuticClass}`
-    ),
-    clinical_outcome_extracted_.map(
+    clinicalOutcomesExtracted.map(
       clinicalOutcomeExtracted =>
-        `clinical_outcome_extracted_:${clinicalOutcomeExtracted}`
+        `${Facets.clinicalOutcomeExtracted}:${clinicalOutcomeExtracted}`
     ),
-    surrogate_outcome_extracted_.map(
+    surrogateOutcomesExtracted.map(
       surrogateOutcomeExtracted =>
-        `surrogate_outcome_extracted_:${surrogateOutcomeExtracted}`
+        `${Facets.surrogateOutcomeExtracted}:${surrogateOutcomeExtracted}`
     ),
-    study_type.map(studyType => `study_type:${studyType}`),
-    countries.map(country => `countries:${country}`)
+    studyTypes.map(studyType => `${Facets.studyType}:${studyType}`),
+    countries.map(country => `${Facets.countries}:${country}`)
   ];
 };
