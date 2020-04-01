@@ -19,7 +19,7 @@ export const subscribeToUpdatesHandler = ({
   response: functions.Response<any>
 ) =>
   pipe(
-    request.body,
+    request.query,
     getFacetFiltersQueryFromRequest,
     TaskEither.map(query =>
       subscribeToUpdates({
