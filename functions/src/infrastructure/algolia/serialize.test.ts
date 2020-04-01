@@ -1,11 +1,11 @@
-import { trialFactory } from "../../domain";
+import { trialFactory, trialIdFactory } from "../../domain";
 import { serialize } from "./serialize";
 
 describe("serialize", () => {
   it("should serialize all fields", () => {
     const date = new Date("Fri, 27 Mar 2020 10:45:59 GMT");
     const trial = trialFactory({
-      trialId: "trialid",
+      trialId: trialIdFactory("trialid"),
       publicTitle: "public_title",
       webAddress: "web_address",
       recruitmentStatus: "recruitment_status",
@@ -36,7 +36,7 @@ describe("serialize", () => {
 
   it("should serialize a trial with additional parameters", () => {
     const trial = trialFactory({
-      trialId: "trialid",
+      trialId: trialIdFactory("trialid"),
       rest: {
         other: "other"
       }

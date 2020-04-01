@@ -5,17 +5,39 @@ This project contains 2 main parts:
 - a cloud function that pulls data from a PG database to insert it into an Algolia index
 - a web application that queries this Algolia index
 
-
 # Development
 
 ## Local app
 
-To build and run on localhost:5000
+To build and run on localhost:3000
+
 ```
 $> yarn start
 ```
 
 To configure the indices your local app connects to, modify `src/config/config.json`
+
+## Testing
+
+To run integration tests use
+
+```
+$> yarn test
+```
+
+from the root folder for the app tests, and from the `functions/` folder for the functions tests.
+
+We use Cypress to run e2e tests. Locally, you can open a cypress window and select the tests to run:
+
+```
+$> yarn e2e:dev
+```
+
+To run all e2e tests (CI for ex):
+
+```
+$> yarn e2e
+```
 
 # Deployment
 
