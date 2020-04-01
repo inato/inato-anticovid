@@ -33,7 +33,7 @@ export class FirestoreSubscriptionRepository implements SubscriptionRepository {
       ),
       taskEitherExtend(results =>
         array.traverse(TaskEither.taskEither)(results.docs, document =>
-          TaskEither.fromEither(deserialize(document.data()))
+          TaskEither.fromEither(deserialize(document.id, document.data()))
         )
       )
     );
@@ -45,7 +45,7 @@ export class FirestoreSubscriptionRepository implements SubscriptionRepository {
         () =>
           this.firestore
             .collection(SUBSCRIPTION_COLLECTION_NAME)
-            .doc()
+            .doc(subscription.id)
             .set(serialize(subscription)),
         e =>
           unknownError(
