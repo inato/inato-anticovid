@@ -1,5 +1,5 @@
 import React from "react";
-import { RefinementList, ToggleRefinement } from "react-instantsearch-dom";
+import { RefinementList } from "react-instantsearch-dom";
 import styled from "styled-components";
 
 import {
@@ -8,7 +8,8 @@ import {
   fontWeight,
   Newsletter,
   SubscribeButton,
-  CheckboxMixin
+  CheckboxMixin,
+  ToggleRefinementWithCount
 } from "../../ui";
 import { PoweredByAlgolia } from "../../ui/PoweredByAlgolia";
 
@@ -32,7 +33,7 @@ export const Facets = ({
           <ResetFilters />
         </Header>
         <FacetContainer>
-          <ToggleRefinement
+          <ToggleRefinementWithCount
             attribute="has_results_publications"
             label="Only with published results"
             value
@@ -114,7 +115,7 @@ const FacetContainer = styled.div`
 
   .ais-RefinementList-labelText,
   .ais-ToggleRefinement-labelText {
-    padding-left: 6px;
+    margin-left: 6px;
     color: ${colors.DefaultText};
   }
 
@@ -139,10 +140,15 @@ const FacetContainer = styled.div`
     }
   }
 
-  .ais-RefinementList-count {
+  .ais-RefinementList-count,
+  .ais-ToggleRefinement-count {
     background-color: ${colors.Border};
     color: ${colors.GreySecondaryText};
     margin-left: 2px;
+  }
+
+  .ais-ToggleRefinement-count {
+    margin-left: 5px;
   }
 
   .ais-RefinementList-showMore--disabled {
