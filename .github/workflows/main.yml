@@ -113,15 +113,15 @@ jobs:
           args: deploy
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      - name: Set Algolia settings for staging
-        if: github.ref == 'refs/heads/staging'
-        run: curl https://us-central1-anticovid-staging.cloudfunctions.net/setAlgoliaSettings
       - name: Index trials in Algolia for staging
         if: github.ref == 'refs/heads/staging'
         run: curl https://us-central1-anticovid-staging.cloudfunctions.net/refreshAlgoliaTrialIndex
-      - name: Set Algolia settings for production
-        if: github.ref == 'refs/heads/master'
-        run: curl https://us-central1-anticovid.cloudfunctions.net/setAlgoliaSettings
+      - name: Set Algolia settings for staging
+        if: github.ref == 'refs/heads/staging'
+        run: curl https://us-central1-anticovid-staging.cloudfunctions.net/setAlgoliaSettings
       - name: Index trials in Algolia for production
         if: github.ref == 'refs/heads/master'
         run: curl https://us-central1-anticovid.cloudfunctions.net/refreshAlgoliaTrialIndex
+      - name: Set Algolia settings for production
+        if: github.ref == 'refs/heads/master'
+        run: curl https://us-central1-anticovid.cloudfunctions.net/setAlgoliaSettings
