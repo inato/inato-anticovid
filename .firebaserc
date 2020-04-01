@@ -1,6 +1,7 @@
 {
   "projects": {
     "production": "anticovid",
-    "staging": "anticovid-staging"
+    "staging": "anticovid-staging",
+    "default": "anticovid-staging"
   }
 }
