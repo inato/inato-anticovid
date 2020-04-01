@@ -27,7 +27,7 @@ export const Facets = ({
 }) => {
   return (
     <LeftPanel filtering={filtering}>
-      <FacetsContainer>
+      <FacetsContainer data-cy="search/filters">
         <Header>
           Filters
           <ResetFilters />
@@ -61,7 +61,10 @@ export const Facets = ({
         <Facet attribute="study_type" title="Study Type" showMore />
         <Facet attribute="countries" title="Countries" />
         <Footer>
-          <FilterTrialsButton onClick={closeFiltering} />
+          <FilterTrialsButton
+            onClick={closeFiltering}
+            data-cy="search/filters/mobile-close"
+          />
         </Footer>
       </FacetsContainer>
       <StyledNewsletter />

@@ -11,13 +11,14 @@ const Component = connectStats(
   ({
     nbHits,
     onClick,
-    className
+    className,
+    ...props
   }: {
     nbHits: number;
     onClick: () => void;
     className?: string;
   }) => (
-    <Button onClick={onClick} className={className}>
+    <Button onClick={onClick} className={className} {...props}>
       Filter ({formatTrialsString(nbHits)})
     </Button>
   )

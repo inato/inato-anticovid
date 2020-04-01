@@ -15,5 +15,11 @@ declare namespace Cypress {
      * @example cy.device('small')
      */
     device(type: DeviceType): Chainable<Element>;
+
+    /**
+     * Custom command to check if element is visible based on predicate.
+     * @example cy.shouldBeVisibleWhen(device === 'small')
+     */
+    shouldBeVisibleWhen(pred: boolean): Chainable<Element>;
   }
 }
