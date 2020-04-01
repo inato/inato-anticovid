@@ -7,8 +7,8 @@ import { connectToggleRefinement } from "react-instantsearch-dom";
 interface Props {
   currentRefinement: boolean;
   count: {
-    checked: boolean;
-    unchecked: boolean;
+    checked: boolean | null | undefined;
+    unchecked: boolean | null | undefined;
   };
   refine: (refinement: boolean) => void;
   label: string;
@@ -26,7 +26,7 @@ const Component = ({ currentRefinement, count, refine, label }: Props) => (
         }}
       />
       <span className="ais-ToggleRefinement-labelText">{label}</span>
-      {count.unchecked !== null && (
+      {count.unchecked !== null && count.unchecked !== undefined && (
         <span className="ais-ToggleRefinement-count">{count.unchecked}</span>
       )}
     </label>
