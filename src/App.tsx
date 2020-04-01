@@ -28,7 +28,7 @@ export default function App() {
   return (
     <Root>
       <Router history={history}>
-        <HeaderContainer>
+        <HeaderContainer data-cy="header">
           <Header>
             <LogoLink to="/">
               <img src={logo} alt="Inato Anti-Covid Logo" />

@@ -24,7 +24,7 @@ export const AnalysisPage = () => {
   return (
     <Container>
       <Introduction />
-      <TableauContainer>
+      <TableauContainer data-cy="analysis/tableau">
         <StyledTitle>
           Clinical research for <UnbreakableWord>Covid-19</UnbreakableWord>
         </StyledTitle>
