@@ -75,7 +75,8 @@ const getFacetFiltersQueryFromRequest = ({ query }: functions.https.Request) =>
         countries: decod.at(
           "countries",
           decod.attempt(decod.array(decod.string), [])
-        )
+        ),
+        has_results_publications: decod.attempt(decod.boolean, undefined)
       })(query)
     }),
     e =>
