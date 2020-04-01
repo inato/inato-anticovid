@@ -7,7 +7,7 @@ import { Accordion } from "./Accordion";
 import { Title } from "./Title";
 
 export const Introduction = () => (
-  <Container>
+  <Container data-cy="analysis/intro">
     <TextContainer>
       <StyledTitle>What is anticovid?</StyledTitle>
       <Paragraph>
