@@ -33,10 +33,8 @@ describe("deserialize", () => {
       ],
       study_type: "Basic Science"
     };
-    const trial = deserialize(row);
 
-    expect(trial.therapeuticClasses).toEqual(["therapeutic_classes"]);
-    expect(trial).toEqual(
+    expect(deserialize(row)).toEqual(
       expect.objectContaining({
         trialId: "trialid",
         publicTitle: "public_title",
@@ -45,6 +43,7 @@ describe("deserialize", () => {
         registrationDate: date,
         exclusionCriteria: null,
         inclusionCriteria: null,
+        therapeuticClasses: ["therapeutic_classes"],
         hasResultsPublications: false,
         acronym: "DisCoVeRy",
         totalRecruitmentSize: 150,
