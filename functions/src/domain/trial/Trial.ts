@@ -1,6 +1,6 @@
 import { TrialId } from "./TrialId";
 
-interface TrialConstructorArgs {
+export interface TrialConstructorArgs {
   trialId: TrialId;
   publicTitle: string;
   webAddress: string;
@@ -10,6 +10,15 @@ interface TrialConstructorArgs {
   exclusionCriteria: string | null;
   inclusionCriteria: string | null;
   hasResultsPublications: boolean;
+  acronym: string | null;
+  totalRecruitmentSize: number;
+  countries: Array<string>;
+  clinicalOutcomes: Array<string>;
+  surrogateOutcomes: Array<string>;
+  resultsPublications: Array<{
+    title: string | null;
+    url: string;
+  }>;
   rest: any;
 }
 
@@ -23,6 +32,15 @@ export class Trial {
   public readonly exclusionCriteria: string | null;
   public readonly inclusionCriteria: string | null;
   public readonly hasResultsPublications: boolean;
+  public readonly acronym: string | null;
+  public readonly totalRecruitmentSize: number;
+  public readonly countries: Array<string>;
+  public readonly clinicalOutcomes: Array<string>;
+  public readonly surrogateOutcomes: Array<string>;
+  public readonly resultsPublications: Array<{
+    title: string | null;
+    url: string;
+  }>;
   public readonly rest: any;
 
   constructor({
@@ -35,6 +53,12 @@ export class Trial {
     exclusionCriteria,
     inclusionCriteria,
     hasResultsPublications,
+    acronym,
+    totalRecruitmentSize,
+    countries,
+    clinicalOutcomes,
+    surrogateOutcomes,
+    resultsPublications,
     rest
   }: TrialConstructorArgs) {
     this.trialId = trialId;
@@ -46,6 +70,12 @@ export class Trial {
     this.exclusionCriteria = exclusionCriteria;
     this.inclusionCriteria = inclusionCriteria;
     this.hasResultsPublications = hasResultsPublications;
+    this.acronym = acronym;
+    this.totalRecruitmentSize = totalRecruitmentSize;
+    this.countries = countries;
+    this.clinicalOutcomes = clinicalOutcomes;
+    this.surrogateOutcomes = surrogateOutcomes;
+    this.resultsPublications = resultsPublications;
     this.rest = rest;
   }
 }

@@ -19,19 +19,45 @@ describe("deserialize", () => {
       exclusion_criteria: null,
       inclusion_criteria: null,
       has_results_publications: false,
+      acronym: "DisCoVeRy",
+      total_recruitment_size: 150,
+      countries: ["France"],
+      clinical_outcome_extracted_: ["Death"],
+      surrogate_outcome_extracted_: ["Viral Load"],
+      results_publications: [
+        {
+          title:
+            "Efficacy of hydroxychloroquine in patients with COVID-19: results of a randomized clinical trial",
+          url: "https://www.medrxiv.org/content/10.1101/2020.03.22.20040758v1"
+        }
+      ]
     };
     const trial = deserialize(row);
 
-    expect(trial.therapeuticClasses).toEqual(['therapeutic_classes']);
-    expect(trial).toEqual(expect.objectContaining({
-      trialId: "trialid",
-      publicTitle: "public_title",
-      webAddress: "web_address",
-      recruitmentStatus: "recruitment_status",
-      registrationDate: date,
-      exclusionCriteria: null,
-      inclusionCriteria: null,
-      hasResultsPublications: false,
-    }));
+    expect(trial.therapeuticClasses).toEqual(["therapeutic_classes"]);
+    expect(trial).toEqual(
+      expect.objectContaining({
+        trialId: "trialid",
+        publicTitle: "public_title",
+        webAddress: "web_address",
+        recruitmentStatus: "recruitment_status",
+        registrationDate: date,
+        exclusionCriteria: null,
+        inclusionCriteria: null,
+        hasResultsPublications: false,
+        acronym: "DisCoVeRy",
+        totalRecruitmentSize: 150,
+        countries: ["France"],
+        clinicalOutcomes: ["Death"],
+        surrogateOutcomes: ["Viral Load"],
+        resultsPublications: [
+          {
+            title:
+              "Efficacy of hydroxychloroquine in patients with COVID-19: results of a randomized clinical trial",
+            url: "https://www.medrxiv.org/content/10.1101/2020.03.22.20040758v1"
+          }
+        ]
+      })
+    );
   });
 });
