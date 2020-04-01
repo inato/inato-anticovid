@@ -21,7 +21,7 @@ export const setIndexSettings = ({
       "registration_timestamp",
       "study_type",
       "surrogate_outcome_extracted_",
-      "has_publications",
+      "has_results_publications",
       "searchable(therapeutic_classes)"
     ],
     customRanking: ["desc(registration_timestamp)"]

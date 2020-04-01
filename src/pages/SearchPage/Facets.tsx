@@ -32,7 +32,7 @@ export const Facets = ({
         </Header>
         <FacetContainer>
           <ToggleRefinement
-            attribute="has_publications"
+            attribute="has_results_publications"
             label="Only with published results"
             value
           />
