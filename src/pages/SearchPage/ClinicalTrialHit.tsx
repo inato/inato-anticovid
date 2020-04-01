@@ -50,44 +50,44 @@ export const ClinicalTrialHit = ({
     results_publications
   }
 }: any) => (
-  <Link href={web_address} target="_blank">
-    <Container
-      hasPublications={results_publications && results_publications.length > 0}
-    >
-      <TopContainer>
-        <LeftContainer>
-          {objectID}
-          <TitleContainer>
+  <Container
+    hasPublications={results_publications && results_publications.length > 0}
+  >
+    <TopContainer>
+      <LeftContainer>
+        {objectID}
+        <TitleContainer>
+          <Link href={web_address} target="_blank">
             <Title>{public_title}</Title> <Acronym>{acronym}</Acronym>
-          </TitleContainer>
-          <RegistrationAndOutcomeContainer>
-            <RegistrationDate registrationDate={date_registration3} />
-            <Outcome
-              hasClinicalOutcome={clinical_outcome_extracted_.length > 0}
-              hasSurrogateOutcome={surrogate_outcome_extracted_.length > 0}
-            />
-          </RegistrationAndOutcomeContainer>
-        </LeftContainer>
-        <RightContainer>
-          <TrialStatus value={recruitment_status} />
-          <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
-          <Countries countries={countries} />
-          <TherapeuticClasses value={therapeutic_classes} />
-        </RightContainer>
-      </TopContainer>
-      {results_publications && results_publications.length > 0 && (
-        <PublicationsContainer>
-          <PublicationsTitle>Result publications</PublicationsTitle>
+          </Link>
+        </TitleContainer>
+        <RegistrationAndOutcomeContainer>
+          <RegistrationDate registrationDate={date_registration3} />
+          <Outcome
+            hasClinicalOutcome={clinical_outcome_extracted_.length > 0}
+            hasSurrogateOutcome={surrogate_outcome_extracted_.length > 0}
+          />
+        </RegistrationAndOutcomeContainer>
+      </LeftContainer>
+      <RightContainer>
+        <TrialStatus value={recruitment_status} />
+        <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
+        <Countries countries={countries} />
+        <TherapeuticClasses value={therapeutic_classes} />
+      </RightContainer>
+    </TopContainer>
+    {results_publications && results_publications.length > 0 && (
+      <PublicationsContainer>
+        <PublicationsTitle>Result publications</PublicationsTitle>
 
-          {results_publications.map(
-            (publication: ClinicalTrialHitPublication) => (
-              <Publication publication={publication} />
-            )
-          )}
-        </PublicationsContainer>
-      )}
-    </Container>
-  </Link>
+        {results_publications.map(
+          (publication: ClinicalTrialHitPublication) => (
+            <Publication publication={publication} />
+          )
+        )}
+      </PublicationsContainer>
+    )}
+  </Container>
 );
 
 const PublicationsTitle = styled.div`
@@ -155,10 +155,11 @@ const TitleContainer = styled.div`
 `;
 
 const Title = styled.span`
-  color: ${colors.DarkGray};
+  color: ${colors.Primary};
 `;
 
 const Acronym = styled.span`
+  color: ${colors.GreySecondaryText};
   white-space: nowrap;
 `;
 
