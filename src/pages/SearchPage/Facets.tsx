@@ -15,6 +15,7 @@ import { PoweredByAlgolia } from "../../ui/PoweredByAlgolia";
 import { ResetFilters } from "./ResetFilters";
 import { FilteringProps } from "./FilteringProps";
 import { FilterTrialsButton } from "./FilterTrialsButton";
+import { RangeSlider } from "./RangeSlider";
 
 export const Facets = ({
   filtering,
@@ -41,6 +42,10 @@ export const Facets = ({
           attribute="clinical_outcome_extracted_"
           title="Clinical Outcome"
         />
+        <FacetContainer>
+          <h3>Registration date</h3>
+          <RangeSlider attribute="registration_timestamp" />
+        </FacetContainer>
         <Facet
           attribute="surrogate_outcome_extracted_"
           title="Surrogate Outcome"
