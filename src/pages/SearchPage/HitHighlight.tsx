@@ -148,15 +148,19 @@ const TherapeuticClass = styled.span`
   padding: 2px 8px;
   background: #eaedf1;
   white-space: nowrap;
-  margin: 4px 4px 0 0;
+  margin: 4px 0 0 4px;
 
   @media ${devices.Desktop} {
     text-overflow: ellipsis;
     overflow: hidden;
+    max-width: 150px;
   }
 `;
 
 const TherapeuticClassesContainer = styled(HitHighlightContainer)`
   flex-wrap: wrap;
-  max-width: 205px; /* for IE11 */
+  margin-left: -4px; /* small hack to take the maximum width possible with some margin between all elements */
+  @media ${devices.Desktop} {
+    max-width: 205px; /* for IE11 */
+  }
 `;

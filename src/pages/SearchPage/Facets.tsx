@@ -189,14 +189,12 @@ const DesktopPoweredByAlgolia = styled(PoweredByAlgolia)`
 
   @media ${devices.Desktop} {
     display: flex;
-    margin-right: 32px;
     margin-top: 12px;
   }
 `;
 
 const LeftPanel = styled.div<FilteringProps>`
   align-self: flex-start;
-  min-width: 265px;
 
   display: ${({ filtering }) => (filtering ? undefined : "none")};
   position: absolute;
@@ -222,11 +220,12 @@ const LeftPanel = styled.div<FilteringProps>`
     position: static;
     top: auto;
     left: auto;
-    width: auto;
+    width: 265px;
+    min-width: 265px;
     z-index: 0;
+    margin-right: 32px;
 
     ${FacetsContainer}, ${StyledNewsletter} {
-      margin-right: 32px;
       padding: 16px;
     }
   }
