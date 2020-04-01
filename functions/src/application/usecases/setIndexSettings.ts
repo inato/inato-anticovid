@@ -24,5 +24,5 @@ export const setIndexSettings = ({
       "has_results_publications",
       "searchable(therapeutic_classes)"
     ],
-    customRanking: ["desc(registration_timestamp)"]
+    customRanking: ["desc(registration_timestamp)", "desc(results_publications_count)"]
   });
