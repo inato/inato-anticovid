@@ -17,6 +17,12 @@ curl -sL https://firebase.tools | bash
 firebase login
 ```
 
+Install the dependencies:
+
+```sh
+yarn install
+```
+
 Even though we're running the function locally, firebase requires you to choose an environment. It doesn't really matter which though because it will use a local configuration file.
 
 ```sh
@@ -32,7 +38,8 @@ The local configuration is stored in `.runtimeconfig.json`
 Run:
 
 ```sh
-yarn emulators:start
+yarn build
+firebase emulators:start
 ```
 
 It will emulate all Firebase services we use (functions, hosting, firestore) locally.
