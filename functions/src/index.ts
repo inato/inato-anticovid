@@ -2,7 +2,8 @@ import * as functions from "firebase-functions";
 
 import {
   setAlgoliaSettingsHandler,
-  refreshAlgoliaTrialIndexHandler
+  refreshAlgoliaTrialIndexHandler,
+  subscribeToUpdatesHandler
 } from "./presentation";
 import {
   AlgoliaIndexingService,
@@ -21,6 +22,10 @@ interface Services {
   subscriptionRepository: SubscriptionRepository;
 }
 
+const firestore = setupFirestore({
+  config: functions.config().firebase ?? undefined
+});
+
 const feedServices = <Ret, Argument1, Argument2>(
   callback: (
     services: Services
@@ -31,9 +36,6 @@ const feedServices = <Ret, Argument1, Argument2>(
     indexName: functions.config().algolia.index
   });
   const postgresClient = await setupPostgresClient();
-  const firestore = setupFirestore({
-    config: functions.firebaseConfig() ?? undefined
-  });
 
   const indexingService = new AlgoliaIndexingService(algoliaIndex);
 
@@ -64,4 +66,8 @@ export const refreshAlgoliaTrialIndex = functions
 
 export const setAlgoliaSettings = functions.https.onRequest(
   feedServices(setAlgoliaSettingsHandler)
+);
+
+export const subscribeToUpdates = functions.https.onRequest(
+  feedServices(subscribeToUpdatesHandler)
 );
