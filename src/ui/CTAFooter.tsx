@@ -7,7 +7,7 @@ import config from "../config";
 import { colors, devices, fontWeight, Button } from ".";
 
 export const CTAFooter = ({ className }: { className?: string }) => (
-  <Container className={className}>
+  <Container className={className} data-cy="analysis/footer">
     <Newsletter />
     <RightCard>
       <Title>Want to go further?</Title>
