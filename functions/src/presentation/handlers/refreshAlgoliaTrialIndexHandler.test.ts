@@ -1,12 +1,12 @@
-import { uploadToAlgoliaHandler } from "./uploadToAlgoliaHandler";
+import { refreshAlgoliaTrialIndexHandler } from "./refreshAlgoliaTrialIndexHandler";
 import { trialRepositoryFactory, trialFactory } from "../../domain";
 import { indexingServiceFactory } from "../../application";
 import { requestFactory, responseFactory } from "../factories";
 import * as TaskEither from "fp-ts/lib/TaskEither";
 
-describe("uploadToAlgoliaHandler", () => {
+describe("refreshAlgoliaTrialIndexHandler", () => {
   it("should answer number of trials indexed", async () => {
-    const handler = uploadToAlgoliaHandler({
+    const handler = refreshAlgoliaTrialIndexHandler({
       trialRepository: trialRepositoryFactory({
         findAllTrials: () => TaskEither.right([trialFactory(), trialFactory()])
       }),

@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 
 import {
   setAlgoliaSettingsHandler,
-  uploadToAlgoliaHandler
+  refreshAlgoliaTrialIndexHandler
 } from "./presentation";
 import {
   AlgoliaIndexingService,
@@ -37,12 +37,12 @@ const feedServices = <Ret, Argument1, Argument2>(
   return callback({ indexingService, trialRepository })(arg1, arg2, ...rest);
 };
 
-export const uploadToAlgolia = functions
+export const refreshAlgoliaTrialIndex = functions
   .runWith({
     timeoutSeconds: 500,
     memory: "1GB"
   })
-  .https.onRequest(feedServices(uploadToAlgoliaHandler));
+  .https.onRequest(feedServices(refreshAlgoliaTrialIndexHandler));
 
 export const setAlgoliaSettings = functions.https.onRequest(
   feedServices(setAlgoliaSettingsHandler)

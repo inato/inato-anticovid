@@ -6,7 +6,7 @@ import * as Task from "fp-ts/lib/Task";
 import { refreshTrialIndex, IndexingService } from "../../application";
 import { TrialRepository } from "../../domain";
 
-export const uploadToAlgoliaHandler = ({
+export const refreshAlgoliaTrialIndexHandler = ({
   trialRepository,
   indexingService
 }: {
