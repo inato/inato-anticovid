@@ -127,6 +127,7 @@ const FacetContainer = styled.div`
   .ais-RefinementList-showMore {
     font-size: 10px;
     background: inherit;
+    background-color: ${colors.SecondaryBackground}; /* For IE11 */
     color: ${colors.GreySecondaryText};
     text-transform: uppercase;
     font-weight: ${fontWeight.SemiBold};
