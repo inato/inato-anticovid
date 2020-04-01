@@ -24,7 +24,7 @@ interface ClinicalTrialHit {
     recruitment_status: string | null;
     therapeutic_classes: Array<string>;
     date_registration3: string;
-    trialid: string;
+    objectID: string;
     acronym: string | null;
     total_recruitment_size: number;
     countries: Array<string>;
@@ -41,7 +41,7 @@ export const ClinicalTrialHit = ({
     recruitment_status,
     therapeutic_classes,
     date_registration3,
-    trialid,
+    objectID,
     acronym,
     total_recruitment_size,
     countries,
@@ -56,7 +56,7 @@ export const ClinicalTrialHit = ({
     >
       <TopContainer>
         <LeftContainer>
-          {trialid}
+          {objectID}
           <TitleContainer>
             <Title>{public_title}</Title> <Acronym>{acronym}</Acronym>
           </TitleContainer>

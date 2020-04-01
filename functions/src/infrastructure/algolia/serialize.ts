@@ -10,7 +10,15 @@ export const serialize = (trial: Trial): Object => {
     therapeutic_classes: trial.therapeuticClasses,
     date_registration3: trial.registrationDate,
     registration_timestamp: trial.registrationDate.getTime(),
-    exclusion_criteria: (trial.rest.exclusion_criteria ?? "").slice(0, 500),
-    inclusion_criteria: (trial.rest.inclusion_criteria ?? "").slice(0, 500)
+    exclusion_criteria: (trial.exclusionCriteria ?? "").slice(0, 500),
+    inclusion_criteria: (trial.inclusionCriteria ?? "").slice(0, 500),
+    has_results_publications: trial.hasResultsPublications,
+    acronym: trial.acronym,
+    countries: trial.countries,
+    total_recruitment_size: trial.totalRecruitmentSize,
+    clinical_outcome_extracted_: trial.clinicalOutcomes,
+    surrogate_outcome_extracted_: trial.surrogateOutcomes,
+    results_publications: trial.resultsPublications,
+    study_type: trial.studyType
   };
 };
