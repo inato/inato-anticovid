@@ -10,7 +10,19 @@ describe("serialize", () => {
       webAddress: "web_address",
       recruitmentStatus: "recruitment_status",
       therapeuticClasses: ["therapeutic_classes"],
-      registrationDate: date
+      registrationDate: date,
+      acronym: "DisCoVeRy",
+      countries: ["France"],
+      totalRecruitmentSize: 150,
+      clinicalOutcomes: ["Death"],
+      surrogateOutcomes: ["Viral Load"],
+      resultsPublications: [
+        {
+          title:
+            "Efficacy of hydroxychloroquine in patients with COVID-19: results of a randomized clinical trial",
+          url: "https://www.medrxiv.org/content/10.1101/2020.03.22.20040758v1"
+        }
+      ]
     });
     expect(serialize(trial)).toStrictEqual({
       exclusion_criteria: "",
@@ -22,7 +34,19 @@ describe("serialize", () => {
       therapeutic_classes: ["therapeutic_classes"],
       date_registration3: date,
       registration_timestamp: 1585305959000,
-      objectID: "trialid"
+      objectID: "trialid",
+      acronym: "DisCoVeRy",
+      countries: ["France"],
+      total_recruitment_size: 150,
+      clinical_outcome_extracted_: ["Death"],
+      surrogate_outcome_extracted_: ["Viral Load"],
+      results_publications: [
+        {
+          title:
+            "Efficacy of hydroxychloroquine in patients with COVID-19: results of a randomized clinical trial",
+          url: "https://www.medrxiv.org/content/10.1101/2020.03.22.20040758v1"
+        }
+      ]
     });
   });
 
