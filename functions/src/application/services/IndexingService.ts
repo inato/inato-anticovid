@@ -1,4 +1,4 @@
-import { Trial } from "../../domain";
+import { Trial, TrialId } from "../../domain";
 import * as TaskEither from "fp-ts/lib/TaskEither";
 import { GenericErrorType, GenericError } from "../../domain/errors";
 import { Option } from "fp-ts/lib/Option";
@@ -32,6 +32,6 @@ export interface IndexingService {
     facetFilters: Partial<FacetFilters>;
   }): TaskEither.TaskEither<
     GenericError<GenericErrorType.UnknownError>,
-    ReadonlyArray<string>
+    ReadonlyArray<TrialId>
   >;
 }
