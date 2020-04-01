@@ -19,6 +19,7 @@ export interface TrialConstructorArgs {
     title: string | null;
     url: string;
   }>;
+  studyType: string;
   rest: any;
 }
 
@@ -41,6 +42,7 @@ export class Trial {
     title: string | null;
     url: string;
   }>;
+  public readonly studyType: string;
   public readonly rest: any;
 
   constructor({
@@ -59,6 +61,7 @@ export class Trial {
     clinicalOutcomes,
     surrogateOutcomes,
     resultsPublications,
+    studyType,
     rest
   }: TrialConstructorArgs) {
     this.trialId = trialId;
@@ -76,6 +79,7 @@ export class Trial {
     this.clinicalOutcomes = clinicalOutcomes;
     this.surrogateOutcomes = surrogateOutcomes;
     this.resultsPublications = resultsPublications;
+    this.studyType = studyType;
     this.rest = rest;
   }
 }
