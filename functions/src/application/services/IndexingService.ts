@@ -10,6 +10,7 @@ export interface FacetFilters {
   surrogate_outcome_extracted_: Array<string>;
   study_type: Array<string>;
   countries: Array<string>;
+  has_results_publications: boolean;
 }
 
 export interface IndexingService {

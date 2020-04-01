@@ -109,9 +109,7 @@ export class AlgoliaIndexingService implements IndexingService {
             }))(),
         e =>
           unknownError(
-            e instanceof Error
-              ? e.message
-              : "Unknown algolia replacing all objects error"
+            e instanceof Error ? e.message : "Unknown algolia search error"
           )
       ),
       TaskEither.map(response => deserializeSearchTrialsResponse(response.hits))
