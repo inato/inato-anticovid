@@ -12,7 +12,7 @@ export enum colors {
   DarkGray = "#333333",
 
   Primary = "#413078",
-  PrimaryHover = "#726798",
+  PrimaryHover = "#636292",
 
   ButtonText = "#FFFFFF",
   ButtonHoverShadow = "#b2a6d8",

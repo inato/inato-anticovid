@@ -58,7 +58,7 @@ export const ClinicalTrialHit = ({
         {objectID}
         <TitleContainer>
           <Link href={web_address} target="_blank">
-            <Title>{public_title}</Title> <Acronym>{acronym}</Acronym>
+            <span>{public_title}</span> <Acronym>{acronym}</Acronym>
           </Link>
         </TitleContainer>
         <RegistrationAndOutcomeContainer>
@@ -146,10 +146,6 @@ const TitleContainer = styled.div`
   font-weight: 500;
 `;
 
-const Title = styled.span`
-  color: ${colors.Primary};
-`;
-
 const Acronym = styled.span`
   color: ${colors.GreySecondaryText};
   white-space: nowrap;
@@ -184,6 +180,13 @@ const LeftContainer = styled.div`
 
 const Link = styled.a`
   text-decoration: none;
+  color: ${colors.Primary};
+  &:hover {
+    color: ${colors.PrimaryHover};
+    ${Acronym} {
+      color: ${colors.PrimaryHover};
+    }
+  }
 `;
 
 const PublicationsContainer = styled.div`
