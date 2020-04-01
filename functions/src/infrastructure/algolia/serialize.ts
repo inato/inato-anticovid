@@ -13,5 +13,11 @@ export const serialize = (trial: Trial): Object => {
     exclusion_criteria: (trial.exclusionCriteria ?? "").slice(0, 500),
     inclusion_criteria: (trial.inclusionCriteria ?? "").slice(0, 500),
     has_results_publications: trial.hasResultsPublications,
+    acronym: trial.acronym,
+    countries: trial.countries,
+    total_recruitment_size: trial.totalRecruitmentSize,
+    clinical_outcome_extracted_: trial.clinicalOutcomes,
+    surrogate_outcome_extracted_: trial.surrogateOutcomes,
+    results_publications: trial.resultsPublications
   };
 };
