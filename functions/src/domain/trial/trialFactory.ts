@@ -11,6 +11,9 @@ export const trialFactory = ({
   recruitmentStatus = "recruitmentStatus",
   therapeuticClasses = ["therapeuticClass"],
   registrationDate = new Date(),
+  exclusionCriteria = null,
+  inclusionCriteria = null,
+  hasResultsPublications = false,
   rest = {}
 }: Partial<{
   trialId: TrialId;
@@ -19,6 +22,9 @@ export const trialFactory = ({
   recruitmentStatus: string | null;
   therapeuticClasses: Array<string>;
   registrationDate: Date;
+  exclusionCriteria: string | null;
+  inclusionCriteria: string | null;
+  hasResultsPublications: boolean;
   rest: Object;
 }> = {}) =>
   new Trial({
@@ -28,5 +34,8 @@ export const trialFactory = ({
     recruitmentStatus,
     therapeuticClasses,
     registrationDate,
+    exclusionCriteria,
+    inclusionCriteria,
+    hasResultsPublications,
     rest
   });

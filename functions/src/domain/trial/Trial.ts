@@ -7,6 +7,9 @@ interface TrialConstructorArgs {
   recruitmentStatus: string | null;
   therapeuticClasses: Array<string>;
   registrationDate: Date;
+  exclusionCriteria: string | null;
+  inclusionCriteria: string | null;
+  hasResultsPublications: boolean;
   rest: any;
 }
 
@@ -17,6 +20,9 @@ export class Trial {
   public readonly recruitmentStatus: string | null;
   public readonly therapeuticClasses: Array<string>;
   public readonly registrationDate: Date;
+  public readonly exclusionCriteria: string | null;
+  public readonly inclusionCriteria: string | null;
+  public readonly hasResultsPublications: boolean;
   public readonly rest: any;
 
   constructor({
@@ -26,6 +32,9 @@ export class Trial {
     recruitmentStatus,
     therapeuticClasses,
     registrationDate,
+    exclusionCriteria,
+    inclusionCriteria,
+    hasResultsPublications,
     rest
   }: TrialConstructorArgs) {
     this.trialId = trialId;
@@ -34,6 +43,9 @@ export class Trial {
     this.recruitmentStatus = recruitmentStatus;
     this.therapeuticClasses = therapeuticClasses;
     this.registrationDate = registrationDate;
+    this.exclusionCriteria = exclusionCriteria;
+    this.inclusionCriteria = inclusionCriteria;
+    this.hasResultsPublications = hasResultsPublications;
     this.rest = rest;
   }
 }
