@@ -28,10 +28,10 @@ The local configuration is stored in `.runtimeconfig.json`
 Run:
 
 ```sh
-yarn shell
+yarn emulators:start
 ```
 
-It will open a firebase shell in which you can type `uploadToAlgolia()` to run the function.
+It will emulate all Firebase services we use (functions, hosting, firestore) locally.
 
 ## Add a new environment variable
 
