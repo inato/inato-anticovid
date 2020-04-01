@@ -38,7 +38,7 @@ export const subscribeToUpdatesHandler = ({
         return Task.of(undefined);
       },
       () => {
-        response.status(200).send("Subscribed");
+        response.sendStatus(204);
         return Task.of(undefined);
       }
     )
