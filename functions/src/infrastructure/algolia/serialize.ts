@@ -18,6 +18,7 @@ export const serialize = (trial: Trial): Object => {
     total_recruitment_size: trial.totalRecruitmentSize,
     clinical_outcome_extracted_: trial.clinicalOutcomes,
     surrogate_outcome_extracted_: trial.surrogateOutcomes,
-    results_publications: trial.resultsPublications
+    results_publications: trial.resultsPublications,
+    study_type: trial.studyType
   };
 };

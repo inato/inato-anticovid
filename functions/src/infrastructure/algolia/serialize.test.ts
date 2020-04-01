@@ -22,7 +22,8 @@ describe("serialize", () => {
             "Efficacy of hydroxychloroquine in patients with COVID-19: results of a randomized clinical trial",
           url: "https://www.medrxiv.org/content/10.1101/2020.03.22.20040758v1"
         }
-      ]
+      ],
+      studyType: "Basic Science"
     });
     expect(serialize(trial)).toStrictEqual({
       exclusion_criteria: "",
@@ -46,7 +47,8 @@ describe("serialize", () => {
             "Efficacy of hydroxychloroquine in patients with COVID-19: results of a randomized clinical trial",
           url: "https://www.medrxiv.org/content/10.1101/2020.03.22.20040758v1"
         }
-      ]
+      ],
+      study_type: "Basic Science"
     });
   });
 

@@ -20,6 +20,7 @@ export const trialFactory = ({
   clinicalOutcomes = [],
   surrogateOutcomes = [],
   resultsPublications = [],
+  studyType = "Basic Science",
   rest = {}
 }: Partial<TrialConstructorArgs> = {}) =>
   new Trial({
@@ -38,5 +39,6 @@ export const trialFactory = ({
     clinicalOutcomes,
     surrogateOutcomes,
     resultsPublications,
+    studyType,
     rest
   });

@@ -48,7 +48,8 @@ export const deserialize = (row: unknown): Trial => {
           url: decod.at("url", decod.string)
         })
       )
-    )
+    ),
+    studyType: decod.at("study_type", decod.string)
   })(row);
 
   return new Trial({
