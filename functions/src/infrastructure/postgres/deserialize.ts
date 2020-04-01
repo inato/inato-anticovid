@@ -16,7 +16,10 @@ export const deserialize = (row: unknown): Trial => {
       ["therapeutic_classes"],
       decod.array(decod.string)
     ),
-    registrationDate: decod.at(["date_registration3"], decod.date)
+    registrationDate: decod.at(["date_registration3"], decod.date),
+    exclusionCriteria: decod.at(["exclusion_criteria"], decod.nullable(decod.string)),
+    inclusionCriteria: decod.at(["inclusion_criteria"], decod.nullable(decod.string)),
+    hasResultsPublications: decod.at(["has_results_publications"], decod.boolean),
   })(row);
 
   return new Trial({

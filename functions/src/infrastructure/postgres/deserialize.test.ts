@@ -16,19 +16,22 @@ describe("deserialize", () => {
       recruitment_status: "recruitment_status",
       therapeutic_classes: ["therapeutic_classes"],
       date_registration3: date,
-      study_design: "study_design"
+      exclusion_criteria: null,
+      inclusion_criteria: null,
+      has_results_publications: false,
     };
     const trial = deserialize(row);
-    expect(trial.trialId).toBe("trialid");
-    expect(trial.webAddress).toBe("web_address");
-    expect(trial.rest).toStrictEqual({
-      trialid: "trialid",
-      public_title: "public_title",
-      web_address: "web_address",
-      recruitment_status: "recruitment_status",
-      therapeutic_classes: ["therapeutic_classes"],
-      date_registration3: date,
-      study_design: "study_design"
-    });
+
+    expect(trial.therapeuticClasses).toEqual(['therapeutic_classes']);
+    expect(trial).toEqual(expect.objectContaining({
+      trialId: "trialid",
+      publicTitle: "public_title",
+      webAddress: "web_address",
+      recruitmentStatus: "recruitment_status",
+      registrationDate: date,
+      exclusionCriteria: null,
+      inclusionCriteria: null,
+      hasResultsPublications: false,
+    }));
   });
 });
