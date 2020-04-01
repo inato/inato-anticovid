@@ -9,7 +9,11 @@ You will need to use node 10 (use nvm)
 Make sure you have `firebase` installed and configured:
 
 ```sh
+# for Mac
 brew install firebase-cli
+# for linux
+curl -sL https://firebase.tools | bash
+# then for both
 firebase login
 ```
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { RefinementList } from "react-instantsearch-dom";
+import { RefinementList, ToggleRefinement } from "react-instantsearch-dom";
 import styled from "styled-components";
 
 import {
@@ -31,6 +31,13 @@ export const Facets = ({
           Filters
           <ResetFilters />
         </Header>
+        <FacetContainer>
+          <ToggleRefinement
+            attribute="has_results_publications"
+            label="Only with published results"
+            value
+          />
+        </FacetContainer>
         <Facet attribute="recruitment_status" title="Recruitment Status" />
         <Facet
           attribute="therapeutic_classes"
@@ -105,12 +112,14 @@ const FacetContainer = styled.div`
     line-height: 28px;
   }
 
-  .ais-RefinementList-labelText {
+  .ais-RefinementList-labelText,
+  .ais-ToggleRefinement-labelText {
     padding-left: 6px;
     color: ${colors.DefaultText};
   }
 
-  .ais-RefinementList-checkbox {
+  .ais-RefinementList-checkbox,
+  .ais-ToggleRefinement-checkbox {
     top: 4px;
     ${CheckboxMixin}
   }
