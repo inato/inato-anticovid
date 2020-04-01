@@ -7,3 +7,4 @@ export * from "./CTAFooter";
 export * from "./SendUsFeedbackCard";
 export * from "./Checkbox";
 export * from "./icons";
+export * from "./ToggleRefinementWithCount";
