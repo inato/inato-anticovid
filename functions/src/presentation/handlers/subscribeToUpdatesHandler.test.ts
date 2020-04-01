@@ -10,15 +10,18 @@ describe("subscribeToUpdatesHandler", () => {
       indexingService: indexingServiceFactory()
     });
     const sendStatus = jest.fn();
+    const send = jest.fn();
+    const status = jest.fn(() => ({ send }));
     await handler(
       requestFactory({
         query: {
           email: "email@toto.com"
         }
       }),
-      responseFactory({ sendStatus })
+      responseFactory({ sendStatus, status, send })
     );
-
+    expect(send).not.toHaveBeenCalled();
+    expect(status).not.toHaveBeenCalled();
     expect(sendStatus).toHaveBeenCalledWith(204);
   });
 
