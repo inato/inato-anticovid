@@ -3,7 +3,7 @@ import * as TaskEither from "fp-ts/lib/TaskEither";
 import { array } from "fp-ts/lib/Array";
 
 import { SubscriptionRepository, Subscription } from "../../domain";
-import { unknownError, invalidInformationError } from "../../domain/errors";
+import { unknownError } from "../../domain/errors";
 import { pipe } from "fp-ts/lib/pipeable";
 import { deserialize } from "./deserialize";
 import { serialize } from "./serialize";
@@ -33,15 +33,7 @@ export class FirestoreSubscriptionRepository implements SubscriptionRepository {
       ),
       taskEitherExtend(results =>
         array.traverse(TaskEither.taskEither)(results.docs, document =>
-          TaskEither.tryCatch(
-            async () => deserialize(document.data()),
-            e =>
-              invalidInformationError(
-                e instanceof Error
-                  ? e.message
-                  : "Invalid document from firebase"
-              )
-          )
+          TaskEither.fromEither(deserialize(document.data()))
         )
       )
     );
