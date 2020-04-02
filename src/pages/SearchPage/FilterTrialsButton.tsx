@@ -4,8 +4,10 @@ import styled from "styled-components";
 
 import { Button } from "../../ui";
 
-const formatTrialsString = (nbHits: number) =>
-  nbHits === 1 ? "1 trial" : `${nbHits} trials`;
+const formatTrialsString = (nbHits: number) => {
+  if (nbHits <= 1) return `${nbHits} trial`;
+  return `${nbHits} trials`;
+};
 
 const Component = connectStats(
   ({

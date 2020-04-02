@@ -85,7 +85,9 @@ describe("Search page", () => {
               });
 
             // should show number of trials found
-            cy.contains(/\d+ trials found/);
+            cy.contains(/\d+ trials found/)
+              .invoke("text")
+              .as("TotalNumberOfTrials");
 
             // should show first 20 trial cards
             cy.get(".ais-Hits-item").should("have.length", 20);
@@ -95,11 +97,131 @@ describe("Search page", () => {
               .children()
               .within(() => {
                 // there is a trial reference
-                cy.contains("NCT04325672").should("be.visible");
+                cy.contains(/NCT\d+/).should("be.visible");
                 // a registration date
                 cy.contains("Registered on").should("be.visible");
               });
           });
+
+        // use search bar
+        getSearchContainer().within(() => {
+          // search for a prefix NCT04321
+          cy.get("input").type("NCT04321");
+          // multiple trials found
+          cy.contains(/\d+ trials found/)
+            .invoke("text")
+            .shouldNotEqAlias("@TotalNumberOfTrials");
+          // type 993, text is now NCT04321993
+          cy.get("input").type("993");
+          // exactly 1 trial found
+          cy.contains("1 trial found");
+          // type abc, text is now NCT04321993abc
+          cy.get("input").type("abc");
+          // no trials found
+          cy.contains("0 trial found");
+          // empty result shows up
+          cy.contains("No trial was found with these criteria");
+          cy.contains("Try to broaden your search or remove some filters");
+          // clear search results
+          cy.get("button[type=reset]").click();
+          cy.get("input").should("have.text", "");
+          cy.contains(/\d+ trials found/)
+            .invoke("text")
+            .shouldEqAlias("@TotalNumberOfTrials");
+        });
+
+        // open filters
+        if (deviceType !== "large") {
+          getOpenFiltersBtn().click();
+        }
+
+        // use filters
+        getFilters()
+          // now visible on all devices
+          .should("be.visible")
+          // toggle the published results flag
+          .contains("Only with published results")
+          .parent()
+          .within(() => {
+            // capture the count of published results
+            cy.get(".ais-ToggleRefinement-count")
+              .invoke("text")
+              .as("OnlyPublishedCount");
+            // and click on the checkbox
+            cy.get(".ais-ToggleRefinement-checkbox").click();
+          });
+
+        // close filters
+        if (deviceType !== "large") {
+          getCloseFiltersBtn().click();
+          getFilters().should("not.be.visible");
+        }
+
+        // check that the results are filtered
+        getSearchContainer().within(() => {
+          cy.get<string>("@OnlyPublishedCount").then(count => {
+            cy.contains(`${count} trials found`);
+            cy.get(".ais-Hits-item").should(
+              "have.length.greaterThan",
+              // cypress does not have a "have.length.greaterThanOrEqual"
+              parseInt(count) - 1
+            );
+          });
+        });
+
+        // open filters
+        if (deviceType !== "large") {
+          getOpenFiltersBtn().click();
+        }
+
+        // reset filters
+        getFilters()
+          .contains("button", "reset filters")
+          .click();
+        getSearchContainer()
+          .contains(/\d+ trials found/)
+          .invoke("text")
+          .shouldEqAlias("@TotalNumberOfTrials");
+
+        // close filters
+        if (deviceType !== "large") {
+          getCloseFiltersBtn().click();
+          getFilters().should("not.be.visible");
+        }
+
+        // use first suggestion
+        getSearchContainer().within(() => {
+          cy.server();
+          cy.route("POST", /\/queries/).as("AlgoliaQuery");
+          cy.contains("or try our suggestions")
+            .parent()
+            .get("a:first")
+            .click();
+          cy.wait("@AlgoliaQuery");
+          cy.contains(/\d+ trials found/)
+            .invoke("text")
+            .shouldNotEqAlias("@TotalNumberOfTrials");
+        });
+
+        // open filters
+        if (deviceType !== "large") {
+          getOpenFiltersBtn().click();
+        }
+
+        // reset filters
+        getFilters()
+          .contains("button", "reset filters")
+          .click();
+        getSearchContainer()
+          .contains(/\d+ trials found/)
+          .invoke("text")
+          .shouldEqAlias("@TotalNumberOfTrials");
+
+        // close filters
+        if (deviceType !== "large") {
+          getCloseFiltersBtn().click();
+          getFilters().should("not.be.visible");
+        }
       });
     });
   });
