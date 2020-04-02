@@ -1,17 +1,7 @@
-import { Trial, TrialId } from "../../domain";
+import { Trial, TrialId, FacetFilters } from "../../domain/trial";
 import * as TaskEither from "fp-ts/lib/TaskEither";
 import { GenericErrorType, GenericError } from "../../domain/errors";
 import { Option } from "fp-ts/lib/Option";
-
-export interface FacetFilters {
-  recruitment_status: Array<string>;
-  therapeutic_classes: Array<string>;
-  clinical_outcome_extracted_: Array<string>;
-  surrogate_outcome_extracted_: Array<string>;
-  study_type: Array<string>;
-  countries: Array<string>;
-  has_results_publications: boolean;
-}
 
 export interface IndexingService {
   indexTrials(
@@ -30,7 +20,7 @@ export interface IndexingService {
     facetFilters
   }: {
     searchQuery: Option<string>;
-    facetFilters: Partial<FacetFilters>;
+    facetFilters: FacetFilters;
   }): TaskEither.TaskEither<
     GenericError<GenericErrorType.UnknownError>,
     ReadonlyArray<TrialId>

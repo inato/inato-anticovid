@@ -3,7 +3,8 @@ import * as functions from "firebase-functions";
 import {
   setAlgoliaSettingsHandler,
   refreshAlgoliaTrialIndexHandler,
-  subscribeToUpdatesHandler
+  subscribeToUpdatesHandler,
+  unsubscribeFromUpdatesHandler
 } from "./presentation";
 import {
   AlgoliaIndexingService,
@@ -70,4 +71,8 @@ export const setAlgoliaSettings = functions.https.onRequest(
 
 export const subscribeToUpdates = functions.https.onRequest(
   feedServices(subscribeToUpdatesHandler)
+);
+
+export const unsubscribeFromUpdates = functions.https.onRequest(
+  feedServices(unsubscribeFromUpdatesHandler)
 );

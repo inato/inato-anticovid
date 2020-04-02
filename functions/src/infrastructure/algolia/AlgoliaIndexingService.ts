@@ -1,5 +1,5 @@
-import { IndexingService, FacetFilters } from "../../application";
-import { Trial } from "../../domain";
+import { IndexingService } from "../../application";
+import { Trial, FacetFilters, Facets } from "../../domain";
 import { serialize } from "./serialize";
 import { SearchIndex } from "algoliasearch";
 import * as TaskEither from "fp-ts/lib/TaskEither";
@@ -63,42 +63,14 @@ export class AlgoliaIndexingService implements IndexingService {
     );
   }
 
-  stringifyFacetFilters({
-    recruitment_status = [],
-    therapeutic_classes = [],
-    clinical_outcome_extracted_ = [],
-    surrogate_outcome_extracted_ = [],
-    study_type = [],
-    countries = []
-  }: Partial<FacetFilters>) {
-    return [
-      recruitment_status.map(
-        recruitmentStatus => `recruitment_status:${recruitmentStatus}`
-      ),
-      therapeutic_classes.map(
-        therapeuticClass => `therapeutic_classes:${therapeuticClass}`
-      ),
-      clinical_outcome_extracted_.map(
-        clinicalOutcomeExtracted =>
-          `clinical_outcome_extracted_:${clinicalOutcomeExtracted}`
-      ),
-      surrogate_outcome_extracted_.map(
-        surrogateOutcomeExtracted =>
-          `surrogate_outcome_extracted_:${surrogateOutcomeExtracted}`
-      ),
-      study_type.map(studyType => `study_type:${studyType}`),
-      countries.map(country => `countries:${country}`)
-    ];
-  }
-
   searchTrials({
     searchQuery,
     facetFilters
   }: {
     searchQuery: Option<string>;
-    facetFilters: Partial<FacetFilters>;
+    facetFilters: FacetFilters;
   }) {
-    const facetFiltersToSearch = this.stringifyFacetFilters(facetFilters);
+    const facetFiltersToSearch = serializeFacetFilters(facetFilters);
     return pipe(
       TaskEither.tryCatch(
         () =>
@@ -116,3 +88,29 @@ export class AlgoliaIndexingService implements IndexingService {
     );
   }
 }
+
+const serializeFacetFilters = ({
+  recruitmentStatus = [],
+  therapeuticClasses = [],
+  clinicalOutcomesExtracted = [],
+  surrogateOutcomesExtracted = [],
+  studyTypes = [],
+  countries = []
+}: FacetFilters) => {
+  return [
+    recruitmentStatus.map(status => `${Facets.recruitmentStatus}:${status}`),
+    therapeuticClasses.map(
+      therapeuticClass => `${Facets.therapeuticClasses}:${therapeuticClass}`
+    ),
+    clinicalOutcomesExtracted.map(
+      clinicalOutcomeExtracted =>
+        `${Facets.clinicalOutcomeExtracted}:${clinicalOutcomeExtracted}`
+    ),
+    surrogateOutcomesExtracted.map(
+      surrogateOutcomeExtracted =>
+        `${Facets.surrogateOutcomeExtracted}:${surrogateOutcomeExtracted}`
+    ),
+    studyTypes.map(studyType => `${Facets.studyType}:${studyType}`),
+    countries.map(country => `${Facets.countries}:${country}`)
+  ];
+};

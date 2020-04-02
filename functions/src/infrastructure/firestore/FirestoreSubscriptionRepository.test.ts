@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import { firestore } from "firebase-admin";
 import * as Either from "fp-ts/lib/Either";
+import * as Option from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/pipeable";
 
 import { FirestoreSubscriptionRepository } from "./FirestoreSubscriptionRepository";
@@ -10,7 +11,9 @@ import {
   trialIdFactory,
   Subscription,
   EmailAddress,
-  subscriptionIdFactory
+  subscriptionIdFactory,
+  facetFiltersFactory,
+  FacetFilters
 } from "../../domain";
 import { GenericErrorType } from "../../domain/errors";
 
@@ -19,14 +22,14 @@ const firestoreMock = ({
   email,
   id = uuid(),
   date = new Date(),
-  search = {},
+  search = { searchQuery: Option.none, facetFilters: facetFiltersFactory() },
   search_results = []
 }: Partial<{
   set: Function;
   email: string;
   id: string;
   date: Date;
-  search: Object;
+  search: { searchQuery: Option.Option<string>; facetFilters: FacetFilters };
   search_results: ReadonlyArray<string>;
 }>) =>
   ({
@@ -64,10 +67,14 @@ describe("FirestoreSubscriptionRepository", () => {
       const repository = new FirestoreSubscriptionRepository(
         firestoreMock({ set })
       );
+      const search = {
+        searchQuery: Option.none,
+        facetFilters: facetFiltersFactory()
+      };
       await repository.store(
         subscriptionFactory({
           email: emailAddressFactory("user@inato.com"),
-          search: {},
+          search,
           searchResults: [trialIdFactory("trialId")],
           lastEmailSentDate
         })
@@ -75,7 +82,7 @@ describe("FirestoreSubscriptionRepository", () => {
 
       expect(set).toHaveBeenCalledWith({
         email: "user@inato.com",
-        search: {},
+        search: expect.anything(),
         search_results: ["trialId"],
         last_email_sent_date: lastEmailSentDate
       });
@@ -88,12 +95,16 @@ describe("FirestoreSubscriptionRepository", () => {
       const email = "email@inato.com";
       const id = uuid();
 
+      const search = {
+        searchQuery: Option.none,
+        facetFilters: facetFiltersFactory()
+      };
       const repository = new FirestoreSubscriptionRepository(
         firestoreMock({
           email,
           date,
           id,
-          search: {},
+          search,
           search_results: ["trialId"]
         })
       );
@@ -107,7 +118,7 @@ describe("FirestoreSubscriptionRepository", () => {
           new Subscription({
             id: subscriptionIdFactory(id),
             email: EmailAddress.unsafe_parse(email),
-            search: {},
+            search,
             searchResults: [trialIdFactory("trialId")],
             lastEmailSentDate: new Date(
               Math.floor(date.getTime() / 1000) * 1000

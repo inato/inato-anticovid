@@ -1,4 +1,5 @@
 import { IndexingService } from "../services";
+import { Facets } from "../../domain/trial";
 
 export const setIndexSettings = ({
   indexingService
@@ -15,14 +16,14 @@ export const setIndexSettings = ({
       "trialid"
     ],
     attributesForFaceting: [
-      "clinical_outcome_extracted_",
-      "countries",
-      "recruitment_status",
-      "registration_timestamp",
-      "study_type",
-      "surrogate_outcome_extracted_",
-      "has_results_publications",
-      "searchable(therapeutic_classes)"
+      Facets.clinicalOutcomeExtracted,
+      Facets.countries,
+      Facets.recruitmentStatus,
+      Facets.registrationTimestamp,
+      Facets.studyType,
+      Facets.surrogateOutcomeExtracted,
+      Facets.hasResultsPublications,
+      `searchable(${Facets.therapeuticClasses})`
     ],
     customRanking: ["desc(registration_timestamp)", "desc(results_publications_count)"]
   });

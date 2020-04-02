@@ -21,7 +21,7 @@ export const subscribeToUpdatesHandler = ({
 ) =>
   pipe(
     request,
-    getFacetFiltersQueryFromRequest,
+    parseQueryString,
     TaskEither.fromEither,
     TaskEither.map(query =>
       subscribeToUpdates({
@@ -46,29 +46,29 @@ export const subscribeToUpdatesHandler = ({
     )
   )();
 
-const getFacetFiltersQueryFromRequest = ({ query }: functions.https.Request) =>
+const parseQueryString = ({ query }: functions.https.Request) =>
   Either.tryCatch(
     () => ({
       email: decod.at("email", decodeEmailAddress)(query),
       searchQuery: decod.at("searchQuery", decodeSearchQuery)(query),
       facetFilters: decod.props({
-        recruitment_status: decod.at(
+        recruitmentStatus: decod.at(
           "recruitment_status",
           decod.attempt(decod.array(decod.string), [])
         ),
-        therapeutic_classes: decod.at(
+        therapeuticClasses: decod.at(
           "therapeutic_classes",
           decod.attempt(decod.array(decod.string), [])
         ),
-        clinical_outcome_extracted_: decod.at(
+        clinicalOutcomesExtracted: decod.at(
           "clinical_outcome_extracted_",
           decod.attempt(decod.array(decod.string), [])
         ),
-        surrogate_outcome_extracted_: decod.at(
+        surrogateOutcomesExtracted: decod.at(
           "surrogate_outcome_extracted_",
           decod.attempt(decod.array(decod.string), [])
         ),
-        study_type: decod.at(
+        studyTypes: decod.at(
           "study_type",
           decod.attempt(decod.array(decod.string), [])
         ),
@@ -76,7 +76,10 @@ const getFacetFiltersQueryFromRequest = ({ query }: functions.https.Request) =>
           "countries",
           decod.attempt(decod.array(decod.string), [])
         ),
-        has_results_publications: decod.attempt(decod.boolean, undefined)
+        hasResultsPublications: decod.at(
+          "has_results_publications",
+          decod.attempt(decod.boolean, undefined)
+        )
       })(query)
     }),
     e =>
