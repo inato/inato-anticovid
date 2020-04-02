@@ -16,6 +16,7 @@ const StyledNavigationOutIcon = styled(NavigationOutIcon)`
 `;
 
 const PublicationLink = styled.a`
+  text-decoration: none;
   display: flex;
   :not(:first-child) {
     margin-top: 4px;
