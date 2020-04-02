@@ -8,6 +8,7 @@ import {
   SubscriptionRepository,
   FacetFilters
 } from "../../domain";
+import { taskEitherExtend } from "../../domain/utils/taskEither";
 
 export const subscribeToUpdates = ({
   indexingService,
@@ -26,7 +27,7 @@ export const subscribeToUpdates = ({
   pipe(
     searchState,
     indexingService.searchTrials,
-    TaskEither.map(trialIds =>
+    taskEitherExtend(trialIds =>
       subscriptionRepository.store(
         Subscription.build({
           email,
