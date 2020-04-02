@@ -183,7 +183,7 @@ const LeftContainer = styled.div`
 const StyledNavigationOutIcon = styled(NavigationOutIcon)`
   visibility: hidden;
   margin-left: 6px;
-  vertical-align: text-bottom;
+  vertical-align: text-top;
 `;
 
 const Link = styled.a`
