@@ -1,6 +1,5 @@
 import { pipe } from "fp-ts/lib/pipeable";
 import * as Option from "fp-ts/lib/Option";
-import * as TaskEither from "fp-ts/lib/TaskEither";
 import { IndexingService } from "../services";
 import {
   EmailAddress,
