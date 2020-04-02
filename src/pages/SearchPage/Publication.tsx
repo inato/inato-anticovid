@@ -1,9 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-import { devices, colors, BookmarkIcon } from "../../ui";
+import { devices, colors, BookmarkIcon, NavigationOutIcon } from "../../ui";
 
 import { ClinicalTrialHitPublication } from "./ClinicalTrialHit";
+
+const StyledNavigationOutIcon = styled(NavigationOutIcon)`
+  visibility: hidden;
+  margin-left: 6px;
+  vertical-align: text-bottom;
+
+  @media ${devices.Desktop} {
+    padding-top: 3px;
+  }
+`;
 
 const PublicationLink = styled.a`
   display: flex;
@@ -16,21 +26,34 @@ const PublicationLink = styled.a`
       margin-top: 0;
     }
   }
+
+  &:hover {
+    ${StyledNavigationOutIcon} {
+      visibility: visible;
+    }
+  }
 `;
 
 const StyledBookmarkIcon = styled(BookmarkIcon)`
   margin-right: 8px;
   flex-shrink: 0;
-  margin-top: 3px;
+  padding-top: 3px;
 `;
 
-const PublicationTitle = styled.a`
+const PublicationTitle = styled.span`
   color: ${colors.Primary};
+  @media ${devices.Desktop} {
+    display: flex;
+  }
+`;
+
+const EllipsisContent = styled.span`
   @media ${devices.Desktop} {
     max-width: 575px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    display: inline-block;
   }
 `;
 
@@ -46,6 +69,9 @@ export const Publication = ({
     rel="noopener noreferrer"
   >
     <StyledBookmarkIcon />
-    <PublicationTitle>{publication.title || publication.url}</PublicationTitle>
+    <PublicationTitle>
+      <EllipsisContent>{publication.title || publication.url}</EllipsisContent>
+      <StyledNavigationOutIcon />
+    </PublicationTitle>
   </PublicationLink>
 );
