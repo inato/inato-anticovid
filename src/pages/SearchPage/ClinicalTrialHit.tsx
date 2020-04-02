@@ -180,6 +180,7 @@ const RegistrationAndOutcomeContainer = styled.div`
 
 const LeftContainer = styled.div`
   margin-bottom: 16px;
+  width: 100%; /* For IE11 */
   @media ${devices.Desktop} {
     width: 600px;
     min-width: 600px;
