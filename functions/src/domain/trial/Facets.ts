@@ -18,3 +18,21 @@ export interface FacetFilters {
   countries: Array<string> | undefined;
   hasResultsPublications: boolean | undefined;
 }
+
+export const facetFiltersFactory = ({
+  recruitmentStatus = [],
+  therapeuticClasses = [],
+  clinicalOutcomesExtracted = [],
+  surrogateOutcomesExtracted = [],
+  studyTypes = [],
+  countries = [],
+  hasResultsPublications = undefined
+}: Partial<FacetFilters> = {}) => ({
+  recruitmentStatus,
+  therapeuticClasses,
+  clinicalOutcomesExtracted,
+  surrogateOutcomesExtracted,
+  studyTypes,
+  countries,
+  hasResultsPublications
+});
