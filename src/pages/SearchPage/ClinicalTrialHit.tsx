@@ -89,6 +89,10 @@ export const StyledNavigationOutIcon = styled(NavigationOutIcon)`
   visibility: hidden;
   margin-left: 6px;
   vertical-align: text-top;
+
+  @media ${devices.Touchable} {
+    visibility: visible;
+  }
 `;
 
 const Link = styled.a`
