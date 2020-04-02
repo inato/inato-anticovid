@@ -25,7 +25,7 @@ export const unsubscribeFromUpdatesHandler = ({
         return Task.of(undefined);
       },
       () => {
-        response.send(`Algolia settings have been set`);
+        response.send(`Successfully unsubscribed from updates`);
         return Task.of(undefined);
       }
     )
