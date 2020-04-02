@@ -96,6 +96,7 @@ export const SearchPage = () => {
             <StyledStats
               translations={{
                 stats(nbHits) {
+                  if (nbHits <= 1) return `${nbHits} trial found`;
                   return `${nbHits} trials found`;
                 }
               }}
