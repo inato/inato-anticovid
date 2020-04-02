@@ -1,11 +1,10 @@
 import * as admin from "firebase-admin";
 
-export const setupFirestore = ({
+export const setupFirebase = ({
   config
 }: {
   config: admin.AppOptions | undefined;
 }) => {
   admin.initializeApp(config);
-
-  return admin.firestore();
+  return { firestore: admin.firestore() };
 };
