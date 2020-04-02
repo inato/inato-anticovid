@@ -1,13 +1,15 @@
 /// <reference path="../support/index.d.ts" />
 
-const getHeader = () => cy.dataCy("header");
-const getIntro = () => cy.dataCy("analysis/intro");
-const getTableau = () => cy.dataCy("analysis/tableau");
-const getFooter = () => cy.dataCy("analysis/footer");
-const getDisclaimer = () => cy.dataCy("analysis/disclaimer");
-const getFeedback = () => cy.dataCy("analysis/feedback");
+import {
+  devices,
+  getDisclaimer,
+  getFeedback,
+  getFooter,
+  getHeader,
+  getIntro,
+  getTableau
+} from "./utils";
 
-const devices: DeviceType[] = ["large", "medium", "small"];
 describe("Analysis page", () => {
   devices.forEach(deviceType => {
     describe(deviceType, () => {
@@ -40,11 +42,9 @@ describe("Analysis page", () => {
             cy.contains("a", "Search trials");
 
             // Should have send us feedback link
-            cy.contains("a", "Send us feedback").then($elt => {
-              // is visible only on large device
-              const isVisible = deviceType === "large";
-              cy.wrap($elt.is(":visible")).should("eq", isVisible);
-            });
+            cy.contains("a", "Send us feedback").shouldBeVisibleWhen(
+              deviceType === "large"
+            );
           });
 
         // Should have intro section
@@ -67,17 +67,11 @@ describe("Analysis page", () => {
 
         // Should have a feeback section
         getFeedback()
+          .shouldBeVisibleWhen(deviceType !== "large")
           .within(() => {
             cy.contains("Any questions or comments?");
             cy.contains("a", "Send us feedback");
-          })
-          .then(e =>
-            cy.wrap(e).then($elt => {
-              // is not visible on large device
-              const isVisible = deviceType !== "large";
-              cy.wrap($elt.is(":visible")).should("eq", isVisible);
-            })
-          );
+          });
 
         // Should have footer section
         getFooter()
