@@ -73,11 +73,11 @@ export class AlgoliaIndexingService implements IndexingService {
   searchTrials({
     searchQuery,
     facetFilters,
-    page = 0
+    startPage = 0
   }: {
     searchQuery: Option.Option<string>;
     facetFilters: FacetFilters;
-    page?: number;
+    startPage?: number;
   }): TaskEither.TaskEither<
     GenericError<
       GenericErrorType.UnknownError | GenericErrorType.InvalidInformationError
@@ -94,7 +94,7 @@ export class AlgoliaIndexingService implements IndexingService {
                 Option.getOrElse(() => "")
               ),
               {
-                page,
+                page: startPage,
                 hitsPerPage: HITS_PER_PAGE,
                 facetFilters: serializeFacetFilters(facetFilters),
                 attributesToRetrieve: ["objectID"]
@@ -109,12 +109,12 @@ export class AlgoliaIndexingService implements IndexingService {
         const hitsTask = TaskEither.fromEither(
           deserializeSearchTrialsHits(response.hits)
         );
-        if (response.nbPages > page + 1) {
+        if (response.nbPages > startPage + 1) {
           return pipe(
             this.searchTrials({
               searchQuery,
               facetFilters,
-              page: page + 1
+              startPage: startPage + 1
             }),
             taskEitherExtend(newHits =>
               pipe(
