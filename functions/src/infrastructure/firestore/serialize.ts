@@ -8,9 +8,7 @@ const serializeSearch = ({
   searchQuery: Option.Option<string>;
   facetFilters: FacetFilters;
 }) => ({
-  search_query: Option.getOrElse<string | undefined>(() => undefined)(
-    searchQuery
-  ),
+  search_query: Option.getOrElse<string>(() => "")(searchQuery),
   recruitment_status: facetFilters.recruitmentStatus,
   therapeutic_classes: facetFilters.therapeuticClasses,
   clinical_outcomes_extracted: facetFilters.clinicalOutcomesExtracted,

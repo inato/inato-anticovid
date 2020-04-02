@@ -10,13 +10,13 @@ export enum Facets {
 }
 
 export interface FacetFilters {
-  recruitmentStatus: Array<string> | undefined;
-  therapeuticClasses: Array<string> | undefined;
-  clinicalOutcomesExtracted: Array<string> | undefined;
-  surrogateOutcomesExtracted: Array<string> | undefined;
-  studyTypes: Array<string> | undefined;
-  countries: Array<string> | undefined;
-  hasResultsPublications: boolean | undefined;
+  recruitmentStatus: Array<string>;
+  therapeuticClasses: Array<string>;
+  clinicalOutcomesExtracted: Array<string>;
+  surrogateOutcomesExtracted: Array<string>;
+  studyTypes: Array<string>;
+  countries: Array<string>;
+  hasResultsPublications: boolean;
 }
 
 export const facetFiltersFactory = ({
@@ -26,7 +26,7 @@ export const facetFiltersFactory = ({
   surrogateOutcomesExtracted = [],
   studyTypes = [],
   countries = [],
-  hasResultsPublications = undefined
+  hasResultsPublications = false
 }: Partial<FacetFilters> = {}) => ({
   recruitmentStatus,
   therapeuticClasses,

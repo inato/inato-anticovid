@@ -8,6 +8,7 @@ import { SubscriptionRepository, EmailAddress } from "../../domain";
 import { IndexingService, subscribeToUpdates } from "../../application";
 import * as Option from "fp-ts/lib/Option";
 import { invalidInformationError } from "../../domain/errors";
+import { taskEitherExtend } from "../../domain/utils/taskEither";
 
 export const subscribeToUpdatesHandler = ({
   subscriptionRepository,
@@ -23,7 +24,7 @@ export const subscribeToUpdatesHandler = ({
     request,
     parseQueryString,
     TaskEither.fromEither,
-    TaskEither.map(query =>
+    taskEitherExtend(query =>
       subscribeToUpdates({
         indexingService,
         subscriptionRepository,
@@ -78,7 +79,7 @@ const parseQueryString = ({ query }: functions.https.Request) =>
         ),
         hasResultsPublications: decod.at(
           "has_results_publications",
-          decod.attempt(decod.boolean, undefined)
+          decod.attempt(decod.boolean, false)
         )
       })(query)
     }),
