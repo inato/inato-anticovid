@@ -16,6 +16,7 @@ import {
   FacetFilters
 } from "../../domain";
 import { GenericErrorType } from "../../domain/errors";
+import { serializeSearch } from "./serialize";
 
 const firestoreMock = ({
   set = () => Promise.resolve(),
@@ -48,7 +49,7 @@ const firestoreMock = ({
                       Math.floor(date.getTime() / 1000),
                       0
                     ),
-                    search,
+                    search: serializeSearch(search),
                     search_results
                   };
                 }

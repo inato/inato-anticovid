@@ -1,7 +1,7 @@
 import * as Option from "fp-ts/lib/Option";
 import { Subscription, FacetFilters } from "../../domain";
 
-const serializeSearch = ({
+export const serializeSearch = ({
   searchQuery,
   facetFilters
 }: {

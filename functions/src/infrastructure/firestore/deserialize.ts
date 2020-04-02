@@ -16,7 +16,7 @@ const decodeEmail = (email: unknown) =>
   EmailAddress.unsafe_parse(decod.string(email));
 
 const decodeSearchQuery = (searchQuery: unknown) =>
-  Option.fromNullable(decod.optional(decod.string)(searchQuery));
+  Option.fromNullable(decod.optional(decod.string)(searchQuery) || null);
 
 const decodeSearch = (search: unknown) => ({
   searchQuery: decod.at("search_query", decodeSearchQuery)(search),
