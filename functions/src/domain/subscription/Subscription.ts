@@ -2,6 +2,8 @@ import { v4 as uuid } from "uuid";
 import { EmailAddress } from "../emailAddress";
 import { TrialId } from "../trial/TrialId";
 import { Opaque } from "../opaque";
+import { FacetFilters } from "../trial";
+import * as Option from "fp-ts/lib/Option";
 
 export type SubscriptionId = Opaque<"SubscriptionId", string>;
 
@@ -10,7 +12,7 @@ export const toSubscriptionId = (id: string) => id as SubscriptionId;
 export interface SubscriptionConstructorArgs {
   id: SubscriptionId;
   email: EmailAddress;
-  search: { [key: string]: unknown };
+  search: { searchQuery: Option.Option<string>; facetFilters: FacetFilters };
   searchResults: ReadonlyArray<TrialId>;
   lastEmailSentDate: Date;
 }
@@ -18,7 +20,10 @@ export interface SubscriptionConstructorArgs {
 export class Subscription {
   id: SubscriptionId;
   email: EmailAddress;
-  search: { [key: string]: unknown };
+  search: {
+    searchQuery: Option.Option<string>;
+    facetFilters: FacetFilters;
+  };
   searchResults: ReadonlyArray<TrialId>;
   lastEmailSentDate: Date;
 
@@ -42,7 +47,10 @@ export class Subscription {
     searchResults
   }: {
     email: EmailAddress;
-    search: { [key: string]: unknown };
+    search: {
+      searchQuery: Option.Option<string>;
+      facetFilters: FacetFilters;
+    };
     searchResults: ReadonlyArray<TrialId>;
   }) {
     return new Subscription({

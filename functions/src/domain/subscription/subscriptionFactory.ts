@@ -1,3 +1,4 @@
+import * as Option from "fp-ts/lib/Option";
 import { v4 as uuid } from "uuid";
 import {
   Subscription,
@@ -5,6 +6,7 @@ import {
   toSubscriptionId
 } from "./Subscription";
 import { emailAddressFactory } from "../emailAddress";
+import { facetFiltersFactory } from "../trial";
 
 export const subscriptionIdFactory = (id: string = uuid()) =>
   toSubscriptionId(id);
@@ -12,7 +14,7 @@ export const subscriptionIdFactory = (id: string = uuid()) =>
 export const subscriptionFactory = ({
   id = subscriptionIdFactory(),
   email = emailAddressFactory(),
-  search = {},
+  search = { searchQuery: Option.none, facetFilters: facetFiltersFactory() },
   searchResults = [],
   lastEmailSentDate = new Date("2020-03-30")
 }: Partial<SubscriptionConstructorArgs> = {}) =>

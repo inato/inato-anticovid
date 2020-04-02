@@ -1,19 +1,16 @@
 import * as TaskEither from "fp-ts/lib/TaskEither";
 
-import { IndexingService, FacetFilters } from "./IndexingService";
-import { Trial } from "../../domain";
+import { IndexingService } from "./IndexingService";
+import { Trial, FacetFilters } from "../../domain/trial";
 import { Option } from "fp-ts/lib/Option";
 
 export const indexingServiceFactory = ({
   indexTrials = (trials: ReadonlyArray<Trial>) =>
     TaskEither.right(trials.map(trial => trial.trialId)),
   setSettings = () => TaskEither.right(undefined),
-  searchTrials = ({
-    searchQuery,
-    facetFilters
-  }: {
+  searchTrials = (_props: {
     searchQuery: Option<string>;
-    facetFilters: Partial<FacetFilters>;
+    facetFilters: FacetFilters;
   }) => TaskEither.right([])
 }: Partial<IndexingService> = {}): IndexingService => ({
   indexTrials,

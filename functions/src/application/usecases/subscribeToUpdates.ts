@@ -1,11 +1,12 @@
 import { pipe } from "fp-ts/lib/pipeable";
 import * as Option from "fp-ts/lib/Option";
 import * as TaskEither from "fp-ts/lib/TaskEither";
-import { IndexingService, FacetFilters } from "../services";
+import { IndexingService } from "../services";
 import {
   EmailAddress,
   Subscription,
-  SubscriptionRepository
+  SubscriptionRepository,
+  FacetFilters
 } from "../../domain";
 
 export const subscribeToUpdates = ({
@@ -18,7 +19,7 @@ export const subscribeToUpdates = ({
   subscriptionRepository: SubscriptionRepository;
   searchState: {
     searchQuery: Option.Option<string>;
-    facetFilters: Partial<FacetFilters>;
+    facetFilters: FacetFilters;
   };
   email: EmailAddress;
 }) =>
