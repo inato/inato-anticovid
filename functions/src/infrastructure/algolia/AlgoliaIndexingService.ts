@@ -6,7 +6,7 @@ import * as TaskEither from "fp-ts/lib/TaskEither";
 import { unknownError } from "../../domain/errors";
 import { pipe } from "fp-ts/lib/pipeable";
 import { deserializeSearchTrialsResponse } from "./deserialize";
-import { Option, getOrElse } from "fp-ts/lib/Option";
+import * as Option from "fp-ts/lib/Option";
 
 export class AlgoliaIndexingService implements IndexingService {
   constructor(private readonly algoliaIndex: SearchIndex) {}
@@ -67,18 +67,23 @@ export class AlgoliaIndexingService implements IndexingService {
     searchQuery,
     facetFilters
   }: {
-    searchQuery: Option<string>;
+    searchQuery: Option.Option<string>;
     facetFilters: FacetFilters;
   }) {
-    const facetFiltersToSearch = serializeFacetFilters(facetFilters);
     return pipe(
       TaskEither.tryCatch(
         () =>
           (async () =>
-            this.algoliaIndex.search(getOrElse(() => "")(searchQuery), {
-              facetFiltersToSearch,
-              attributesToRetrieve: ["objectID"]
-            }))(),
+            this.algoliaIndex.search(
+              pipe(
+                searchQuery,
+                Option.getOrElse(() => "")
+              ),
+              {
+                facetFilters: serializeFacetFilters(facetFilters),
+                attributesToRetrieve: ["objectID"]
+              }
+            ))(),
         e =>
           unknownError(
             e instanceof Error ? e.message : "Unknown algolia search error"

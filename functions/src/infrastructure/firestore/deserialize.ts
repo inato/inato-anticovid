@@ -23,32 +23,23 @@ const decodeSearch = (search: unknown) => ({
   facetFilters: decod.props({
     recruitmentStatus: decod.at(
       "recruitment_status",
-      decod.attempt(decod.array(decod.string), [])
+      decod.array(decod.string)
     ),
     therapeuticClasses: decod.at(
       "therapeutic_classes",
-      decod.attempt(decod.array(decod.string), [])
+      decod.array(decod.string)
     ),
     clinicalOutcomesExtracted: decod.at(
       "clinical_outcomes_extracted",
-      decod.attempt(decod.array(decod.string), [])
+      decod.array(decod.string)
     ),
     surrogateOutcomesExtracted: decod.at(
       "surrogate_outcomes_extracted",
-      decod.attempt(decod.array(decod.string), [])
+      decod.array(decod.string)
     ),
-    studyTypes: decod.at(
-      "study_types",
-      decod.attempt(decod.array(decod.string), [])
-    ),
-    countries: decod.at(
-      "countries",
-      decod.attempt(decod.array(decod.string), [])
-    ),
-    hasResultsPublications: decod.at(
-      "has_results_publications",
-      decod.attempt(decod.boolean, undefined)
-    )
+    studyTypes: decod.at("study_types", decod.array(decod.string)),
+    countries: decod.at("countries", decod.array(decod.string)),
+    hasResultsPublications: decod.at("has_results_publications", decod.boolean)
   })(search)
 });
 const decodeTimestamp = (timestamp: unknown) =>

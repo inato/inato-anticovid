@@ -24,8 +24,7 @@ export const subscribeToUpdates = ({
   email: EmailAddress;
 }) =>
   pipe(
-    searchState,
-    indexingService.searchTrials,
+    indexingService.searchTrials(searchState),
     taskEitherExtend(trialIds =>
       subscriptionRepository.store(
         Subscription.build({
