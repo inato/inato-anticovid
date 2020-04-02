@@ -86,7 +86,7 @@ export const SearchPage = () => {
       >
         <Layout>
           <Facets filtering={filtering} closeFiltering={closeFiltering} />
-          <SearchContainter filtering={filtering}>
+          <SearchContainer filtering={filtering} data-cy="search/container">
             <StyledSearchBox
               translations={{
                 placeholder: "Search by keyword, drug, NCTID, ..."
@@ -96,6 +96,7 @@ export const SearchPage = () => {
             <StyledStats
               translations={{
                 stats(nbHits) {
+                  if (nbHits <= 1) return `${nbHits} trial found`;
                   return `${nbHits} trials found`;
                 }
               }}
@@ -104,7 +105,7 @@ export const SearchPage = () => {
             <MobilePoweredByAlgolia />
             <StyledSendUsFeedbackCard />
             <Disclaimer />
-          </SearchContainter>
+          </SearchContainer>
         </Layout>
         <FilterButton
           type="button"
@@ -112,6 +113,7 @@ export const SearchPage = () => {
             window.scrollTo(0, 0);
             openFiltering();
           }}
+          data-cy="search/filters/mobile-open"
         >
           <FilterIcon src={icon} />
           filters
@@ -183,7 +185,7 @@ const Layout = styled.div`
   display: flex;
 `;
 
-const SearchContainter = styled.div<FilteringProps>`
+const SearchContainer = styled.div<FilteringProps>`
   width: 100%; /* for IE11 */
   display: ${({ filtering }) => (filtering ? "none" : undefined)};
 `;

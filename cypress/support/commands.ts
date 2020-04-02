@@ -37,3 +37,27 @@ Cypress.Commands.add("device", (type: "small" | "medium" | "large") => {
 });
 
 Cypress.Commands.add("dataCy", (attr: string) => cy.get(`[data-cy="${attr}"]`));
+
+Cypress.Commands.add(
+  "shouldBeVisibleWhen",
+  { prevSubject: true },
+  (subject: Cypress.Chainable<Element>, pred: boolean) =>
+    cy.wrap(subject).should(pred ? "be.visible" : "not.be.visible")
+);
+
+const compareToAlias = (comp: "eq" | "not.eq") => (
+  subject: any,
+  alias: string
+) => cy.get(alias).should(comp, subject);
+
+Cypress.Commands.add(
+  "shouldEqAlias",
+  { prevSubject: true },
+  compareToAlias("eq")
+);
+
+Cypress.Commands.add(
+  "shouldNotEqAlias",
+  { prevSubject: true },
+  compareToAlias("not.eq")
+);
