@@ -1,12 +1,19 @@
 import { IndexingService } from "../../application";
-import { Trial, FacetFilters, Facets } from "../../domain";
+import { Trial, FacetFilters, Facets, TrialId } from "../../domain";
 import { serialize } from "./serialize";
 import { SearchIndex } from "algoliasearch";
 import * as TaskEither from "fp-ts/lib/TaskEither";
-import { unknownError } from "../../domain/errors";
+import {
+  unknownError,
+  GenericErrorType,
+  GenericError
+} from "../../domain/errors";
 import { pipe } from "fp-ts/lib/pipeable";
-import { deserializeSearchTrialsResponse } from "./deserialize";
+import { deserializeSearchTrialsHits } from "./deserialize";
 import * as Option from "fp-ts/lib/Option";
+import { taskEitherExtend } from "../../domain/utils/taskEither";
+
+const HITS_PER_PAGE = 100;
 
 export class AlgoliaIndexingService implements IndexingService {
   constructor(private readonly algoliaIndex: SearchIndex) {}
@@ -65,11 +72,18 @@ export class AlgoliaIndexingService implements IndexingService {
 
   searchTrials({
     searchQuery,
-    facetFilters
+    facetFilters,
+    page = 0
   }: {
     searchQuery: Option.Option<string>;
     facetFilters: FacetFilters;
-  }) {
+    page?: number;
+  }): TaskEither.TaskEither<
+    GenericError<
+      GenericErrorType.UnknownError | GenericErrorType.InvalidInformationError
+    >,
+    ReadonlyArray<TrialId>
+  > {
     return pipe(
       TaskEither.tryCatch(
         () =>
@@ -80,6 +94,8 @@ export class AlgoliaIndexingService implements IndexingService {
                 Option.getOrElse(() => "")
               ),
               {
+                page,
+                hitsPerPage: HITS_PER_PAGE,
                 facetFilters: serializeFacetFilters(facetFilters),
                 attributesToRetrieve: ["objectID"]
               }
@@ -89,7 +105,27 @@ export class AlgoliaIndexingService implements IndexingService {
             e instanceof Error ? e.message : "Unknown algolia search error"
           )
       ),
-      TaskEither.map(response => deserializeSearchTrialsResponse(response.hits))
+      taskEitherExtend(response => {
+        const hitsTask = TaskEither.fromEither(
+          deserializeSearchTrialsHits(response.hits)
+        );
+        if (response.nbPages > page + 1) {
+          return pipe(
+            this.searchTrials({
+              searchQuery,
+              facetFilters,
+              page: page + 1
+            }),
+            taskEitherExtend(newHits =>
+              pipe(
+                hitsTask,
+                TaskEither.map(hits => [...hits, ...newHits])
+              )
+            )
+          );
+        }
+        return hitsTask;
+      })
     );
   }
 }

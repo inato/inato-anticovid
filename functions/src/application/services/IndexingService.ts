@@ -22,7 +22,9 @@ export interface IndexingService {
     searchQuery: Option<string>;
     facetFilters: FacetFilters;
   }): TaskEither.TaskEither<
-    GenericError<GenericErrorType.UnknownError>,
+    GenericError<
+      GenericErrorType.UnknownError | GenericErrorType.InvalidInformationError
+    >,
     ReadonlyArray<TrialId>
   >;
 }
