@@ -13,6 +13,10 @@ const StyledNavigationOutIcon = styled(NavigationOutIcon)`
   @media ${devices.Desktop} {
     padding-top: 3px;
   }
+
+  @media ${devices.Touchable} {
+    visibility: visible;
+  }
 `;
 
 const PublicationLink = styled.a`
