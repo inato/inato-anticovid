@@ -1,11 +1,5 @@
 # Environments management
 
-**Status**: In review
-
-**Date of approval**: N/A
-
-**Owner:** Léopold Houdin
-
 ## Context
 
 Throughout the process of development and release, the deployed components, codebase and data may vary in stability and quality (despite all used effort by the teams 😛). Also, since several teams with different use cases work on the same project, potentially at the same time, there might be collision(s) in development and integration.
