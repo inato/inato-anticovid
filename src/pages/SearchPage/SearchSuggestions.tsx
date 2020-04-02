@@ -49,15 +49,17 @@ export const SearchSuggestions = () => {
     <Container>
       <SecondaryText>or try our suggestions: </SecondaryText>
       {searchSuggestions.map((searchSuggestion, index) => (
-        <Suggestion
-          to={searchStateToUrl(history.location, {
-            refinementList: searchSuggestion
-          })}
-          key={searchSuggestion.name}
-        >
-          {searchSuggestion.name}
+        <>
+          <Suggestion
+            to={searchStateToUrl(history.location, {
+              refinementList: searchSuggestion
+            })}
+            key={searchSuggestion.name}
+          >
+            {searchSuggestion.name}
+          </Suggestion>
           {index < searchSuggestions.length - 1 ? "," : null}{" "}
-        </Suggestion>
+        </>
       ))}
     </Container>
   ) : (
@@ -77,26 +79,31 @@ const Suggestion = styled(Link)`
   &:hover,
   &:focus {
     cursor: pointer;
-    opacity: 0.7;
-  }
-
-  &:active {
-    opacity: 1;
+    color: ${colors.PrimaryHover};
   }
 
   &::after {
     content: "";
     background: ${colors.Primary};
     display: block;
-    height: 2px;
-    width: 0;
-    transition: width 0.3s;
+    height: 1px;
+    width: 100%;
   }
 
   &:hover::after {
     content: "";
     width: 100%;
-    transition: width 0.3s;
+    background-color: ${colors.DefaultTextHover};
+    animation: increase-width 0.3s;
+  }
+
+  @keyframes increase-width {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
   }
 `;
 
