@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import { colors, devices } from "../../ui";
+import { colors, devices, NavigationOutIcon } from "../../ui";
 
 import {
   TrialStatus,
@@ -58,7 +58,9 @@ export const ClinicalTrialHit = ({
         {objectID}
         <TitleContainer>
           <Link href={web_address} target="_blank">
-            <span>{public_title}</span> <Acronym>{acronym}</Acronym>
+            <span>{public_title}</span>
+            {acronym && <Acronym> {acronym}</Acronym>}
+            <StyledNavigationOutIcon />
           </Link>
         </TitleContainer>
         <RegistrationAndOutcomeContainer>
@@ -178,6 +180,12 @@ const LeftContainer = styled.div`
   }
 `;
 
+const StyledNavigationOutIcon = styled(NavigationOutIcon)`
+  visibility: hidden;
+  margin-left: 6px;
+  vertical-align: text-bottom;
+`;
+
 const Link = styled.a`
   text-decoration: none;
   color: ${colors.Primary};
@@ -185,6 +193,9 @@ const Link = styled.a`
     color: ${colors.PrimaryHover};
     ${Acronym} {
       color: ${colors.PrimaryHover};
+    }
+    ${StyledNavigationOutIcon} {
+      visibility: visible;
     }
   }
 `;
