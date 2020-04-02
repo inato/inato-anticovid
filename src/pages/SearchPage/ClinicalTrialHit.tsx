@@ -12,6 +12,7 @@ import {
   Outcome
 } from "./HitHighlight";
 import { Publication } from "./Publication";
+import { Acronym, ClinicalTrialPublicTitle } from "./ClinicalTrialPublicTitle";
 
 export interface ClinicalTrialHitPublication {
   title?: string;
@@ -84,12 +85,7 @@ const TitleContainer = styled.div`
   font-weight: 500;
 `;
 
-const Acronym = styled.span`
-  color: ${colors.GreySecondaryText};
-  white-space: nowrap;
-`;
-
-const StyledNavigationOutIcon = styled(NavigationOutIcon)`
+export const StyledNavigationOutIcon = styled(NavigationOutIcon)`
   visibility: hidden;
   margin-left: 6px;
   vertical-align: text-top;
@@ -173,9 +169,10 @@ export const ClinicalTrialHit = ({
         {objectID}
         <TitleContainer>
           <Link href={web_address} target="_blank">
-            <span>{public_title}</span>
-            {acronym && <Acronym> {acronym}</Acronym>}
-            <StyledNavigationOutIcon />
+            <ClinicalTrialPublicTitle
+              publicTitle={public_title}
+              acronym={acronym}
+            />
           </Link>
         </TitleContainer>
         <RegistrationAndOutcomeContainer>
