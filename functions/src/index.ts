@@ -4,34 +4,45 @@ import {
   setAlgoliaSettingsHandler,
   refreshAlgoliaTrialIndexHandler,
   subscribeToUpdatesHandler,
-  unsubscribeFromUpdatesHandler
+  unsubscribeFromUpdatesHandler,
+  sendEmailsScheduled
 } from "./presentation";
 import {
   AlgoliaIndexingService,
   setupAlgoliaIndex,
   PostgresTrialRepository,
   setupPostgresClient,
-  setupFirestore,
-  FirestoreSubscriptionRepository
+  setupFirebase,
+  FirestoreSubscriptionRepository,
+  PubSubMessageService
 } from "./infrastructure";
-import { IndexingService } from "./application";
+import { IndexingService, MessagingService } from "./application";
 import { TrialRepository, SubscriptionRepository } from "./domain";
 
 interface Services {
   indexingService: IndexingService;
   trialRepository: TrialRepository;
   subscriptionRepository: SubscriptionRepository;
+  messagingService: MessagingService;
 }
 
-const firestore = setupFirestore({
+const { firestore } = setupFirebase({
   config: functions.config().firebase ?? undefined
 });
 
 const feedServices = <Ret, Argument1, Argument2>(
-  callback: (
-    services: Services
-  ) => (arg1: Argument1, arg2: Argument2, ...rest: any[]) => Promise<Ret>
-) => async (arg1: Argument1, arg2: Argument2, ...rest: any[]): Promise<Ret> => {
+  callback:
+    | ((
+        services: Services
+      ) => (arg1: Argument1, ...rest: any[]) => Promise<Ret>)
+    | ((
+        services: Services
+      ) => (arg1: Argument1, arg2?: Argument2, ...rest: any[]) => Promise<Ret>)
+) => async (
+  arg1: Argument1,
+  arg2?: Argument2,
+  ...rest: any[]
+): Promise<Ret> => {
   const algoliaIndex = setupAlgoliaIndex({
     apiKey: functions.config().algolia.apikey,
     indexName: functions.config().algolia.index
@@ -47,10 +58,13 @@ const feedServices = <Ret, Argument1, Argument2>(
 
   const subscriptionRepository = new FirestoreSubscriptionRepository(firestore);
 
+  const messagingService = new PubSubMessageService();
+
   const result = await callback({
     indexingService,
     trialRepository,
-    subscriptionRepository
+    subscriptionRepository,
+    messagingService
   })(arg1, arg2, ...rest);
 
   await postgresClient.end();
@@ -76,3 +90,7 @@ export const subscribeToUpdates = functions.https.onRequest(
 export const unsubscribeFromUpdates = functions.https.onRequest(
   feedServices(unsubscribeFromUpdatesHandler)
 );
+
+export const sendEmails = functions.pubsub
+  .schedule("every 1 hour")
+  .onRun(feedServices(sendEmailsScheduled));
