@@ -28,11 +28,26 @@ const searchClient = algoliasearch(
   config.algolia.publicApiKey
 );
 
-const createURL = (state: unknown) => `?${qs.stringify(state)}`;
+const cleanNullValues = (obj: {
+  [key: string]: unknown | null | undefined;
+}): { [key: string]: unknown | null | undefined } =>
+  Object.entries(obj).reduce((acc, [key, value]) => {
+    if (!value) {
+      return acc;
+    }
+    if (value instanceof Object) {
+      return { ...acc, [key]: cleanNullValues(value as any) };
+    }
+
+    return { ...acc, [key]: value };
+  }, {});
+
+const createURL = (state: { [key: string]: unknown }) =>
+  `?${qs.stringify(cleanNullValues(state))}`;
 
 export const searchStateToUrl = (
   location: ReturnType<typeof useHistory>["location"],
-  searchState: unknown
+  searchState: { [key: string]: unknown }
 ) => (searchState ? `${location.pathname}${createURL(searchState)}` : "");
 
 const urlToSearchState = (
@@ -46,7 +61,7 @@ export const SearchPage = () => {
   ]);
 
   const onSearchStateChange = useCallback(
-    (searchState: unknown) => {
+    (searchState: { [key: string]: unknown }) => {
       history.replace(
         searchStateToUrl(history.location, searchState),
         searchState as any
