@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { devices, BookmarkIcon, NavigationOutIcon, linkCss } from "../../ui";
+import { devices, linkCss, BookmarkIcon, NavigationOutIcon } from "../../ui";
 
 import { ClinicalTrialHitPublication } from "./ClinicalTrialHit";
 
@@ -19,22 +19,15 @@ const StyledNavigationOutIcon = styled(NavigationOutIcon)`
   }
 `;
 
-const PublicationLink = styled.a`
-  text-decoration: none;
+const PublicationContainer = styled.div`
   display: flex;
-  :not(:first-child) {
-    margin-top: 4px;
+  :not(:last-child) {
+    margin-bottom: 8px;
   }
 
   @media ${devices.Desktop} {
-    :not(:first-child) {
-      margin-top: 0;
-    }
-  }
-
-  &:hover {
-    ${StyledNavigationOutIcon} {
-      visibility: visible;
+    :not(:last-child) {
+      margin-bottom: 4px;
     }
   }
 `;
@@ -45,20 +38,26 @@ const StyledBookmarkIcon = styled(BookmarkIcon)`
   padding-top: 3px;
 `;
 
-const PublicationTitle = styled.span`
+const PublicationLink = styled.a`
+  text-decoration: none;
   @media ${devices.Desktop} {
     display: flex;
+  }
+  &:hover {
+    ${StyledNavigationOutIcon} {
+      visibility: visible;
+    }
   }
 `;
 
 const EllipsisContent = styled.span`
-  ${linkCss}
-
+  ${linkCss};
   @media ${devices.Desktop} {
     max-width: 575px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    display: inline-block;
   }
 `;
 
@@ -67,16 +66,15 @@ export const Publication = ({
 }: {
   publication: ClinicalTrialHitPublication;
 }) => (
-  <PublicationLink
-    key={publication.url}
-    href={publication.url}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
+  <PublicationContainer key={publication.url}>
     <StyledBookmarkIcon />
-    <PublicationTitle>
+    <PublicationLink
+      href={publication.url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       <EllipsisContent>{publication.title || publication.url}</EllipsisContent>
       <StyledNavigationOutIcon />
-    </PublicationTitle>
-  </PublicationLink>
+    </PublicationLink>
+  </PublicationContainer>
 );
