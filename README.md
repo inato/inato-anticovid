@@ -12,7 +12,7 @@ All decisions related to this project are located in the [ADR folder](https://gi
 A complete stack of AntiCovid is composed of the following:
 
 - A PostgreSQL database, which contains views of data to expose;
-- Firebase Functions, that are used to pushe data from the PostgreSQL database to the Algolia index, or register a new subscription, or send an email when new trials match a subscription.
+- Firebase Functions, that are used to push data from the PostgreSQL database to the Algolia index, or register a new subscription, or send an email when new trials match a subscription.
 - An [Algolia](https://www.algolia.com/) index, which is used as database and search engine for the application;
 - A Firestore database that is used to store search suggestions and subscriptions.
 - Google Cloud Pub/sub, used by functions to communicated with each other.
