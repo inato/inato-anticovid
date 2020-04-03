@@ -7,6 +7,15 @@ This project contains 2 main parts:
 
 All decisions related to this project are located in the [ADR folder](https://github.com/inato/inato-anticovid/tree/staging/adr).
 
+## Components
+
+A complete stack of AntiCovid is composed of the following:
+- A PostgreSQL database, which contains views of data to expose;
+- A CloudFunction that pushes data from the PostgreSQL database to the Algolia index;
+- An [Algolia](https://www.algolia.com/) index, which is used as database and search engine for the application;
+- A Firebase application that serves the front-end and exposes an API for data querying;
+- A React front-end application, visitor facing.
+
 # Development
 
 ## Local app
