@@ -1,11 +1,11 @@
 import { pipe } from "fp-ts/lib/pipeable";
-import * as Option from "fp-ts/lib/Option";
+import * as TaskEither from "fp-ts/lib/TaskEither";
 import { IndexingService } from "../services";
 import {
   EmailAddress,
   Subscription,
   SubscriptionRepository,
-  FacetFilters
+  Search
 } from "../../domain";
 import { taskEitherExtend } from "../../domain/utils/taskEither";
 
@@ -17,14 +17,12 @@ export const subscribeToUpdates = ({
 }: {
   indexingService: IndexingService;
   subscriptionRepository: SubscriptionRepository;
-  searchState: {
-    searchQuery: Option.Option<string>;
-    facetFilters: FacetFilters;
-  };
+  searchState: Search;
   email: EmailAddress;
 }) =>
   pipe(
     indexingService.searchTrials(searchState),
+    TaskEither.map(results => results.map(({ trialId }) => trialId)),
     taskEitherExtend(trialIds =>
       subscriptionRepository.store(
         Subscription.build({

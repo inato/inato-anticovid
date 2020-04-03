@@ -3,6 +3,11 @@ import * as TaskEither from "fp-ts/lib/TaskEither";
 import { GenericErrorType, GenericError } from "../../domain/errors";
 import { Option } from "fp-ts/lib/Option";
 
+export interface SearchResult {
+  trialId: TrialId;
+  publicTitle: string;
+}
+
 export interface IndexingService {
   indexTrials(
     trials: ReadonlyArray<Trial>
@@ -15,16 +20,14 @@ export interface IndexingService {
     attributesForFaceting: ReadonlyArray<string>;
     customRanking: ReadonlyArray<string>;
   }): TaskEither.TaskEither<GenericError<GenericErrorType.UnknownError>, void>;
-  searchTrials({
-    searchQuery,
-    facetFilters
-  }: {
+  searchTrials(attributes: {
     searchQuery: Option<string>;
     facetFilters: FacetFilters;
+    startPage?: number;
   }): TaskEither.TaskEither<
     GenericError<
       GenericErrorType.UnknownError | GenericErrorType.InvalidInformationError
     >,
-    ReadonlyArray<TrialId>
+    ReadonlyArray<SearchResult>
   >;
 }

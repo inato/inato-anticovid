@@ -5,7 +5,8 @@ import {
   refreshAlgoliaTrialIndexHandler,
   subscribeToUpdatesHandler,
   unsubscribeFromUpdatesHandler,
-  sendEmailsScheduled
+  sendEmailsScheduled,
+  sendEmailConsumer
 } from "./presentation";
 import {
   AlgoliaIndexingService,
@@ -14,9 +15,11 @@ import {
   setupPostgresClient,
   setupFirebase,
   FirestoreSubscriptionRepository,
-  PubSubMessageService
+  PubSubMessageService,
+  SUBSCRIPTION_EMAIL_TOPIC,
+  PostmarkEmailService
 } from "./infrastructure";
-import { IndexingService, MessagingService } from "./application";
+import { IndexingService, MessagingService, EmailService } from "./application";
 import { TrialRepository, SubscriptionRepository } from "./domain";
 
 interface Services {
@@ -24,6 +27,7 @@ interface Services {
   trialRepository: TrialRepository;
   subscriptionRepository: SubscriptionRepository;
   messagingService: MessagingService;
+  emailService: EmailService;
 }
 
 const { firestore } = setupFirebase({
@@ -60,11 +64,14 @@ const feedServices = <Ret, Argument1, Argument2>(
 
   const messagingService = new PubSubMessageService();
 
+  const emailService = new PostmarkEmailService();
+
   const result = await callback({
     indexingService,
     trialRepository,
     subscriptionRepository,
-    messagingService
+    messagingService,
+    emailService
   })(arg1, arg2, ...rest);
 
   await postgresClient.end();
@@ -94,3 +101,7 @@ export const unsubscribeFromUpdates = functions.https.onRequest(
 export const sendEmails = functions.pubsub
   .schedule("every 1 hour")
   .onRun(feedServices(sendEmailsScheduled));
+
+export const sendEmail = functions.pubsub
+  .topic(SUBSCRIPTION_EMAIL_TOPIC)
+  .onPublish(feedServices(sendEmailConsumer));
