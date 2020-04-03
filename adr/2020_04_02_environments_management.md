@@ -12,9 +12,9 @@ We will use the following environment:
 
 - **Production**: Visitor facing environment. **It must be stable**, i.e. code and data shipped to production must be of the best quality and validated by product team.
 
-- **Staging**: Internal purposed environment. *Components, code and data therein might be unstable* and thus could potentially not reflect what would be deployed to production. This is the environment used by the product team to validate new improvements, fix and so... Since there is "only" one environment of that kind, several updates might concurrently live there.
+- **Staging**: Internal purposed environment. _Components, code and data therein might be unstable_ and thus could potentially not reflect what would be deployed to production. This is the environment used by the product team to validate new improvements, fix and so... Since there is "only" one environment of that kind, several updates might concurrently live there.
 
-- **Local**: Development purposed environment. Each developer (independently of its team) might use such an environment while developing. Since our stack involves components on GCP and Algolia, the following has been decided: GCP CloudFunctions can be ran locally (refer to `README.md` for usage); Algolia indices can only exist in Algolia (i.e. SAAS), thus one must create its own (i.e. developer bound) index (refer to `README.md` for usage) and refer to it locally by updating `algolia.index` in the `functions/.runtimeconfig.json` file.
+- **Local**: Development purposed environment. Each developer (independently of its team) might use such an environment while developing. Since our stack involves components on GCP and Algolia, the following has been decided: GCP CloudFunctions can be ran locally (refer to `README.md` for usage); Algolia indices can only exist in Algolia (i.e. SAAS), thus one must create its own (i.e. developer bound) index (refer to `functions/README.md` for usage) and refer to it locally by updating `algolia.index` in the `functions/.runtimeconfig.json` file.
 
 ## Consequences
 
