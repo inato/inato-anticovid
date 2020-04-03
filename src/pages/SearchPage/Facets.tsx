@@ -199,7 +199,7 @@ const DesktopPoweredByAlgolia = styled(PoweredByAlgolia)`
 const LeftPanel = styled.div<FilteringProps>`
   align-self: flex-start;
 
-  display: ${({ filtering }) => (filtering ? undefined : "none")};
+  display: ${({ filtering }) => (filtering ? "block" : "none")};
   position: absolute;
   top: 0;
   left: 0;
@@ -247,6 +247,7 @@ const Header = styled.div`
 
 const Footer = styled.div`
   position: fixed;
+  z-index: 3;
   width: calc(100% - 32px);
   left: 0;
   bottom: 0;
