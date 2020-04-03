@@ -22,12 +22,6 @@ const Container = styled.div`
 `;
 
 const Suggestion = styled(Link)`
-  text-decoration: none;
-  color: ${colors.Primary};
-  border: none;
-  background: none;
-  font-size: 14px;
-
   ${linkCss};
 `;
 
