@@ -18,6 +18,7 @@ We will use the following environment:
 
 ## Consequences
 
-- Production should be stable.
-- Staging can be unstable.
-- Use of several indices on Algolia for development.
+- Production should be stable;
+- Staging can be unstable;
+- Use of several indices on Algolia for development;
+- Components of an environment are described in the repository's `README.md` file.
