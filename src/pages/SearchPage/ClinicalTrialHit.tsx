@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import { colors, devices } from "../../ui";
+import { colors, devices, NavigationOutIcon } from "../../ui";
 
 import {
   TrialStatus,
@@ -12,6 +12,7 @@ import {
   Outcome
 } from "./HitHighlight";
 import { Publication } from "./Publication";
+import { Acronym, ClinicalTrialPublicTitle } from "./ClinicalTrialPublicTitle";
 
 export interface ClinicalTrialHitPublication {
   title?: string;
@@ -34,76 +35,8 @@ interface ClinicalTrialHit {
   };
 }
 
-export const ClinicalTrialHit = ({
-  hit: {
-    public_title,
-    web_address,
-    recruitment_status,
-    therapeutic_classes,
-    date_registration3,
-    objectID,
-    acronym,
-    total_recruitment_size,
-    countries,
-    clinical_outcome_extracted_,
-    surrogate_outcome_extracted_,
-    results_publications
-  }
-}: any) => (
-  <Link href={web_address} target="_blank">
-    <Container
-      hasPublications={results_publications && results_publications.length > 0}
-    >
-      <TopContainer>
-        <LeftContainer>
-          {objectID}
-          <TitleContainer>
-            <Title>{public_title}</Title> <Acronym>{acronym}</Acronym>
-          </TitleContainer>
-          <RegistrationAndOutcomeContainer>
-            <RegistrationDate registrationDate={date_registration3} />
-            <Outcome
-              hasClinicalOutcome={clinical_outcome_extracted_.length > 0}
-              hasSurrogateOutcome={surrogate_outcome_extracted_.length > 0}
-            />
-          </RegistrationAndOutcomeContainer>
-        </LeftContainer>
-        <RightContainer>
-          <TrialStatus value={recruitment_status} />
-          <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
-          <Countries countries={countries} />
-          <TherapeuticClasses value={therapeutic_classes} />
-        </RightContainer>
-      </TopContainer>
-      {results_publications && results_publications.length > 0 && (
-        <PublicationsContainer>
-          <PublicationsTitle>Result publications</PublicationsTitle>
-
-          {results_publications.map(
-            (publication: ClinicalTrialHitPublication) => (
-              <Publication publication={publication} />
-            )
-          )}
-        </PublicationsContainer>
-      )}
-    </Container>
-  </Link>
-);
-
-const PublicationsTitle = styled.div`
-  font-size: 12px;
-`;
-
 const Container = styled.div<{ hasPublications: boolean }>`
   color: ${colors.GreySecondaryText};
-  &:hover {
-    background-color: ${colors.LightGreyBackground};
-    cursor: pointer;
-
-    transform: scale(1.002);
-    transition-duration: 100ms;
-    box-shadow: hsla(0, 0%, 94%, 1) 4px 4px 6px 0px;
-  }
   background-color: ${colors.SecondaryBackground};
   border: 1px solid ${colors.Border};
   border-radius: 4px;
@@ -136,16 +69,14 @@ const TopContainer = styled.div`
   }
 `;
 
-const RightContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  > div:not(:last-child) {
-    margin-top: 4px;
-  }
+const LeftContainer = styled.div`
+  margin-bottom: 16px;
+  width: 100%; /* For IE11 */
   @media ${devices.Desktop} {
-    > div:not(:last-child):not(:first-child) {
-      margin-top: 4px;
-    }
+    width: 600px;
+    min-width: 600px;
+    margin-right: 64px;
+    margin-bottom: 0;
   }
 `;
 
@@ -154,12 +85,28 @@ const TitleContainer = styled.div`
   font-weight: 500;
 `;
 
-const Title = styled.span`
-  color: ${colors.DarkGray};
+export const StyledNavigationOutIcon = styled(NavigationOutIcon)`
+  visibility: hidden;
+  margin-left: 6px;
+  vertical-align: text-top;
+
+  @media ${devices.Touchable} {
+    visibility: visible;
+  }
 `;
 
-const Acronym = styled.span`
-  white-space: nowrap;
+const Link = styled.a`
+  text-decoration: none;
+  color: ${colors.Primary};
+  &:hover {
+    color: ${colors.PrimaryHover};
+    ${Acronym} {
+      color: ${colors.PrimaryHover};
+    }
+    ${StyledNavigationOutIcon} {
+      visibility: visible;
+    }
+  }
 `;
 
 const RegistrationAndOutcomeContainer = styled.div`
@@ -178,19 +125,17 @@ const RegistrationAndOutcomeContainer = styled.div`
   }
 `;
 
-const LeftContainer = styled.div`
-  margin-bottom: 16px;
-  width: 100%; /* For IE11 */
-  @media ${devices.Desktop} {
-    width: 600px;
-    min-width: 600px;
-    margin-right: 64px;
-    margin-bottom: 0;
+const RightContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  > div:not(:last-child) {
+    margin-top: 4px;
   }
-`;
-
-const Link = styled.a`
-  text-decoration: none;
+  @media ${devices.Desktop} {
+    > div:not(:last-child):not(:first-child) {
+      margin-top: 4px;
+    }
+  }
 `;
 
 const PublicationsContainer = styled.div`
@@ -199,3 +144,66 @@ const PublicationsContainer = styled.div`
     margin-top: 0;
   }
 `;
+
+const PublicationsTitle = styled.div`
+  font-size: 12px;
+`;
+
+export const ClinicalTrialHit = ({
+  hit: {
+    public_title,
+    web_address,
+    recruitment_status,
+    therapeutic_classes,
+    date_registration3,
+    objectID,
+    acronym,
+    total_recruitment_size,
+    countries,
+    clinical_outcome_extracted_,
+    surrogate_outcome_extracted_,
+    results_publications
+  }
+}: any) => (
+  <Container
+    hasPublications={results_publications && results_publications.length > 0}
+  >
+    <TopContainer>
+      <LeftContainer>
+        {objectID}
+        <TitleContainer>
+          <Link href={web_address} target="_blank">
+            <ClinicalTrialPublicTitle
+              publicTitle={public_title}
+              acronym={acronym}
+            />
+          </Link>
+        </TitleContainer>
+        <RegistrationAndOutcomeContainer>
+          <RegistrationDate registrationDate={date_registration3} />
+          <Outcome
+            hasClinicalOutcome={clinical_outcome_extracted_.length > 0}
+            hasSurrogateOutcome={surrogate_outcome_extracted_.length > 0}
+          />
+        </RegistrationAndOutcomeContainer>
+      </LeftContainer>
+      <RightContainer>
+        <TrialStatus value={recruitment_status} />
+        <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
+        <Countries countries={countries} />
+        <TherapeuticClasses value={therapeutic_classes} />
+      </RightContainer>
+    </TopContainer>
+    {results_publications && results_publications.length > 0 && (
+      <PublicationsContainer>
+        <PublicationsTitle>Result publications</PublicationsTitle>
+
+        {results_publications.map(
+          (publication: ClinicalTrialHitPublication) => (
+            <Publication publication={publication} />
+          )
+        )}
+      </PublicationsContainer>
+    )}
+  </Container>
+);
