@@ -64,7 +64,9 @@ const feedServices = <Ret, Argument1, Argument2>(
 
   const messagingService = new PubSubMessageService();
 
-  const emailService = new PostmarkEmailService();
+  const emailService = new PostmarkEmailService({
+    apiToken: functions.config().postmark.apitoken
+  });
 
   const result = await callback({
     indexingService,
