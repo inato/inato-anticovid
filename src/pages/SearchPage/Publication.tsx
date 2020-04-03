@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { devices, linkCss, BookmarkIcon, NavigationOutIcon } from "../../ui";
+import { devices, BookmarkIcon, NavigationOutIcon, linkCss } from "../../ui";
 
 import { ClinicalTrialHitPublication } from "./ClinicalTrialHit";
 
@@ -19,7 +19,8 @@ const StyledNavigationOutIcon = styled(NavigationOutIcon)`
   }
 `;
 
-const PublicationContainer = styled.div`
+const PublicationLink = styled.a`
+  text-decoration: none;
   display: flex;
   :not(:first-child) {
     margin-top: 4px;
@@ -30,6 +31,12 @@ const PublicationContainer = styled.div`
       margin-top: 0;
     }
   }
+
+  &:hover {
+    ${StyledNavigationOutIcon} {
+      visibility: visible;
+    }
+  }
 `;
 
 const StyledBookmarkIcon = styled(BookmarkIcon)`
@@ -38,26 +45,20 @@ const StyledBookmarkIcon = styled(BookmarkIcon)`
   padding-top: 3px;
 `;
 
-const PublicationLink = styled.a`
-  text-decoration: none;
+const PublicationTitle = styled.span`
   @media ${devices.Desktop} {
     display: flex;
-  }
-  &:hover {
-    ${StyledNavigationOutIcon} {
-      visibility: visible;
-    }
   }
 `;
 
 const EllipsisContent = styled.span`
-  ${linkCss};
+  ${linkCss}
+
   @media ${devices.Desktop} {
     max-width: 575px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    display: inline-block;
   }
 `;
 
@@ -66,15 +67,16 @@ export const Publication = ({
 }: {
   publication: ClinicalTrialHitPublication;
 }) => (
-  <PublicationContainer key={publication.url}>
+  <PublicationLink
+    key={publication.url}
+    href={publication.url}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
     <StyledBookmarkIcon />
-    <PublicationLink
-      href={publication.url}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <PublicationTitle>
       <EllipsisContent>{publication.title || publication.url}</EllipsisContent>
       <StyledNavigationOutIcon />
-    </PublicationLink>
-  </PublicationContainer>
+    </PublicationTitle>
+  </PublicationLink>
 );

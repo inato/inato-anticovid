@@ -4,7 +4,6 @@ import { colors } from "./colors";
 import { devices } from "./media";
 
 export const linkCss = css`
-  text-decoration: none;
   color: ${colors.Primary};
   padding-bottom: 3px;
   border-bottom: 1px solid ${colors.Primary};
