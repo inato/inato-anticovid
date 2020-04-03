@@ -11,11 +11,12 @@ export enum colors {
 
   DarkGray = "#333333",
 
-  Primary = "#413078",
+  Primary = "#413078", // Dark purple
   PrimaryHover = "#636292",
 
   ButtonText = "#FFFFFF",
   ButtonHoverShadow = "#b2a6d8",
+  ButtonLightHover = "#E2DDF3",
   HeaderInactiveText = "#DADAE7",
   SecondaryText = "#647B91",
 
