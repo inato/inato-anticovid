@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 
 import config from "../../config";
-import { colors, devices } from "../../ui";
+import { colors, linkCss } from "../../ui";
 
 import { searchStateToUrl } from "./SearchPage";
 
@@ -75,49 +75,7 @@ const Suggestion = styled(Link)`
   font-size: 14px;
 
   padding: 2px;
-  padding-bottom: 3px;
-  border-bottom: 1px solid ${colors.Primary};
-  &:hover {
-    border-bottom-color: ${colors.DefaultTextHover};
-    color: ${colors.PrimaryHover};
-  }
-
-  @media ${devices.Desktop} {
-    display: inline-block;
-
-    padding-bottom: 0;
-    border-bottom: 0;
-
-    &:hover,
-    &:focus {
-      cursor: pointer;
-      color: ${colors.PrimaryHover};
-    }
-
-    &::after {
-      content: "";
-      display: block;
-      margin-top: -1px;
-      border-bottom: 1px solid ${colors.Primary};
-      width: 100%;
-    }
-
-    &:hover::after {
-      content: "";
-      width: 100%;
-      border-bottom-color: ${colors.DefaultTextHover};
-      animation: increase-width 0.3s;
-    }
-
-    @keyframes increase-width {
-      0% {
-        width: 0;
-      }
-      100% {
-        width: 100%;
-      }
-    }
-  }
+  ${linkCss};
 `;
 
 const Container = styled.div`
