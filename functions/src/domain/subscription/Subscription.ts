@@ -2,8 +2,7 @@ import { v4 as uuid } from "uuid";
 import { EmailAddress } from "../emailAddress";
 import { TrialId } from "../trial/TrialId";
 import { Opaque } from "../opaque";
-import { FacetFilters } from "../trial";
-import * as Option from "fp-ts/lib/Option";
+import { Search } from "../trial";
 
 export type SubscriptionId = Opaque<"SubscriptionId", string>;
 
@@ -12,7 +11,7 @@ export const toSubscriptionId = (id: string) => id as SubscriptionId;
 export interface SubscriptionConstructorArgs {
   id: SubscriptionId;
   email: EmailAddress;
-  search: { searchQuery: Option.Option<string>; facetFilters: FacetFilters };
+  search: Search;
   searchResults: ReadonlyArray<TrialId>;
   lastEmailSentDate: Date;
 }
@@ -20,10 +19,7 @@ export interface SubscriptionConstructorArgs {
 export class Subscription {
   id: SubscriptionId;
   email: EmailAddress;
-  search: {
-    searchQuery: Option.Option<string>;
-    facetFilters: FacetFilters;
-  };
+  search: Search;
   searchResults: ReadonlyArray<TrialId>;
   lastEmailSentDate: Date;
 
@@ -47,10 +43,7 @@ export class Subscription {
     searchResults
   }: {
     email: EmailAddress;
-    search: {
-      searchQuery: Option.Option<string>;
-      facetFilters: FacetFilters;
-    };
+    search: Search;
     searchResults: ReadonlyArray<TrialId>;
   }) {
     return new Subscription({
@@ -59,6 +52,22 @@ export class Subscription {
       search,
       searchResults,
       lastEmailSentDate: new Date()
+    });
+  }
+
+  buildWithNewSearchResultsAndEmailSentDate({
+    searchResults,
+    lastEmailSentDate
+  }: {
+    searchResults: ReadonlyArray<TrialId>;
+    lastEmailSentDate: Date;
+  }) {
+    return new Subscription({
+      id: this.id,
+      email: this.email,
+      search: this.search,
+      searchResults,
+      lastEmailSentDate
     });
   }
 }

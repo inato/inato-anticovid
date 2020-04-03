@@ -1,5 +1,5 @@
-import { IndexingService } from "../../application";
-import { Trial, FacetFilters, Facets, TrialId } from "../../domain";
+import { IndexingService, SearchResult } from "../../application";
+import { Trial, FacetFilters, Facets } from "../../domain";
 import { serialize } from "./serialize";
 import { SearchIndex } from "algoliasearch";
 import * as TaskEither from "fp-ts/lib/TaskEither";
@@ -82,7 +82,7 @@ export class AlgoliaIndexingService implements IndexingService {
     GenericError<
       GenericErrorType.UnknownError | GenericErrorType.InvalidInformationError
     >,
-    ReadonlyArray<TrialId>
+    ReadonlyArray<SearchResult>
   > {
     return pipe(
       TaskEither.tryCatch(
@@ -97,7 +97,7 @@ export class AlgoliaIndexingService implements IndexingService {
                 page: startPage,
                 hitsPerPage: HITS_PER_PAGE,
                 facetFilters: serializeFacetFilters(facetFilters),
-                attributesToRetrieve: ["objectID"]
+                attributesToRetrieve: ["objectID", "public_title"]
               }
             ))(),
         e =>

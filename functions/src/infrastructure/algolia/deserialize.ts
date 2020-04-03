@@ -17,4 +17,7 @@ export const deserializeSearchTrialsHits = (hits: ReadonlyArray<unknown>) =>
   );
 
 const deserializeSearchTrial = (hit: unknown) =>
-  decod.at("objectID", decodeTrialId)(hit);
+  decod.props({
+    trialId: decod.at("objectID", decodeTrialId),
+    publicTitle: decod.at("public_title", decod.string)
+  })(hit);

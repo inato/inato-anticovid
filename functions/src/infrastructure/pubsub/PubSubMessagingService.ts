@@ -14,7 +14,7 @@ import { PubSub } from "@google-cloud/pubsub";
 
 // Creates a client
 
-const SUBSCRIPTION_EMAIL_TOPIC = "subscription_email";
+export const SUBSCRIPTION_EMAIL_TOPIC = "subscription_email";
 
 export class PubSubMessageService implements MessagingService {
   pubsub: PubSub = new PubSub();
