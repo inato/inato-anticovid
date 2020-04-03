@@ -16,6 +16,25 @@ export interface SearchSuggestion {
   recruitment_status?: Array<string>;
 }
 
+const Container = styled.div`
+  margin-top: 4px;
+  min-height: 30px;
+`;
+
+const Suggestion = styled(Link)`
+  text-decoration: none;
+  color: ${colors.Primary};
+  border: none;
+  background: none;
+  font-size: 14px;
+
+  ${linkCss};
+`;
+
+const SecondaryText = styled.span`
+  color: ${colors.SecondaryText};
+`;
+
 export const SearchSuggestions = () => {
   const [searchSuggestions, setSearchSuggestions] = useState<
     Array<SearchSuggestion>
@@ -66,22 +85,3 @@ export const SearchSuggestions = () => {
     <Container />
   );
 };
-
-const Suggestion = styled(Link)`
-  text-decoration: none;
-  color: ${colors.Primary};
-  border: none;
-  background: none;
-  font-size: 14px;
-
-  padding: 2px;
-  ${linkCss};
-`;
-
-const Container = styled.div`
-  margin-top: 4px;
-  min-height: 30px;
-`;
-const SecondaryText = styled.span`
-  color: ${colors.SecondaryText};
-`;
