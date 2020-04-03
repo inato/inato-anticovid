@@ -12,6 +12,12 @@ export interface SubscriptionRepository {
     >,
     ReadonlyArray<Subscription>
   >;
+  findAllSubscriptions(): TaskEither.TaskEither<
+    GenericError<
+      GenericErrorType.UnknownError | GenericErrorType.InvalidInformationError
+    >,
+    ReadonlyArray<Subscription>
+  >;
   store(
     subscription: Subscription
   ): TaskEither.TaskEither<GenericError<GenericErrorType.UnknownError>, void>;

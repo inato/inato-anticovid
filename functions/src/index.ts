@@ -6,7 +6,8 @@ import {
   subscribeToUpdatesHandler,
   unsubscribeFromUpdatesHandler,
   sendEmailsScheduled,
-  sendEmailConsumer
+  sendEmailConsumer,
+  getSubscriptionsHandler
 } from "./presentation";
 import {
   AlgoliaIndexingService,
@@ -192,3 +193,7 @@ export const sendEmailOnEvent = functions.pubsub
       sendEmailConsumer
     )
   );
+
+export const getSubscriptions = functions.https.onRequest(
+  feedServices(["subscriptionRepository"], getSubscriptionsHandler)
+);

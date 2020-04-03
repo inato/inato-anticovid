@@ -47,4 +47,15 @@ export class InMemorySubscriptionRepository implements SubscriptionRepository {
       Option.fromNullable(this.entities.get(subscriptionId))
     );
   }
+  findAllSubscriptions(
+  ): TaskEither.TaskEither<
+    GenericError<
+      GenericErrorType.UnknownError | GenericErrorType.InvalidInformationError
+    >,
+    ReadonlyArray<Subscription>
+  > {
+    return TaskEither.right(
+      Array.from(this.entities.values())
+    );
+  }
 }
