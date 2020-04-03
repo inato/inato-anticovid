@@ -5,6 +5,8 @@ This project contains 2 main parts:
 - a cloud function that pulls data from a PG database to insert it into an Algolia index
 - a web application that queries this Algolia index
 
+All decisions related to this project are located in the [ADR folder](https://github.com/inato/inato-anticovid/tree/staging/adr).
+
 # Development
 
 ## Local app
