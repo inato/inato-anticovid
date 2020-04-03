@@ -1,3 +1,4 @@
+export * from "./AlarmBellRingIcon";
 export * from "./AlgoliaLogo";
 export * from "./ArrowDownIcon";
 export * from "./ArrowRightIcon";
