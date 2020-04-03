@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 
 import config from "../../config";
-import { colors } from "../../ui";
+import { colors, devices } from "../../ui";
 
 import { searchStateToUrl } from "./SearchPage";
 
@@ -68,41 +68,54 @@ export const SearchSuggestions = () => {
 };
 
 const Suggestion = styled(Link)`
-  display: inline-block;
   text-decoration: none;
-  padding: 2px;
   color: ${colors.Primary};
   border: none;
   background: none;
   font-size: 14px;
 
-  &:hover,
-  &:focus {
-    cursor: pointer;
+  padding: 2px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid ${colors.Primary};
+  &:hover {
+    border-bottom-color: ${colors.DefaultTextHover};
     color: ${colors.PrimaryHover};
   }
 
-  &::after {
-    content: "";
-    background: ${colors.Primary};
-    display: block;
-    height: 1px;
-    width: 100%;
-  }
+  @media ${devices.Desktop} {
+    display: inline-block;
 
-  &:hover::after {
-    content: "";
-    width: 100%;
-    background-color: ${colors.DefaultTextHover};
-    animation: increase-width 0.3s;
-  }
+    padding-bottom: 0;
+    border-bottom: 0;
 
-  @keyframes increase-width {
-    0% {
-      width: 0;
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      color: ${colors.PrimaryHover};
     }
-    100% {
+
+    &::after {
+      content: "";
+      display: block;
+      margin-top: -1px;
+      border-bottom: 1px solid ${colors.Primary};
       width: 100%;
+    }
+
+    &:hover::after {
+      content: "";
+      width: 100%;
+      border-bottom-color: ${colors.DefaultTextHover};
+      animation: increase-width 0.3s;
+    }
+
+    @keyframes increase-width {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 100%;
+      }
     }
   }
 `;
