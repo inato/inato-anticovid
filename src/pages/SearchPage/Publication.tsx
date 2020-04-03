@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { devices, colors, BookmarkIcon, NavigationOutIcon } from "../../ui";
+import { devices, BookmarkIcon, NavigationOutIcon, linkCss } from "../../ui";
 
 import { ClinicalTrialHitPublication } from "./ClinicalTrialHit";
 
@@ -46,59 +46,19 @@ const StyledBookmarkIcon = styled(BookmarkIcon)`
 `;
 
 const PublicationTitle = styled.span`
-  color: ${colors.Primary};
   @media ${devices.Desktop} {
     display: flex;
   }
 `;
 
 const EllipsisContent = styled.span`
-  padding-bottom: 3px;
-  border-bottom: 1px solid ${colors.Primary};
-  &:hover {
-    border-bottom-color: ${colors.DefaultTextHover};
-    color: ${colors.PrimaryHover};
-  }
+  ${linkCss}
 
   @media ${devices.Desktop} {
     max-width: 575px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    display: inline-block;
-
-    padding-bottom: 0;
-    border-bottom: 0;
-
-    &:hover,
-    &:focus {
-      cursor: pointer;
-      color: ${colors.PrimaryHover};
-    }
-
-    &::after {
-      content: "";
-      display: block;
-      margin-top: -1px;
-      border-bottom: 1px solid ${colors.Primary};
-      width: 100%;
-    }
-
-    &:hover::after {
-      content: "";
-      width: 100%;
-      border-bottom-color: ${colors.DefaultTextHover};
-      animation: increase-width 0.3s;
-    }
-
-    @keyframes increase-width {
-      0% {
-        width: 0;
-      }
-      100% {
-        width: 100%;
-      }
-    }
   }
 `;
 
