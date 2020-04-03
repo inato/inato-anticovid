@@ -35,6 +35,11 @@ The local configuration is stored in `.runtimeconfig.json`
 
 ### Usage
 
+#### Prerequisite: have a JDK installed
+```sh
+brew install homebrew/cask/java
+```
+
 Run:
 
 ```sh
