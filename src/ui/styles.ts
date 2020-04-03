@@ -27,7 +27,7 @@ export const linkCss = css`
     &::after {
       content: "";
       display: block;
-      margin-top: -1px;
+      margin-top: -2px;
       border-bottom: 1px solid ${colors.Primary};
       width: 100%;
     }

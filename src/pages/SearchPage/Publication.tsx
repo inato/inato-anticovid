@@ -21,13 +21,13 @@ const StyledNavigationOutIcon = styled(NavigationOutIcon)`
 
 const PublicationContainer = styled.div`
   display: flex;
-  :not(:first-child) {
-    margin-top: 4px;
+  :not(:last-child) {
+    margin-bottom: 8px;
   }
 
   @media ${devices.Desktop} {
-    :not(:first-child) {
-      margin-top: 0;
+    :not(:last-child) {
+      margin-bottom: 4px;
     }
   }
 `;
