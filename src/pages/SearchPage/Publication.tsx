@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { devices, colors, BookmarkIcon, NavigationOutIcon } from "../../ui";
+import { devices, BookmarkIcon, NavigationOutIcon, linkCss } from "../../ui";
 
 import { ClinicalTrialHitPublication } from "./ClinicalTrialHit";
 
@@ -46,19 +46,19 @@ const StyledBookmarkIcon = styled(BookmarkIcon)`
 `;
 
 const PublicationTitle = styled.span`
-  color: ${colors.Primary};
   @media ${devices.Desktop} {
     display: flex;
   }
 `;
 
 const EllipsisContent = styled.span`
+  ${linkCss}
+
   @media ${devices.Desktop} {
     max-width: 575px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    display: inline-block;
   }
 `;
 

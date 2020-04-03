@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 
 import config from "../../config";
-import { colors } from "../../ui";
+import { colors, linkCss } from "../../ui";
 
 import { searchStateToUrl } from "./SearchPage";
 
@@ -15,6 +15,25 @@ export interface SearchSuggestion {
   study_type?: Array<string>;
   recruitment_status?: Array<string>;
 }
+
+const Container = styled.div`
+  margin-top: 4px;
+  min-height: 30px;
+`;
+
+const Suggestion = styled(Link)`
+  text-decoration: none;
+  color: ${colors.Primary};
+  border: none;
+  background: none;
+  font-size: 14px;
+
+  ${linkCss};
+`;
+
+const SecondaryText = styled.span`
+  color: ${colors.SecondaryText};
+`;
 
 export const SearchSuggestions = () => {
   const [searchSuggestions, setSearchSuggestions] = useState<
@@ -66,51 +85,3 @@ export const SearchSuggestions = () => {
     <Container />
   );
 };
-
-const Suggestion = styled(Link)`
-  display: inline-block;
-  text-decoration: none;
-  padding: 2px;
-  color: ${colors.Primary};
-  border: none;
-  background: none;
-  font-size: 14px;
-
-  &:hover,
-  &:focus {
-    cursor: pointer;
-    color: ${colors.PrimaryHover};
-  }
-
-  &::after {
-    content: "";
-    background: ${colors.Primary};
-    display: block;
-    height: 1px;
-    width: 100%;
-  }
-
-  &:hover::after {
-    content: "";
-    width: 100%;
-    background-color: ${colors.DefaultTextHover};
-    animation: increase-width 0.3s;
-  }
-
-  @keyframes increase-width {
-    0% {
-      width: 0;
-    }
-    100% {
-      width: 100%;
-    }
-  }
-`;
-
-const Container = styled.div`
-  margin-top: 4px;
-  min-height: 30px;
-`;
-const SecondaryText = styled.span`
-  color: ${colors.SecondaryText};
-`;
