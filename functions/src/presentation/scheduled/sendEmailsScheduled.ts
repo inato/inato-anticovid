@@ -5,6 +5,7 @@ import { pipe } from "fp-ts/lib/pipeable";
 import { readonlyArray } from "fp-ts/lib/ReadonlyArray";
 import { taskEitherExtend } from "../../domain/utils/taskEither";
 import { MessagingService } from "../../application";
+import { subDays } from "date-fns";
 
 export const sendEmailsScheduled = ({
   subscriptionRepository,
@@ -12,11 +13,11 @@ export const sendEmailsScheduled = ({
 }: {
   subscriptionRepository: SubscriptionRepository;
   messagingService: MessagingService;
-}) => (_context: functions.EventContext) => {
-  const date = new Date();
-  date.setDate(date.getDate() - 1);
-  return pipe(
-    subscriptionRepository.findAllSubscriptionsLastEmailSentAfter(date),
+}) => (_context: functions.EventContext) =>
+  pipe(
+    subscriptionRepository.findAllSubscriptionsLastEmailSentAfter(
+      subDays(new Date(), 1)
+    ),
     taskEitherExtend(subscriptions =>
       readonlyArray.traverse(TaskEither.taskEither)(
         subscriptions,
@@ -27,4 +28,3 @@ export const sendEmailsScheduled = ({
       )
     )
   )();
-};

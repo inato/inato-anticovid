@@ -13,7 +13,6 @@ import {
   EmailAddress,
   subscriptionIdFactory,
   facetFiltersFactory,
-  FacetFilters,
   Search
 } from "../../domain";
 import { GenericErrorType } from "../../domain/errors";

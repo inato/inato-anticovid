@@ -6,6 +6,7 @@ import { Option } from "fp-ts/lib/Option";
 export interface SearchResult {
   trialId: TrialId;
   publicTitle: string;
+  registrationDate: Date;
 }
 
 export interface IndexingService {
