@@ -8,6 +8,7 @@ import { taskEitherExtend } from "../../domain/utils/taskEither";
 import * as TaskEither from "fp-ts/lib/TaskEither";
 import { aggregateNotFoundError, genericError } from "../../domain/errors";
 import { IndexingService, SearchResult, EmailService } from "../services";
+import { subDays, isBefore } from "date-fns";
 
 export const sendEmail = ({
   subscriptionRepository,
@@ -29,12 +30,14 @@ export const sendEmail = ({
       pipe(
         findNewTrials({ subscription, indexingService }),
         taskEitherExtend(newTrials =>
-          sendEmailAndUpdateSubscription({
-            subscription,
-            newTrials,
-            subscriptionRepository,
-            emailService
-          })
+          newTrials.length > 0
+            ? sendEmailAndUpdateSubscription({
+                subscription,
+                newTrials,
+                subscriptionRepository,
+                emailService
+              })
+            : TaskEither.right(undefined)
         )
       )
     )
@@ -82,9 +85,9 @@ const findSubscriptionIfEmailNotSentForToday = ({
           aggregateNotFoundError("Subscription not found")
         ),
         taskEitherExtend(subscription => {
-          const date = new Date();
-          date.setDate(date.getDate() - 1);
-          if (subscription.lastEmailSentDate > date) {
+          if (
+            isBefore(subscription.lastEmailSentDate, subDays(new Date(), 1))
+          ) {
             return TaskEither.right(subscription);
           }
           return TaskEither.left(

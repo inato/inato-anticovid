@@ -97,7 +97,11 @@ export class AlgoliaIndexingService implements IndexingService {
                 page: startPage,
                 hitsPerPage: HITS_PER_PAGE,
                 facetFilters: serializeFacetFilters(facetFilters),
-                attributesToRetrieve: ["objectID", "public_title"]
+                attributesToRetrieve: [
+                  "objectID",
+                  "public_title",
+                  "registration_timestamp"
+                ]
               }
             ))(),
         e =>
