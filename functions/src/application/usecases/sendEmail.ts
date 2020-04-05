@@ -116,9 +116,9 @@ const findNewTrials = ({
     )
   );
 
-enum SendEmailError {
+export enum SendEmailError {
   Duplicate = "SEND_EMAIL_DUPLICATE_ERROR"
 }
 
-const duplicateError = (reason: string) =>
+export const duplicateError = (reason: string) =>
   genericError(SendEmailError.Duplicate, reason);

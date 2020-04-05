@@ -1,0 +1,51 @@
+import { Subscription, SubscriptionId } from "./Subscription";
+import * as TaskEither from "fp-ts/lib/TaskEither";
+import * as Option from "fp-ts/lib/Option";
+import { GenericError, GenericErrorType } from "../errors";
+
+import { SubscriptionRepository } from "./SubscriptionRepository";
+import { isBefore } from "date-fns";
+
+export class InMemorySubscriptionRepository implements SubscriptionRepository {
+  entities: Map<SubscriptionId, Subscription> = new Map();
+
+  findAllSubscriptionsLastEmailSentAfter(
+    date: Date
+  ): TaskEither.TaskEither<
+    GenericError<
+      GenericErrorType.UnknownError | GenericErrorType.InvalidInformationError
+    >,
+    ReadonlyArray<Subscription>
+  > {
+    const currentDate = new Date();
+    return TaskEither.right(
+      Array.from(this.entities.values()).filter(subscription =>
+        isBefore(subscription.lastEmailSentDate, currentDate)
+      )
+    );
+  }
+  store(
+    subscription: Subscription
+  ): TaskEither.TaskEither<GenericError<GenericErrorType.UnknownError>, void> {
+    this.entities.set(subscription.id, subscription);
+    return TaskEither.right(undefined);
+  }
+  remove(
+    subscriptionId: SubscriptionId
+  ): TaskEither.TaskEither<GenericError<GenericErrorType.UnknownError>, void> {
+    this.entities.delete(subscriptionId);
+    return TaskEither.right(undefined);
+  }
+  findById(
+    subscriptionId: SubscriptionId
+  ): TaskEither.TaskEither<
+    GenericError<
+      GenericErrorType.UnknownError | GenericErrorType.InvalidInformationError
+    >,
+    Option.Option<Subscription>
+  > {
+    return TaskEither.right(
+      Option.fromNullable(this.entities.get(subscriptionId))
+    );
+  }
+}
