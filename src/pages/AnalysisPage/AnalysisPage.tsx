@@ -72,7 +72,6 @@ const TableauSkeleton = styled.div`
 
 const StyledTitle = styled(Title)`
   background-color: ${colors.SecondaryBackground};
-  margin: 0;
   padding: 16px 16px 0 16px;
 
   @media ${devices.Desktop} {
