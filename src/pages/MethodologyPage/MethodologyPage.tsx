@@ -122,9 +122,6 @@ export const MethodologyPage = () => {
         <Accordion title="What processing is done for each trial?">
           <Paragraph>
             First, already structured data that we collect are displayed ad
-          </Paragraph>
-          <Paragraph>
-            First, already structured data that we collect are displayed ad
             integrum, even though we standardize their presentation for the sake
             of intuitive comparison. Second, our internal expert in medicine and
             clinical research &quot;manually&quot; study each trial to extract
