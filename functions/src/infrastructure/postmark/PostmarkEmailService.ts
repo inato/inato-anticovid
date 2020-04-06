@@ -20,6 +20,9 @@ export class PostmarkEmailService implements EmailService {
   client: PostmarkClient;
 
   constructor({ apiToken }: { apiToken: string }) {
+    if (!apiToken) {
+      throw new Error("Postmark api token not set");
+    }
     this.client = new PostmarkClient(apiToken);
   }
 
