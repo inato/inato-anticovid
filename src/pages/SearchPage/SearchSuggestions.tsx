@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import styled from "styled-components";
@@ -63,17 +63,16 @@ export const SearchSuggestions = () => {
     <Container>
       <SecondaryText>or try our suggestions: </SecondaryText>
       {searchSuggestions.map((searchSuggestion, index) => (
-        <>
+        <Fragment key={searchSuggestion.name}>
           <Suggestion
             to={searchStateToUrl(history.location, {
               refinementList: searchSuggestion
             })}
-            key={searchSuggestion.name}
           >
             {searchSuggestion.name}
           </Suggestion>
           {index < searchSuggestions.length - 1 ? "," : null}{" "}
-        </>
+        </Fragment>
       ))}
     </Container>
   ) : (
