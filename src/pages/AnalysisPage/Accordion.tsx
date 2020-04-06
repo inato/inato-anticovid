@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 import { ArrowDownIcon } from "../../ui/ArrowDownIcon";
 import { ArrowRightIcon } from "../../ui/ArrowRightIcon";
 import { colors } from "../../ui";
+import { useBoolean } from "../../hooks";
 
 type AccordionProps = {
   title: string;
@@ -12,17 +13,17 @@ type AccordionProps = {
 
 export const Accordion = styled(
   (props: React.PropsWithChildren<AccordionProps>) => {
-    const [isActive, setActive] = useState("");
+    const { isTrue: isActive, toggle: toggleActive } = useBoolean(false);
     const [height, setHeight] = useState("0px");
 
     const accordionContent = useRef(null);
 
     function toggleAccordion() {
-      setActive(isActive === "" ? "active" : "");
+      toggleActive();
       // eslint-disable-next-line
       // @ts-ignore
       const contentHeight = accordionContent.current.scrollHeight;
-      setHeight(isActive === "active" ? "0px" : `${contentHeight}px`);
+      setHeight(isActive ? "0px" : `${contentHeight}px`);
     }
 
     return (
