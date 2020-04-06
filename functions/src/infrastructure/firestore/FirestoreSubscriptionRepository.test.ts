@@ -13,7 +13,7 @@ import {
   EmailAddress,
   subscriptionIdFactory,
   facetFiltersFactory,
-  FacetFilters
+  Search
 } from "../../domain";
 import { GenericErrorType } from "../../domain/errors";
 import { serializeSearch } from "./serialize";
@@ -30,7 +30,7 @@ const firestoreMock = ({
   email: string;
   id: string;
   date: Date;
-  search: { searchQuery: Option.Option<string>; facetFilters: FacetFilters };
+  search: Search;
   search_results: ReadonlyArray<string>;
 }>) =>
   ({

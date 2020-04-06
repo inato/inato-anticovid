@@ -3,7 +3,8 @@ import * as Either from "fp-ts/lib/Either";
 import { toTrialId } from "../../domain";
 import { invalidInformationError } from "../../domain/errors";
 
-export const decodeTrialId = (value: unknown) => toTrialId(decod.string(value));
+const decodeTrialId = (value: unknown) => toTrialId(decod.string(value));
+const decodeTimestamp = (value: unknown) => new Date(decod.number(value));
 
 export const deserializeSearchTrialsHits = (hits: ReadonlyArray<unknown>) =>
   Either.tryCatch(
@@ -17,4 +18,8 @@ export const deserializeSearchTrialsHits = (hits: ReadonlyArray<unknown>) =>
   );
 
 const deserializeSearchTrial = (hit: unknown) =>
-  decod.at("objectID", decodeTrialId)(hit);
+  decod.props({
+    trialId: decod.at("objectID", decodeTrialId),
+    publicTitle: decod.at("public_title", decod.string),
+    registrationDate: decod.at("registration_timestamp", decodeTimestamp)
+  })(hit);

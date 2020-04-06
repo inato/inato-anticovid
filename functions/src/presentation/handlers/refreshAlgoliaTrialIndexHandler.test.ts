@@ -1,15 +1,21 @@
 import { refreshAlgoliaTrialIndexHandler } from "./refreshAlgoliaTrialIndexHandler";
-import { trialRepositoryFactory, trialFactory } from "../../domain";
+import {
+  trialFactory,
+  InMemoryTrialRepository,
+  trialIdFactory
+} from "../../domain";
 import { indexingServiceFactory } from "../../application";
 import { requestFactory, responseFactory } from "../factories";
-import * as TaskEither from "fp-ts/lib/TaskEither";
 
 describe("refreshAlgoliaTrialIndexHandler", () => {
   it("should answer number of trials indexed", async () => {
+    const trialRepository = new InMemoryTrialRepository();
+    trialRepository.store([
+      trialFactory({ trialId: trialIdFactory("trialId1") }),
+      trialFactory({ trialId: trialIdFactory("trialId2") })
+    ]);
     const handler = refreshAlgoliaTrialIndexHandler({
-      trialRepository: trialRepositoryFactory({
-        findAllTrials: () => TaskEither.right([trialFactory(), trialFactory()])
-      }),
+      trialRepository,
       indexingService: indexingServiceFactory()
     });
     const send = jest.fn();

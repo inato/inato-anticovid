@@ -1,5 +1,5 @@
-import { IndexingService } from "../../application";
-import { Trial, FacetFilters, Facets, TrialId } from "../../domain";
+import { IndexingService, SearchResult } from "../../application";
+import { Trial, FacetFilters, Facets } from "../../domain";
 import { serialize } from "./serialize";
 import { SearchIndex } from "algoliasearch";
 import * as TaskEither from "fp-ts/lib/TaskEither";
@@ -14,22 +14,32 @@ import * as Option from "fp-ts/lib/Option";
 import { taskEitherExtend } from "../../domain/utils/taskEither";
 
 const HITS_PER_PAGE = 100;
+export const ALGOLIA_CLIENT_ID = "QC98I887KP";
 
 export class AlgoliaIndexingService implements IndexingService {
   constructor(private readonly algoliaIndex: SearchIndex) {}
 
-  indexTrials(trials: ReadonlyArray<Trial>) {
+  indexTrials(
+    trials: ReadonlyArray<Trial>,
+    { wait = false }: { wait?: boolean } = {}
+  ) {
     return pipe(
       TaskEither.tryCatch(
         () =>
-          (async () =>
-            this.algoliaIndex.replaceAllObjects(
+          (async () => {
+            const result = this.algoliaIndex.replaceAllObjects(
               trials.map(trial => serialize(trial)),
               {
-                safe: true,
+                safe: false,
                 batchSize: 50
               }
-            ))(),
+            );
+
+            if (wait) {
+              return result.wait();
+            }
+            return result;
+          })(),
         e =>
           unknownError(
             e instanceof Error
@@ -41,23 +51,34 @@ export class AlgoliaIndexingService implements IndexingService {
     );
   }
 
-  setSettings({
-    searchableAttributes,
-    attributesForFaceting,
-    customRanking
-  }: {
-    searchableAttributes: ReadonlyArray<string>;
-    attributesForFaceting: ReadonlyArray<string>;
-    customRanking: ReadonlyArray<string>;
-  }) {
+  setSettings() {
     return pipe(
       TaskEither.tryCatch(
         () =>
           (async () =>
             this.algoliaIndex.setSettings({
-              searchableAttributes,
-              attributesForFaceting,
-              customRanking
+              searchableAttributes: [
+                "scientific_title",
+                "public_title",
+                "acronym",
+                "unordered(therapeutic_classes)",
+                "intervention",
+                "trialid"
+              ],
+              attributesForFaceting: [
+                Facets.clinicalOutcomeExtracted,
+                Facets.countries,
+                Facets.recruitmentStatus,
+                Facets.registrationTimestamp,
+                Facets.studyType,
+                Facets.surrogateOutcomeExtracted,
+                Facets.hasResultsPublications,
+                `searchable(${Facets.therapeuticClasses})`
+              ],
+              customRanking: [
+                "desc(registration_timestamp)",
+                "desc(results_publications_count)"
+              ]
             }))(),
         e =>
           unknownError(
@@ -82,7 +103,7 @@ export class AlgoliaIndexingService implements IndexingService {
     GenericError<
       GenericErrorType.UnknownError | GenericErrorType.InvalidInformationError
     >,
-    ReadonlyArray<TrialId>
+    ReadonlyArray<SearchResult>
   > {
     return pipe(
       TaskEither.tryCatch(
@@ -97,7 +118,11 @@ export class AlgoliaIndexingService implements IndexingService {
                 page: startPage,
                 hitsPerPage: HITS_PER_PAGE,
                 facetFilters: serializeFacetFilters(facetFilters),
-                attributesToRetrieve: ["objectID"]
+                attributesToRetrieve: [
+                  "objectID",
+                  "public_title",
+                  "registration_timestamp"
+                ]
               }
             ))(),
         e =>
