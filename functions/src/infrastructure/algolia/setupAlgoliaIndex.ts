@@ -1,6 +1,5 @@
 import algoliasearch from "algoliasearch";
-
-const ALGOLIA_CLIENT_ID = "QC98I887KP";
+import { ALGOLIA_CLIENT_ID } from "./AlgoliaIndexingService";
 
 export const setupAlgoliaIndex = ({
   indexName,

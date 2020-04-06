@@ -16,11 +16,10 @@ export interface IndexingService {
     GenericError<GenericErrorType.UnknownError>,
     ReadonlyArray<string>
   >;
-  setSettings(attributes: {
-    searchableAttributes: ReadonlyArray<string>;
-    attributesForFaceting: ReadonlyArray<string>;
-    customRanking: ReadonlyArray<string>;
-  }): TaskEither.TaskEither<GenericError<GenericErrorType.UnknownError>, void>;
+  setSettings(): TaskEither.TaskEither<
+    GenericError<GenericErrorType.UnknownError>,
+    void
+  >;
   searchTrials(attributes: {
     searchQuery: Option<string>;
     facetFilters: FacetFilters;

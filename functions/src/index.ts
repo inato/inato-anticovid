@@ -19,24 +19,8 @@ import {
   SUBSCRIPTION_EMAIL_TOPIC,
   PostmarkEmailService
 } from "./infrastructure";
-import {
-  IndexingService,
-  MessagingService,
-  EmailService,
-  sendEmail
-} from "./application";
-import {
-  TrialRepository,
-  SubscriptionRepository,
-  Subscription,
-  facetFiltersFactory,
-  EmailAddress,
-  subscriptionIdFactory
-} from "./domain";
-import { some } from "fp-ts/lib/Option";
-import { fold } from "fp-ts/lib/TaskEither";
-import { pipe } from "fp-ts/lib/pipeable";
-import { subDays } from "date-fns";
+import { IndexingService, MessagingService, EmailService } from "./application";
+import { TrialRepository, SubscriptionRepository } from "./domain";
 
 interface Services {
   indexingService: IndexingService;
@@ -116,50 +100,10 @@ export const unsubscribeFromUpdates = functions.https.onRequest(
   feedServices(unsubscribeFromUpdatesHandler)
 );
 
-export const sendEmails = functions.pubsub
+export const sendEmailsScheduler = functions.pubsub
   .schedule("every 1 hour")
   .onRun(feedServices(sendEmailsScheduled));
 
-export const sendEmailCon = functions.pubsub
+export const sendEmailOnEvent = functions.pubsub
   .topic(SUBSCRIPTION_EMAIL_TOPIC)
   .onPublish(feedServices(sendEmailConsumer));
-
-export const sendEmailToMyself = functions.https.onRequest(
-  async (req, response) => {
-    await feedServices(
-      ({ subscriptionRepository, indexingService, emailService }) => async (
-        _req: functions.https.Request,
-        resp: functions.Response
-      ) => {
-        const subscription = new Subscription({
-          id: subscriptionIdFactory(),
-          lastEmailSentDate: subDays(new Date(), 2),
-          email: EmailAddress.unsafe_parse("julien@inato.com"),
-          search: {
-            searchQuery: some("Chloroquine"),
-            facetFilters: facetFiltersFactory()
-          },
-          searchResults: []
-        });
-        await subscriptionRepository.store(subscription)();
-        await pipe(
-          sendEmail({
-            subscriptionRepository,
-            indexingService,
-            emailService,
-            subscriptionId: subscription.id
-          }),
-          fold(
-            e => async () => {
-              console.log("e", e);
-              resp.send(e);
-            },
-            () => async () => {
-              resp.send("OK");
-            }
-          )
-        )();
-      }
-    )(req, response);
-  }
-);
