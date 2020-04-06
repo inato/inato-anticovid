@@ -106,7 +106,7 @@ const StyledSearchBox = styled(SearchBox)`
   }
 `;
 
-const UpdateAlertsButton = styled(Button)`
+const GetUpdateAlertsButton = styled(Button)`
   display: none;
   @media ${devices.Desktop} {
     display: inline-flex;
@@ -180,7 +180,7 @@ export const SearchPage = () => {
     history.location
   ]);
 
-  const displayUpdateAlertsButton = useMemo(
+  const displayGetUpdateAlertsButton = useMemo(
     () => hasActiveSearchFilters(searchState),
     [searchState]
   );
@@ -218,11 +218,11 @@ export const SearchPage = () => {
                   placeholder: "Search by keyword, drug, NCTID, ..."
                 }}
               />
-              {displayUpdateAlertsButton && (
-                <UpdateAlertsButton>
+              {displayGetUpdateAlertsButton && (
+                <GetUpdateAlertsButton>
                   <AlarmBellRingIcon />
                   <ButtonText>Get update alerts</ButtonText>
-                </UpdateAlertsButton>
+                </GetUpdateAlertsButton>
               )}
             </SearchTop>
             <SearchSuggestions />
