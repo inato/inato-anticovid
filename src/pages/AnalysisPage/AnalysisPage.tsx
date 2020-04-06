@@ -7,13 +7,13 @@ import {
   CTAFooter,
   SendUsFeedbackCard,
   devices,
-  colors
+  colors,
+  BlockTitle
 } from "../../ui";
 import { useBoolean } from "../../hooks";
 import config from "../../config";
 
 import { Introduction } from "./Introduction";
-import { Title } from "./Title";
 
 export const AnalysisPage = () => {
   const {
@@ -25,9 +25,9 @@ export const AnalysisPage = () => {
     <Container>
       <Introduction />
       <TableauContainer data-cy="analysis/tableau">
-        <StyledTitle>
+        <Title>
           Clinical research for <UnbreakableWord>Covid-19</UnbreakableWord>
-        </StyledTitle>
+        </Title>
 
         {isTableauSkeletonDisplayed && <TableauSkeleton />}
 
@@ -70,9 +70,8 @@ const TableauSkeleton = styled.div`
   background-color: ${colors.SecondaryBackground};
 `;
 
-const StyledTitle = styled(Title)`
+const Title = styled(BlockTitle)`
   background-color: ${colors.SecondaryBackground};
-  margin: 0;
   padding: 16px 16px 0 16px;
 
   @media ${devices.Desktop} {

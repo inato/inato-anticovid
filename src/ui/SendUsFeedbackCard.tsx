@@ -9,10 +9,7 @@ import { colors } from "./colors";
 import { devices } from "./media";
 
 export const SendUsFeedbackCard = ({ className }: { className?: string }) => (
-  <SendUsFeedbackCardContainer
-    className={className}
-    data-cy="analysis/feedback"
-  >
+  <SendUsFeedbackCardContainer className={className} data-cy="feedback">
     <Title>Any questions or comments?</Title>
     <LinkButton href={config.feedbackUrl}>Send us feedback</LinkButton>
   </SendUsFeedbackCardContainer>
