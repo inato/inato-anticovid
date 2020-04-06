@@ -8,7 +8,10 @@ import algoliasearch from "algoliasearch";
 import {
   trialFactory,
   trialIdFactory,
-  facetFiltersFactory
+  facetFiltersFactory,
+  orderedCustomRanking,
+  orderedSearchableAttributes,
+  orderedFacets
 } from "../../domain";
 
 const TEST_API_KEY = "a13b2921031d090fc9a870816ffc98b3";
@@ -29,7 +32,11 @@ describe("AlgoliaIndexingService", () => {
   describe("setSettings", () => {
     it("should call setSettings index method", async () => {
       const indexingService = new AlgoliaIndexingService(TEST_INDEX);
-      const result = await indexingService.setSettings()();
+      const result = await indexingService.setSettings({
+        customRanking: orderedCustomRanking,
+        searchableAttributes: orderedSearchableAttributes,
+        attributesForFaceting: orderedFacets
+      })();
 
       expect(result).toStrictEqual(Either.right(undefined));
     });
@@ -63,7 +70,11 @@ describe("AlgoliaIndexingService", () => {
         { wait: true }
       )();
 
-      await indexingService.setSettings()();
+      await indexingService.setSettings({
+        customRanking: orderedCustomRanking,
+        searchableAttributes: orderedSearchableAttributes,
+        attributesForFaceting: orderedFacets
+      })();
 
       const results = await indexingService.searchTrials({
         searchQuery: Option.some("Chloroqune"),
