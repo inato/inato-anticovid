@@ -200,7 +200,7 @@ export const ClinicalTrialHit = ({
 
         {results_publications.map(
           (publication: ClinicalTrialHitPublication) => (
-            <Publication publication={publication} />
+            <Publication publication={publication} key={publication.url} />
           )
         )}
       </PublicationsContainer>
