@@ -142,6 +142,10 @@ const FacetContainer = styled.div`
     margin: 0;
     padding: 0;
 
+    :hover {
+      color: ${colors.Primary};
+    }
+
     &.ais-RefinementList-showMore--disabled {
       display: none;
     }
