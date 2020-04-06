@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css, FlattenSimpleInterpolation } from "styled-components";
 
 import { colors } from "./colors";
 import { devices } from "./media";
@@ -47,5 +47,26 @@ export const linkCss = css`
         width: 100%;
       }
     }
+  }
+`;
+
+export const placeholderCss = (style: FlattenSimpleInterpolation) => css`
+  &::-webkit-input-placeholder {
+    ${style}
+  }
+  &:-moz-placeholder {
+    ${style}
+  }
+  &::-moz-placeholder {
+    ${style}
+  }
+  &::-moz-p {
+    ${style}
+  }
+  &:-ms-input-placeholder {
+    ${style}
+  }
+  &::placeholder {
+    ${style}
   }
 `;
