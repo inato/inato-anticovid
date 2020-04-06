@@ -1,14 +1,17 @@
 import * as TaskEither from "fp-ts/lib/TaskEither";
 import * as Either from "fp-ts/lib/Either";
+import * as Option from "fp-ts/lib/Option";
 
 import { sendEmail, duplicateError } from "./sendEmail";
 import {
   subscriptionFactory,
   InMemorySubscriptionRepository,
-  trialFactory
+  trialFactory,
+  Subscription
 } from "../../domain";
 import { indexingServiceFactory, emailServiceFactory } from "../services";
 import { subDays } from "date-fns";
+import { pipe } from "fp-ts/lib/pipeable";
 
 describe("sendEmail", () => {
   it("should send an error if email has been sent less than a day ago", async () => {
@@ -67,9 +70,10 @@ describe("sendEmail", () => {
     expect(result).toStrictEqual(Either.right(undefined));
   });
 
-  it("should send an email if there are new trials", async () => {
+  it("should send an email if there are new trials and update subscription", async () => {
     const subscription = subscriptionFactory({
-      lastEmailSentDate: subDays(new Date(), 7)
+      lastEmailSentDate: subDays(new Date(), 7),
+      searchResults: []
     });
     const newResults = [trialFactory()];
     const subscriptionRepository = new InMemorySubscriptionRepository();
@@ -94,5 +98,19 @@ describe("sendEmail", () => {
       subscription
     });
     expect(result).toStrictEqual(Either.right(undefined));
+
+    const newSubscription = pipe(
+      await subscriptionRepository.findById(subscription.id)(),
+      Either.getOrElse<any, Option.Option<Subscription>>(() => Option.none),
+      Option.getOrElse<Subscription | null>(() => null)
+    );
+
+    expect(newSubscription).not.toEqual(null);
+    expect(newSubscription!.lastEmailSentDate).not.toBe(
+      subscription.lastEmailSentDate
+    );
+    expect(newSubscription!.searchResults).toStrictEqual(
+      newResults.map(({ trialId }) => trialId)
+    );
   });
 });
