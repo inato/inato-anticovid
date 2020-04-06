@@ -93,22 +93,28 @@ const feedServices = <Ret, Argument1, Argument2>(
           postgresClient,
           functions.config().pg.tablename
         ),
-      indexingService: () => new AlgoliaIndexingService(algoliaIndex)
+      indexingService: () => new AlgoliaIndexingService(algoliaIndex),
+      loggingService: () => loggingService,
+      reportingService: () => reportingService
     }) as any
   );
 
   const services = Array.from(availableServices.entries())
     .filter(([key]) => requiredServices.includes(key))
-    .map(([_key, f]) => f());
+    .reduce((acc, [key, f]) => {
+      acc[key] = f();
+      return acc;
+    }, {} as any);
 
   try {
-    const result = await callback(services as any)(arg1, arg2, ...rest);
+    const result = await callback(services)(arg1, arg2, ...rest);
 
     await postgresClient.end();
 
     return result;
   } catch (e) {
     reportingService.reportError(e);
+    throw e;
   }
 };
 
