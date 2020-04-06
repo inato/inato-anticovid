@@ -56,6 +56,14 @@ const urlToSearchState = (
   location: ReturnType<typeof useHistory>["location"]
 ) => qs.parse(location.search.slice(1));
 
+const hasActiveSearchFilters = (searchState: {
+  refinementList?: { [key: string]: Array<string> };
+  toggle?: { [key: string]: string };
+}) =>
+  (searchState.refinementList &&
+    Object.keys(searchState.refinementList).length > 0) ||
+  (searchState.toggle && Object.keys(searchState.toggle).length > 0);
+
 const Container = styled.div`
   padding: 32px 16px;
   max-width: 1200px;
@@ -172,6 +180,11 @@ export const SearchPage = () => {
     history.location
   ]);
 
+  const displayUpdateAlertsButton = useMemo(
+    () => hasActiveSearchFilters(searchState),
+    [searchState]
+  );
+
   const onSearchStateChange = useCallback(
     (searchState: { [key: string]: unknown }) => {
       history.replace(
@@ -205,10 +218,12 @@ export const SearchPage = () => {
                   placeholder: "Search by keyword, drug, NCTID, ..."
                 }}
               />
-              <UpdateAlertsButton>
-                <AlarmBellRingIcon />
-                <ButtonText>Get update alerts</ButtonText>
-              </UpdateAlertsButton>
+              {displayUpdateAlertsButton && (
+                <UpdateAlertsButton>
+                  <AlarmBellRingIcon />
+                  <ButtonText>Get update alerts</ButtonText>
+                </UpdateAlertsButton>
+              )}
             </SearchTop>
             <SearchSuggestions />
             <StyledStats
