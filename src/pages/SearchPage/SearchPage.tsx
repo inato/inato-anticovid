@@ -24,6 +24,7 @@ import { FilteringProps } from "./FilteringProps";
 import icon from "./Filter.svg";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SearchResults } from "./SearchResults";
+import { UpdateAlertsModal } from "./UpdateAlertsModal";
 
 const searchClient = algoliasearch(
   config.algolia.applicationId,
@@ -201,6 +202,12 @@ export const SearchPage = () => {
     setToTrue: openFiltering
   } = useBoolean(false);
 
+  const {
+    isTrue: isModalOpen,
+    setToFalse: closeModal,
+    setToTrue: openModal
+  } = useBoolean(false);
+
   return (
     <Container>
       <InstantSearch
@@ -219,7 +226,7 @@ export const SearchPage = () => {
                 }}
               />
               {displayGetUpdateAlertsButton && (
-                <GetUpdateAlertsButton>
+                <GetUpdateAlertsButton onClick={openModal}>
                   <AlarmBellRingIcon />
                   <ButtonText>Get update alerts</ButtonText>
                 </GetUpdateAlertsButton>
@@ -252,6 +259,7 @@ export const SearchPage = () => {
           filters
         </FilterButton>
       </InstantSearch>
+      <UpdateAlertsModal isOpen={isModalOpen} onRequestClose={closeModal} />
     </Container>
   );
 };
