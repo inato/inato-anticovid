@@ -30,6 +30,7 @@
     "babel-preset-react-app": "^9.1.1",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "core-js": "^3.6.4",
     "css-loader": "3.4.2",
     "cypress": "^4.2.0",
     "date-fns": "^2.11.0",
