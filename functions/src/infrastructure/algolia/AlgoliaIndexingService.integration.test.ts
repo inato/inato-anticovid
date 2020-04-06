@@ -1,9 +1,6 @@
 import * as Either from "fp-ts/lib/Either";
 import * as Option from "fp-ts/lib/Option";
-import {
-  ALGOLIA_CLIENT_ID,
-  AlgoliaIndexingService
-} from "./AlgoliaIndexingService";
+import { AlgoliaIndexingService } from "./AlgoliaIndexingService";
 import algoliasearch from "algoliasearch";
 import {
   trialFactory,
@@ -15,6 +12,7 @@ import {
 } from "../../domain";
 
 const TEST_API_KEY = "a13b2921031d090fc9a870816ffc98b3";
+const ALGOLIA_CLIENT_ID = "QC98I887KP";
 const INDEX_NAME = `test_data_${Math.floor(Math.random() * 10000)}`;
 
 const ALGOLIA_CLIENT = algoliasearch(ALGOLIA_CLIENT_ID, TEST_API_KEY);

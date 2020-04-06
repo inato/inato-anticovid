@@ -49,7 +49,8 @@ const feedServices = <Ret, Argument1, Argument2>(
 ): Promise<Ret> => {
   const algoliaIndex = setupAlgoliaIndex({
     apiKey: functions.config().algolia.apikey,
-    indexName: functions.config().algolia.index
+    indexName: functions.config().algolia.index,
+    clientId: functions.config().algolia.clientid
   });
   const postgresClient = await setupPostgresClient();
 

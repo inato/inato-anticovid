@@ -1,5 +1,6 @@
 {
   "algolia": {
+    "clientid": "QC98I887KP",
     "apikey": "***REMOVED***",
     "index": "dev_data"
   },
