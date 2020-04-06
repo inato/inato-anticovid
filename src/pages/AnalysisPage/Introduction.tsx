@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Accordion, TextBlockWithLaboratory, BlockTitle } from "../../ui";
 
 export const Introduction = () => (
-  <TextBlockWithLaboratory data-cy="analysis/intro">
+  <TextBlockWithLaboratory dataCy="analysis/intro">
     <Title>What is anticovid?</Title>
     <Paragraph>
       Anticovid is an open access platform which gathers all available
