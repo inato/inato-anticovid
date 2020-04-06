@@ -9,6 +9,9 @@ export enum colors {
   BoxShadow = "#e3e5ec",
   PurpleBoxShadow = "rgba(89, 40, 250, 0.4)",
 
+  ModalOverlay = "rgba(53, 48, 69, 0.2)",
+  ModalShadow = "rgba(18, 68, 105, 0.2)",
+
   DarkGray = "#333333",
 
   Primary = "#413078", // Dark purple
