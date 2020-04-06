@@ -14,7 +14,6 @@ import * as Option from "fp-ts/lib/Option";
 import { taskEitherExtend } from "../../domain/utils/taskEither";
 
 const HITS_PER_PAGE = 100;
-export const ALGOLIA_CLIENT_ID = "QC98I887KP";
 
 export class AlgoliaIndexingService implements IndexingService {
   constructor(private readonly algoliaIndex: SearchIndex) {}

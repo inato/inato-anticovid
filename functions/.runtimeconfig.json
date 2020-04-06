@@ -1,5 +1,6 @@
 {
   "algolia": {
+    "clientid": "QC98I887KP",
     "apikey": "***REMOVED***",
     "index": "dev_data"
   },
@@ -7,6 +8,6 @@
     "tablename": "who_trial_staging"
   },
   "postmark": {
-    "apitoken": "***REMOVED***"
+    "apitoken": ""
   }
 }
