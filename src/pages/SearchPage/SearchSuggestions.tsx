@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import * as firebase from "firebase";
+import * as firebase from "firebase/app";
+import "firebase/firestore";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 
