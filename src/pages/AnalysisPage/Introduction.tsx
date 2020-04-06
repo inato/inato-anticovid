@@ -1,13 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Accordion, TextBlockWithLaboratory } from "../../ui";
-
-import { Title } from "./Title";
+import { Accordion, TextBlockWithLaboratory, BlockTitle } from "../../ui";
 
 export const Introduction = () => (
   <TextBlockWithLaboratory data-cy="analysis/intro">
-    <StyledTitle>What is anticovid?</StyledTitle>
+    <Title>What is anticovid?</Title>
     <Paragraph>
       Anticovid is an open access platform which gathers all available
       information regarding global clinical trials for SARS-CoV 2 (the virus
@@ -56,7 +54,7 @@ export const Introduction = () => (
   </TextBlockWithLaboratory>
 );
 
-const StyledTitle = styled(Title)`
+const Title = styled(BlockTitle)`
   margin-bottom: 4px;
 `;
 

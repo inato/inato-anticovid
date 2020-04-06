@@ -11,3 +11,4 @@ export * from "./Checkbox";
 export * from "./styles";
 export * from "./TextBlockWithLaboratory";
 export * from "./ToggleRefinementWithCount";
+export * from "./BlockTitle";
