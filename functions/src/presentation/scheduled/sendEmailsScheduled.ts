@@ -20,7 +20,7 @@ export const sendEmailsScheduled = ({
   timeService: TimeService;
 }) => (_context: functions.EventContext) =>
   pipe(
-    subscriptionRepository.findAllSubscriptionsLastEmailSentAfter(
+    subscriptionRepository.findAllSubscriptionsLastEmailSentBefore(
       subDays(timeService.currentDate, 1)
     ),
     taskEitherExtend(subscriptions => {

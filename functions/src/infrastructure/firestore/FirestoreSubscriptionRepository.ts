@@ -23,13 +23,13 @@ export class FirestoreSubscriptionRepository implements SubscriptionRepository {
     this.firestore = firestore;
   }
 
-  findAllSubscriptionsLastEmailSentAfter(date: Date) {
+  findAllSubscriptionsLastEmailSentBefore(date: Date) {
     return pipe(
       TaskEither.tryCatch(
         () =>
           this.firestore
             .collection(SUBSCRIPTION_COLLECTION_NAME)
-            .where("last_email_sent_date", ">", date)
+            .where("last_email_sent_date", "<", date)
             .get(),
         e =>
           unknownError(

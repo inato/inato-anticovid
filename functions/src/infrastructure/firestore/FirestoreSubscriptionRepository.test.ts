@@ -90,7 +90,7 @@ describe("FirestoreSubscriptionRepository", () => {
     });
   });
 
-  describe("findAllSubscriptionsLastEmailSentAfter", () => {
+  describe("findAllSubscriptionsLastEmailSentBefore", () => {
     it("should find subscriptions", async () => {
       const date = new Date();
       const email = "email@inato.com";
@@ -110,7 +110,7 @@ describe("FirestoreSubscriptionRepository", () => {
         })
       );
 
-      const results = await repository.findAllSubscriptionsLastEmailSentAfter(
+      const results = await repository.findAllSubscriptionsLastEmailSentBefore(
         date
       )();
 
@@ -136,7 +136,7 @@ describe("FirestoreSubscriptionRepository", () => {
         firestoreMock({ date, email })
       );
 
-      const results = await repository.findAllSubscriptionsLastEmailSentAfter(
+      const results = await repository.findAllSubscriptionsLastEmailSentBefore(
         date
       )();
 
