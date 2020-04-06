@@ -100,7 +100,6 @@ const StyledTitle = styled(Title)`
 
 const Paragraph = styled.p`
   margin: 4px 0 0 0;
-  
   & ${Accordion} {
     :last-child {
       margin-bottom: 16px;
