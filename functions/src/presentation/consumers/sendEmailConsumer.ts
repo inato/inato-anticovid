@@ -45,7 +45,7 @@ export const sendEmailConsumer = ({
     }),
     TaskEither.fold(
       e => {
-        loggingService.log("Error when sending email", e);
+        loggingService.log("Error when sending email", e.reason);
         return Task.of(undefined);
       },
       () => {
