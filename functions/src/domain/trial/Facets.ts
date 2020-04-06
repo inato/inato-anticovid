@@ -36,3 +36,37 @@ export const facetFiltersFactory = ({
   countries,
   hasResultsPublications
 });
+
+export const orderedFacets: ReadonlyArray<{
+  name: Facets;
+  searchable?: boolean;
+}> = [
+  { name: Facets.clinicalOutcomeExtracted },
+  { name: Facets.countries },
+  { name: Facets.recruitmentStatus },
+  { name: Facets.registrationTimestamp },
+  { name: Facets.studyType },
+  { name: Facets.surrogateOutcomeExtracted },
+  { name: Facets.hasResultsPublications },
+  { name: Facets.therapeuticClasses, searchable: true }
+];
+
+export const orderedSearchableAttributes: ReadonlyArray<{
+  name: string;
+  unordered?: boolean;
+}> = [
+  { name: "scientific_title" },
+  { name: "public_title" },
+  { name: "acronym" },
+  { name: "therapeutic_classes", unordered: true },
+  { name: "intervention" },
+  { name: "trialid" }
+];
+
+export const orderedCustomRanking: ReadonlyArray<{
+  name: string;
+  orderBy: "asc" | "desc";
+}> = [
+  { name: "registration_timestamp", orderBy: "desc" },
+  { name: "results_publications_count", orderBy: "desc" }
+];

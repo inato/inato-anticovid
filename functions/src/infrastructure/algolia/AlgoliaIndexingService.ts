@@ -51,34 +51,40 @@ export class AlgoliaIndexingService implements IndexingService {
     );
   }
 
-  setSettings() {
+  setSettings({
+    searchableAttributes,
+    attributesForFaceting,
+    customRanking
+  }: {
+    searchableAttributes: ReadonlyArray<{
+      name: string;
+      unordered?: boolean;
+    }>;
+    attributesForFaceting: ReadonlyArray<{
+      name: Facets;
+      searchable?: boolean;
+    }>;
+    customRanking: ReadonlyArray<{
+      name: string;
+      orderBy: "asc" | "desc";
+    }>;
+  }) {
     return pipe(
       TaskEither.tryCatch(
         () =>
           (async () =>
             this.algoliaIndex.setSettings({
-              searchableAttributes: [
-                "scientific_title",
-                "public_title",
-                "acronym",
-                "unordered(therapeutic_classes)",
-                "intervention",
-                "trialid"
-              ],
-              attributesForFaceting: [
-                Facets.clinicalOutcomeExtracted,
-                Facets.countries,
-                Facets.recruitmentStatus,
-                Facets.registrationTimestamp,
-                Facets.studyType,
-                Facets.surrogateOutcomeExtracted,
-                Facets.hasResultsPublications,
-                `searchable(${Facets.therapeuticClasses})`
-              ],
-              customRanking: [
-                "desc(registration_timestamp)",
-                "desc(results_publications_count)"
-              ]
+              searchableAttributes: searchableAttributes.map(
+                ({ name, unordered }) =>
+                  unordered ? `unordered(${name})` : name
+              ),
+              attributesForFaceting: attributesForFaceting.map(
+                ({ name, searchable }) =>
+                  searchable ? `searchable(${name})` : name
+              ),
+              customRanking: customRanking.map(
+                ({ name, orderBy }) => `${orderBy}(${name})`
+              )
             }))(),
         e =>
           unknownError(
