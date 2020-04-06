@@ -29,7 +29,7 @@ export const sendEmailConsumer = ({
   timeService: TimeService;
 }) => (message: functions.pubsub.Message, _context: functions.EventContext) =>
   pipe(
-    TaskEither.fromEither(deserializeMessage(message.toJSON())),
+    TaskEither.fromEither(deserializeMessage(message.json)),
     taskEitherExtend(({ subscriptionId }) => {
       loggingService.log(
         `Handling send email message for subscription ${subscriptionId}`
