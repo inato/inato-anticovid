@@ -82,7 +82,7 @@ const Header = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   height: 100%;
 
@@ -94,7 +94,7 @@ const Header = styled.div`
 `;
 
 const LogoLink = styled(NavLink)`
-  height: 65px;
+  height: 45px;
   display: block;
   flex-basis: 100%;
   width: 100%; /* FOR IE11*/
@@ -121,11 +121,12 @@ const HeaderLinkContainer = styled.div`
   overflow-y: hidden;
   height: 100%;
   align-items: center;
-  min-height: 26px;
-  padding-bottom: 16px;
+  height: 60px;
+  width: 100%; /* For IE11 */
 
   @media ${devices.Desktop} {
-    padding-bottom: 0;
+    height: 65px;
+    width: auto;
   }
 `;
 
@@ -166,7 +167,7 @@ const HeaderLink = styled(NavLink)`
     &:after {
       border-bottom: 2px solid ${colors.ButtonText};
       opacity: 1;
-      bottom: -20px;
+      bottom: -21px;
       width: 100%;
     }
   }
