@@ -11,7 +11,8 @@ import {
   IndexingService,
   SearchResult,
   EmailService,
-  LoggingService
+  LoggingService,
+  TimeService
 } from "../services";
 import { subDays, isBefore } from "date-fns";
 
@@ -20,18 +21,21 @@ export const sendEmail = ({
   indexingService,
   emailService,
   loggingService,
+  timeService,
   subscriptionId
 }: {
   subscriptionRepository: SubscriptionRepository;
   indexingService: IndexingService;
   emailService: EmailService;
   loggingService: LoggingService;
+  timeService: TimeService;
   subscriptionId: SubscriptionId;
 }) =>
   pipe(
     findSubscriptionIfEmailNotSentForToday({
       subscriptionId,
-      subscriptionRepository
+      subscriptionRepository,
+      timeService
     }),
     taskEitherExtend(subscription =>
       pipe(
@@ -45,7 +49,8 @@ export const sendEmail = ({
                 subscription,
                 newTrials,
                 subscriptionRepository,
-                emailService
+                emailService,
+                timeService
               })
             : TaskEither.right(undefined);
         })
@@ -57,12 +62,14 @@ const sendEmailAndUpdateSubscription = ({
   subscription,
   newTrials,
   subscriptionRepository,
-  emailService
+  emailService,
+  timeService
 }: {
   subscription: Subscription;
   newTrials: ReadonlyArray<SearchResult>;
   subscriptionRepository: SubscriptionRepository;
   emailService: EmailService;
+  timeService: TimeService;
 }) =>
   pipe(
     emailService.sendNewResultsForSubscription({
@@ -73,7 +80,7 @@ const sendEmailAndUpdateSubscription = ({
       subscriptionRepository.store(
         subscription.buildWithNewSearchResultsAndEmailSentDate({
           searchResults: newTrials.map(({ trialId }) => trialId),
-          lastEmailSentDate: new Date()
+          lastEmailSentDate: timeService.currentDate
         })
       )
     )
@@ -81,10 +88,12 @@ const sendEmailAndUpdateSubscription = ({
 
 const findSubscriptionIfEmailNotSentForToday = ({
   subscriptionId,
-  subscriptionRepository
+  subscriptionRepository,
+  timeService
 }: {
   subscriptionId: SubscriptionId;
   subscriptionRepository: SubscriptionRepository;
+  timeService: TimeService;
 }) =>
   pipe(
     subscriptionRepository.findById(subscriptionId),
@@ -96,7 +105,10 @@ const findSubscriptionIfEmailNotSentForToday = ({
         ),
         taskEitherExtend(subscription => {
           if (
-            isBefore(subscription.lastEmailSentDate, subDays(new Date(), 1))
+            isBefore(
+              subscription.lastEmailSentDate,
+              subDays(timeService.currentDate, 1)
+            )
           ) {
             return TaskEither.right(subscription);
           }

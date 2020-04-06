@@ -10,7 +10,8 @@ import {
   sendEmail,
   IndexingService,
   EmailService,
-  LoggingService
+  LoggingService,
+  timeServiceFactory
 } from "../../application";
 
 export const sendEmailConsumer = ({
@@ -32,7 +33,8 @@ export const sendEmailConsumer = ({
         subscriptionRepository,
         indexingService,
         emailService,
-        loggingService
+        loggingService,
+        timeService: timeServiceFactory()
       })
     )
   )();

@@ -1,4 +1,4 @@
-import { LoggingService } from "../../application/services/LoggingService";
+import { LoggingService } from "../application";
 
 export class ConsoleLoggingService implements LoggingService {
   log(...messages: ReadonlyArray<string>) {

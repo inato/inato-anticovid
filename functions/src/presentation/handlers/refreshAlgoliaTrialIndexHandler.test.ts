@@ -4,7 +4,10 @@ import {
   InMemoryTrialRepository,
   trialIdFactory
 } from "../../domain";
-import { indexingServiceFactory } from "../../application";
+import {
+  indexingServiceFactory,
+  loggingServiceFactory
+} from "../../application";
 import { requestFactory, responseFactory } from "../factories";
 
 describe("refreshAlgoliaTrialIndexHandler", () => {
@@ -16,7 +19,8 @@ describe("refreshAlgoliaTrialIndexHandler", () => {
     ]);
     const handler = refreshAlgoliaTrialIndexHandler({
       trialRepository,
-      indexingService: indexingServiceFactory()
+      indexingService: indexingServiceFactory(),
+      loggingService: loggingServiceFactory()
     });
     const send = jest.fn();
     await handler(requestFactory(), responseFactory({ send }));
