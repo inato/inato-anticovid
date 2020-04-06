@@ -24,9 +24,11 @@ import {
   IndexingService,
   MessagingService,
   EmailService,
-  LoggingService
+  LoggingService,
+  TimeService
 } from "./application";
 import { TrialRepository, SubscriptionRepository } from "./domain";
+import { DateTimeService } from "./infrastructure/DateTimeService";
 
 interface Services {
   indexingService: IndexingService;
@@ -35,6 +37,7 @@ interface Services {
   messagingService: MessagingService;
   emailService: EmailService;
   loggingService: LoggingService;
+  timeService: TimeService;
 }
 
 const { firestore } = setupFirebase({
@@ -79,13 +82,16 @@ const feedServices = <Ret, Argument1, Argument2>(
     apiToken: functions.config().postmark.apitoken
   });
 
+  const timeService = new DateTimeService();
+
   const result = await callback({
     indexingService,
     trialRepository,
     subscriptionRepository,
     messagingService,
     emailService,
-    loggingService
+    loggingService,
+    timeService
   })(arg1, arg2, ...rest);
 
   await postgresClient.end();

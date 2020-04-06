@@ -6,19 +6,22 @@ import { readonlyArray } from "fp-ts/lib/ReadonlyArray";
 import { taskEitherExtend } from "../../domain/utils/taskEither";
 import { MessagingService, LoggingService } from "../../application";
 import { subDays } from "date-fns";
+import { TimeService } from "../../application/services/TimeService";
 
 export const sendEmailsScheduled = ({
   subscriptionRepository,
   messagingService,
-  loggingService
+  loggingService,
+  timeService
 }: {
   subscriptionRepository: SubscriptionRepository;
   messagingService: MessagingService;
   loggingService: LoggingService;
+  timeService: TimeService;
 }) => (_context: functions.EventContext) =>
   pipe(
     subscriptionRepository.findAllSubscriptionsLastEmailSentAfter(
-      subDays(new Date(), 1)
+      subDays(timeService.currentDate, 1)
     ),
     taskEitherExtend(subscriptions => {
       loggingService.log(
