@@ -4,11 +4,13 @@ import styled from "styled-components";
 import { colors, devices, LaboratoryIcon, Accordion } from ".";
 
 export const TextBlockWithLaboratory = ({
-  children
+  children,
+  dataCy
 }: {
   children: React.ReactNode;
+  dataCy?: string;
 }) => (
-  <Container>
+  <Container data-cy={dataCy}>
     <TextContainer>{children}</TextContainer>
     <IconContainer>
       <StyledLaboratoryIcon />
