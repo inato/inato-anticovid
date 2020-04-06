@@ -4,7 +4,7 @@ import * as Option from "fp-ts/lib/Option";
 import { GenericError, GenericErrorType } from "../errors";
 
 export interface SubscriptionRepository {
-  findAllSubscriptionsLastEmailSentAfter(
+  findAllSubscriptionsLastEmailSentBefore(
     date: Date
   ): TaskEither.TaskEither<
     GenericError<

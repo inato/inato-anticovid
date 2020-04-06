@@ -9,7 +9,7 @@ import { isBefore } from "date-fns";
 export class InMemorySubscriptionRepository implements SubscriptionRepository {
   entities: Map<SubscriptionId, Subscription> = new Map();
 
-  findAllSubscriptionsLastEmailSentAfter(
+  findAllSubscriptionsLastEmailSentBefore(
     date: Date
   ): TaskEither.TaskEither<
     GenericError<
