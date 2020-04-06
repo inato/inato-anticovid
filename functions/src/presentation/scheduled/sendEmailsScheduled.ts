@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import * as TaskEither from "fp-ts/lib/TaskEither";
+import * as Task from "fp-ts/lib/Task";
 import { SubscriptionRepository } from "../../domain";
 import { pipe } from "fp-ts/lib/pipeable";
 import { readonlyArray } from "fp-ts/lib/ReadonlyArray";
@@ -34,5 +35,14 @@ export const sendEmailsScheduled = ({
             subscriptionId: subscription.id
           })
       );
-    })
+    }),
+    TaskEither.fold(
+      e => {
+        loggingService.log("Error scheduling mails", e.reason);
+        return Task.of(undefined);
+      },
+      () => {
+        return Task.of(undefined);
+      }
+    )
   )();
