@@ -48,6 +48,7 @@ const { firestore } = setupFirebase({
 });
 
 const feedServices = <Ret, Argument1, Argument2>(
+  requiredServices: ReadonlyArray<keyof Services>,
   callback:
     | ((
         services: Services
@@ -74,33 +75,34 @@ const feedServices = <Ret, Argument1, Argument2>(
   });
   const postgresClient = await setupPostgresClient();
 
-  const indexingService = new AlgoliaIndexingService(algoliaIndex);
-
-  const trialRepository = new PostgresTrialRepository(
-    postgresClient,
-    functions.config().pg.tablename
+  const availableServices: Map<keyof Services, any> = new Map<
+    keyof Services,
+    () => any
+  >(
+    Object.entries({
+      timeService: () => new DateTimeService(),
+      emailService: () =>
+        new PostmarkEmailService({
+          apiToken: functions.config().postmark.apitoken
+        }),
+      messagingService: () => new PubSubMessageService(),
+      subscriptionRepository: () =>
+        new FirestoreSubscriptionRepository(firestore),
+      trialRepository: () =>
+        new PostgresTrialRepository(
+          postgresClient,
+          functions.config().pg.tablename
+        ),
+      indexingService: () => new AlgoliaIndexingService(algoliaIndex)
+    }) as any
   );
 
-  const subscriptionRepository = new FirestoreSubscriptionRepository(firestore);
+  const services = Array.from(availableServices.entries())
+    .filter(([key]) => requiredServices.includes(key))
+    .map(([_key, f]) => f());
 
-  const messagingService = new PubSubMessageService();
-
-  const emailService = new PostmarkEmailService({
-    apiToken: functions.config().postmark.apitoken
-  });
-
-  const timeService = new DateTimeService();
   try {
-    const result = await callback({
-      indexingService,
-      trialRepository,
-      subscriptionRepository,
-      messagingService,
-      emailService,
-      loggingService,
-      timeService,
-      reportingService
-    })(arg1, arg2, ...rest);
+    const result = await callback(services as any)(arg1, arg2, ...rest);
 
     await postgresClient.end();
 
@@ -115,24 +117,66 @@ export const refreshAlgoliaTrialIndex = functions
     timeoutSeconds: 500,
     memory: "1GB"
   })
-  .https.onRequest(feedServices(refreshAlgoliaTrialIndexHandler));
+  .https.onRequest(
+    feedServices(
+      [
+        "trialRepository",
+        "indexingService",
+        "loggingService",
+        "reportingService"
+      ],
+      refreshAlgoliaTrialIndexHandler
+    )
+  );
 
 export const setAlgoliaSettings = functions.https.onRequest(
-  feedServices(setAlgoliaSettingsHandler)
+  feedServices(
+    ["indexingService", "reportingService"],
+    setAlgoliaSettingsHandler
+  )
 );
 
 export const subscribeToUpdates = functions.https.onRequest(
-  feedServices(subscribeToUpdatesHandler)
+  feedServices(
+    ["subscriptionRepository", "indexingService", "reportingService"],
+    subscribeToUpdatesHandler
+  )
 );
 
 export const unsubscribeFromUpdates = functions.https.onRequest(
-  feedServices(unsubscribeFromUpdatesHandler)
+  feedServices(
+    ["subscriptionRepository", "reportingService"],
+    unsubscribeFromUpdatesHandler
+  )
 );
 
 export const sendEmailsScheduler = functions.pubsub
   .schedule("every 60 minutes")
-  .onRun(feedServices(sendEmailsScheduled));
+  .onRun(
+    feedServices(
+      [
+        "subscriptionRepository",
+        "messagingService",
+        "loggingService",
+        "timeService",
+        "reportingService"
+      ],
+      sendEmailsScheduled
+    )
+  );
 
 export const sendEmailOnEvent = functions.pubsub
   .topic(SUBSCRIPTION_EMAIL_TOPIC)
-  .onPublish(feedServices(sendEmailConsumer));
+  .onPublish(
+    feedServices(
+      [
+        "subscriptionRepository",
+        "indexingService",
+        "emailService",
+        "loggingService",
+        "timeService",
+        "reportingService"
+      ],
+      sendEmailConsumer
+    )
+  );

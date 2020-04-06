@@ -11,7 +11,7 @@
     "apitoken": ""
   },
   "sentry": {
-    "dsn": null,
+    "dsn": "",
     "environment": "dev"
   }
 }
