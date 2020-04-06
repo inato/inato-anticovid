@@ -13,7 +13,7 @@ export const CTAFooter = ({
   className?: string;
   searchTrialsTitle?: string;
 }) => (
-  <Container className={className} data-cy="analysis/footer">
+  <Container className={className} data-cy="CTAFooter">
     <Newsletter />
     <RightCard>
       <Title>{searchTrialsTitle}</Title>
