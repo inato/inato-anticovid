@@ -3,6 +3,7 @@ import { trialFactory, InMemoryTrialRepository } from "../../domain";
 import { indexingServiceFactory } from "..";
 import * as TaskEither from "fp-ts/lib/TaskEither";
 import * as Either from "fp-ts/lib/Either";
+import { loggingServiceFactory } from "../services";
 
 describe("refreshTrialIndex", () => {
   it("should index all trials found in the repository", async () => {
@@ -19,7 +20,8 @@ describe("refreshTrialIndex", () => {
     });
     const count = await refreshTrialIndex({
       trialRepository,
-      indexingService
+      indexingService,
+      loggingService: loggingServiceFactory()
     })();
     expect(count).toEqual(Either.right(1));
     expect(indexTrials).toHaveBeenCalledWith(trials);

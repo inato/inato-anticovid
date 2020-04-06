@@ -6,16 +6,23 @@ import { SubscriptionRepository, toSubscriptionId } from "../../domain";
 import { pipe } from "fp-ts/lib/pipeable";
 import { invalidInformationError } from "../../domain/errors";
 import { taskEitherExtend } from "../../domain/utils/taskEither";
-import { sendEmail, IndexingService, EmailService } from "../../application";
+import {
+  sendEmail,
+  IndexingService,
+  EmailService,
+  LoggingService
+} from "../../application";
 
 export const sendEmailConsumer = ({
   subscriptionRepository,
   indexingService,
-  emailService
+  emailService,
+  loggingService
 }: {
   subscriptionRepository: SubscriptionRepository;
   indexingService: IndexingService;
   emailService: EmailService;
+  loggingService: LoggingService;
 }) => (message: functions.pubsub.Message, _context: functions.EventContext) =>
   pipe(
     TaskEither.fromEither(deserializeMessage(message.toJSON())),
@@ -24,7 +31,8 @@ export const sendEmailConsumer = ({
         subscriptionId,
         subscriptionRepository,
         indexingService,
-        emailService
+        emailService,
+        loggingService
       })
     )
   )();

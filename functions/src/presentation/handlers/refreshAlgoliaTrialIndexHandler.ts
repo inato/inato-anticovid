@@ -3,20 +3,27 @@ import { pipe } from "fp-ts/lib/pipeable";
 import * as TaskEither from "fp-ts/lib/TaskEither";
 import * as Task from "fp-ts/lib/Task";
 
-import { refreshTrialIndex, IndexingService } from "../../application";
+import {
+  refreshTrialIndex,
+  IndexingService,
+  LoggingService
+} from "../../application";
 import { TrialRepository } from "../../domain";
 
 export const refreshAlgoliaTrialIndexHandler = ({
   trialRepository,
-  indexingService
+  indexingService,
+  loggingService
 }: {
   trialRepository: TrialRepository;
   indexingService: IndexingService;
+  loggingService: LoggingService;
 }) => (_request: functions.https.Request, response: functions.Response) =>
   pipe(
     refreshTrialIndex({
       trialRepository,
-      indexingService
+      indexingService,
+      loggingService
     }),
     TaskEither.fold(
       error => {

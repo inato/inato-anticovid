@@ -7,18 +7,25 @@ import { pipe } from "fp-ts/lib/pipeable";
 import { taskEitherExtend } from "../../domain/utils/taskEither";
 import * as TaskEither from "fp-ts/lib/TaskEither";
 import { aggregateNotFoundError, genericError } from "../../domain/errors";
-import { IndexingService, SearchResult, EmailService } from "../services";
+import {
+  IndexingService,
+  SearchResult,
+  EmailService,
+  LoggingService
+} from "../services";
 import { subDays, isBefore } from "date-fns";
 
 export const sendEmail = ({
   subscriptionRepository,
   indexingService,
   emailService,
+  loggingService,
   subscriptionId
 }: {
   subscriptionRepository: SubscriptionRepository;
   indexingService: IndexingService;
   emailService: EmailService;
+  loggingService: LoggingService;
   subscriptionId: SubscriptionId;
 }) =>
   pipe(
@@ -29,16 +36,19 @@ export const sendEmail = ({
     taskEitherExtend(subscription =>
       pipe(
         findNewTrials({ subscription, indexingService }),
-        taskEitherExtend(newTrials =>
-          newTrials.length > 0
+        taskEitherExtend(newTrials => {
+          loggingService.log(
+            `Found ${newTrials.length} new trials for subscription ${subscription.id}`
+          );
+          return newTrials.length > 0
             ? sendEmailAndUpdateSubscription({
                 subscription,
                 newTrials,
                 subscriptionRepository,
                 emailService
               })
-            : TaskEither.right(undefined)
-        )
+            : TaskEither.right(undefined);
+        })
       )
     )
   );
