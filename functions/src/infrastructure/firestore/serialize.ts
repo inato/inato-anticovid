@@ -1,13 +1,7 @@
 import * as Option from "fp-ts/lib/Option";
-import { Subscription, FacetFilters } from "../../domain";
+import { Subscription, Search } from "../../domain";
 
-export const serializeSearch = ({
-  searchQuery,
-  facetFilters
-}: {
-  searchQuery: Option.Option<string>;
-  facetFilters: FacetFilters;
-}) => ({
+export const serializeSearch = ({ searchQuery, facetFilters }: Search) => ({
   search_query: Option.getOrElse<string>(() => "")(searchQuery),
   recruitment_status: facetFilters.recruitmentStatus,
   therapeutic_classes: facetFilters.therapeuticClasses,

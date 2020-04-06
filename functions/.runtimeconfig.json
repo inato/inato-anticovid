@@ -5,5 +5,8 @@
   },
   "pg": {
     "tablename": "who_trial_staging"
+  },
+  "postmark": {
+    "apitoken": "***REMOVED***"
   }
 }
