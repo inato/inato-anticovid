@@ -15,7 +15,7 @@ import {
 export const MethodologyPage = () => {
   return (
     <Container>
-      <TextBlockWithLaboratory dataCy="methodology">
+      <TextBlockWithLaboratory dataCy="methodology/main">
         <Title>Methodology</Title>
         <Accordion title="Where do we find trials?">
           <Paragraph>
