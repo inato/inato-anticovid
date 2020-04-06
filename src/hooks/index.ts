@@ -1,1 +1,1 @@
-export * from "./useBolean";
+export * from "./useBoolean";
