@@ -7,3 +7,5 @@ export * from "./LoggingService";
 export * from "./loggingServiceFactory";
 export * from "./TimeService";
 export * from "./timeServiceFactory";
+export * from "./ReportingService";
+export * from "./reportingServiceFactory";

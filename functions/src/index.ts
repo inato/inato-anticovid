@@ -18,17 +18,19 @@ import {
   PubSubMessageService,
   SUBSCRIPTION_EMAIL_TOPIC,
   PostmarkEmailService,
-  ConsoleLoggingService
+  ConsoleLoggingService,
+  DateTimeService,
+  SentryReportingService
 } from "./infrastructure";
 import {
   IndexingService,
   MessagingService,
   EmailService,
   LoggingService,
-  TimeService
+  TimeService,
+  ReportingService
 } from "./application";
 import { TrialRepository, SubscriptionRepository } from "./domain";
-import { DateTimeService } from "./infrastructure/DateTimeService";
 
 interface Services {
   indexingService: IndexingService;
@@ -37,6 +39,7 @@ interface Services {
   messagingService: MessagingService;
   emailService: EmailService;
   loggingService: LoggingService;
+  reportingService: ReportingService;
   timeService: TimeService;
 }
 
@@ -56,8 +59,12 @@ const feedServices = <Ret, Argument1, Argument2>(
   arg1: Argument1,
   arg2?: Argument2,
   ...rest: any[]
-): Promise<Ret> => {
+): Promise<Ret | void> => {
   const loggingService = new ConsoleLoggingService();
+  const reportingService = new SentryReportingService({
+    dsn: functions.config().sentry.dsn,
+    environment: functions.config().sentry.environment
+  });
 
   const algoliaIndex = setupAlgoliaIndex({
     apiKey: functions.config().algolia.apikey,
@@ -83,20 +90,24 @@ const feedServices = <Ret, Argument1, Argument2>(
   });
 
   const timeService = new DateTimeService();
+  try {
+    const result = await callback({
+      indexingService,
+      trialRepository,
+      subscriptionRepository,
+      messagingService,
+      emailService,
+      loggingService,
+      timeService,
+      reportingService
+    })(arg1, arg2, ...rest);
 
-  const result = await callback({
-    indexingService,
-    trialRepository,
-    subscriptionRepository,
-    messagingService,
-    emailService,
-    loggingService,
-    timeService
-  })(arg1, arg2, ...rest);
+    await postgresClient.end();
 
-  await postgresClient.end();
-
-  return result;
+    return result;
+  } catch (e) {
+    reportingService.reportError(e);
+  }
 };
 
 export const refreshAlgoliaTrialIndex = functions
@@ -119,7 +130,7 @@ export const unsubscribeFromUpdates = functions.https.onRequest(
 );
 
 export const sendEmailsScheduler = functions.pubsub
-  .schedule("every 5 minutes")
+  .schedule("every 60 minutes")
   .onRun(feedServices(sendEmailsScheduled));
 
 export const sendEmailOnEvent = functions.pubsub

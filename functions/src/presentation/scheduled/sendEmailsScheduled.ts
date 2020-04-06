@@ -5,7 +5,11 @@ import { SubscriptionRepository } from "../../domain";
 import { pipe } from "fp-ts/lib/pipeable";
 import { readonlyArray } from "fp-ts/lib/ReadonlyArray";
 import { taskEitherExtend } from "../../domain/utils/taskEither";
-import { MessagingService, LoggingService } from "../../application";
+import {
+  MessagingService,
+  LoggingService,
+  ReportingService
+} from "../../application";
 import { subDays } from "date-fns";
 import { TimeService } from "../../application/services/TimeService";
 
@@ -13,11 +17,13 @@ export const sendEmailsScheduled = ({
   subscriptionRepository,
   messagingService,
   loggingService,
-  timeService
+  timeService,
+  reportingService
 }: {
   subscriptionRepository: SubscriptionRepository;
   messagingService: MessagingService;
   loggingService: LoggingService;
+  reportingService: ReportingService;
   timeService: TimeService;
 }) => (_context: functions.EventContext) =>
   pipe(
@@ -38,6 +44,7 @@ export const sendEmailsScheduled = ({
     }),
     TaskEither.fold(
       e => {
+        reportingService.reportError(e.toError());
         loggingService.log("Error scheduling mails", e.reason);
         return Task.of(undefined);
       },
