@@ -1,10 +1,9 @@
 import React, { useState, useRef } from "react";
 import styled, { css } from "styled-components";
 
-import { ArrowDownIcon } from "../../ui/ArrowDownIcon";
-import { ArrowRightIcon } from "../../ui/ArrowRightIcon";
-import { colors } from "../../ui";
-import { useBoolean } from "../../hooks";
+import { useBoolean } from "../hooks";
+
+import { colors, ArrowRightIcon, ArrowDownIcon } from ".";
 
 type AccordionProps = {
   title: string;
