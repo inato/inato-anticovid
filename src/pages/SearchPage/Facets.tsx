@@ -116,7 +116,8 @@ const FacetContainer = styled.div`
     line-height: 28px;
   }
 
-  .ais-RefinementList-label, .ais-ToggleRefinement-label {
+  .ais-RefinementList-label,
+  .ais-ToggleRefinement-label {
     cursor: pointer;
   }
 
