@@ -62,6 +62,7 @@ const Form = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 
   @media ${devices.Tablet} {
     flex-direction: row;
