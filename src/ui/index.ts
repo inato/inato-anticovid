@@ -9,3 +9,4 @@ export * from "./Checkbox";
 export * from "./icons";
 export * from "./styles";
 export * from "./ToggleRefinementWithCount";
+export * from "./Accordion";
