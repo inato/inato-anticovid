@@ -2,6 +2,8 @@ import "react-app-polyfill/ie11";
 import React from "react";
 import ReactDOM from "react-dom";
 import ReactGA from "react-ga";
+import "core-js/stable/typed-array/for-each";
+
 import "instantsearch.css/themes/algolia.css";
 import "./index.css";
 
