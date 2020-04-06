@@ -1,15 +1,19 @@
 import algoliasearch from "algoliasearch";
-import { ALGOLIA_CLIENT_ID } from "./AlgoliaIndexingService";
+import { LoggingService } from "../../application";
 
 export const setupAlgoliaIndex = ({
   indexName,
-  apiKey
+  apiKey,
+  clientId,
+  loggingService
 }: {
   indexName: string;
   apiKey: string;
+  clientId: string;
+  loggingService: LoggingService;
 }) => {
-  console.log("setup Algolia index", indexName, ALGOLIA_CLIENT_ID, apiKey);
-  const client = algoliasearch(ALGOLIA_CLIENT_ID, apiKey);
+  loggingService.log("setup Algolia index", indexName, clientId, apiKey);
+  const client = algoliasearch(clientId, apiKey);
   const index = client.initIndex(indexName);
 
   return index;

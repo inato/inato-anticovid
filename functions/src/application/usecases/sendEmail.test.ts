@@ -9,7 +9,12 @@ import {
   trialFactory,
   Subscription
 } from "../../domain";
-import { indexingServiceFactory, emailServiceFactory } from "../services";
+import {
+  indexingServiceFactory,
+  emailServiceFactory,
+  loggingServiceFactory,
+  timeServiceFactory
+} from "../services";
 import { subDays } from "date-fns";
 import { pipe } from "fp-ts/lib/pipeable";
 
@@ -32,7 +37,9 @@ describe("sendEmail", () => {
       subscriptionRepository,
       indexingService,
       emailService,
-      subscriptionId: subscription.id
+      subscriptionId: subscription.id,
+      loggingService: loggingServiceFactory(),
+      timeService: timeServiceFactory()
     })();
 
     expect(emailService.sendNewResultsForSubscription).not.toHaveBeenCalled();
@@ -63,7 +70,9 @@ describe("sendEmail", () => {
       subscriptionRepository,
       indexingService,
       emailService,
-      subscriptionId: subscription.id
+      subscriptionId: subscription.id,
+      loggingService: loggingServiceFactory(),
+      timeService: timeServiceFactory()
     })();
 
     expect(emailService.sendNewResultsForSubscription).not.toHaveBeenCalled();
@@ -86,11 +95,15 @@ describe("sendEmail", () => {
     });
     await subscriptionRepository.store(subscription)();
 
+    const newDate = new Date();
+
     const result = await sendEmail({
       subscriptionRepository,
       indexingService,
       emailService,
-      subscriptionId: subscription.id
+      subscriptionId: subscription.id,
+      loggingService: loggingServiceFactory(),
+      timeService: timeServiceFactory({ currentDate: newDate })
     })();
 
     expect(emailService.sendNewResultsForSubscription).toHaveBeenCalledWith({
@@ -106,9 +119,7 @@ describe("sendEmail", () => {
     );
 
     expect(newSubscription).not.toEqual(null);
-    expect(newSubscription!.lastEmailSentDate).not.toBe(
-      subscription.lastEmailSentDate
-    );
+    expect(newSubscription!.lastEmailSentDate).toBe(newDate);
     expect(newSubscription!.searchResults).toStrictEqual(
       newResults.map(({ trialId }) => trialId)
     );

@@ -17,10 +17,9 @@ export class InMemorySubscriptionRepository implements SubscriptionRepository {
     >,
     ReadonlyArray<Subscription>
   > {
-    const currentDate = new Date();
     return TaskEither.right(
       Array.from(this.entities.values()).filter(subscription =>
-        isBefore(subscription.lastEmailSentDate, currentDate)
+        isBefore(subscription.lastEmailSentDate, date)
       )
     );
   }
