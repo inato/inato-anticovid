@@ -73,6 +73,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 16px 16px 0 16px;
+  border-radius: 4px;
 
   @media ${devices.Desktop} {
     flex-direction: row;
