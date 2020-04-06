@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { unsubscribeFromUpdates } from "../../application";
+import { unsubscribeFromUpdates, ReportingService } from "../../application";
 import { pipe } from "fp-ts/lib/pipeable";
 import * as TaskEither from "fp-ts/lib/TaskEither";
 import * as Either from "fp-ts/lib/Either";
@@ -10,9 +10,11 @@ import { invalidInformationError } from "../../domain/errors";
 import { taskEitherExtend } from "../../domain/utils/taskEither";
 
 export const unsubscribeFromUpdatesHandler = ({
-  subscriptionRepository
+  subscriptionRepository,
+  reportingService
 }: {
   subscriptionRepository: SubscriptionRepository;
+  reportingService: ReportingService;
 }) => (request: functions.https.Request, response: functions.Response<any>) =>
   pipe(
     pipe(parseSubscriptionIdFromRequest(request), TaskEither.fromEither),
@@ -21,6 +23,7 @@ export const unsubscribeFromUpdatesHandler = ({
     ),
     TaskEither.fold(
       error => {
+        reportingService.reportError(error.toError());
         response.status(500).send(error.reason);
         return Task.of(undefined);
       },

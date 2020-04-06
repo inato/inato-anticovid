@@ -6,15 +6,18 @@ import * as Task from "fp-ts/lib/Task";
 import {
   refreshTrialIndex,
   IndexingService,
-  LoggingService
+  LoggingService,
+  ReportingService
 } from "../../application";
 import { TrialRepository } from "../../domain";
 
 export const refreshAlgoliaTrialIndexHandler = ({
   trialRepository,
   indexingService,
-  loggingService
+  loggingService,
+  reportingService
 }: {
+  reportingService: ReportingService;
   trialRepository: TrialRepository;
   indexingService: IndexingService;
   loggingService: LoggingService;
@@ -27,6 +30,7 @@ export const refreshAlgoliaTrialIndexHandler = ({
     }),
     TaskEither.fold(
       error => {
+        reportingService.reportError(error.toError());
         response.status(500).send(error.reason);
         return Task.of(undefined);
       },
