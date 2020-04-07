@@ -11,7 +11,24 @@ const Bold = styled.strong`
   color: ${colors.DarkGray};
 `;
 
-const Input = styled.input``;
+const Container = styled.div`
+  color: ${colors.DarkGray};
+`;
+
+const SecondaryText = styled.span`
+  color: ${colors.SecondaryText};
+`;
+
+const Input = styled.input`
+  display: block;
+  margin: 16px 0;
+  width: 100%;
+  line-height: 40px;
+  padding: 0 16px;
+  font-size: ${props => props.theme.fontSizes.normal}px;
+  border: 1px solid ${colors.GreyBackground};
+  border-radius: 4px;
+`;
 
 export const UpdateAlertsModal = ({
   onRequestClose,
@@ -54,24 +71,27 @@ export const UpdateAlertsModal = ({
         onClick: onRequestClose
       }}
     >
-      <div>
-        <Bold>Get alerted on new trials and results</Bold> matching your current
-        search criteria
+      <Container>
+        <SecondaryText>
+          <Bold>Get alerted on new trials and results</Bold> matching your
+          current search criteria
+        </SecondaryText>
+        <Input
+          type="email"
+          required
+          placeholder="Your email..."
+          name="email"
+          value={email}
+          onChange={emailChangeHandler}
+        />
         <div>
-          <div>
-            <label htmlFor="email">Enter your email</label>
-          </div>
-          <Input
-            type="email"
-            required
-            placeholder="Your email..."
-            name="email"
-            id="email"
-            value={email}
-            onChange={emailChangeHandler}
-          />
+          We will sent you an email at most once a day
+          <br />
+          <SecondaryText>
+            No spam, unsubscribe anytime, not shared with a third-party
+          </SecondaryText>
         </div>
-      </div>
+      </Container>
     </Modal>
   );
 };
