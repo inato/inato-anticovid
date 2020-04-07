@@ -256,7 +256,7 @@ const Header = styled.div`
 const Footer = styled.div`
   position: fixed;
   z-index: 3;
-  width: calc(100% - 32px);
+  width: 100%;
 
   display: flex;
   flex-direction: row;
