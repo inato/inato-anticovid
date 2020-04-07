@@ -141,10 +141,10 @@ export const UpdateAlertsModal = ({
           onChange={emailChangeHandler}
         />
         <div>
-          We will sent you an email at most once a day
+          We will send you an email once a day at most
           <br />
           <SecondaryText>
-            No spam, unsubscribe anytime, not shared with a third-party
+            No spam, unsubscribe anytime, not shared with any third-party
           </SecondaryText>
           {subscriptionState === "loading" && <Loading />}
           {subscriptionState === "success" && <Success />}
