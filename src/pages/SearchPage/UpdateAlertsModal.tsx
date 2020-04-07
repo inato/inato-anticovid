@@ -74,6 +74,7 @@ const SubscriptionState = styled.div`
   &:before {
     background-repeat: no-repeat;
     background-size: 16px;
+    background-position: 4px 4px;
   }
 `;
 
@@ -103,6 +104,7 @@ const Loading = styled(({ className }: { className?: string }) => {
     left: 0;
     animation: ${rotating} 0.55s linear infinite;
     background-size: 24px;
+    background-position: 0 0;
   }
 `;
 
