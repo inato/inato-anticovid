@@ -62,6 +62,23 @@ export const TextButton = styled.button`
   }
 `;
 
+export const OutlineButton = styled.button`
+  display: inline-block;
+  border-radius: 4px;
+  padding: 8px 16px;
+  color: ${colors.Primary};
+  border: 1px solid ${colors.Primary};
+  height: 40px;
+  font-size: 12px;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export const LinkButton = (props: {
   semantic?: Semantic;
   children: React.ReactNode;

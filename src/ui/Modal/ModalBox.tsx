@@ -76,18 +76,17 @@ const ModalActionButton = styled(
     }
   }
   @media (${props => props.theme.breakpoints.mobileAndSmaller}) {
-    & + & {
-      margin-top: ${props => props.theme.spacings.sm}px;
-    }
+    margin-top: ${props => props.theme.spacings.sm}px;
   }
 `;
 
 const ModalFooter = styled.footer`
   display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
 
   @media (${props => props.theme.breakpoints.tabletAndLarger}) {
-    flex-direction: row;
-    justify-content: flex-end;
     border-bottom-left-radius: ${props => props.theme.borderRadiuses.regular};
     border-bottom-right-radius: ${props => props.theme.borderRadiuses.regular};
 
@@ -96,12 +95,12 @@ const ModalFooter = styled.footer`
   }
 
   @media (${props => props.theme.breakpoints.mobileAndSmaller}) {
+    justify-content: space-between;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: ${props => props.theme.spacings.l}px;
-    flex-direction: column;
+    padding: ${props => props.theme.spacings.m}px;
     background-color: ${props => props.theme.colors.white};
   }
 `;
