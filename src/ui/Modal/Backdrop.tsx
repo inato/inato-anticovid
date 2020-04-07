@@ -36,9 +36,6 @@ const ModalOuterWrapper = styled.div<{ scrollable?: boolean }>`
   flex: 1;
   justify-content: center;
   align-items: flex-start;
-  @media (${props => props.theme.breakpoints.tabletAndLarger}) {
-    align-items: center;
-  }
 `;
 
 const ModalInnerWrapper = styled.div<{ scrollable?: boolean }>`
@@ -48,7 +45,7 @@ const ModalInnerWrapper = styled.div<{ scrollable?: boolean }>`
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: ${props => props.theme.spacings.xl}px;
+  margin-top: ${props => props.theme.spacings.xxxxl}px;
 `;
 
 interface ModalProps {

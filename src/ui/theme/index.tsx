@@ -9,6 +9,8 @@ import { shadows } from "./shadow";
 import { spacings } from "./spacing";
 import { zIndexes } from "./zindex";
 
+export * from "./color";
+
 export const theme = {
   borderRadiuses,
   breakpoints,

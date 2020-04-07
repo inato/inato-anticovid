@@ -7,5 +7,6 @@ export const spacings = {
   m: gridBlockSize * 2, // 16px
   l: gridBlockSize * 3, // 24px
   xl: gridBlockSize * 6, // 48px
-  xxxl: gridBlockSize * 12 // 96px
+  xxxl: gridBlockSize * 12, // 96px
+  xxxxl: gridBlockSize * 20 // 160px
 };
