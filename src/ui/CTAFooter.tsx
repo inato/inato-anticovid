@@ -6,11 +6,17 @@ import config from "../config";
 
 import { colors, devices, fontWeight, Button } from ".";
 
-export const CTAFooter = ({ className }: { className?: string }) => (
-  <Container className={className} data-cy="analysis/footer">
+export const CTAFooter = ({
+  className,
+  searchTrialsTitle = "Want to go further?"
+}: {
+  className?: string;
+  searchTrialsTitle?: string;
+}) => (
+  <Container className={className} data-cy="CTAFooter">
     <Newsletter />
     <RightCard>
-      <Title>Want to go further?</Title>
+      <Title>{searchTrialsTitle}</Title>
       <Paragraph>
         Make your own analysis by <Link to="/search">searching trials</Link>
       </Paragraph>
@@ -62,6 +68,7 @@ const Form = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 
   @media ${devices.Tablet} {
     flex-direction: row;

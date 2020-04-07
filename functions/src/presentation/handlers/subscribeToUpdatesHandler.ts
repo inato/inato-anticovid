@@ -5,17 +5,23 @@ import * as Either from "fp-ts/lib/Either";
 import * as Task from "fp-ts/lib/Task";
 import * as decod from "decod";
 import { SubscriptionRepository, EmailAddress } from "../../domain";
-import { IndexingService, subscribeToUpdates } from "../../application";
+import {
+  IndexingService,
+  subscribeToUpdates,
+  ReportingService
+} from "../../application";
 import * as Option from "fp-ts/lib/Option";
 import { invalidInformationError } from "../../domain/errors";
 import { taskEitherExtend } from "../../domain/utils/taskEither";
 
 export const subscribeToUpdatesHandler = ({
   subscriptionRepository,
-  indexingService
+  indexingService,
+  reportingService
 }: {
   subscriptionRepository: SubscriptionRepository;
   indexingService: IndexingService;
+  reportingService: ReportingService;
 }) => async (
   request: functions.https.Request,
   response: functions.Response<any>
@@ -37,6 +43,7 @@ export const subscribeToUpdatesHandler = ({
     ),
     TaskEither.fold(
       e => {
+        reportingService.reportError(e.toError());
         response.status(500).send(e.reason);
         return Task.of(undefined);
       },

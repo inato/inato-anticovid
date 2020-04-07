@@ -1,5 +1,8 @@
 import { subscribeToUpdatesHandler } from "./subscribeToUpdatesHandler";
-import { indexingServiceFactory } from "../../application";
+import {
+  indexingServiceFactory,
+  reportingServiceFactory
+} from "../../application";
 import { requestFactory, responseFactory } from "../factories";
 import { InMemorySubscriptionRepository } from "../../domain";
 
@@ -7,7 +10,8 @@ describe("subscribeToUpdatesHandler", () => {
   it("should answer with 204 when no errors", async () => {
     const handler = subscribeToUpdatesHandler({
       subscriptionRepository: new InMemorySubscriptionRepository(),
-      indexingService: indexingServiceFactory()
+      indexingService: indexingServiceFactory(),
+      reportingService: reportingServiceFactory()
     });
     const sendStatus = jest.fn();
     const send = jest.fn();
@@ -28,7 +32,8 @@ describe("subscribeToUpdatesHandler", () => {
   it("should answer with 500 when there is an error", async () => {
     const handler = subscribeToUpdatesHandler({
       subscriptionRepository: new InMemorySubscriptionRepository(),
-      indexingService: indexingServiceFactory()
+      indexingService: indexingServiceFactory(),
+      reportingService: reportingServiceFactory()
     });
     const send = jest.fn();
     const status = jest.fn(() => ({ send }));

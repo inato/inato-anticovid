@@ -59,7 +59,7 @@ export const Facets = ({
           title="Surrogate Outcome"
         />
         <Facet attribute="study_type" title="Study Type" showMore />
-        <Facet attribute="countries" title="Countries" />
+        <Facet attribute="countries" title="Countries" searchable showMore />
         <Footer>
           <FilterTrialsButton
             onClick={closeFiltering}

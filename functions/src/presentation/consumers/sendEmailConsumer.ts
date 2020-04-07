@@ -12,7 +12,8 @@ import {
   IndexingService,
   EmailService,
   LoggingService,
-  TimeService
+  TimeService,
+  ReportingService
 } from "../../application";
 
 export const sendEmailConsumer = ({
@@ -20,16 +21,18 @@ export const sendEmailConsumer = ({
   indexingService,
   emailService,
   loggingService,
-  timeService
+  timeService,
+  reportingService
 }: {
   subscriptionRepository: SubscriptionRepository;
   indexingService: IndexingService;
   emailService: EmailService;
   loggingService: LoggingService;
   timeService: TimeService;
+  reportingService: ReportingService;
 }) => (message: functions.pubsub.Message, _context: functions.EventContext) =>
   pipe(
-    TaskEither.fromEither(deserializeMessage(message.toJSON())),
+    TaskEither.fromEither(deserializeMessage(message.json)),
     taskEitherExtend(({ subscriptionId }) => {
       loggingService.log(
         `Handling send email message for subscription ${subscriptionId}`
@@ -45,6 +48,7 @@ export const sendEmailConsumer = ({
     }),
     TaskEither.fold(
       e => {
+        reportingService.reportError(e.toError());
         loggingService.log("Error when sending email", e.reason);
         return Task.of(undefined);
       },

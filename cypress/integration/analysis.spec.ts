@@ -2,7 +2,6 @@
 
 import {
   devices,
-  getDisclaimer,
   getFeedback,
   getFooter,
   getHeader,
@@ -65,7 +64,7 @@ describe("Analysis page", () => {
             cy.contains("Clinical research for Covid-19");
           });
 
-        // Should have a feeback section
+        // Should have a feedback section
         getFeedback()
           .shouldBeVisibleWhen(deviceType !== "large")
           .within(() => {

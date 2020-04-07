@@ -60,7 +60,15 @@ describe("Search page", () => {
               });
             cy.contains("Surrogate Outcome");
             cy.contains("Study Type");
-            cy.contains("Countries");
+            cy.contains("Countries")
+              .parent()
+              // within the countries section
+              .within(() => {
+                // there should be an algolia search input
+                cy.get(".ais-SearchBox-input");
+                // and a show more button
+                cy.contains("button", "Show more");
+              });
           });
 
         // should have a open filters button not visible on large devices

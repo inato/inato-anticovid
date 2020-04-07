@@ -9,6 +9,7 @@ import { colors, devices } from "./ui";
 import { SearchPage } from "./pages/SearchPage";
 import logo from "./Logo.svg";
 import { AnalysisPage } from "./pages/AnalysisPage";
+import { MethodologyPage } from "./pages/MethodologyPage";
 
 const history = createBrowserHistory();
 
@@ -33,8 +34,11 @@ export default function App() {
             <LogoLink to="/">
               <img src={logo} alt="Inato Anti-Covid Logo" />
             </LogoLink>
-            <HeaderLink to="/analysis">Analysis</HeaderLink>
-            <HeaderLink to="/search">Search trials</HeaderLink>
+            <HeaderLinkContainer>
+              <HeaderLink to="/analysis">Analysis</HeaderLink>
+              <HeaderLink to="/search">Search trials</HeaderLink>
+              <HeaderLink to="/methodology">Methodology</HeaderLink>
+            </HeaderLinkContainer>
             <SendUsFeedbackLink href={config.feedbackUrl} target="_blank">
               Send us feedback
             </SendUsFeedbackLink>
@@ -48,6 +52,10 @@ export default function App() {
           <Route exact path="/search">
             <SearchPage />
           </Route>
+          <Route exact path="/methodology">
+            <MethodologyPage />
+          </Route>
+
           <Redirect to="/analysis" />
         </Switch>
       </Router>
@@ -62,7 +70,7 @@ const Root = styled.div`
 
 const HeaderContainer = styled.div`
   background: ${colors.Primary};
-  padding: 32px 0 18px 0;
+  padding: 32px 0 0 0;
 
   @media ${devices.Desktop} {
     height: 65px;
@@ -74,7 +82,7 @@ const Header = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex-wrap: wrap;
   height: 100%;
 
@@ -86,7 +94,7 @@ const Header = styled.div`
 `;
 
 const LogoLink = styled(NavLink)`
-  height: 65px;
+  height: 45px;
   display: block;
   flex-basis: 100%;
   width: 100%; /* FOR IE11*/
@@ -106,6 +114,22 @@ const Separator = styled.div`
   height: 1px;
 `;
 
+const HeaderLinkContainer = styled.div`
+  flex-wrap: nowrap;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 100%;
+  align-items: center;
+  height: 60px;
+  width: 100%; /* For IE11 */
+
+  @media ${devices.Desktop} {
+    height: 65px;
+    width: auto;
+  }
+`;
+
 const HeaderLink = styled(NavLink)`
   font-size: 18px;
   line-height: 20px;
@@ -115,8 +139,11 @@ const HeaderLink = styled(NavLink)`
   text-decoration: none;
   text-align: center;
   border-bottom: 2px solid transparent;
+  white-space: nowrap;
 
-  flex-basis: 50%;
+  flex-basis: 33.3%;
+  padding: 0 16px;
+  box-sizing: border-box;
 
   &:after {
     opacity: 0;
@@ -140,7 +167,7 @@ const HeaderLink = styled(NavLink)`
     &:after {
       border-bottom: 2px solid ${colors.ButtonText};
       opacity: 1;
-      bottom: -20px;
+      bottom: -21px;
       width: 100%;
     }
   }
