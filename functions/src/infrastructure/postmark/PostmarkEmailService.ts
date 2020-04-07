@@ -1,4 +1,4 @@
-import { Client as PostmarkClient } from "postmark";
+import { Client as PostmarkClient, Models as PostmarkModels } from "postmark";
 import * as qs from "qs";
 import { format } from "date-fns";
 import { EmailService, SearchResult } from "../../application";
@@ -42,6 +42,8 @@ export class PostmarkEmailService implements EmailService {
           this.client.sendEmailWithTemplate({
             From: SENDER_EMAIL_ADDRESS,
             To: subscription.email.toString(),
+            TrackLinks: PostmarkModels.LinkTrackingOptions.None,
+            TrackOpens: true,
             TemplateAlias: "anticovid-new-trials-for-subscription",
             TemplateModel: {
               subscriptionId: subscription.id,

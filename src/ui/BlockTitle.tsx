@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import { colors, fontSize, fontWeight, lineHeight, devices } from "../../ui";
+import { colors, fontSize, fontWeight, lineHeight, devices } from ".";
 
-export const Title = styled.h1`
+export const BlockTitle = styled.h1`
   font-family: Lora, Georgia;
   color: ${colors.Primary};
   font-size: ${fontSize.Medium};

@@ -42,7 +42,7 @@ export const orderedFacets: ReadonlyArray<{
   searchable?: boolean;
 }> = [
   { name: Facets.clinicalOutcomeExtracted },
-  { name: Facets.countries },
+  { name: Facets.countries, searchable: true },
   { name: Facets.recruitmentStatus },
   { name: Facets.registrationTimestamp },
   { name: Facets.studyType },

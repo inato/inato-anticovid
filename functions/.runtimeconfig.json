@@ -9,5 +9,9 @@
   },
   "postmark": {
     "apitoken": ""
+  },
+  "sentry": {
+    "dsn": "",
+    "environment": "dev"
   }
 }

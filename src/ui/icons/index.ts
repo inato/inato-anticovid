@@ -1,4 +1,6 @@
 export * from "./AlgoliaLogo";
+export * from "./ArrowDownIcon";
+export * from "./ArrowRightIcon";
 export * from "./BookmarkIcon";
 export * from "./EarthIcon";
 export * from "./LaboratoryIcon";

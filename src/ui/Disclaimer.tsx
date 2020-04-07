@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { colors } from ".";
 
 export const Disclaimer = () => (
-  <Container data-cy="analysis/disclaimer">
+  <Container data-cy="disclaimer">
     <Line>DISCLAIMER</Line>
     <Line>
       This platform is operated free of charge, for the immediate benefit of the

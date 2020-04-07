@@ -6,7 +6,8 @@ import {
 } from "../../domain";
 import {
   indexingServiceFactory,
-  loggingServiceFactory
+  loggingServiceFactory,
+  reportingServiceFactory
 } from "../../application";
 import { requestFactory, responseFactory } from "../factories";
 
@@ -20,7 +21,8 @@ describe("refreshAlgoliaTrialIndexHandler", () => {
     const handler = refreshAlgoliaTrialIndexHandler({
       trialRepository,
       indexingService: indexingServiceFactory(),
-      loggingService: loggingServiceFactory()
+      loggingService: loggingServiceFactory(),
+      reportingService: reportingServiceFactory()
     });
     const send = jest.fn();
     await handler(requestFactory(), responseFactory({ send }));
