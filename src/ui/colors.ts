@@ -28,7 +28,9 @@ export enum colors {
   GreySecondaryText = "#647B91",
   DefaultText = "#433C59",
 
-  DefaultTextHover = "#9E9EB4"
+  DefaultTextHover = "#9E9EB4",
+  RedAlert = "#BF0000",
+  GreenAlert = "#1CAB9F"
 }
 
 export enum Semantic {
