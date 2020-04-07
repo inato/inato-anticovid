@@ -54,8 +54,9 @@ export const MethodologyPage = () => {
             Those registries and websites are very well known from most
             researchers and have been very active to include as fast as possible
             clinical studies that were registered. However, there was to our
-            knowledge no unique and centralized repository where all clinical
-            studies conducted worldwide on COVID-19 could be found.
+            knowledge no unique and centralized repository where{" "}
+            <Bold>all</Bold> clinical studies conducted worldwide on COVID-19
+            could be found.
           </Paragraph>
         </Accordion>
 
@@ -133,8 +134,10 @@ export const MethodologyPage = () => {
               Primary outcomes are classified as follows: clinical, surrogate,
               clinical scale or clinical element other than hard endpoints
               classified in &quot;clinical&quot; <br />
-              This feature is still under development and might lead to some
-              miscategorized outcomes.
+              <Italic>
+                This feature is still under development and might lead to some
+                miscategorized outcomes.
+              </Italic>
             </StyledLi>
             <StyledLi>Total recruitment target</StyledLi>
             <StyledLi>
@@ -204,4 +207,8 @@ const StyledLink = styled.a`
 
 const Bold = styled.span`
   font-weight: bold;
+`;
+
+const Italic = styled.span`
+  font-style: italic;
 `;

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Accordion, TextBlockWithLaboratory, BlockTitle } from "../../ui";
+import { InternalLink } from "../../ui/InternalLink";
 
 export const Introduction = () => (
   <TextBlockWithLaboratory dataCy="analysis/intro">
@@ -51,6 +52,11 @@ export const Introduction = () => (
         </ul>
       </Paragraph>
     </Accordion>
+    <LastParagraph>
+      <InternalLink to="/methodology">
+        Learn more about our methodology
+      </InternalLink>
+    </LastParagraph>
   </TextBlockWithLaboratory>
 );
 
@@ -60,4 +66,8 @@ const Title = styled(BlockTitle)`
 
 const Paragraph = styled.p`
   margin: 4px 0 0 0;
+`;
+
+const LastParagraph = styled(Paragraph)`
+  margin-top: 16px;
 `;

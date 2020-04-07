@@ -2,10 +2,11 @@ import React, { useEffect, useState, Fragment } from "react";
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import config from "../../config";
-import { colors, linkCss } from "../../ui";
+import { colors } from "../../ui";
+import { InternalLink } from "../../ui/InternalLink";
 
 import { searchStateToUrl } from "./SearchPage";
 
@@ -20,10 +21,6 @@ export interface SearchSuggestion {
 const Container = styled.div`
   margin-top: 4px;
   min-height: 30px;
-`;
-
-const Suggestion = styled(Link)`
-  ${linkCss};
 `;
 
 const SecondaryText = styled.span`
@@ -64,13 +61,13 @@ export const SearchSuggestions = () => {
       <SecondaryText>or try our suggestions: </SecondaryText>
       {searchSuggestions.map((searchSuggestion, index) => (
         <Fragment key={searchSuggestion.name}>
-          <Suggestion
+          <InternalLink
             to={searchStateToUrl(history.location, {
               refinementList: searchSuggestion
             })}
           >
             {searchSuggestion.name}
-          </Suggestion>
+          </InternalLink>
           {index < searchSuggestions.length - 1 ? "," : null}{" "}
         </Fragment>
       ))}
