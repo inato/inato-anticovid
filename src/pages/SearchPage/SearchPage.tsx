@@ -114,11 +114,11 @@ const GetUpdateAlertsButton = styled(Button)`
     align-items: center;
     margin-left: 14px;
     color: ${colors.Primary};
-    background-color: unset;
+    background-color: transparent;
     padding: 8px 16px;
 
     &:hover {
-      box-shadow: unset;
+      box-shadow: none;
       background-color: ${colors.ButtonLightHover};
     }
   }
