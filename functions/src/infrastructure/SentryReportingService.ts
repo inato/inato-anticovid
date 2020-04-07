@@ -15,4 +15,8 @@ export class SentryReportingService implements ReportingService {
   reportError(e: Error) {
     Sentry.captureException(e);
   }
+
+  flush() {
+    return Sentry.flush();
+  }
 }
