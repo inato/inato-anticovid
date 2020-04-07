@@ -50,6 +50,7 @@ export const TextButton = styled.button`
   border-radius: 4px;
   padding: 8px 16px;
   color: ${colors.Primary};
+  background-color: transparent;
   height: 40px;
   font-size: 12px;
   text-transform: uppercase;

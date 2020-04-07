@@ -1,9 +1,10 @@
 import React, { useState, useCallback, ChangeEvent } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import qs from "qs";
 
 import { Modal } from "../../ui/Modal";
 import { styled } from "../../ui/styled";
-import { colors } from "../../ui";
+import { colors, EmailIcon } from "../../ui";
 import config from "../../config";
 
 const Bold = styled.strong`
@@ -19,6 +20,12 @@ const SecondaryText = styled.span`
   color: ${colors.SecondaryText};
 `;
 
+const getEmailIcon = () => {
+  return `"data:image/svg+xml,${encodeURIComponent(
+    renderToStaticMarkup(<EmailIcon />)
+  )}"`;
+};
+
 const Input = styled.input`
   display: block;
   margin: 16px 0;
@@ -28,6 +35,10 @@ const Input = styled.input`
   font-size: ${props => props.theme.fontSizes.normal}px;
   border: 1px solid ${colors.GreyBackground};
   border-radius: 4px;
+  background-image: url(${getEmailIcon()});
+  background-repeat: no-repeat;
+  background-position: 9px center;
+  padding-left: 40px;
 `;
 
 const SubscriptionState = styled.div`
