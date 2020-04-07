@@ -27,11 +27,32 @@ const SecondaryText = styled.span`
   color: ${colors.SecondaryText};
 `;
 
-const getEmailIcon = () => {
-  return `"data:image/svg+xml,${encodeURIComponent(
-    renderToStaticMarkup(<EmailIcon />)
-  )}"`;
-};
+const Input = styled.input`
+  display: block;
+  margin: 16px 0;
+  width: 100%;
+  line-height: 40px;
+  height: 40px;
+  padding: 0 16px;
+  font-size: ${props => props.theme.fontSizes.normal}px;
+  border: 1px solid ${colors.GreyBackground};
+  border-radius: 4px;
+  padding-left: 40px;
+`;
+
+const InputContainer = styled.div`
+  position: relative;
+  svg {
+    position: absolute;
+    top: 11.5px;
+    left: 9px;
+    z-index: 10;
+  }
+
+  ${Input} {
+    z-index: 1;
+  }
+`;
 
 const getCrossIcon = () => {
   return `"data:image/svg+xml,${encodeURIComponent(
@@ -50,22 +71,6 @@ const getSpinnerIcon = () => {
     renderToStaticMarkup(<SpinnerIcon />)
   )}"`;
 };
-
-const Input = styled.input`
-  display: block;
-  margin: 16px 0;
-  width: 100%;
-  line-height: 40px;
-  height: 40px;
-  padding: 0 16px;
-  font-size: ${props => props.theme.fontSizes.normal}px;
-  border: 1px solid ${colors.GreyBackground};
-  border-radius: 4px;
-  background-image: url(${getEmailIcon()});
-  background-repeat: no-repeat;
-  background-position: 9px center;
-  padding-left: 40px;
-`;
 
 const SubscriptionState = styled.div`
   margin: 32px 0;
@@ -160,6 +165,10 @@ export const UpdateAlertsModal = ({
   }, []);
 
   const submitHandler = useCallback(async () => {
+    if (!email) {
+      setSubscriptionState("error");
+      return;
+    }
     setSubscriptionState("loading");
     const queryString = {
       email,
@@ -205,14 +214,17 @@ export const UpdateAlertsModal = ({
           <Bold>Get alerted on new trials and results</Bold> matching your
           current search criteria
         </SecondaryText>
-        <Input
-          type="email"
-          required
-          placeholder="Your email..."
-          name="email"
-          value={email}
-          onChange={emailChangeHandler}
-        />
+        <InputContainer>
+          <EmailIcon />
+          <Input
+            type="email"
+            required
+            placeholder="Your email..."
+            name="email"
+            value={email}
+            onChange={emailChangeHandler}
+          />
+        </InputContainer>
         <div>
           We will send you an email once a day at most
           <br />
