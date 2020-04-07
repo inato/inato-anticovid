@@ -1,5 +1,4 @@
 import React, { useEffect, useCallback } from "react";
-import { transparentize } from "polished";
 
 import { styled, css } from "../styled";
 import { colors } from "../colors";
@@ -14,14 +13,8 @@ const Container = styled.div`
   flex-direction: column;
   z-index: ${props => props.theme.zIndexes.modal};
   overflow-y: scroll;
-  background-color: white;
-  @supports (backdrop-filter: blur(2px)) {
-    backdrop-filter: blur(2px);
-  }
 
-  @media (${props => props.theme.breakpoints.tabletAndLarger}) {
-    background-color: ${transparentize(0.8, colors.ModalOverlay)};
-  }
+  background-color: ${colors.ModalOverlay};
 `;
 
 const scrollableMixin = css`
