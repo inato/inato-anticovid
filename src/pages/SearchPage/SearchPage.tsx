@@ -61,9 +61,8 @@ const hasActiveSearchFilters = (searchState: {
   refinementList?: { [key: string]: Array<string> };
   toggle?: { [key: string]: string };
 }) =>
-  (searchState.refinementList &&
-    Object.keys(searchState.refinementList).length > 0) ||
-  (searchState.toggle && Object.keys(searchState.toggle).length > 0);
+  Object.keys(searchState?.refinementList ?? {}).length > 0 ||
+  Object.keys(searchState?.toggle ?? {}).length > 0;
 
 const Container = styled.div`
   padding: 32px 16px;
@@ -221,6 +220,7 @@ export const SearchPage = () => {
             filtering={filtering}
             closeFiltering={closeFiltering}
             openSubscriptionModal={openModal}
+            hasActiveSearchFilters={displayGetUpdateAlertsButton}
           />
           <SearchContainer filtering={filtering} data-cy="search/container">
             <SearchTop>

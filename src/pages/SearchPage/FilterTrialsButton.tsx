@@ -27,4 +27,5 @@ const Component = connectStats(
 );
 export const FilterTrialsButton = styled(Component)`
   padding: 0 24px;
+  margin-left: auto;
 `;

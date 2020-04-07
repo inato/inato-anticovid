@@ -22,11 +22,13 @@ import { RangeSlider } from "./RangeSlider";
 export const Facets = ({
   filtering,
   closeFiltering,
-  openSubscriptionModal
+  openSubscriptionModal,
+  hasActiveSearchFilters
 }: {
   filtering: boolean;
   closeFiltering: () => void;
   openSubscriptionModal: () => void;
+  hasActiveSearchFilters: boolean;
 }) => {
   return (
     <LeftPanel filtering={filtering}>
@@ -64,9 +66,11 @@ export const Facets = ({
         <Facet attribute="study_type" title="Study Type" showMore />
         <Facet attribute="countries" title="Countries" searchable showMore />
         <Footer>
-          <OpenSubscriptionModalButton onClick={openSubscriptionModal}>
-            Get Update alerts
-          </OpenSubscriptionModalButton>
+          {hasActiveSearchFilters && (
+            <OpenSubscriptionModalButton onClick={openSubscriptionModal}>
+              Get Update alerts
+            </OpenSubscriptionModalButton>
+          )}
           <FilterTrialsButton
             onClick={closeFiltering}
             data-cy="search/filters/mobile-close"
