@@ -73,6 +73,7 @@ const TableauSkeleton = styled.div`
 const Title = styled(BlockTitle)`
   background-color: ${colors.SecondaryBackground};
   padding: 16px 16px 0 16px;
+  border-radius: 4px;
 
   @media ${devices.Desktop} {
     padding: 16px 32px 0 32px;

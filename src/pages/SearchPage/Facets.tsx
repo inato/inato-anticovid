@@ -116,6 +116,11 @@ const FacetContainer = styled.div`
     line-height: 28px;
   }
 
+  .ais-RefinementList-label,
+  .ais-ToggleRefinement-label {
+    cursor: pointer;
+  }
+
   .ais-RefinementList-labelText,
   .ais-ToggleRefinement-labelText {
     margin-left: 6px;
@@ -137,6 +142,10 @@ const FacetContainer = styled.div`
     font-weight: ${fontWeight.SemiBold};
     margin: 0;
     padding: 0;
+
+    &:hover {
+      color: ${colors.Primary};
+    }
 
     &.ais-RefinementList-showMore--disabled {
       display: none;

@@ -39,7 +39,7 @@ export default function App() {
               <HeaderLink to="/search">Search trials</HeaderLink>
               <HeaderLink to="/methodology">Methodology</HeaderLink>
             </HeaderLinkContainer>
-            <SendUsFeedbackLink href={config.feedbackUrl}>
+            <SendUsFeedbackLink href={config.feedbackUrl} target="_blank">
               Send us feedback
             </SendUsFeedbackLink>
           </Header>

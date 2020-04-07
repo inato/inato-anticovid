@@ -12,7 +12,7 @@ const ResetFiltersComponent = ({ items, refine, className }: any) => (
     className={className}
   >
     <StyledUndoIcon
-      color={items.length ? colors.DefaultText : colors.SecondaryText}
+      color={items.length ? colors.DefaultText : colors.GreyBackground}
     />
     reset filters
   </button>
@@ -37,7 +37,7 @@ export const ResetFilters = styled(ConnectedResetFiltersComponent)`
   text-transform: uppercase;
   padding: 0;
   :disabled {
-    color: ${colors.SecondaryText};
+    color: ${colors.GreyBackground};
     cursor: default;
   }
 `;
