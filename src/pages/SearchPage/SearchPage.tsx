@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from "react";
 import algoliasearch from "algoliasearch";
 import { InstantSearch, SearchBox, Stats } from "react-instantsearch-dom";
 import { useHistory } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import qs from "qs";
 
 import {
@@ -12,7 +12,8 @@ import {
   fontWeight,
   Disclaimer,
   SendUsFeedbackCard,
-  placeholderCss
+  Button,
+  AlarmBellRingIcon
 } from "../../ui";
 import config from "../../config";
 import { useBoolean } from "../../hooks";
@@ -23,6 +24,7 @@ import { FilteringProps } from "./FilteringProps";
 import icon from "./Filter.svg";
 import { SearchSuggestions } from "./SearchSuggestions";
 import { SearchResults } from "./SearchResults";
+import { UpdateAlertsModal } from "./UpdateAlertsModal";
 
 const searchClient = algoliasearch(
   config.algolia.applicationId,
@@ -55,11 +57,133 @@ const urlToSearchState = (
   location: ReturnType<typeof useHistory>["location"]
 ) => qs.parse(location.search.slice(1));
 
+const hasActiveSearchFilters = (searchState: {
+  refinementList?: { [key: string]: Array<string> };
+  toggle?: { [key: string]: string };
+}) =>
+  Object.keys(searchState?.refinementList ?? {}).length > 0 ||
+  Object.keys(searchState?.toggle ?? {}).length > 0;
+
+const Container = styled.div`
+  padding: 32px 16px;
+  max-width: 1200px;
+  margin: auto;
+`;
+
+const Layout = styled.div`
+  display: flex;
+`;
+
+const SearchContainer = styled.div<FilteringProps>`
+  width: 100%; /* for IE11 */
+  display: ${({ filtering }) => (filtering ? "none" : undefined)};
+`;
+
+const SearchTop = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledSearchBox = styled(SearchBox)`
+  .ais-SearchBox-input {
+    height: 40px;
+    border-radius: 4px;
+    outline: none;
+    color: ${colors.DefaultText};
+    font-weight: ${fontWeight.Regular};
+    &:focus {
+      border: 1px solid ${colors.Primary};
+      transition: border 0.1s cubic-bezier(0.4, 0, 1, 1) 0s;
+      animation: 0.1s cubic-bezier(0.4, 0, 1, 1) 0s 1 normal none running dtOkaS;
+      box-shadow: rgba(90, 40, 250, 0.2) 0px 0px 0px 2px;
+    }
+  }
+
+  width: 100%;
+  @media ${devices.Desktop} {
+    width: 50%;
+    min-width: 500px;
+  }
+`;
+
+const GetUpdateAlertsButton = styled(Button)`
+  display: none;
+  @media ${devices.Desktop} {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 14px;
+    color: ${colors.Primary};
+    background-color: transparent;
+    padding: 8px 16px;
+
+    &:hover {
+      box-shadow: none;
+      background-color: ${colors.ButtonLightHover};
+    }
+  }
+`;
+
+const ButtonText = styled.span`
+  padding-left: 8px;
+`;
+
+const StyledStats = styled(Stats)`
+  padding-top: 18px;
+
+  margin-bottom: 24px;
+
+  .ais-Stats-text {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: ${colors.Primary};
+  }
+`;
+
+const MobilePoweredByAlgolia = styled(PoweredByAlgolia)`
+  justify-content: center;
+  margin-top: 56px;
+
+  @media ${devices.Desktop} {
+    display: none;
+  }
+`;
+
+const StyledSendUsFeedbackCard = styled(SendUsFeedbackCard)`
+  margin-top: 48px;
+
+  @media ${devices.Desktop} {
+    display: none;
+  }
+`;
+
+const FilterButton = styled(SearchButton)`
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%);
+
+  @media ${devices.Desktop} {
+    display: none;
+  }
+`;
+
+const FilterIcon = styled.img`
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+`;
+
 export const SearchPage = () => {
   const history = useHistory();
   const searchState = useMemo(() => urlToSearchState(history.location), [
     history.location
   ]);
+
+  const displayGetUpdateAlertsButton = useMemo(
+    () => hasActiveSearchFilters(searchState),
+    [searchState]
+  );
 
   const onSearchStateChange = useCallback(
     (searchState: { [key: string]: unknown }) => {
@@ -77,6 +201,12 @@ export const SearchPage = () => {
     setToTrue: openFiltering
   } = useBoolean(false);
 
+  const {
+    isTrue: isModalOpen,
+    setToFalse: closeModal,
+    setToTrue: openModal
+  } = useBoolean(false);
+
   return (
     <Container>
       <InstantSearch
@@ -86,13 +216,26 @@ export const SearchPage = () => {
         searchState={searchState}
       >
         <Layout>
-          <Facets filtering={filtering} closeFiltering={closeFiltering} />
+          <Facets
+            filtering={filtering}
+            closeFiltering={closeFiltering}
+            openSubscriptionModal={openModal}
+            hasActiveSearchFilters={displayGetUpdateAlertsButton}
+          />
           <SearchContainer filtering={filtering} data-cy="search/container">
-            <StyledSearchBox
-              translations={{
-                placeholder: "Search by keyword, drug, NCTID, ..."
-              }}
-            />
+            <SearchTop>
+              <StyledSearchBox
+                translations={{
+                  placeholder: "Search by keyword, drug, NCTID, ..."
+                }}
+              />
+              {displayGetUpdateAlertsButton && (
+                <GetUpdateAlertsButton onClick={openModal}>
+                  <AlarmBellRingIcon />
+                  <ButtonText>Get update alerts</ButtonText>
+                </GetUpdateAlertsButton>
+              )}
+            </SearchTop>
             <SearchSuggestions />
             <StyledStats
               translations={{
@@ -120,95 +263,12 @@ export const SearchPage = () => {
           filters
         </FilterButton>
       </InstantSearch>
+      {isModalOpen && (
+        <UpdateAlertsModal
+          onRequestClose={closeModal}
+          searchState={searchState}
+        />
+      )}
     </Container>
   );
 };
-
-const MobilePoweredByAlgolia = styled(PoweredByAlgolia)`
-  justify-content: center;
-  margin-top: 56px;
-
-  @media ${devices.Desktop} {
-    display: none;
-  }
-`;
-
-const StyledSendUsFeedbackCard = styled(SendUsFeedbackCard)`
-  margin-top: 48px;
-
-  @media ${devices.Desktop} {
-    display: none;
-  }
-`;
-
-const Container = styled.div`
-  padding: 32px 16px;
-  max-width: 1200px;
-  margin: auto;
-`;
-
-const StyledSearchBox = styled(SearchBox)`
-  .ais-SearchBox-input {
-    height: 40px;
-    border-radius: 4px;
-    outline: none;
-    color: ${colors.DefaultText};
-    font-weight: ${fontWeight.Regular};
-    &:focus {
-      border: 1px solid ${colors.Primary};
-      transition: border 0.1s cubic-bezier(0.4, 0, 1, 1) 0s;
-      animation: 0.1s cubic-bezier(0.4, 0, 1, 1) 0s 1 normal none running dtOkaS;
-      box-shadow: rgba(90, 40, 250, 0.2) 0px 0px 0px 2px;
-    }
-
-    ${placeholderCss(css`
-      color: ${colors.GreySecondaryText};
-      opacity: 1;
-    `)}
-  }
-
-  width: 100%;
-  @media ${devices.Desktop} {
-    width: 50%;
-    min-width: 500px;
-  }
-`;
-
-const StyledStats = styled(Stats)`
-  padding-top: 18px;
-
-  margin-bottom: 24px;
-
-  .ais-Stats-text {
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 500;
-    color: ${colors.Primary};
-  }
-`;
-
-const Layout = styled.div`
-  display: flex;
-`;
-
-const SearchContainer = styled.div<FilteringProps>`
-  width: 100%; /* for IE11 */
-  display: ${({ filtering }) => (filtering ? "none" : undefined)};
-`;
-
-const FilterButton = styled(SearchButton)`
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-  left: 50%;
-  position: fixed;
-  transform: translateX(-50%);
-
-  @media ${devices.Desktop} {
-    display: none;
-  }
-`;
-
-const FilterIcon = styled.img`
-  margin-right: 8px;
-  width: 16px;
-  height: 16px;
-`;
