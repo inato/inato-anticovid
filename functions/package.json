@@ -18,6 +18,7 @@
     "@google-cloud/pubsub": "^1.7.0",
     "@sentry/node": "5.15.4",
     "algoliasearch": "^4.1.0",
+    "cors": "^2.8.5",
     "date-fns": "^2.11.1",
     "decod": "^6.1.6",
     "firebase-admin": "^8.10.0",
@@ -30,6 +31,7 @@
     "uuid": "^7.0.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.6",
     "@types/jest": "^25.1.4",
     "@types/pg": "^7.14.3",
     "@types/uuid": "^7.0.2",
