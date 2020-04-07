@@ -56,6 +56,7 @@ const Input = styled.input`
   margin: 16px 0;
   width: 100%;
   line-height: 40px;
+  height: 40px;
   padding: 0 16px;
   font-size: ${props => props.theme.fontSizes.normal}px;
   border: 1px solid ${colors.GreyBackground};
@@ -72,7 +73,7 @@ const SubscriptionState = styled.div`
   &,
   &:before {
     background-repeat: no-repeat;
-    background-size: 24px;
+    background-size: 16px;
   }
 `;
 
@@ -101,6 +102,7 @@ const Loading = styled(({ className }: { className?: string }) => {
     position: absolute;
     left: 0;
     animation: ${rotating} 0.55s linear infinite;
+    background-size: 24px;
   }
 `;
 
