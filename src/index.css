@@ -9,3 +9,7 @@ body {
 [class^="ais-"] {
   font-size: inherit;
 }
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}

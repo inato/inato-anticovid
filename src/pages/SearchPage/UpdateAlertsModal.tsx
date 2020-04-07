@@ -1,10 +1,17 @@
 import React, { useState, useCallback, ChangeEvent } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import qs from "qs";
+import { keyframes } from "styled-components";
 
 import { Modal } from "../../ui/Modal";
 import { styled } from "../../ui/styled";
-import { colors, EmailIcon } from "../../ui";
+import {
+  colors,
+  EmailIcon,
+  CheckmarkIcon,
+  CrossIcon,
+  SpinnerIcon
+} from "../../ui";
 import config from "../../config";
 
 const Bold = styled.strong`
@@ -26,6 +33,24 @@ const getEmailIcon = () => {
   )}"`;
 };
 
+const getCrossIcon = () => {
+  return `"data:image/svg+xml,${encodeURIComponent(
+    renderToStaticMarkup(<CrossIcon />)
+  )}"`;
+};
+
+const getCheckmarkIcon = () => {
+  return `"data:image/svg+xml,${encodeURIComponent(
+    renderToStaticMarkup(<CheckmarkIcon />)
+  )}"`;
+};
+
+const getSpinnerIcon = () => {
+  return `"data:image/svg+xml,${encodeURIComponent(
+    renderToStaticMarkup(<SpinnerIcon />)
+  )}"`;
+};
+
 const Input = styled.input`
   display: block;
   margin: 16px 0;
@@ -43,13 +68,41 @@ const Input = styled.input`
 
 const SubscriptionState = styled.div`
   margin: 32px 0;
+  padding-left: 30px;
+  &,
+  &:before {
+    background-repeat: no-repeat;
+    background-size: 24px;
+  }
+`;
+
+const rotating = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 `;
 
 const Loading = styled(({ className }: { className?: string }) => {
   return (
     <SubscriptionState className={className}>Subscribing...</SubscriptionState>
   );
-})``;
+})`
+  position: relative;
+
+  &:before {
+    content: " ";
+    background-image: url(${getSpinnerIcon()});
+    display: block;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 0;
+    animation: ${rotating} 0.55s linear infinite;
+  }
+`;
 
 const Error = styled(({ className }: { className?: string }) => {
   return (
@@ -67,7 +120,11 @@ const Error = styled(({ className }: { className?: string }) => {
     </SubscriptionState>
   );
 })`
-  color: ${colors.RedAlert};
+  &,
+  a {
+    color: ${colors.RedAlert};
+  }
+  background-image: url(${getCrossIcon()});
 `;
 
 const Success = styled(({ className }: { className?: string }) => {
@@ -78,6 +135,7 @@ const Success = styled(({ className }: { className?: string }) => {
   );
 })`
   color: ${colors.GreenAlert};
+  background-image: url(${getCheckmarkIcon()});
 `;
 
 export const UpdateAlertsModal = ({
