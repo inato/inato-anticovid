@@ -54,8 +54,9 @@ export const MethodologyPage = () => {
             Those registries and websites are very well known from most
             researchers and have been very active to include as fast as possible
             clinical studies that were registered. However, there was to our
-            knowledge no unique and centralized repository where all clinical
-            studies conducted worldwide on COVID-19 could be found.
+            knowledge no unique and centralized repository where{" "}
+            <Bold>all</Bold> clinical studies conducted worldwide on COVID-19
+            could be found.
           </Paragraph>
         </Accordion>
 
@@ -119,7 +120,7 @@ export const MethodologyPage = () => {
           </Paragraph>
         </Accordion>
 
-        <Accordion title="What processing is done for each trial?">
+        <LastAccordion title="What processing is done for each trial?">
           <Paragraph>
             First, already structured data that we collect are displayed ad
             integrum, even though we standardize their presentation for the sake
@@ -133,8 +134,10 @@ export const MethodologyPage = () => {
               Primary outcomes are classified as follows: clinical, surrogate,
               clinical scale or clinical element other than hard endpoints
               classified in &quot;clinical&quot; <br />
-              This feature is still under development and might lead to some
-              miscategorized outcomes.
+              <Italic>
+                This feature is still under development and might lead to some
+                miscategorized outcomes.
+              </Italic>
             </StyledLi>
             <StyledLi>Total recruitment target</StyledLi>
             <StyledLi>
@@ -152,7 +155,7 @@ export const MethodologyPage = () => {
             </StyledLink>{" "}
             if you have questions or remarks regarding our methodology.
           </Paragraph>
-        </Accordion>
+        </LastAccordion>
       </TextBlockWithLaboratory>
       <StyledSendUsFeedbackCard />
       <StyledCTAFooter searchTrialsTitle="Explore ongoing clinical trials" />
@@ -204,4 +207,15 @@ const StyledLink = styled.a`
 
 const Bold = styled.span`
   font-weight: bold;
+`;
+
+const Italic = styled.span`
+  font-style: italic;
+`;
+
+const LastAccordion = styled(Accordion)`
+  margin-top: 32px;
+  @media ${devices.Desktop} {
+    margin-top: none;
+  }
 `;
