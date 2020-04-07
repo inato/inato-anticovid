@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ChangeEvent } from "react";
+import React, { useState, useCallback, ChangeEvent, useMemo } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import qs from "qs";
 import { keyframes } from "styled-components";
@@ -10,7 +10,9 @@ import {
   EmailIcon,
   CheckmarkIcon,
   CrossIcon,
-  SpinnerIcon
+  SpinnerIcon,
+  fontSize,
+  lineHeight
 } from "../../ui";
 import config from "../../config";
 
@@ -42,6 +44,7 @@ const Input = styled.input`
 
 const InputContainer = styled.div`
   position: relative;
+
   svg {
     position: absolute;
     top: 11.5px;
@@ -145,6 +148,26 @@ const Success = styled(({ className }: { className?: string }) => {
   background-image: url(${getCheckmarkIcon()});
 `;
 
+const TagsContainer = styled.div`
+  margin-top: 8px;
+`;
+
+const Tag = styled.span`
+  background-color: ${colors.Border};
+  color: ${colors.GreySecondaryText};
+  font-size: ${fontSize.Small};
+  height: ${lineHeight.Small};
+  line-height: ${lineHeight.Small};
+  display: inline-block;
+  border-radius: 4px;
+  margin-top: 4px;
+  padding: 0 8px;
+
+  & + & {
+    margin-left: 4px;
+  }
+`;
+
 export const UpdateAlertsModal = ({
   onRequestClose,
   searchState
@@ -159,6 +182,18 @@ export const UpdateAlertsModal = ({
   const [subscriptionState, setSubscriptionState] = useState<
     "loading" | "success" | "error" | undefined
   >(undefined);
+
+  const tags = useMemo(() => {
+    return [
+      searchState.toggle?.has_results_publications
+        ? "Has results publications"
+        : null,
+      ...Object.values(searchState.refinementList ?? []).reduce(
+        (acc, value) => [...acc, ...value],
+        []
+      )
+    ].filter((value): value is string => !!value);
+  }, [searchState]);
 
   const emailChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -212,8 +247,13 @@ export const UpdateAlertsModal = ({
       <Container>
         <SecondaryText>
           <Bold>Get alerted on new trials and results</Bold> matching your
-          current search criteria
+          criteria:
         </SecondaryText>
+        <TagsContainer>
+          {tags.map(value => (
+            <Tag key={value}>{value}</Tag>
+          ))}
+        </TagsContainer>
         <InputContainer>
           <EmailIcon />
           <Input
