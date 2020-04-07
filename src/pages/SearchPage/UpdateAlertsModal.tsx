@@ -115,7 +115,8 @@ export const UpdateAlertsModal = ({
         label:
           subscriptionState === "success" ? "Close" : "Subscribe to updates",
         onClick:
-          subscriptionState === "success" ? onRequestClose : submitHandler
+          subscriptionState === "success" ? onRequestClose : submitHandler,
+        disabled: subscriptionState === "loading"
       }}
       secondaryAction={
         subscriptionState === "success"
