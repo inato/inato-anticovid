@@ -39,7 +39,7 @@ const decodeSearch = (search: unknown) => ({
     ),
     studyTypes: decod.at("study_types", decod.array(decod.string)),
     countries: decod.at("countries", decod.array(decod.string)),
-    hasResultsPublications: decod.at("has_results_publications", decod.boolean)
+    hasResultsPublications: decod.at("has_results_publications", decod.attempt(decod.boolean))
   })(search)
 });
 const decodeTimestamp = (timestamp: unknown) =>
