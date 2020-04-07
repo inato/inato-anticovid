@@ -36,6 +36,7 @@ export const Accordion = styled(
         <AccordionContent
           ref={accordionContent}
           style={{ maxHeight: `${height}` }}
+          isActive={isActive}
         >
           {props.children}
         </AccordionContent>
@@ -87,10 +88,15 @@ const ClickableContainer = styled.div`
   }
 `;
 
-const AccordionContent = styled.div`
+const AccordionContent = styled.div<{ isActive: boolean }>`
   overflow: hidden;
   transition: max-height 0.1s linear;
   padding: 0 16px;
+  ${({ isActive }) =>
+    isActive &&
+    css`
+      padding-bottom: 16px;
+    `}
   ul {
     margin-top: 0;
   }
