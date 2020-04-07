@@ -120,7 +120,7 @@ export const MethodologyPage = () => {
           </Paragraph>
         </Accordion>
 
-        <LastAccordion title="What processing is done for each trial?">
+        <Accordion title="What processing is done for each trial?">
           <Paragraph>
             First, already structured data that we collect are displayed ad
             integrum, even though we standardize their presentation for the sake
@@ -155,7 +155,7 @@ export const MethodologyPage = () => {
             </StyledLink>{" "}
             if you have questions or remarks regarding our methodology.
           </Paragraph>
-        </LastAccordion>
+        </Accordion>
       </TextBlockWithLaboratory>
       <StyledSendUsFeedbackCard />
       <StyledCTAFooter searchTrialsTitle="Explore ongoing clinical trials" />
@@ -211,11 +211,4 @@ const Bold = styled.span`
 
 const Italic = styled.span`
   font-style: italic;
-`;
-
-const LastAccordion = styled(Accordion)`
-  margin-top: 32px;
-  @media ${devices.Desktop} {
-    margin-top: none;
-  }
 `;
