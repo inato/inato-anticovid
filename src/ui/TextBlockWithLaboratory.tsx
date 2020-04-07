@@ -38,9 +38,11 @@ const Container = styled.div`
 `;
 
 const TextContainer = styled.div`
+  margin-bottom: 32px;
   @media ${devices.Desktop} {
     padding-bottom: 16px;
     margin-right: 32px;
+    margin-bottom: 0;
   }
 `;
 

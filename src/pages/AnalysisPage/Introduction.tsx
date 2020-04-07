@@ -1,12 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import {
-  Accordion,
-  TextBlockWithLaboratory,
-  BlockTitle,
-  devices
-} from "../../ui";
+import { Accordion, TextBlockWithLaboratory, BlockTitle } from "../../ui";
 import { InternalLink } from "../../ui/InternalLink";
 
 export const Introduction = () => (
@@ -74,8 +69,5 @@ const Paragraph = styled.p`
 `;
 
 const LastParagraph = styled(Paragraph)`
-  margin: 16px 0;
-  @media ${devices.Desktop} {
-    margin-bottom: 0;
-  }
+  margin-top: 16px;
 `;
