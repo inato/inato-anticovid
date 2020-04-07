@@ -217,7 +217,11 @@ export const SearchPage = () => {
         searchState={searchState}
       >
         <Layout>
-          <Facets filtering={filtering} closeFiltering={closeFiltering} />
+          <Facets
+            filtering={filtering}
+            closeFiltering={closeFiltering}
+            openSubscriptionModal={openModal}
+          />
           <SearchContainer filtering={filtering} data-cy="search/container">
             <SearchTop>
               <StyledSearchBox

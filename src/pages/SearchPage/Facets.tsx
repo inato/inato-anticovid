@@ -9,7 +9,8 @@ import {
   Newsletter,
   SubscribeButton,
   CheckboxMixin,
-  ToggleRefinementWithCount
+  ToggleRefinementWithCount,
+  OutlineButton
 } from "../../ui";
 import { PoweredByAlgolia } from "../../ui/PoweredByAlgolia";
 
@@ -20,10 +21,12 @@ import { RangeSlider } from "./RangeSlider";
 
 export const Facets = ({
   filtering,
-  closeFiltering
+  closeFiltering,
+  openSubscriptionModal
 }: {
   filtering: boolean;
   closeFiltering: () => void;
+  openSubscriptionModal: () => void;
 }) => {
   return (
     <LeftPanel filtering={filtering}>
@@ -61,6 +64,9 @@ export const Facets = ({
         <Facet attribute="study_type" title="Study Type" showMore />
         <Facet attribute="countries" title="Countries" searchable showMore />
         <Footer>
+          <OpenSubscriptionModalButton onClick={openSubscriptionModal}>
+            Get Update alerts
+          </OpenSubscriptionModalButton>
           <FilterTrialsButton
             onClick={closeFiltering}
             data-cy="search/filters/mobile-close"
@@ -234,6 +240,8 @@ const LeftPanel = styled.div<FilteringProps>`
   }
 `;
 
+const OpenSubscriptionModalButton = styled(OutlineButton)``;
+
 const Header = styled.div`
   color: ${colors.Primary};
   display: flex;
@@ -249,13 +257,16 @@ const Footer = styled.div`
   position: fixed;
   z-index: 3;
   width: calc(100% - 32px);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   left: 0;
   bottom: 0;
   padding: 16px;
   border-top: 1px solid ${colors.Border};
   background-color: ${colors.SecondaryBackground};
-  justify-content: center;
-  display: flex;
+
   @media ${devices.Desktop} {
     display: none;
   }
