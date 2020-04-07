@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from "react";
 
-import { Button } from "../Button";
+import { Button, TextButton } from "../Button";
 import { Theme } from "../theme";
 import { styled } from "../styled";
 import { getVariation } from "../theme/helpers";
@@ -59,7 +59,17 @@ const StyledCloseIcon = styled(CloseIcon)`
   cursor: pointer;
 `;
 
-const ModalActionButton = styled(Button)`
+const ModalActionButton = styled(
+  ({
+    secondary = false,
+    ...props
+  }: {
+    secondary?: boolean;
+    children?: React.ReactNode;
+    onClick?: any;
+    disabled?: boolean;
+  }) => (secondary ? <TextButton {...props} /> : <Button {...props} />)
+)`
   @media (${props => props.theme.breakpoints.tabletAndLarger}) {
     & + & {
       margin-left: ${props => props.theme.spacings.m}px;
@@ -213,6 +223,7 @@ export const ModalBox = ({
       <ModalFooter data-testid="footer">
         {secondaryAction && (
           <ModalActionButton
+            secondary
             data-testid="secondary-button"
             onClick={secondaryAction.onClick}
             disabled={secondaryAction.disabled}
