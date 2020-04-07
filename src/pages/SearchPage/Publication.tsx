@@ -66,7 +66,7 @@ export const Publication = ({
 }: {
   publication: ClinicalTrialHitPublication;
 }) => (
-  <PublicationContainer key={publication.url}>
+  <PublicationContainer>
     <StyledBookmarkIcon />
     <PublicationLink
       href={publication.url}

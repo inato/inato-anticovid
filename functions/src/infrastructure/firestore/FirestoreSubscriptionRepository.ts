@@ -44,6 +44,26 @@ export class FirestoreSubscriptionRepository implements SubscriptionRepository {
     );
   }
 
+  findAllSubscriptions() {
+    return pipe(
+      TaskEither.tryCatch(
+        () =>
+          this.firestore
+            .collection(SUBSCRIPTION_COLLECTION_NAME)
+            .get(),
+        e =>
+          unknownError(
+            e instanceof Error ? e.message : "Unknown firestore get error"
+          )
+      ),
+      taskEitherExtend(results =>
+        array.traverse(TaskEither.taskEither)(results.docs, document =>
+          TaskEither.fromEither(deserialize(document.id, document.data()))
+        )
+      )
+    );
+  }
+
   findById(subscriptionId: SubscriptionId) {
     return pipe(
       TaskEither.tryCatch(

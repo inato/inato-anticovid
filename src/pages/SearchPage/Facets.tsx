@@ -9,7 +9,8 @@ import {
   Newsletter,
   SubscribeButton,
   CheckboxMixin,
-  ToggleRefinementWithCount
+  ToggleRefinementWithCount,
+  OutlineButton
 } from "../../ui";
 import { PoweredByAlgolia } from "../../ui/PoweredByAlgolia";
 
@@ -20,10 +21,14 @@ import { RangeSlider } from "./RangeSlider";
 
 export const Facets = ({
   filtering,
-  closeFiltering
+  closeFiltering,
+  openSubscriptionModal,
+  hasActiveSearchFilters
 }: {
   filtering: boolean;
   closeFiltering: () => void;
+  openSubscriptionModal: () => void;
+  hasActiveSearchFilters: boolean;
 }) => {
   return (
     <LeftPanel filtering={filtering}>
@@ -61,6 +66,11 @@ export const Facets = ({
         <Facet attribute="study_type" title="Study Type" showMore />
         <Facet attribute="countries" title="Countries" searchable showMore />
         <Footer>
+          {hasActiveSearchFilters && (
+            <OpenSubscriptionModalButton onClick={openSubscriptionModal}>
+              Get Update alerts
+            </OpenSubscriptionModalButton>
+          )}
           <FilterTrialsButton
             onClick={closeFiltering}
             data-cy="search/filters/mobile-close"
@@ -208,7 +218,7 @@ const DesktopPoweredByAlgolia = styled(PoweredByAlgolia)`
 const LeftPanel = styled.div<FilteringProps>`
   align-self: flex-start;
 
-  display: ${({ filtering }) => (filtering ? undefined : "none")};
+  display: ${({ filtering }) => (filtering ? "block" : "none")};
   position: absolute;
   top: 0;
   left: 0;
@@ -243,6 +253,8 @@ const LeftPanel = styled.div<FilteringProps>`
   }
 `;
 
+const OpenSubscriptionModalButton = styled(OutlineButton)``;
+
 const Header = styled.div`
   color: ${colors.Primary};
   display: flex;
@@ -256,14 +268,18 @@ const Header = styled.div`
 
 const Footer = styled.div`
   position: fixed;
-  width: calc(100% - 32px);
+  z-index: 3;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   left: 0;
   bottom: 0;
   padding: 16px;
   border-top: 1px solid ${colors.Border};
   background-color: ${colors.SecondaryBackground};
-  justify-content: center;
-  display: flex;
+
   @media ${devices.Desktop} {
     display: none;
   }

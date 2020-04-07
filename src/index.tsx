@@ -13,6 +13,7 @@ import "./index.css";
 import config from "./config";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import { ModalProvider, ThemeProvider } from "./hooks";
 
 if (config.ga.id) {
   // eslint-disable-next-line
@@ -20,7 +21,14 @@ if (config.ga.id) {
   ReactGA.initialize(config.ga.id);
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <ThemeProvider>
+    <ModalProvider>
+      <App />
+    </ModalProvider>
+  </ThemeProvider>,
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
