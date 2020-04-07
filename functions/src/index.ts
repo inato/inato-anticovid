@@ -106,14 +106,20 @@ const feedServices = <Ret, Argument1, Argument2>(
       return acc;
     }, {} as any);
 
+  const cleanUp = async () => {
+    await postgresClient.end();
+    await reportingService.flush();
+  };
+
   try {
     const result = await callback(services)(arg1, arg2, ...rest);
 
-    await postgresClient.end();
+    await cleanUp();
 
     return result;
   } catch (e) {
     reportingService.reportError(e);
+    await cleanUp();
     throw e;
   }
 };
