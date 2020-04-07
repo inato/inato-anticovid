@@ -7,4 +7,5 @@ export default config as {
   feedbackUrl: string;
   firebase: { projectId: string };
   TableauUrl: string;
+  baseApiUrl: string;
 };

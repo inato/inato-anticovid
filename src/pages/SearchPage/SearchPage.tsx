@@ -259,7 +259,12 @@ export const SearchPage = () => {
           filters
         </FilterButton>
       </InstantSearch>
-      {isModalOpen && <UpdateAlertsModal onRequestClose={closeModal} />}
+      {isModalOpen && (
+        <UpdateAlertsModal
+          onRequestClose={closeModal}
+          searchState={searchState}
+        />
+      )}
     </Container>
   );
 };

@@ -1,8 +1,10 @@
 import React, { useState, useCallback, ChangeEvent } from "react";
+import qs from "qs";
 
 import { Modal } from "../../ui/Modal";
 import { styled } from "../../ui/styled";
 import { colors } from "../../ui";
+import config from "../../config";
 
 const Bold = styled.strong`
   font-weight: ${props => props.theme.fontWeights.semiBold};
@@ -12,9 +14,14 @@ const Bold = styled.strong`
 const Input = styled.input``;
 
 export const UpdateAlertsModal = ({
-  onRequestClose
+  onRequestClose,
+  searchState
 }: {
   onRequestClose: () => void;
+  searchState: {
+    refinementList?: { [key: string]: Array<string> };
+    toggle?: { [key: string]: string };
+  };
 }) => {
   const [email, setEmail] = useState("");
 
@@ -23,9 +30,15 @@ export const UpdateAlertsModal = ({
   }, []);
 
   const submitHandler = useCallback(() => {
-    // eslint-disable-next-line
-    console.log(`Subscribe to updates button clicked`, email);
-  }, [email]);
+    const queryString = {
+      email,
+      ...searchState.toggle,
+      ...searchState.refinementList
+    };
+    fetch(
+      `${config.baseApiUrl}/subscribeToUpdates?${qs.stringify(queryString)}`
+    );
+  }, [email, searchState.refinementList, searchState.toggle]);
 
   return (
     <Modal
