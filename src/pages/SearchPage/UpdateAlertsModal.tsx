@@ -30,6 +30,45 @@ const Input = styled.input`
   border-radius: 4px;
 `;
 
+const SubscriptionState = styled.div`
+  margin: 32px 0;
+`;
+
+const Loading = styled(({ className }: { className?: string }) => {
+  return (
+    <SubscriptionState className={className}>Subscribing...</SubscriptionState>
+  );
+})``;
+
+const Error = styled(({ className }: { className?: string }) => {
+  return (
+    <SubscriptionState className={className}>
+      An error has occured. Please retry.
+      <br />
+      If this occurs again, please contact{" "}
+      <a
+        href="mailto:anticovid@inato.com"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        anticovid@inato.com
+      </a>
+    </SubscriptionState>
+  );
+})`
+  color: ${colors.RedAlert};
+`;
+
+const Success = styled(({ className }: { className?: string }) => {
+  return (
+    <SubscriptionState className={className}>
+      You subscribed successfully
+    </SubscriptionState>
+  );
+})`
+  color: ${colors.GreenAlert};
+`;
+
 export const UpdateAlertsModal = ({
   onRequestClose,
   searchState
@@ -41,20 +80,30 @@ export const UpdateAlertsModal = ({
   };
 }) => {
   const [email, setEmail] = useState("");
+  const [subscriptionState, setSubscriptionState] = useState<
+    "loading" | "success" | "error" | undefined
+  >(undefined);
 
   const emailChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   }, []);
 
-  const submitHandler = useCallback(() => {
+  const submitHandler = useCallback(async () => {
+    setSubscriptionState("loading");
     const queryString = {
       email,
       ...searchState.toggle,
       ...searchState.refinementList
     };
-    fetch(
+    const result = await fetch(
       `${config.baseApiUrl}/subscribeToUpdates?${qs.stringify(queryString)}`
     );
+
+    if (result.status === 204) {
+      setSubscriptionState("success");
+      return;
+    }
+    setSubscriptionState("error");
   }, [email, searchState.refinementList, searchState.toggle]);
 
   return (
@@ -63,13 +112,19 @@ export const UpdateAlertsModal = ({
       title="Get update alerts"
       onRequestClose={onRequestClose}
       primaryAction={{
-        label: "Subscribe to updates",
-        onClick: submitHandler
+        label:
+          subscriptionState === "success" ? "Close" : "Subscribe to updates",
+        onClick:
+          subscriptionState === "success" ? onRequestClose : submitHandler
       }}
-      secondaryAction={{
-        label: "Cancel",
-        onClick: onRequestClose
-      }}
+      secondaryAction={
+        subscriptionState === "success"
+          ? undefined
+          : {
+              label: "Cancel",
+              onClick: onRequestClose
+            }
+      }
     >
       <Container>
         <SecondaryText>
@@ -90,6 +145,9 @@ export const UpdateAlertsModal = ({
           <SecondaryText>
             No spam, unsubscribe anytime, not shared with a third-party
           </SecondaryText>
+          {subscriptionState === "loading" && <Loading />}
+          {subscriptionState === "success" && <Success />}
+          {subscriptionState === "error" && <Error />}
         </div>
       </Container>
     </Modal>
