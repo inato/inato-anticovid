@@ -5,6 +5,7 @@ export * from "./ArrowRightIcon";
 export * from "./BookmarkIcon";
 export * from "./CloseIcon";
 export * from "./EarthIcon";
+export * from "./EmailIcon";
 export * from "./LaboratoryIcon";
 export * from "./MedicalKitIcon";
 export * from "./NavigationOutIcon";
