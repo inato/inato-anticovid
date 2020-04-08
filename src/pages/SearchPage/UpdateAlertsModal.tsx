@@ -23,6 +23,7 @@ const Bold = styled.strong`
 
 const Container = styled.div`
   color: ${colors.DarkGray};
+  margin-top: 16px;
 `;
 
 const SecondaryText = styled.span`

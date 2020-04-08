@@ -23,7 +23,7 @@ const widthOfModalSize = (props: { theme: Theme; size?: ModalSize }) => {
   return props.theme.widths.modal;
 };
 
-const mobileFooterWithTwoButtonsHeight = 140;
+const mobileFooterWithTwoButtonsHeight = 48;
 
 const ModalBody = styled.div<{ scrollable?: boolean }>`
   @media (${props => props.theme.breakpoints.tabletAndLarger}) {
@@ -42,11 +42,11 @@ const ModalHeader = styled.header`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  background-color: ${props => getVariation(props.theme.colors.grey, 20)};
 
   @media (${props => props.theme.breakpoints.tabletAndLarger}) {
     border-top-left-radius: ${props => props.theme.borderRadiuses.regular};
     border-top-right-radius: ${props => props.theme.borderRadiuses.regular};
-    background-color: ${props => getVariation(props.theme.colors.grey, 10)};
     padding: ${props => props.theme.spacings.m}px;
   }
 
@@ -75,9 +75,6 @@ const ModalActionButton = styled(
       margin-left: ${props => props.theme.spacings.m}px;
     }
   }
-  @media (${props => props.theme.breakpoints.mobileAndSmaller}) {
-    margin-top: ${props => props.theme.spacings.sm}px;
-  }
 `;
 
 const ModalFooter = styled.footer`
@@ -85,22 +82,17 @@ const ModalFooter = styled.footer`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  background-color: ${props => getVariation(props.theme.colors.grey, 20)};
 
   @media (${props => props.theme.breakpoints.tabletAndLarger}) {
     border-bottom-left-radius: ${props => props.theme.borderRadiuses.regular};
     border-bottom-right-radius: ${props => props.theme.borderRadiuses.regular};
 
     padding: ${props => props.theme.spacings.m}px;
-    background-color: ${props => getVariation(props.theme.colors.grey, 10)};
   }
 
   @media (${props => props.theme.breakpoints.mobileAndSmaller}) {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
     padding: ${props => props.theme.spacings.m}px;
-    background-color: ${props => props.theme.colors.white};
   }
 `;
 
@@ -108,6 +100,8 @@ const Container = styled.div<{ size?: ModalSize }>`
   display: flex;
   flex-direction: column;
   background-color: ${props => props.theme.colors.white};
+  border-radius: 4px;
+  box-shadow: ${props => props.theme.shadows.modal};
 
   @media (${props => props.theme.breakpoints.tabletAndLarger}) {
     max-height: 100%;
@@ -116,13 +110,11 @@ const Container = styled.div<{ size?: ModalSize }>`
       widthOfModalSize({ size, theme })}px;
     border-radius: ${props => props.theme.borderRadiuses.regular};
     overflow: visible;
-    box-shadow: ${props => props.theme.shadows.modal};
   }
 
   @media (${props => props.theme.breakpoints.mobileAndSmaller}) {
     position: fixed;
     top: 0;
-    bottom: 0;
     left: 0;
     right: 0;
   }
