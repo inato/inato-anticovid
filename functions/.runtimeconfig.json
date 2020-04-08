@@ -5,7 +5,12 @@
     "index": "dev_data"
   },
   "pg": {
-    "tablename": "who_trial_staging"
+    "ip": "34.77.35.199",
+    "user": "app",
+    "password": "",
+    "port": "5432",
+    "tablename": "who_trial_staging",
+    "db": "postgres"
   },
   "postmark": {
     "apitoken": ""

@@ -7,7 +7,7 @@ import {
   subscribeToUpdatesHandler,
   unsubscribeFromUpdatesHandler,
   sendEmailsScheduled,
-  sendEmailConsumer,
+  sendEmailConsumer
 } from "./presentation";
 import {
   AlgoliaIndexingService,
@@ -54,78 +54,84 @@ const feedServices = <Ret, Argument1, Argument2>(
   requiredServices: ReadonlyArray<keyof Services>,
   callback:
     | ((
-      services: Services
-    ) => (arg1: Argument1, ...rest: any[]) => Promise<Ret>)
+        services: Services
+      ) => (arg1: Argument1, ...rest: any[]) => Promise<Ret>)
     | ((
-      services: Services
-    ) => (arg1: Argument1, arg2?: Argument2, ...rest: any[]) => Promise<Ret>)
+        services: Services
+      ) => (arg1: Argument1, arg2?: Argument2, ...rest: any[]) => Promise<Ret>)
 ) => async (
   arg1: Argument1,
   arg2?: Argument2,
   ...rest: any[]
 ): Promise<Ret | void> => {
-    const loggingService = new ConsoleLoggingService();
-    const reportingService = new SentryReportingService({
-      dsn: functions.config().sentry.dsn,
-      environment: functions.config().sentry.environment
-    });
+  const loggingService = new ConsoleLoggingService();
+  const reportingService = new SentryReportingService({
+    dsn: functions.config().sentry.dsn,
+    environment: functions.config().sentry.environment
+  });
 
-    const algoliaIndex = setupAlgoliaIndex({
-      apiKey: functions.config().algolia.apikey,
-      indexName: functions.config().algolia.index,
-      clientId: functions.config().algolia.clientid,
-      loggingService
-    });
-    const postgresClient = await setupPostgresClient();
+  const algoliaIndex = setupAlgoliaIndex({
+    apiKey: functions.config().algolia.apikey,
+    indexName: functions.config().algolia.index,
+    clientId: functions.config().algolia.clientid,
+    loggingService
+  });
+  const postgresClient = await setupPostgresClient({
+    ip: functions.config().pg.ip,
+    port: functions.config().pg.port,
+    user: functions.config().pg.user,
+    password: functions.config().pg.password,
+    db: functions.config().pg.db
+  });
 
-    const availableServices: Map<keyof Services, any> = new Map<
-      keyof Services,
-      () => any
-    >(
-      Object.entries({
-        timeService: () => new DateTimeService(),
-        emailService: () =>
-          new PostmarkEmailService({
-            apiToken: functions.config().postmark.apitoken
-          }),
-        messagingService: () => new PubSubMessageService(),
-        subscriptionRepository: () =>
-          new FirestoreSubscriptionRepository(firestore),
-        trialRepository: () =>
-          new PostgresTrialRepository(
-            postgresClient,
-            functions.config().pg.tablename
-          ),
-        indexingService: () => new AlgoliaIndexingService(algoliaIndex),
-        loggingService: () => loggingService,
-        reportingService: () => reportingService
-      }) as any
-    );
+  const availableServices: Map<keyof Services, any> = new Map<
+    keyof Services,
+    () => any
+  >(
+    Object.entries({
+      timeService: () => new DateTimeService(),
+      emailService: () =>
+        new PostmarkEmailService({
+          apiToken: functions.config().postmark.apitoken
+        }),
+      messagingService: () => new PubSubMessageService(),
+      subscriptionRepository: () =>
+        new FirestoreSubscriptionRepository(firestore),
+      trialRepository: () =>
+        new PostgresTrialRepository(
+          postgresClient,
+          functions.config().pg.tablename
+        ),
+      indexingService: () => new AlgoliaIndexingService(algoliaIndex),
+      loggingService: () => loggingService,
+      reportingService: () => reportingService
+    }) as any
+  );
 
-    const services = Array.from(availableServices.entries())
-      .filter(([key]) => requiredServices.includes(key))
-      .reduce((acc, [key, f]) => {
-        acc[key] = f();
-        return acc;
-      }, {} as any);
+  const services = Array.from(availableServices.entries())
+    .filter(([key]) => requiredServices.includes(key))
+    .reduce((acc, [key, f]) => {
+      acc[key] = f();
+      return acc;
+    }, {} as any);
 
-    const cleanUp = async () => {
-      await postgresClient.end();
-      await reportingService.flush();
-    };
-
-    try {
-      const result = await callback(services)(arg1, arg2, ...rest);
-
-      await cleanUp();
-
-      return result;
-    } catch (e) {
-      reportingService.reportError(e);
-      await cleanUp();
-      throw e;
-    }
+  const cleanUp = async () => {
+    await postgresClient.end();
+    await reportingService.flush();
   };
+
+  try {
+    const result = await callback(services)(arg1, arg2, ...rest);
+
+    await cleanUp();
+
+    return result;
+  } catch (e) {
+    reportingService.reportError(e);
+    await cleanUp();
+    throw e;
+  }
+};
 
 export const refreshAlgoliaTrialIndex = functions
   .runWith({
@@ -154,8 +160,10 @@ export const setAlgoliaSettings = functions.https.onRequest(
 export const subscribeToUpdates = functions.https.onRequest(
   feedServices(
     ["subscriptionRepository", "indexingService", "reportingService"],
-    services => (req: functions.https.Request,
-      res: functions.Response<any>) => corsMiddleware(req, res, () => subscribeToUpdatesHandler(services)(req, res))
+    services => (req: functions.https.Request, res: functions.Response<any>) =>
+      corsMiddleware(req, res, () =>
+        subscribeToUpdatesHandler(services)(req, res)
+      )
   )
 );
 

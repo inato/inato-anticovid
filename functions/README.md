@@ -33,9 +33,12 @@ firebase use production
 
 The local configuration is stored in `.runtimeconfig.json`
 
+If you need to launch the `refreshAlgoliaTrialIndex` function, you'll need to set the `pg.password` and `pg.ip` variables in `.runtimeconfig.json` (available in 1password)
+
 ### Usage
 
 #### Prerequisite: have a JDK installed
+
 ```sh
 brew install homebrew/cask/java
 ```

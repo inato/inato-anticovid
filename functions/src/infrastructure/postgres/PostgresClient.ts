@@ -1,16 +1,20 @@
 import { Client } from "pg";
 
-const PG_IP = "34.77.35.199";
-const PG_PORT = 5432;
-const PG_USER = "app";
-const PG_PASSWORD = "ZrFC8IxUmVT59JXhZcZWJBA1u";
-const PG_DB = "postgres";
-
-const PG_CONNECTION_STRING = `postgresql://${PG_USER}:${PG_PASSWORD}@${PG_IP}:${PG_PORT}/${PG_DB}`;
-
-export const setupPostgresClient = async () => {
+export const setupPostgresClient = async ({
+  ip,
+  port,
+  user,
+  password,
+  db
+}: {
+  ip: string;
+  port: number;
+  user: string;
+  password: string;
+  db: string;
+}) => {
   const client = new Client({
-    connectionString: PG_CONNECTION_STRING
+    connectionString: `postgresql://${user}:${password}@${ip}:${port}/${db}`
   });
 
   await client.connect();
