@@ -16,7 +16,7 @@ import { taskEitherExtend } from "../../domain/utils/taskEither";
 const HITS_PER_PAGE = 100;
 
 export class AlgoliaIndexingService implements IndexingService {
-  constructor(private readonly algoliaIndex: SearchIndex) {}
+  constructor(private readonly algoliaIndex: SearchIndex) { }
 
   indexTrials(
     trials: ReadonlyArray<Trial>,
@@ -166,9 +166,10 @@ const serializeFacetFilters = ({
   clinicalOutcomesExtracted = [],
   surrogateOutcomesExtracted = [],
   studyTypes = [],
-  countries = []
+  countries = [],
+  hasResultsPublications,
 }: FacetFilters) => {
-  return [
+  const facetFilters = [
     recruitmentStatus.map(status => `${Facets.recruitmentStatus}:${status}`),
     therapeuticClasses.map(
       therapeuticClass => `${Facets.therapeuticClasses}:${therapeuticClass}`
@@ -182,6 +183,12 @@ const serializeFacetFilters = ({
         `${Facets.surrogateOutcomeExtracted}:${surrogateOutcomeExtracted}`
     ),
     studyTypes.map(studyType => `${Facets.studyType}:${studyType}`),
-    countries.map(country => `${Facets.countries}:${country}`)
+    countries.map(country => `${Facets.countries}:${country}`),
   ];
+
+  if (hasResultsPublications !== null) {
+    facetFilters.push([`${Facets.hasResultsPublications}:${hasResultsPublications}`]);
+  }
+
+  return facetFilters;
 };
