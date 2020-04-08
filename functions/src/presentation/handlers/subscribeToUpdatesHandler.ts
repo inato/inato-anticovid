@@ -26,33 +26,33 @@ export const subscribeToUpdatesHandler = ({
   request: functions.https.Request,
   response: functions.Response<any>
 ) =>
-  pipe(
-    request,
-    parseQueryString,
-    TaskEither.fromEither,
-    taskEitherExtend(query =>
-      subscribeToUpdates({
-        indexingService,
-        subscriptionRepository,
-        searchState: {
-          searchQuery: query.searchQuery,
-          facetFilters: query.facetFilters
+    pipe(
+      request,
+      parseQueryString,
+      TaskEither.fromEither,
+      taskEitherExtend(query =>
+        subscribeToUpdates({
+          indexingService,
+          subscriptionRepository,
+          searchState: {
+            searchQuery: query.searchQuery,
+            facetFilters: query.facetFilters
+          },
+          email: query.email
+        })
+      ),
+      TaskEither.fold(
+        e => {
+          reportingService.reportError(e.toError());
+          response.status(500).send(e.reason);
+          return Task.of(undefined);
         },
-        email: query.email
-      })
-    ),
-    TaskEither.fold(
-      e => {
-        reportingService.reportError(e.toError());
-        response.status(500).send(e.reason);
-        return Task.of(undefined);
-      },
-      () => {
-        response.sendStatus(204);
-        return Task.of(undefined);
-      }
-    )
-  )();
+        () => {
+          response.sendStatus(204);
+          return Task.of(undefined);
+        }
+      )
+    )();
 
 const parseQueryString = ({ query }: functions.https.Request) =>
   Either.tryCatch(
@@ -86,7 +86,7 @@ const parseQueryString = ({ query }: functions.https.Request) =>
         ),
         hasResultsPublications: decod.at(
           "has_results_publications",
-          decod.attempt(decod.boolean, false)
+          decodeHasResultsPublications
         )
       })(query)
     }),
@@ -101,3 +101,14 @@ const decodeEmailAddress = (email: unknown) =>
 
 const decodeSearchQuery = (searchQuery: unknown) =>
   Option.fromNullable(decod.optional(decod.string)(searchQuery));
+
+const decodeHasResultsPublications = (hasResultsPublicationsQuery: unknown) => {
+  switch (hasResultsPublicationsQuery) {
+    case 'true':
+      return true
+    case 'false':
+      return false;
+    default:
+      return null;
+  }
+}

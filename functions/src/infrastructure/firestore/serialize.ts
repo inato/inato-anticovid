@@ -9,7 +9,7 @@ export const serializeSearch = ({ searchQuery, facetFilters }: Search) => ({
   surrogate_outcomes_extracted: facetFilters.surrogateOutcomesExtracted,
   study_types: facetFilters.studyTypes,
   countries: facetFilters.countries,
-  has_results_publications: facetFilters.hasResultsPublications
+  has_results_publications: facetFilters.hasResultsPublications,
 });
 
 export const serialize = (subscription: Subscription) => ({
