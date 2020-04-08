@@ -210,10 +210,8 @@ export const UpdateAlertsModal = ({
     setSubscriptionState("loading");
     const queryString = {
       email,
-      facetFilters: {
-        ...searchState.toggle,
-        ...searchState.refinementList
-      }
+      ...searchState.toggle,
+      ...searchState.refinementList
     };
     const result = await fetch(
       `${config.baseApiUrl}/subscribeToUpdates?${qs.stringify(queryString)}`
