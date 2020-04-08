@@ -26,33 +26,33 @@ export const subscribeToUpdatesHandler = ({
   request: functions.https.Request,
   response: functions.Response<any>
 ) =>
-    pipe(
-      request,
-      parseQueryString,
-      TaskEither.fromEither,
-      taskEitherExtend(query =>
-        subscribeToUpdates({
-          indexingService,
-          subscriptionRepository,
-          searchState: {
-            searchQuery: query.searchQuery,
-            facetFilters: query.facetFilters
-          },
-          email: query.email
-        })
-      ),
-      TaskEither.fold(
-        e => {
-          reportingService.reportError(e.toError());
-          response.status(500).send(e.reason);
-          return Task.of(undefined);
+  pipe(
+    request,
+    parseQueryString,
+    TaskEither.fromEither,
+    taskEitherExtend(query =>
+      subscribeToUpdates({
+        indexingService,
+        subscriptionRepository,
+        searchState: {
+          searchQuery: query.searchQuery,
+          facetFilters: query.facetFilters
         },
-        () => {
-          response.sendStatus(204);
-          return Task.of(undefined);
-        }
-      )
-    )();
+        email: query.email
+      })
+    ),
+    TaskEither.fold(
+      e => {
+        reportingService.reportError(e.toError());
+        response.status(500).send(e.reason);
+        return Task.of(undefined);
+      },
+      () => {
+        response.sendStatus(204);
+        return Task.of(undefined);
+      }
+    )
+  )();
 
 const parseQueryString = ({ query }: functions.https.Request) =>
   Either.tryCatch(
@@ -62,28 +62,22 @@ const parseQueryString = ({ query }: functions.https.Request) =>
       facetFilters: decod.props({
         recruitmentStatus: decod.at(
           "recruitment_status",
-          decod.attempt(decod.array(decod.string), [])
+          decodeOptionalArrayOfString
         ),
         therapeuticClasses: decod.at(
           "therapeutic_classes",
-          decod.attempt(decod.array(decod.string), [])
+          decodeOptionalArrayOfString
         ),
         clinicalOutcomesExtracted: decod.at(
           "clinical_outcome_extracted_",
-          decod.attempt(decod.array(decod.string), [])
+          decodeOptionalArrayOfString
         ),
         surrogateOutcomesExtracted: decod.at(
           "surrogate_outcome_extracted_",
-          decod.attempt(decod.array(decod.string), [])
+          decodeOptionalArrayOfString
         ),
-        studyTypes: decod.at(
-          "study_type",
-          decod.attempt(decod.array(decod.string), [])
-        ),
-        countries: decod.at(
-          "countries",
-          decod.attempt(decod.array(decod.string), [])
-        ),
+        studyTypes: decod.at("study_type", decodeOptionalArrayOfString),
+        countries: decod.at("countries", decodeOptionalArrayOfString),
         hasResultsPublications: decod.at(
           "has_results_publications",
           decodeHasResultsPublications
@@ -96,6 +90,9 @@ const parseQueryString = ({ query }: functions.https.Request) =>
       )
   );
 
+const decodeOptionalArrayOfString = (array: unknown) =>
+  decod.optional(decod.array(decod.string))(array) || [];
+
 const decodeEmailAddress = (email: unknown) =>
   EmailAddress.unsafe_parse(decod.string(email));
 
@@ -104,11 +101,11 @@ const decodeSearchQuery = (searchQuery: unknown) =>
 
 const decodeHasResultsPublications = (hasResultsPublicationsQuery: unknown) => {
   switch (hasResultsPublicationsQuery) {
-    case 'true':
-      return true
-    case 'false':
+    case "true":
+      return true;
+    case "false":
       return false;
     default:
       return null;
   }
-}
+};
