@@ -42,6 +42,7 @@ interface Services {
   loggingService: LoggingService;
   reportingService: ReportingService;
   timeService: TimeService;
+  config: any;
 }
 
 const { firestore } = setupFirebase({
@@ -104,7 +105,8 @@ const feedServices = <Ret, Argument1, Argument2>(
         ),
       indexingService: () => new AlgoliaIndexingService(algoliaIndex),
       loggingService: () => loggingService,
-      reportingService: () => reportingService
+      reportingService: () => reportingService,
+      config: () => functions.config()
     }) as any
   );
 
@@ -169,7 +171,7 @@ export const subscribeToUpdates = functions.https.onRequest(
 
 export const unsubscribeFromUpdates = functions.https.onRequest(
   feedServices(
-    ["subscriptionRepository", "reportingService"],
+    ["subscriptionRepository", "reportingService", "config"],
     unsubscribeFromUpdatesHandler
   )
 );

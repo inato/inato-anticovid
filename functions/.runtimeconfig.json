@@ -18,5 +18,8 @@
   "sentry": {
     "dsn": "",
     "environment": "dev"
+  },
+  "app": {
+    "unsubscribedredirecturl": "http://localhost:3000/search?unsubscribedFromAlerts=true"
   }
 }
