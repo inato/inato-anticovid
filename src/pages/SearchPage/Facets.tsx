@@ -253,7 +253,9 @@ const LeftPanel = styled.div<FilteringProps>`
   }
 `;
 
-const OpenSubscriptionModalButton = styled(OutlineButton)``;
+const OpenSubscriptionModalButton = styled(OutlineButton)`
+  background-color: white;
+`;
 
 const Header = styled.div`
   color: ${colors.Primary};
