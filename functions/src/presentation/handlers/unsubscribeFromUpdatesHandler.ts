@@ -11,10 +11,12 @@ import { taskEitherExtend } from "../../domain/utils/taskEither";
 
 export const unsubscribeFromUpdatesHandler = ({
   subscriptionRepository,
-  reportingService
+  reportingService,
+  config
 }: {
   subscriptionRepository: SubscriptionRepository;
   reportingService: ReportingService;
+  config: any;
 }) => (request: functions.https.Request, response: functions.Response<any>) =>
   pipe(
     pipe(parseSubscriptionIdFromRequest(request), TaskEither.fromEither),
@@ -28,7 +30,7 @@ export const unsubscribeFromUpdatesHandler = ({
         return Task.of(undefined);
       },
       () => {
-        response.send(`Successfully unsubscribed from updates`);
+        response.redirect(config.app.unsubscribedredirecturl);
         return Task.of(undefined);
       }
     )
