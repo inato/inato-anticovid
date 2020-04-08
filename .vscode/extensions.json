@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "andys8.jest-snippets",
+    "dbaeumer.vscode-eslint",
+    "drknoxy.eslint-disable-snippets",
+    "esbenp.prettier-vscode",
+    "ionutvmi.path-autocomplete",
+    "jpoissonnier.vscode-styled-components",
+    "naumovs.color-highlight",
+    "stylelint.vscode-stylelint",
+    "tyriar.sort-lines",
+    "will-stone.plastic",
+    "wmaurer.change-case",
+    "xabikos.javascriptsnippets"
+  ]
+}

@@ -1,7 +1,7 @@
-import { TimeService } from "./TimeService";
+import { TimeService } from './TimeService';
 
 export const timeServiceFactory = ({
-  currentDate = new Date()
+  currentDate = new Date(),
 }: Partial<TimeService> = {}) => ({
-  currentDate
+  currentDate,
 });

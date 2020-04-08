@@ -1,20 +1,21 @@
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+import { subDays, isBefore } from 'date-fns';
+
 import {
   SubscriptionRepository,
   SubscriptionId,
-  Subscription
-} from "../../domain";
-import { pipe } from "fp-ts/lib/pipeable";
-import { taskEitherExtend } from "../../domain/utils/taskEither";
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import { aggregateNotFoundError, genericError } from "../../domain/errors";
+  Subscription,
+} from '../../domain';
+import { taskEitherExtend } from '../../domain/utils/taskEither';
+import { aggregateNotFoundError, genericError } from '../../domain/errors';
 import {
   IndexingService,
   SearchResult,
   EmailService,
   LoggingService,
-  TimeService
-} from "../services";
-import { subDays, isBefore } from "date-fns";
+  TimeService,
+} from '../services';
 
 export const sendEmail = ({
   subscriptionRepository,
@@ -22,7 +23,7 @@ export const sendEmail = ({
   emailService,
   loggingService,
   timeService,
-  subscriptionId
+  subscriptionId,
 }: {
   subscriptionRepository: SubscriptionRepository;
   indexingService: IndexingService;
@@ -35,14 +36,14 @@ export const sendEmail = ({
     findSubscriptionIfEmailNotSentForToday({
       subscriptionId,
       subscriptionRepository,
-      timeService
+      timeService,
     }),
     taskEitherExtend(subscription =>
       pipe(
         findNewTrials({ subscription, indexingService }),
         taskEitherExtend(newTrials => {
           loggingService.log(
-            `Found ${newTrials.length} new trials for subscription ${subscription.id}`
+            `Found ${newTrials.length} new trials for subscription ${subscription.id}`,
           );
           return newTrials.length > 0
             ? sendEmailAndUpdateSubscription({
@@ -50,12 +51,12 @@ export const sendEmail = ({
                 newTrials,
                 subscriptionRepository,
                 emailService,
-                timeService
+                timeService,
               })
             : TaskEither.right(undefined);
-        })
-      )
-    )
+        }),
+      ),
+    ),
   );
 
 const sendEmailAndUpdateSubscription = ({
@@ -63,7 +64,7 @@ const sendEmailAndUpdateSubscription = ({
   newTrials,
   subscriptionRepository,
   emailService,
-  timeService
+  timeService,
 }: {
   subscription: Subscription;
   newTrials: ReadonlyArray<SearchResult>;
@@ -74,22 +75,22 @@ const sendEmailAndUpdateSubscription = ({
   pipe(
     emailService.sendNewResultsForSubscription({
       subscription,
-      newResults: newTrials
+      newResults: newTrials,
     }),
     taskEitherExtend(() =>
       subscriptionRepository.store(
         subscription.buildWithNewSearchResultsAndEmailSentDate({
           searchResults: newTrials.map(({ trialId }) => trialId),
-          lastEmailSentDate: timeService.currentDate
-        })
-      )
-    )
+          lastEmailSentDate: timeService.currentDate,
+        }),
+      ),
+    ),
   );
 
 const findSubscriptionIfEmailNotSentForToday = ({
   subscriptionId,
   subscriptionRepository,
-  timeService
+  timeService,
 }: {
   subscriptionId: SubscriptionId;
   subscriptionRepository: SubscriptionRepository;
@@ -101,30 +102,30 @@ const findSubscriptionIfEmailNotSentForToday = ({
       pipe(
         subscriptionOption,
         TaskEither.fromOption(() =>
-          aggregateNotFoundError("Subscription not found")
+          aggregateNotFoundError('Subscription not found'),
         ),
         taskEitherExtend(subscription => {
           if (
             isBefore(
               subscription.lastEmailSentDate,
-              subDays(timeService.currentDate, 1)
+              subDays(timeService.currentDate, 1),
             )
           ) {
             return TaskEither.right(subscription);
           }
           return TaskEither.left(
             duplicateError(
-              `Mail has already been sent today for subscription ${subscription.id}`
-            )
+              `Mail has already been sent today for subscription ${subscription.id}`,
+            ),
           );
-        })
-      )
-    )
+        }),
+      ),
+    ),
   );
 
 const findNewTrials = ({
   subscription,
-  indexingService
+  indexingService,
 }: {
   subscription: Subscription;
   indexingService: IndexingService;
@@ -133,13 +134,13 @@ const findNewTrials = ({
     indexingService.searchTrials(subscription.search),
     TaskEither.map(results =>
       results.filter(
-        result => !subscription.searchResults.includes(result.trialId)
-      )
-    )
+        result => !subscription.searchResults.includes(result.trialId),
+      ),
+    ),
   );
 
 export enum SendEmailError {
-  Duplicate = "SEND_EMAIL_DUPLICATE_ERROR"
+  Duplicate = 'SEND_EMAIL_DUPLICATE_ERROR',
 }
 
 export const duplicateError = (reason: string) =>

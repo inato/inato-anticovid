@@ -1,19 +1,20 @@
-import { pipe } from "fp-ts/lib/pipeable";
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import { IndexingService } from "../services";
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+
+import { IndexingService } from '../services';
 import {
   EmailAddress,
   Subscription,
   SubscriptionRepository,
-  Search
-} from "../../domain";
-import { taskEitherExtend } from "../../domain/utils/taskEither";
+  Search,
+} from '../../domain';
+import { taskEitherExtend } from '../../domain/utils/taskEither';
 
 export const subscribeToUpdates = ({
   indexingService,
   subscriptionRepository,
   searchState,
-  email
+  email,
 }: {
   indexingService: IndexingService;
   subscriptionRepository: SubscriptionRepository;
@@ -28,8 +29,8 @@ export const subscribeToUpdates = ({
         Subscription.build({
           email,
           search: searchState,
-          searchResults: trialIds
-        })
-      )
-    )
+          searchResults: trialIds,
+        }),
+      ),
+    ),
   );

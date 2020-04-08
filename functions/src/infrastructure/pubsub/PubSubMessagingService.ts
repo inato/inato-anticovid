@@ -1,36 +1,38 @@
-import * as TaskEither from "fp-ts/lib/TaskEither";
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+import { pipe } from 'fp-ts/lib/pipeable';
+import { PubSub } from '@google-cloud/pubsub';
 
 import {
   MessagingService,
-  SubscriptionEmailMessagePayload
-} from "../../application";
+  SubscriptionEmailMessagePayload,
+} from '../../application';
 import {
   GenericErrorType,
   GenericError,
-  unknownError
-} from "../../domain/errors";
-import { pipe } from "fp-ts/lib/pipeable";
-import { PubSub } from "@google-cloud/pubsub";
+  unknownError,
+} from '../../domain/errors';
 
 // Creates a client
 
-export const SUBSCRIPTION_EMAIL_TOPIC = "subscription_email";
+export const SUBSCRIPTION_EMAIL_TOPIC = 'subscription_email';
 
 export class PubSubMessageService implements MessagingService {
   pubsub: PubSub = new PubSub();
 
   sendSubscriptionEmailMessage(
-    payload: SubscriptionEmailMessagePayload
+    payload: SubscriptionEmailMessagePayload,
   ): TaskEither.TaskEither<GenericError<GenericErrorType.UnknownError>, void> {
     return pipe(
       TaskEither.tryCatch(
         () => this.pubsub.topic(SUBSCRIPTION_EMAIL_TOPIC).publishJSON(payload),
         e =>
           unknownError(
-            e instanceof Error ? e.message : "Unknown publishing to topic error"
-          )
+            e instanceof Error
+              ? e.message
+              : 'Unknown publishing to topic error',
+          ),
       ),
-      TaskEither.map(() => undefined)
+      TaskEither.map(() => undefined),
     );
   }
 }

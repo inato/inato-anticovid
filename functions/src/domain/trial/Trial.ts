@@ -1,4 +1,4 @@
-import { TrialId } from "./TrialId";
+import { TrialId } from './TrialId';
 
 export interface TrialConstructorArgs {
   trialId: TrialId;
@@ -25,24 +25,40 @@ export interface TrialConstructorArgs {
 
 export class Trial {
   public readonly trialId: TrialId;
+
   public readonly publicTitle: string;
+
   public readonly webAddress: string;
+
   public readonly recruitmentStatus: string | null;
+
   public readonly therapeuticClasses: Array<string>;
+
   public readonly registrationDate: Date;
+
   public readonly exclusionCriteria: string | null;
+
   public readonly inclusionCriteria: string | null;
+
   public readonly hasResultsPublications: boolean;
+
   public readonly acronym: string | null;
+
   public readonly totalRecruitmentSize: number;
+
   public readonly countries: Array<string>;
+
   public readonly clinicalOutcomes: Array<string>;
+
   public readonly surrogateOutcomes: Array<string>;
+
   public readonly resultsPublications: Array<{
     title: string | null;
     url: string;
   }>;
+
   public readonly studyType: string;
+
   public readonly rest: any;
 
   constructor({
@@ -62,7 +78,7 @@ export class Trial {
     surrogateOutcomes,
     resultsPublications,
     studyType,
-    rest
+    rest,
   }: TrialConstructorArgs) {
     this.trialId = trialId;
     this.publicTitle = publicTitle;

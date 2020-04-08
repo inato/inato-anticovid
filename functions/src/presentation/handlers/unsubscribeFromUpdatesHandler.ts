@@ -1,18 +1,19 @@
-import * as functions from "firebase-functions";
-import { unsubscribeFromUpdates, ReportingService } from "../../application";
-import { pipe } from "fp-ts/lib/pipeable";
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import * as Either from "fp-ts/lib/Either";
-import * as Task from "fp-ts/lib/Task";
-import * as decod from "decod";
-import { toSubscriptionId, SubscriptionRepository } from "../../domain";
-import { invalidInformationError } from "../../domain/errors";
-import { taskEitherExtend } from "../../domain/utils/taskEither";
+import * as functions from 'firebase-functions';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+import * as Either from 'fp-ts/lib/Either';
+import * as Task from 'fp-ts/lib/Task';
+import * as decod from 'decod';
+
+import { unsubscribeFromUpdates, ReportingService } from '../../application';
+import { toSubscriptionId, SubscriptionRepository } from '../../domain';
+import { invalidInformationError } from '../../domain/errors';
+import { taskEitherExtend } from '../../domain/utils/taskEither';
 
 export const unsubscribeFromUpdatesHandler = ({
   subscriptionRepository,
   reportingService,
-  config
+  config,
 }: {
   subscriptionRepository: SubscriptionRepository;
   reportingService: ReportingService;
@@ -21,7 +22,7 @@ export const unsubscribeFromUpdatesHandler = ({
   pipe(
     pipe(parseSubscriptionIdFromRequest(request), TaskEither.fromEither),
     taskEitherExtend(subscriptionId =>
-      unsubscribeFromUpdates({ subscriptionRepository, subscriptionId })
+      unsubscribeFromUpdates({ subscriptionRepository, subscriptionId }),
     ),
     TaskEither.fold(
       error => {
@@ -32,17 +33,17 @@ export const unsubscribeFromUpdatesHandler = ({
       () => {
         response.redirect(config.app.unsubscribedredirecturl);
         return Task.of(undefined);
-      }
-    )
+      },
+    ),
   )();
 
 const parseSubscriptionIdFromRequest = ({ query }: functions.https.Request) =>
   Either.tryCatch(
-    () => decod.at("subscriptionId", decodeSubscriptionId)(query),
+    () => decod.at('subscriptionId', decodeSubscriptionId)(query),
     e =>
       invalidInformationError(
-        e instanceof Error ? e.message : "Unknown decode error"
-      )
+        e instanceof Error ? e.message : 'Unknown decode error',
+      ),
   );
 
 const decodeSubscriptionId = (value: unknown) =>

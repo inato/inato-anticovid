@@ -1,6 +1,6 @@
-import * as functions from "firebase-functions";
+import * as functions from 'firebase-functions';
 
 export const requestFactory = ({
-  query = {}
+  query = {},
 }: Partial<{ query: { [key: string]: unknown } }> = {}) =>
   ({ query } as functions.https.Request);

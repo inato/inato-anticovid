@@ -1,1 +1,1 @@
-export * from "./sendEmailsScheduled";
+export * from './sendEmailsScheduled';

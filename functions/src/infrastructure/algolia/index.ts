@@ -1,3 +1,3 @@
-export * from "./serialize";
-export * from "./AlgoliaIndexingService";
-export * from "./setupAlgoliaIndex";
+export * from './serialize';
+export * from './AlgoliaIndexingService';
+export * from './setupAlgoliaIndex';

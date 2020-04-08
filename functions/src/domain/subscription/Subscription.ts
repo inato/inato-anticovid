@@ -1,10 +1,11 @@
-import { v4 as uuid } from "uuid";
-import { EmailAddress } from "../emailAddress";
-import { TrialId } from "../trial/TrialId";
-import { Opaque } from "../opaque";
-import { Search } from "../trial";
+import { v4 as uuid } from 'uuid';
 
-export type SubscriptionId = Opaque<"SubscriptionId", string>;
+import { EmailAddress } from '../emailAddress';
+import { TrialId } from '../trial/TrialId';
+import { Opaque } from '../opaque';
+import { Search } from '../trial';
+
+export type SubscriptionId = Opaque<'SubscriptionId', string>;
 
 export const toSubscriptionId = (id: string) => id as SubscriptionId;
 
@@ -18,9 +19,13 @@ export interface SubscriptionConstructorArgs {
 
 export class Subscription {
   id: SubscriptionId;
+
   email: EmailAddress;
+
   search: Search;
+
   searchResults: ReadonlyArray<TrialId>;
+
   lastEmailSentDate: Date;
 
   constructor({
@@ -28,7 +33,7 @@ export class Subscription {
     email,
     search,
     searchResults,
-    lastEmailSentDate
+    lastEmailSentDate,
   }: SubscriptionConstructorArgs) {
     this.id = id;
     this.email = email;
@@ -40,7 +45,7 @@ export class Subscription {
   static build({
     email,
     search,
-    searchResults
+    searchResults,
   }: {
     email: EmailAddress;
     search: Search;
@@ -51,13 +56,13 @@ export class Subscription {
       email,
       search,
       searchResults,
-      lastEmailSentDate: new Date()
+      lastEmailSentDate: new Date(),
     });
   }
 
   buildWithNewSearchResultsAndEmailSentDate({
     searchResults,
-    lastEmailSentDate
+    lastEmailSentDate,
   }: {
     searchResults: ReadonlyArray<TrialId>;
     lastEmailSentDate: Date;
@@ -67,7 +72,7 @@ export class Subscription {
       email: this.email,
       search: this.search,
       searchResults,
-      lastEmailSentDate
+      lastEmailSentDate,
     });
   }
 }
