@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { devices, linkCss, BookmarkIcon, NavigationOutIcon } from "../../ui";
+import { devices, linkCss, BookmarkIcon, NavigationOutIcon } from '../../ui';
 
-import { ClinicalTrialHitPublication } from "./ClinicalTrialHit";
+import { ClinicalTrialHitPublication } from './ClinicalTrialHit';
 
 const StyledNavigationOutIcon = styled(NavigationOutIcon)`
   visibility: hidden;
@@ -62,7 +62,7 @@ const EllipsisContent = styled.span`
 `;
 
 export const Publication = ({
-  publication
+  publication,
 }: {
   publication: ClinicalTrialHitPublication;
 }) => (

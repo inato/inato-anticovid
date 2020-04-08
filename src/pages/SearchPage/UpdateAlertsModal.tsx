@@ -1,10 +1,10 @@
-import React, { useState, useCallback, ChangeEvent, useMemo } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
-import qs from "qs";
-import { keyframes } from "styled-components";
+import React, { useState, useCallback, ChangeEvent, useMemo } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import qs from 'qs';
+import { keyframes } from 'styled-components';
 
-import { Modal } from "../../ui/Modal";
-import { styled } from "../../ui/styled";
+import { Modal } from '../../ui/Modal';
+import { styled } from '../../ui/styled';
 import {
   colors,
   EmailIcon,
@@ -12,9 +12,9 @@ import {
   CrossIcon,
   SpinnerIcon,
   fontSize,
-  lineHeight
-} from "../../ui";
-import config from "../../config";
+  lineHeight,
+} from '../../ui';
+import config from '../../config';
 
 const Bold = styled.strong`
   font-weight: ${props => props.theme.fontWeights.semiBold};
@@ -60,19 +60,19 @@ const InputContainer = styled.div`
 
 const getCrossIcon = () => {
   return `"data:image/svg+xml,${encodeURIComponent(
-    renderToStaticMarkup(<CrossIcon />)
+    renderToStaticMarkup(<CrossIcon />),
   )}"`;
 };
 
 const getCheckmarkIcon = () => {
   return `"data:image/svg+xml,${encodeURIComponent(
-    renderToStaticMarkup(<CheckmarkIcon />)
+    renderToStaticMarkup(<CheckmarkIcon />),
   )}"`;
 };
 
 const getSpinnerIcon = () => {
   return `"data:image/svg+xml,${encodeURIComponent(
-    renderToStaticMarkup(<SpinnerIcon />)
+    renderToStaticMarkup(<SpinnerIcon />),
   )}"`;
 };
 
@@ -104,7 +104,7 @@ const Loading = styled(({ className }: { className?: string }) => {
   position: relative;
 
   &:before {
-    content: " ";
+    content: ' ';
     background-image: url(${getSpinnerIcon()});
     display: block;
     width: 24px;
@@ -122,7 +122,7 @@ const Error = styled(({ className }: { className?: string }) => {
     <SubscriptionState className={className}>
       An error has occured. Please retry.
       <br />
-      If this occurs again, please contact{" "}
+      If this occurs again, please contact{' '}
       <a
         href="mailto:anticovid@inato.com"
         target="_blank"
@@ -173,7 +173,7 @@ const Tag = styled.span`
 
 export const UpdateAlertsModal = ({
   onRequestClose,
-  searchState
+  searchState,
 }: {
   onRequestClose: () => void;
   searchState: {
@@ -181,20 +181,20 @@ export const UpdateAlertsModal = ({
     toggle?: { [key: string]: string };
   };
 }) => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [subscriptionState, setSubscriptionState] = useState<
-    "loading" | "success" | "error" | undefined
+    'loading' | 'success' | 'error' | undefined
   >(undefined);
 
   const tags = useMemo(() => {
     return [
       searchState.toggle?.has_results_publications
-        ? "Has results publications"
+        ? 'Has results publications'
         : null,
       ...Object.values(searchState.refinementList ?? []).reduce(
         (acc, value) => [...acc, ...value],
-        []
-      )
+        [],
+      ),
     ].filter((value): value is string => !!value);
   }, [searchState]);
 
@@ -204,24 +204,24 @@ export const UpdateAlertsModal = ({
 
   const submitHandler = useCallback(async () => {
     if (!email) {
-      setSubscriptionState("error");
+      setSubscriptionState('error');
       return;
     }
-    setSubscriptionState("loading");
+    setSubscriptionState('loading');
     const queryString = {
       email,
       ...searchState.toggle,
-      ...searchState.refinementList
+      ...searchState.refinementList,
     };
     const result = await fetch(
-      `${config.baseApiUrl}/subscribeToUpdates?${qs.stringify(queryString)}`
+      `${config.baseApiUrl}/subscribeToUpdates?${qs.stringify(queryString)}`,
     );
 
     if (result.status === 204) {
-      setSubscriptionState("success");
+      setSubscriptionState('success');
       return;
     }
-    setSubscriptionState("error");
+    setSubscriptionState('error');
   }, [email, searchState.refinementList, searchState.toggle]);
 
   return (
@@ -231,17 +231,17 @@ export const UpdateAlertsModal = ({
       onRequestClose={onRequestClose}
       primaryAction={{
         label:
-          subscriptionState === "success" ? "Close" : "Subscribe to updates",
+          subscriptionState === 'success' ? 'Close' : 'Subscribe to updates',
         onClick:
-          subscriptionState === "success" ? onRequestClose : submitHandler,
-        disabled: subscriptionState === "loading"
+          subscriptionState === 'success' ? onRequestClose : submitHandler,
+        disabled: subscriptionState === 'loading',
       }}
       secondaryAction={
-        subscriptionState === "success"
+        subscriptionState === 'success'
           ? undefined
           : {
-              label: "Cancel",
-              onClick: onRequestClose
+              label: 'Cancel',
+              onClick: onRequestClose,
             }
       }
     >
@@ -272,9 +272,9 @@ export const UpdateAlertsModal = ({
           <SecondaryText>
             No spam, unsubscribe anytime, not shared with any third-party
           </SecondaryText>
-          {subscriptionState === "loading" && <Loading />}
-          {subscriptionState === "success" && <Success />}
-          {subscriptionState === "error" && <Error />}
+          {subscriptionState === 'loading' && <Loading />}
+          {subscriptionState === 'success' && <Success />}
+          {subscriptionState === 'error' && <Error />}
         </div>
       </Container>
     </Modal>

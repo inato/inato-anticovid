@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const PatientsIcon = ({ className }: { className?: string }) => {
   return (

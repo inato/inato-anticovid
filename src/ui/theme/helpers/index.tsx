@@ -1,1 +1,1 @@
-export * from "./getVariation";
+export * from './getVariation';

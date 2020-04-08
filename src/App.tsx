@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import ReactGA from "react-ga";
-import { Router, Switch, Route, Redirect, NavLink } from "react-router-dom";
-import { createBrowserHistory } from "history";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import ReactGA from 'react-ga';
+import { Router, Switch, Route, Redirect, NavLink } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
-import config from "./config";
-import { colors, devices } from "./ui";
-import { SearchPage } from "./pages/SearchPage";
-import logo from "./Logo.svg";
-import { AnalysisPage } from "./pages/AnalysisPage";
-import { MethodologyPage } from "./pages/MethodologyPage";
+import config from './config';
+import { colors, devices } from './ui';
+import { SearchPage } from './pages/SearchPage';
+import logo from './Logo.svg';
+import { AnalysisPage } from './pages/AnalysisPage';
+import { MethodologyPage } from './pages/MethodologyPage';
 
 const history = createBrowserHistory();
 
@@ -148,7 +148,7 @@ const HeaderLink = styled(NavLink)`
   &:after {
     opacity: 0;
     position: absolute;
-    content: "";
+    content: '';
     width: 0;
     height: 2px;
     background-color: ${colors.ButtonText};

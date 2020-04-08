@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { colors } from ".";
+import { colors } from '.';
 
 export const Disclaimer = () => (
   <Container data-cy="disclaimer">

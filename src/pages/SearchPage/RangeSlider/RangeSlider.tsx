@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
-import React, { useCallback, useState, useEffect } from "react";
-import { connectRange } from "react-instantsearch-dom";
-import styled from "styled-components";
-import Rheostat, { PublicState } from "rheostat";
-import { format } from "date-fns";
+import React, { useCallback, useState, useEffect } from 'react';
+import { connectRange } from 'react-instantsearch-dom';
+import styled from 'styled-components';
+import Rheostat, { PublicState } from 'rheostat';
+import { format } from 'date-fns';
 
-import { colors } from "../../../ui";
+import { colors } from '../../../ui';
 
 interface Refinement {
   min: number;
@@ -28,7 +28,7 @@ export const RangeSlider = connectRange(
       setRheostatState({
         min: min ?? currentRefinement.min,
         max: max ?? currentRefinement.max,
-        values: [currentRefinement.min, currentRefinement.max]
+        values: [currentRefinement.min, currentRefinement.max],
       });
     }, [setRheostatState, currentRefinement, min, max]);
 
@@ -38,12 +38,12 @@ export const RangeSlider = connectRange(
           refine({ min, max });
         }
       },
-      [refine]
+      [refine],
     );
 
     const onValuesUpdated = useCallback(
       (state: PublicState) => setRheostatState(state),
-      []
+      [],
     );
 
     return (
@@ -60,7 +60,7 @@ export const RangeSlider = connectRange(
         </div>
       </StyledRheostat>
     );
-  }
+  },
 );
 
 const StyledRheostat = styled(Rheostat)`
@@ -111,7 +111,7 @@ const StyledRheostat = styled(Rheostat)`
   }
 
   .rheostat-handle::before {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     top: -10px;
@@ -135,4 +135,4 @@ const StyledRheostat = styled(Rheostat)`
 `;
 
 const formatDate = (timestamp?: number) =>
-  timestamp ? format(new Date(timestamp), "MMM d, uu") : "";
+  timestamp ? format(new Date(timestamp), 'MMM d, uu') : '';

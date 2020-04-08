@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo } from "react";
-import algoliasearch from "algoliasearch";
-import { InstantSearch, SearchBox, Stats } from "react-instantsearch-dom";
-import { useHistory } from "react-router-dom";
-import styled from "styled-components";
-import qs from "qs";
+import React, { useCallback, useMemo } from 'react';
+import algoliasearch from 'algoliasearch';
+import { InstantSearch, SearchBox, Stats } from 'react-instantsearch-dom';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import qs from 'qs';
 
 import {
   colors,
@@ -14,22 +14,22 @@ import {
   SendUsFeedbackCard,
   Button,
   AlarmBellRingIcon,
-  SuccessAlert
-} from "../../ui";
-import config from "../../config";
-import { useBoolean } from "../../hooks";
-import { PoweredByAlgolia } from "../../ui/PoweredByAlgolia";
+  SuccessAlert,
+} from '../../ui';
+import config from '../../config';
+import { useBoolean } from '../../hooks';
+import { PoweredByAlgolia } from '../../ui/PoweredByAlgolia';
 
-import { Facets } from "./Facets";
-import { FilteringProps } from "./FilteringProps";
-import icon from "./Filter.svg";
-import { SearchSuggestions } from "./SearchSuggestions";
-import { SearchResults } from "./SearchResults";
-import { UpdateAlertsModal } from "./UpdateAlertsModal";
+import { Facets } from './Facets';
+import { FilteringProps } from './FilteringProps';
+import icon from './Filter.svg';
+import { SearchSuggestions } from './SearchSuggestions';
+import { SearchResults } from './SearchResults';
+import { UpdateAlertsModal } from './UpdateAlertsModal';
 
 const searchClient = algoliasearch(
   config.algolia.applicationId,
-  config.algolia.publicApiKey
+  config.algolia.publicApiKey,
 );
 
 const cleanNullValues = (obj: {
@@ -50,12 +50,12 @@ const createURL = (state: { [key: string]: unknown }) =>
   `?${qs.stringify(cleanNullValues(state))}`;
 
 export const searchStateToUrl = (
-  location: ReturnType<typeof useHistory>["location"],
-  searchState: { [key: string]: unknown }
-) => (searchState ? `${location.pathname}${createURL(searchState)}` : "");
+  location: ReturnType<typeof useHistory>['location'],
+  searchState: { [key: string]: unknown },
+) => (searchState ? `${location.pathname}${createURL(searchState)}` : '');
 
 const urlToSearchState = (
-  location: ReturnType<typeof useHistory>["location"]
+  location: ReturnType<typeof useHistory>['location'],
 ) => qs.parse(location.search.slice(1));
 
 const hasActiveSearchFilters = (searchState: {
@@ -77,7 +77,7 @@ const Layout = styled.div`
 
 const SearchContainer = styled.div<FilteringProps>`
   width: 100%; /* for IE11 */
-  display: ${({ filtering }) => (filtering ? "none" : undefined)};
+  display: ${({ filtering }) => (filtering ? 'none' : undefined)};
 `;
 
 const SearchTop = styled.div`
@@ -182,12 +182,12 @@ const FilterIcon = styled.img`
 export const SearchPage = () => {
   const history = useHistory();
   const searchState = useMemo(() => urlToSearchState(history.location), [
-    history.location
+    history.location,
   ]);
 
   const displayGetUpdateAlertsButton = useMemo(
     () => hasActiveSearchFilters(searchState),
-    [searchState]
+    [searchState],
   );
 
   const hasUnsubscribedFromAlerts = useMemo(() => {
@@ -198,22 +198,22 @@ export const SearchPage = () => {
     (searchState: { [key: string]: unknown }) => {
       history.replace(
         searchStateToUrl(history.location, searchState),
-        searchState as any
+        searchState as any,
       );
     },
-    [history]
+    [history],
   );
 
   const {
     isTrue: filtering,
     setToFalse: closeFiltering,
-    setToTrue: openFiltering
+    setToTrue: openFiltering,
   } = useBoolean(false);
 
   const {
     isTrue: isModalOpen,
     setToFalse: closeModal,
-    setToTrue: openModal
+    setToTrue: openModal,
   } = useBoolean(false);
 
   return (
@@ -240,7 +240,7 @@ export const SearchPage = () => {
             <SearchTop>
               <StyledSearchBox
                 translations={{
-                  placeholder: "Search by keyword, drug, NCTID, ..."
+                  placeholder: 'Search by keyword, drug, NCTID, ...',
                 }}
               />
               {displayGetUpdateAlertsButton && (
@@ -256,7 +256,7 @@ export const SearchPage = () => {
                 stats(nbHits) {
                   if (nbHits <= 1) return `${nbHits} trial found`;
                   return `${nbHits} trials found`;
-                }
+                },
               }}
             />
             <SearchResults />

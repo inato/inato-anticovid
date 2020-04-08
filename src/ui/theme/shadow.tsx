@@ -1,7 +1,7 @@
-import { colors } from "../colors";
+import { colors } from '../colors';
 
-import { spacings } from "./spacing";
+import { spacings } from './spacing';
 
 export const shadows = {
-  modal: `0 ${spacings.xs}px ${spacings.l}px ${colors.ModalShadow}`
+  modal: `0 ${spacings.xs}px ${spacings.l}px ${colors.ModalShadow}`,
 };

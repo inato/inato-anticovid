@@ -1,7 +1,7 @@
-import * as React from "react";
-import { keyframes, css } from "styled-components";
+import * as React from 'react';
+import { keyframes, css } from 'styled-components';
 
-import { colors } from "./colors";
+import { colors } from './colors';
 
 export interface CheckboxProps {
   id?: string;
