@@ -65,7 +65,6 @@ describe('deserialize', () => {
   it('should deserialize a firestore document to a Subscription', () => {
     const { simplifiedUseCase, id, date } = setupUseCase();
 
-
     expect(simplifiedUseCase()).toStrictEqual(Either.right(
       new Subscription({
         id: subscriptionIdFactory(id),
@@ -80,7 +79,11 @@ describe('deserialize', () => {
   })
 
   it('should deserialize a document that has results publications', () => {
-    const { id, date, simplifiedUseCase } = setupUseCase({ search: { has_results_publications: true } });
+    const {
+      simplifiedUseCase,
+      id,
+      date,
+    } = setupUseCase({ search: { has_results_publications: true } });
 
     expect(simplifiedUseCase()).toStrictEqual(Either.right(
       new Subscription({
