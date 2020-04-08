@@ -1,12 +1,12 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import config from "../config";
+import config from '../config';
 
-import { LinkButton } from "./Button";
-import { fontWeight } from "./texts";
-import { colors } from "./colors";
-import { devices } from "./media";
+import { LinkButton } from './Button';
+import { fontWeight } from './texts';
+import { colors } from './colors';
+import { devices } from './media';
 
 export const SendUsFeedbackCard = ({ className }: { className?: string }) => (
   <SendUsFeedbackCardContainer className={className} data-cy="feedback">

@@ -1,17 +1,17 @@
-import React from "react";
-import { renderToStaticMarkup } from "react-dom/server";
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
-import { useBoolean } from "../hooks";
+import { useBoolean } from '../hooks';
 
-import { colors } from "./colors";
-import { TextButton } from "./Button";
-import { fontSize, lineHeight } from "./texts";
-import { CheckmarkIcon } from "./icons";
-import { styled } from "./styled";
+import { colors } from './colors';
+import { TextButton } from './Button';
+import { fontSize, lineHeight } from './texts';
+import { CheckmarkIcon } from './icons';
+import { styled } from './styled';
 
 const getCheckmarkIcon = () => {
   return `"data:image/svg+xml,${encodeURIComponent(
-    renderToStaticMarkup(<CheckmarkIcon />)
+    renderToStaticMarkup(<CheckmarkIcon />),
   )}"`;
 };
 

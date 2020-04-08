@@ -1,16 +1,16 @@
-import React, { useEffect, useState, Fragment } from "react";
-import * as firebase from "firebase/app";
-import "firebase/firestore";
-import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState, Fragment } from 'react';
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
+import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
-import config from "../../config";
-import { colors } from "../../ui";
-import { InternalLink } from "../../ui/InternalLink";
+import config from '../../config';
+import { colors } from '../../ui';
+import { InternalLink } from '../../ui/InternalLink';
 
-import { searchStateToUrl } from "./SearchPage";
+import { searchStateToUrl } from './SearchPage';
 
-const searchSuggestionCollection = "suggestions";
+const searchSuggestionCollection = 'suggestions';
 
 export interface SearchSuggestion {
   name: string;
@@ -46,8 +46,8 @@ export const SearchSuggestions = () => {
       docs.forEach(suggestion =>
         suggestions.push({
           ...suggestion.data(),
-          name: suggestion.id
-        } as SearchSuggestion)
+          name: suggestion.id,
+        } as SearchSuggestion),
       );
       setSearchSuggestions(suggestions);
     };
@@ -63,12 +63,12 @@ export const SearchSuggestions = () => {
         <Fragment key={name}>
           <InternalLink
             to={searchStateToUrl(history.location, {
-              refinementList: searchSuggestion
+              refinementList: searchSuggestion,
             })}
           >
             {name}
           </InternalLink>
-          {index < searchSuggestions.length - 1 ? "," : null}{" "}
+          {index < searchSuggestions.length - 1 ? ',' : null}{' '}
         </Fragment>
       ))}
     </Container>

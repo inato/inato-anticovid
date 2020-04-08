@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   ThemeProvider as StyledComponentsThemeProvider,
-  ThemeContext
-} from "styled-components";
+  ThemeContext,
+} from 'styled-components';
 
-import { theme, Theme } from "../ui/theme";
+import { theme, Theme } from '../ui/theme';
 
 interface Props {
   children?: React.ReactNode;

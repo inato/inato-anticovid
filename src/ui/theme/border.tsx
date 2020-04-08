@@ -1,5 +1,5 @@
-import { spacings } from "./spacing";
+import { spacings } from './spacing';
 
 export const borderRadiuses = {
-  regular: `${spacings.xs}px`
+  regular: `${spacings.xs}px`,
 };

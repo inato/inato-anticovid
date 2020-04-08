@@ -1,1 +1,1 @@
-export * from "./MethodologyPage";
+export * from './MethodologyPage';

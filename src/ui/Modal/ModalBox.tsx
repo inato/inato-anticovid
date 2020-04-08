@@ -1,23 +1,23 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef } from 'react';
 
-import { Button, TextButton } from "../Button";
-import { Theme } from "../theme";
-import { styled } from "../styled";
-import { getVariation } from "../theme/helpers";
-import { H1, H3 } from "../typography";
-import { CloseIcon } from "../icons";
-import { useOnOutsideClick } from "../../hooks";
+import { Button, TextButton } from '../Button';
+import { Theme } from '../theme';
+import { styled } from '../styled';
+import { getVariation } from '../theme/helpers';
+import { H1, H3 } from '../typography';
+import { CloseIcon } from '../icons';
+import { useOnOutsideClick } from '../../hooks';
 
-export type ModalSize = "large" | "medium" | "small" | "default";
+export type ModalSize = 'large' | 'medium' | 'small' | 'default';
 
 const widthOfModalSize = (props: { theme: Theme; size?: ModalSize }) => {
-  if (props.size === "large") {
+  if (props.size === 'large') {
     return props.theme.widths.modalLarge;
   }
-  if (props.size === "medium") {
+  if (props.size === 'medium') {
     return props.theme.widths.modalMedium;
   }
-  if (props.size === "small") {
+  if (props.size === 'small') {
     return props.theme.widths.modalSmall;
   }
   return props.theme.widths.modal;
@@ -27,7 +27,7 @@ const mobileFooterWithTwoButtonsHeight = 48;
 
 const ModalBody = styled.div<{ scrollable?: boolean }>`
   @media (${props => props.theme.breakpoints.tabletAndLarger}) {
-    overflow-y: ${props => (props.scrollable ? "auto" : "visible")};
+    overflow-y: ${props => (props.scrollable ? 'auto' : 'visible')};
     padding: ${props => props.theme.spacings.m}px;
   }
   @media (${props => props.theme.breakpoints.mobileAndSmaller}) {
@@ -68,7 +68,7 @@ const ModalActionButton = styled(
     children?: React.ReactNode;
     onClick?: any;
     disabled?: boolean;
-  }) => (secondary ? <TextButton {...props} /> : <Button {...props} />)
+  }) => (secondary ? <TextButton {...props} /> : <Button {...props} />),
 )`
   @media (${props => props.theme.breakpoints.tabletAndLarger}) {
     & + & {
@@ -106,7 +106,7 @@ const Container = styled.div<{ size?: ModalSize }>`
   @media (${props => props.theme.breakpoints.tabletAndLarger}) {
     max-height: 100%;
     max-width: 100%;
-    flex-basis: ${({ theme, size = "default" }) =>
+    flex-basis: ${({ theme, size = 'default' }) =>
       widthOfModalSize({ size, theme })}px;
     border-radius: ${props => props.theme.borderRadiuses.regular};
     overflow: visible;
@@ -123,7 +123,7 @@ const Container = styled.div<{ size?: ModalSize }>`
 const ResponsiveTitle = styled(
   ({
     children,
-    className
+    className,
   }: {
     children: React.ReactNode;
     className?: string;
@@ -132,7 +132,7 @@ const ResponsiveTitle = styled(
       <H1>{children}</H1>
       <H3>{children}</H3>
     </div>
-  )
+  ),
 )`
   ${H1} {
     display: inline-block;
@@ -179,7 +179,7 @@ export const ModalBox = ({
   className,
   size,
   onOutsideClick = () => ({}),
-  scrollable
+  scrollable,
 }: ModalProps) => {
   const ref = useRef<HTMLDivElement>(null);
 

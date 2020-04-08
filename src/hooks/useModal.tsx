@@ -2,13 +2,13 @@ import React, {
   createContext,
   useState,
   useLayoutEffect,
-  useContext
-} from "react";
+  useContext,
+} from 'react';
 
 export const ModalContext = createContext<HTMLDivElement | null>(null);
 
 export const ModalProvider = ({ children }: any) => {
-  const [value] = useState(() => document.createElement("div"));
+  const [value] = useState(() => document.createElement('div'));
   useLayoutEffect(() => {
     document.body.appendChild(value);
     return () => {
@@ -25,7 +25,7 @@ export const useModal = () => {
   const modalContext = useContext(ModalContext);
   if (!modalContext) {
     throw new Error(
-      "We did not found modal context, you probably forgot to use modal provider"
+      'We did not found modal context, you probably forgot to use modal provider',
     );
   }
   return modalContext;

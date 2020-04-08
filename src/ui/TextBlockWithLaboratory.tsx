@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { colors, devices, LaboratoryIcon, Accordion } from ".";
+import { colors, devices, LaboratoryIcon, Accordion } from '.';
 
 export const TextBlockWithLaboratory = ({
   children,
-  dataCy
+  dataCy,
 }: {
   children: React.ReactNode;
   dataCy?: string;

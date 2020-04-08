@@ -1,6 +1,6 @@
-import React from "react";
-import { RefinementList } from "react-instantsearch-dom";
-import styled from "styled-components";
+import React from 'react';
+import { RefinementList } from 'react-instantsearch-dom';
+import styled from 'styled-components';
 
 import {
   colors,
@@ -10,20 +10,20 @@ import {
   SubscribeButton,
   CheckboxMixin,
   ToggleRefinementWithCount,
-  OutlineButton
-} from "../../ui";
-import { PoweredByAlgolia } from "../../ui/PoweredByAlgolia";
+  OutlineButton,
+} from '../../ui';
+import { PoweredByAlgolia } from '../../ui/PoweredByAlgolia';
 
-import { ResetFilters } from "./ResetFilters";
-import { FilteringProps } from "./FilteringProps";
-import { FilterTrialsButton } from "./FilterTrialsButton";
-import { RangeSlider } from "./RangeSlider";
+import { ResetFilters } from './ResetFilters';
+import { FilteringProps } from './FilteringProps';
+import { FilterTrialsButton } from './FilterTrialsButton';
+import { RangeSlider } from './RangeSlider';
 
 export const Facets = ({
   filtering,
   closeFiltering,
   openSubscriptionModal,
-  hasActiveSearchFilters
+  hasActiveSearchFilters,
 }: {
   filtering: boolean;
   closeFiltering: () => void;
@@ -87,7 +87,7 @@ const Facet = ({
   attribute,
   title,
   searchable = false,
-  showMore = false
+  showMore = false,
 }: {
   attribute: string;
   title: string;
@@ -218,7 +218,7 @@ const DesktopPoweredByAlgolia = styled(PoweredByAlgolia)`
 const LeftPanel = styled.div<FilteringProps>`
   align-self: flex-start;
 
-  display: ${({ filtering }) => (filtering ? "block" : "none")};
+  display: ${({ filtering }) => (filtering ? 'block' : 'none')};
   position: absolute;
   top: 0;
   left: 0;
