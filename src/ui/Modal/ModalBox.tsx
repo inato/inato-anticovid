@@ -95,17 +95,12 @@ const ModalFooter = styled.footer`
   }
 
   @media (${props => props.theme.breakpoints.mobileAndSmaller}) {
-    justify-content: space-between;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     padding: ${props => props.theme.spacings.m}px;
     background-color: ${props => props.theme.colors.white};
-  }
-
-  ${ModalActionButton}:last-child {
-    margin-left: auto;
   }
 `;
 
