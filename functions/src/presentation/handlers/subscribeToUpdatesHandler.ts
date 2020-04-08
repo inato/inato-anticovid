@@ -1,30 +1,31 @@
-import * as functions from "firebase-functions";
-import { pipe } from "fp-ts/lib/pipeable";
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import * as Either from "fp-ts/lib/Either";
-import * as Task from "fp-ts/lib/Task";
-import * as decod from "decod";
-import { SubscriptionRepository, EmailAddress } from "../../domain";
+import * as functions from 'firebase-functions';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+import * as Either from 'fp-ts/lib/Either';
+import * as Task from 'fp-ts/lib/Task';
+import * as decod from 'decod';
+import * as Option from 'fp-ts/lib/Option';
+
+import { SubscriptionRepository, EmailAddress } from '../../domain';
 import {
   IndexingService,
   subscribeToUpdates,
-  ReportingService
-} from "../../application";
-import * as Option from "fp-ts/lib/Option";
-import { invalidInformationError } from "../../domain/errors";
-import { taskEitherExtend } from "../../domain/utils/taskEither";
+  ReportingService,
+} from '../../application';
+import { invalidInformationError } from '../../domain/errors';
+import { taskEitherExtend } from '../../domain/utils/taskEither';
 
 export const subscribeToUpdatesHandler = ({
   subscriptionRepository,
   indexingService,
-  reportingService
+  reportingService,
 }: {
   subscriptionRepository: SubscriptionRepository;
   indexingService: IndexingService;
   reportingService: ReportingService;
 }) => async (
   request: functions.https.Request,
-  response: functions.Response<any>
+  response: functions.Response<any>,
 ) =>
   pipe(
     request,
@@ -36,10 +37,10 @@ export const subscribeToUpdatesHandler = ({
         subscriptionRepository,
         searchState: {
           searchQuery: query.searchQuery,
-          facetFilters: query.facetFilters
+          facetFilters: query.facetFilters,
         },
-        email: query.email
-      })
+        email: query.email,
+      }),
     ),
     TaskEither.fold(
       e => {
@@ -50,60 +51,60 @@ export const subscribeToUpdatesHandler = ({
       () => {
         response.sendStatus(204);
         return Task.of(undefined);
-      }
-    )
+      },
+    ),
   )();
 
 const parseQueryString = ({ query }: functions.https.Request) =>
   Either.tryCatch(
     () => ({
-      email: decod.at("email", decodeEmailAddress)(query),
-      searchQuery: decod.at("searchQuery", decodeSearchQuery)(query),
+      email: decod.at('email', decodeEmailAddress)(query),
+      searchQuery: decod.at('searchQuery', decodeSearchQuery)(query),
       facetFilters: decod.props({
         recruitmentStatus: decod.at(
-          "recruitment_status",
-          decodeOptionalArrayOfString
+          'recruitment_status',
+          decodeOptionalArrayOfString,
         ),
         therapeuticClasses: decod.at(
-          "therapeutic_classes",
-          decodeOptionalArrayOfString
+          'therapeutic_classes',
+          decodeOptionalArrayOfString,
         ),
         clinicalOutcomesExtracted: decod.at(
-          "clinical_outcome_extracted_",
-          decodeOptionalArrayOfString
+          'clinical_outcome_extracted_',
+          decodeOptionalArrayOfString,
         ),
         surrogateOutcomesExtracted: decod.at(
-          "surrogate_outcome_extracted_",
-          decodeOptionalArrayOfString
+          'surrogate_outcome_extracted_',
+          decodeOptionalArrayOfString,
         ),
-        studyTypes: decod.at("study_type", decodeOptionalArrayOfString),
-        countries: decod.at("countries", decodeOptionalArrayOfString),
+        studyTypes: decod.at('study_type', decodeOptionalArrayOfString),
+        countries: decod.at('countries', decodeOptionalArrayOfString),
         hasResultsPublications: decod.at(
-          "has_results_publications",
-          decodeHasResultsPublications
-        )
-      })(query)
+          'has_results_publications',
+          decodeHasResultsPublications,
+        ),
+      })(query),
     }),
     e =>
       invalidInformationError(
-        e instanceof Error ? e.message : "Invalid query error"
-      )
+        e instanceof Error ? e.message : 'Invalid query error',
+      ),
   );
 
 const decodeOptionalArrayOfString = (array: unknown) =>
   decod.optional(decod.array(decod.string))(array) || [];
 
 const decodeEmailAddress = (email: unknown) =>
-  EmailAddress.unsafe_parse(decod.string(email));
+  EmailAddress.unsafeParse(decod.string(email));
 
 const decodeSearchQuery = (searchQuery: unknown) =>
   Option.fromNullable(decod.optional(decod.string)(searchQuery));
 
 const decodeHasResultsPublications = (hasResultsPublicationsQuery: unknown) => {
   switch (hasResultsPublicationsQuery) {
-    case "true":
+    case 'true':
       return true;
-    case "false":
+    case 'false':
       return false;
     default:
       return null;

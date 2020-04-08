@@ -1,5 +1,5 @@
-import * as functions from "firebase-functions";
-import * as cors from "cors";
+import * as functions from 'firebase-functions';
+import cors from 'cors';
 
 import {
   setAlgoliaSettingsHandler,
@@ -7,8 +7,8 @@ import {
   subscribeToUpdatesHandler,
   unsubscribeFromUpdatesHandler,
   sendEmailsScheduled,
-  sendEmailConsumer
-} from "./presentation";
+  sendEmailConsumer,
+} from './presentation';
 import {
   AlgoliaIndexingService,
   setupAlgoliaIndex,
@@ -21,17 +21,17 @@ import {
   PostmarkEmailService,
   ConsoleLoggingService,
   DateTimeService,
-  SentryReportingService
-} from "./infrastructure";
+  SentryReportingService,
+} from './infrastructure';
 import {
   IndexingService,
   MessagingService,
   EmailService,
   LoggingService,
   TimeService,
-  ReportingService
-} from "./application";
-import { TrialRepository, SubscriptionRepository } from "./domain";
+  ReportingService,
+} from './application';
+import { TrialRepository, SubscriptionRepository } from './domain';
 
 interface Services {
   indexingService: IndexingService;
@@ -46,7 +46,7 @@ interface Services {
 }
 
 const { firestore } = setupFirebase({
-  config: functions.config().firebase ?? undefined
+  config: functions.config().firebase ?? undefined,
 });
 
 const corsMiddleware = cors({ origin: true });
@@ -55,34 +55,38 @@ const feedServices = <Ret, Argument1, Argument2>(
   requiredServices: ReadonlyArray<keyof Services>,
   callback:
     | ((
-        services: Services
-      ) => (arg1: Argument1, ...rest: any[]) => Promise<Ret>)
+        services: Services,
+      ) => (arg1: Argument1, ...rest: Array<any>) => Promise<Ret>)
     | ((
-        services: Services
-      ) => (arg1: Argument1, arg2?: Argument2, ...rest: any[]) => Promise<Ret>)
+        services: Services,
+      ) => (
+        arg1: Argument1,
+        arg2?: Argument2,
+        ...rest: Array<any>
+      ) => Promise<Ret>),
 ) => async (
   arg1: Argument1,
   arg2?: Argument2,
-  ...rest: any[]
+  ...rest: Array<any>
 ): Promise<Ret | void> => {
   const loggingService = new ConsoleLoggingService();
   const reportingService = new SentryReportingService({
     dsn: functions.config().sentry.dsn,
-    environment: functions.config().sentry.environment
+    environment: functions.config().sentry.environment,
   });
 
   const algoliaIndex = setupAlgoliaIndex({
     apiKey: functions.config().algolia.apikey,
     indexName: functions.config().algolia.index,
     clientId: functions.config().algolia.clientid,
-    loggingService
+    loggingService,
   });
   const postgresClient = await setupPostgresClient({
     ip: functions.config().pg.ip,
     port: functions.config().pg.port,
     user: functions.config().pg.user,
     password: functions.config().pg.password,
-    db: functions.config().pg.db
+    db: functions.config().pg.db,
   });
 
   const availableServices: Map<keyof Services, any> = new Map<
@@ -93,7 +97,7 @@ const feedServices = <Ret, Argument1, Argument2>(
       timeService: () => new DateTimeService(),
       emailService: () =>
         new PostmarkEmailService({
-          apiToken: functions.config().postmark.apitoken
+          apiToken: functions.config().postmark.apitoken,
         }),
       messagingService: () => new PubSubMessageService(),
       subscriptionRepository: () =>
@@ -101,13 +105,13 @@ const feedServices = <Ret, Argument1, Argument2>(
       trialRepository: () =>
         new PostgresTrialRepository(
           postgresClient,
-          functions.config().pg.tablename
+          functions.config().pg.tablename,
         ),
       indexingService: () => new AlgoliaIndexingService(algoliaIndex),
       loggingService: () => loggingService,
       reportingService: () => reportingService,
-      config: () => functions.config()
-    }) as any
+      config: () => functions.config(),
+    }) as any,
   );
 
   const services = Array.from(availableServices.entries())
@@ -138,57 +142,57 @@ const feedServices = <Ret, Argument1, Argument2>(
 export const refreshAlgoliaTrialIndex = functions
   .runWith({
     timeoutSeconds: 500,
-    memory: "1GB"
+    memory: '1GB',
   })
   .https.onRequest(
     feedServices(
       [
-        "trialRepository",
-        "indexingService",
-        "loggingService",
-        "reportingService"
+        'trialRepository',
+        'indexingService',
+        'loggingService',
+        'reportingService',
       ],
-      refreshAlgoliaTrialIndexHandler
-    )
+      refreshAlgoliaTrialIndexHandler,
+    ),
   );
 
 export const setAlgoliaSettings = functions.https.onRequest(
   feedServices(
-    ["indexingService", "reportingService"],
-    setAlgoliaSettingsHandler
-  )
+    ['indexingService', 'reportingService'],
+    setAlgoliaSettingsHandler,
+  ),
 );
 
 export const subscribeToUpdates = functions.https.onRequest(
   feedServices(
-    ["subscriptionRepository", "indexingService", "reportingService"],
+    ['subscriptionRepository', 'indexingService', 'reportingService'],
     services => (req: functions.https.Request, res: functions.Response<any>) =>
       corsMiddleware(req, res, () =>
-        subscribeToUpdatesHandler(services)(req, res)
-      )
-  )
+        subscribeToUpdatesHandler(services)(req, res),
+      ),
+  ),
 );
 
 export const unsubscribeFromUpdates = functions.https.onRequest(
   feedServices(
-    ["subscriptionRepository", "reportingService", "config"],
-    unsubscribeFromUpdatesHandler
-  )
+    ['subscriptionRepository', 'reportingService', 'config'],
+    unsubscribeFromUpdatesHandler,
+  ),
 );
 
 export const sendEmailsScheduler = functions.pubsub
-  .schedule("every 60 minutes")
+  .schedule('every 60 minutes')
   .onRun(
     feedServices(
       [
-        "subscriptionRepository",
-        "messagingService",
-        "loggingService",
-        "timeService",
-        "reportingService"
+        'subscriptionRepository',
+        'messagingService',
+        'loggingService',
+        'timeService',
+        'reportingService',
       ],
-      sendEmailsScheduled
-    )
+      sendEmailsScheduled,
+    ),
   );
 
 export const sendEmailOnEvent = functions.pubsub
@@ -196,15 +200,15 @@ export const sendEmailOnEvent = functions.pubsub
   .onPublish(
     feedServices(
       [
-        "subscriptionRepository",
-        "indexingService",
-        "emailService",
-        "loggingService",
-        "timeService",
-        "reportingService"
+        'subscriptionRepository',
+        'indexingService',
+        'emailService',
+        'loggingService',
+        'timeService',
+        'reportingService',
       ],
-      sendEmailConsumer
-    )
+      sendEmailConsumer,
+    ),
   );
 
 /* Can be used locally to fetch the subscriptions */

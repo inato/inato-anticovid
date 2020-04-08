@@ -1,4 +1,4 @@
-import { EmailAddress } from "./EmailAddress";
+import { EmailAddress } from './EmailAddress';
 
-export const emailAddressFactory = (value = "email@domain.tld"): EmailAddress =>
-  EmailAddress.unsafe_parse(value);
+export const emailAddressFactory = (value = 'email@domain.tld'): EmailAddress =>
+  EmailAddress.unsafeParse(value);

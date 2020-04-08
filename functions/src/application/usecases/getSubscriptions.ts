@@ -1,6 +1,4 @@
-import {
-  SubscriptionRepository,
-} from "../../domain/subscription";
+import { SubscriptionRepository } from '../../domain/subscription';
 
 export const getSubscriptions = ({
   subscriptionRepository,

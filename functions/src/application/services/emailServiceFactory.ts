@@ -1,9 +1,9 @@
-import * as TaskEither from "fp-ts/lib/TaskEither";
+import * as TaskEither from 'fp-ts/lib/TaskEither';
 
-import { EmailService } from "./EmailService";
+import { EmailService } from './EmailService';
 
 export const emailServiceFactory = ({
-  sendNewResultsForSubscription = () => TaskEither.right(undefined)
+  sendNewResultsForSubscription = () => TaskEither.right(undefined),
 }: Partial<EmailService> = {}): EmailService => ({
-  sendNewResultsForSubscription
+  sendNewResultsForSubscription,
 });

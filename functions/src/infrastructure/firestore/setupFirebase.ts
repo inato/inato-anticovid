@@ -1,7 +1,7 @@
-import * as admin from "firebase-admin";
+import * as admin from 'firebase-admin';
 
 export const setupFirebase = ({
-  config
+  config,
 }: {
   config: admin.AppOptions | undefined;
 }) => {

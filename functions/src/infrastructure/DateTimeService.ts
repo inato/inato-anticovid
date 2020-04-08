@@ -1,4 +1,4 @@
-import { TimeService } from "../application";
+import { TimeService } from '../application';
 
 export class DateTimeService implements TimeService {
   get currentDate() {

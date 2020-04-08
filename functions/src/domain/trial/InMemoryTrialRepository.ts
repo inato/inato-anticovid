@@ -1,9 +1,10 @@
-import { Trial } from "./Trial";
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import { GenericError, GenericErrorType } from "../errors";
+import * as TaskEither from 'fp-ts/lib/TaskEither';
 
-import { TrialRepository } from "./TrialRepository";
-import { TrialId } from "./TrialId";
+import { GenericError, GenericErrorType } from '../errors';
+
+import { Trial } from './Trial';
+import { TrialRepository } from './TrialRepository';
+import { TrialId } from './TrialId';
 
 export class InMemoryTrialRepository implements TrialRepository {
   entities: Map<TrialId, Trial> = new Map();

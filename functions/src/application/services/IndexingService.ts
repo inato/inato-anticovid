@@ -1,7 +1,8 @@
-import { Trial, TrialId, FacetFilters, Facets } from "../../domain/trial";
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import { GenericErrorType, GenericError } from "../../domain/errors";
-import { Option } from "fp-ts/lib/Option";
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+import { Option } from 'fp-ts/lib/Option';
+
+import { Trial, TrialId, FacetFilters, Facets } from '../../domain/trial';
+import { GenericErrorType, GenericError } from '../../domain/errors';
 
 export interface SearchResult {
   trialId: TrialId;
@@ -11,7 +12,7 @@ export interface SearchResult {
 
 export interface IndexingService {
   indexTrials(
-    trials: ReadonlyArray<Trial>
+    trials: ReadonlyArray<Trial>,
   ): TaskEither.TaskEither<
     GenericError<GenericErrorType.UnknownError>,
     ReadonlyArray<string>
@@ -27,7 +28,7 @@ export interface IndexingService {
     }>;
     customRanking: ReadonlyArray<{
       name: string;
-      orderBy: "asc" | "desc";
+      orderBy: 'asc' | 'desc';
     }>;
   }): TaskEither.TaskEither<GenericError<GenericErrorType.UnknownError>, void>;
   searchTrials(attributes: {

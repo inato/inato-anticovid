@@ -1,6 +1,8 @@
-import { Trial } from "./Trial";
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import { GenericErrorType, GenericError } from "../errors";
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+
+import { GenericErrorType, GenericError } from '../errors';
+
+import { Trial } from './Trial';
 
 export interface TrialRepository {
   findAllTrials(): TaskEither.TaskEither<
