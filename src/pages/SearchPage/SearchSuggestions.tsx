@@ -59,14 +59,14 @@ export const SearchSuggestions = () => {
   return searchSuggestions.length > 0 ? (
     <Container>
       <SecondaryText>or try our suggestions: </SecondaryText>
-      {searchSuggestions.map((searchSuggestion, index) => (
-        <Fragment key={searchSuggestion.name}>
+      {searchSuggestions.map(({ name, ...searchSuggestion }, index) => (
+        <Fragment key={name}>
           <InternalLink
             to={searchStateToUrl(history.location, {
               refinementList: searchSuggestion
             })}
           >
-            {searchSuggestion.name}
+            {name}
           </InternalLink>
           {index < searchSuggestions.length - 1 ? "," : null}{" "}
         </Fragment>
