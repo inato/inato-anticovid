@@ -190,7 +190,7 @@ export const SearchPage = () => {
     [searchState]
   );
 
-  const hasUnsubscribedFromList = useMemo(() => {
+  const hasUnsubscribedFromAlerts = useMemo(() => {
     return !!searchState.unsubscribedFromAlerts;
   }, [searchState]);
 
@@ -232,7 +232,7 @@ export const SearchPage = () => {
             hasActiveSearchFilters={displayGetUpdateAlertsButton}
           />
           <SearchContainer filtering={filtering} data-cy="search/container">
-            {hasUnsubscribedFromList && (
+            {hasUnsubscribedFromAlerts && (
               <StyledSuccessAlert closable>
                 You have been successfully unsubscribed from this alert
               </StyledSuccessAlert>
