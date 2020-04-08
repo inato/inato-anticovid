@@ -16,7 +16,7 @@ export interface FacetFilters {
   surrogateOutcomesExtracted: Array<string>;
   studyTypes: Array<string>;
   countries: Array<string>;
-  hasResultsPublications?: boolean;
+  hasResultsPublications: boolean | null;
 }
 
 export const facetFiltersFactory = ({
@@ -26,7 +26,7 @@ export const facetFiltersFactory = ({
   surrogateOutcomesExtracted = [],
   studyTypes = [],
   countries = [],
-  hasResultsPublications = false
+  hasResultsPublications = null
 }: Partial<FacetFilters> = {}) => ({
   recruitmentStatus,
   therapeuticClasses,
