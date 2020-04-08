@@ -105,7 +105,7 @@ const ModalFooter = styled.footer`
   }
 
   ${ModalActionButton}:last-child {
-    justify-content: flex-end;
+    margin-left: auto;
   }
 `;
 

@@ -273,7 +273,7 @@ const Footer = styled.div`
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   left: 0;
   bottom: 0;
   padding: 16px;
