@@ -13,7 +13,8 @@ import {
   Disclaimer,
   SendUsFeedbackCard,
   Button,
-  AlarmBellRingIcon
+  AlarmBellRingIcon,
+  SuccessAlert
 } from "../../ui";
 import config from "../../config";
 import { useBoolean } from "../../hooks";
@@ -82,6 +83,10 @@ const SearchContainer = styled.div<FilteringProps>`
 const SearchTop = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const StyledSuccessAlert = styled(SuccessAlert)`
+  margin-bottom: 24px;
 `;
 
 const StyledSearchBox = styled(SearchBox)`
@@ -185,6 +190,10 @@ export const SearchPage = () => {
     [searchState]
   );
 
+  const hasUnsubscribedFromList = useMemo(() => {
+    return !!searchState.unsubscribedFromAlerts;
+  }, [searchState]);
+
   const onSearchStateChange = useCallback(
     (searchState: { [key: string]: unknown }) => {
       history.replace(
@@ -223,6 +232,11 @@ export const SearchPage = () => {
             hasActiveSearchFilters={displayGetUpdateAlertsButton}
           />
           <SearchContainer filtering={filtering} data-cy="search/container">
+            {hasUnsubscribedFromList && (
+              <StyledSuccessAlert closable>
+                You have been successfully unsubscribed from this alert
+              </StyledSuccessAlert>
+            )}
             <SearchTop>
               <StyledSearchBox
                 translations={{
