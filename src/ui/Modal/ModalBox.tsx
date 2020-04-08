@@ -103,11 +103,16 @@ const ModalFooter = styled.footer`
     padding: ${props => props.theme.spacings.m}px;
     background-color: ${props => props.theme.colors.white};
   }
+
+  ${ModalActionButton}:last-child {
+    justify-content: flex-end;
+  }
 `;
 
 const Container = styled.div<{ size?: ModalSize }>`
   display: flex;
   flex-direction: column;
+  background-color: ${props => props.theme.colors.white};
 
   @media (${props => props.theme.breakpoints.tabletAndLarger}) {
     max-height: 100%;
@@ -116,7 +121,6 @@ const Container = styled.div<{ size?: ModalSize }>`
       widthOfModalSize({ size, theme })}px;
     border-radius: ${props => props.theme.borderRadiuses.regular};
     overflow: visible;
-    background-color: ${props => props.theme.colors.white};
     box-shadow: ${props => props.theme.shadows.modal};
   }
 
