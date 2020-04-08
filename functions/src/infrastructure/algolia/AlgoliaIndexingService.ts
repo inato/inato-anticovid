@@ -186,7 +186,7 @@ const serializeFacetFilters = ({
     countries.map(country => `${Facets.countries}:${country}`),
   ];
 
-  if (hasResultsPublications !== undefined) {
+  if (hasResultsPublications !== null) {
     facetFilters.push([`${Facets.hasResultsPublications}:${hasResultsPublications}`]);
   }
 

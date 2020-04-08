@@ -109,6 +109,6 @@ const decodeHasResultsPublications = (hasResultsPublicationsQuery: unknown) => {
     case 'false':
       return false;
     default:
-      return undefined;
+      return null;
   }
 }
