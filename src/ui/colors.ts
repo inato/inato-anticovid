@@ -31,6 +31,8 @@ export enum colors {
   DefaultTextHover = '#9E9EB4',
   RedAlert = '#BF0000',
   GreenAlert = '#1CAB9F',
+  HighlightDarkBackground = '#D1C8EE',
+  HighlightLightBackground = '#E8E4F6',
 }
 
 export enum Semantic {
