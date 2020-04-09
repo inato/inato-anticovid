@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { Highlight } from 'react-instantsearch-dom';
 
 import { colors, devices, NavigationOutIcon } from '../../ui';
 
@@ -149,61 +150,56 @@ const PublicationsTitle = styled.div`
   font-size: 12px;
 `;
 
-export const ClinicalTrialHit = ({
-  hit: {
-    public_title,
+export const ClinicalTrialHit = ({ hit }: { hit: any }) => {
+  const {
     web_address,
     recruitment_status,
-    therapeutic_classes,
     date_registration3,
-    objectID,
-    acronym,
     total_recruitment_size,
     countries,
     clinical_outcome_extracted_,
     surrogate_outcome_extracted_,
     results_publications,
-  },
-}: any) => (
-  <Container
-    hasPublications={results_publications && results_publications.length > 0}
-  >
-    <TopContainer>
-      <LeftContainer>
-        {objectID}
-        <TitleContainer>
-          <Link href={web_address} target="_blank">
-            <ClinicalTrialPublicTitle
-              publicTitle={public_title}
-              acronym={acronym}
-            />
-          </Link>
-        </TitleContainer>
-        <RegistrationAndOutcomeContainer>
-          <RegistrationDate registrationDate={date_registration3} />
-          <Outcome
-            hasClinicalOutcome={clinical_outcome_extracted_.length > 0}
-            hasSurrogateOutcome={surrogate_outcome_extracted_.length > 0}
-          />
-        </RegistrationAndOutcomeContainer>
-      </LeftContainer>
-      <RightContainer>
-        <TrialStatus value={recruitment_status} />
-        <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
-        <Countries countries={countries} />
-        <TherapeuticClasses value={therapeutic_classes} />
-      </RightContainer>
-    </TopContainer>
-    {results_publications && results_publications.length > 0 && (
-      <PublicationsContainer>
-        <PublicationsTitle>Result publications</PublicationsTitle>
+  } = hit;
 
-        {results_publications.map(
-          (publication: ClinicalTrialHitPublication) => (
-            <Publication publication={publication} key={publication.url} />
-          ),
-        )}
-      </PublicationsContainer>
-    )}
-  </Container>
-);
+  return (
+    <Container
+      hasPublications={results_publications && results_publications.length > 0}
+    >
+      <TopContainer>
+        <LeftContainer>
+          <Highlight attribute="trialid" hit={hit} />
+          <TitleContainer>
+            <Link href={web_address} target="_blank">
+              <ClinicalTrialPublicTitle hit={hit} />
+            </Link>
+          </TitleContainer>
+          <RegistrationAndOutcomeContainer>
+            <RegistrationDate registrationDate={date_registration3} />
+            <Outcome
+              hasClinicalOutcome={clinical_outcome_extracted_.length > 0}
+              hasSurrogateOutcome={surrogate_outcome_extracted_.length > 0}
+            />
+          </RegistrationAndOutcomeContainer>
+        </LeftContainer>
+        <RightContainer>
+          <TrialStatus value={recruitment_status} />
+          <TargetedPatients targetedPatientsNumber={total_recruitment_size} />
+          <Countries countries={countries} />
+          <TherapeuticClasses hit={hit} attribute="therapeutic_classes" />
+        </RightContainer>
+      </TopContainer>
+      {results_publications && results_publications.length > 0 && (
+        <PublicationsContainer>
+          <PublicationsTitle>Result publications</PublicationsTitle>
+
+          {results_publications.map(
+            (publication: ClinicalTrialHitPublication) => (
+              <Publication publication={publication} key={publication.url} />
+            ),
+          )}
+        </PublicationsContainer>
+      )}
+    </Container>
+  );
+};

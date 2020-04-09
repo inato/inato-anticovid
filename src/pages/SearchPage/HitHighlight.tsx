@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { format } from 'date-fns';
+import { connectHighlight } from 'react-instantsearch-dom';
 
 import {
   colors,
@@ -18,19 +19,40 @@ export const TrialStatus = ({ value }: { value: string | null }) => (
   </HitHighlightContainer>
 );
 
-export const TherapeuticClasses = ({ value }: { value: Array<string> }) => {
-  return (
-    <TherapeuticClassesContainer>
-      {value
-        .filter(therapeuticClass => therapeuticClass)
-        .map(therapeuticClass => (
-          <TherapeuticClass key={therapeuticClass} title={therapeuticClass}>
-            {therapeuticClass}
+const HighlightedText = styled.span`
+  background-color: ${colors.HighlightDarkBackground};
+`;
+
+export const TherapeuticClasses = connectHighlight(
+  ({ highlight, attribute, hit }) => {
+    const parsedHit = highlight({
+      highlightProperty: '_highlightResult',
+      attribute,
+      hit,
+    });
+
+    // eslint-disable-next-line
+    console.log({ parsedHit });
+
+    return (
+      <TherapeuticClassesContainer>
+        {parsedHit.map((therapeuticClass: any) => (
+          <TherapeuticClass
+            key={therapeuticClass[0].value}
+            title={therapeuticClass[0].value}
+          >
+            {therapeuticClass.map(({ value, isHighlighted }: any) => {
+              if (isHighlighted) {
+                return <HighlightedText>{value}</HighlightedText>;
+              }
+              return <span>{value}</span>;
+            })}
           </TherapeuticClass>
         ))}
-    </TherapeuticClassesContainer>
-  );
-};
+      </TherapeuticClassesContainer>
+    );
+  },
+);
 
 export const RegistrationDate = ({
   registrationDate,
@@ -145,10 +167,14 @@ const GrayDot = styled(Dot)`
 
 const TherapeuticClass = styled.span`
   border-radius: 4px;
-  padding: 2px 8px;
+  padding: 0px 8px;
   background: #eaedf1;
   white-space: nowrap;
   margin: 4px 0 0 4px;
+
+  span {
+    padding: 2px 0px;
+  }
 
   @media ${devices.Desktop} {
     text-overflow: ellipsis;

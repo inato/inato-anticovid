@@ -30,6 +30,7 @@ export interface IndexingService {
       name: string;
       orderBy: 'asc' | 'desc';
     }>;
+    attributesToHighlight: ReadonlyArray<string>;
   }): TaskEither.TaskEither<GenericError<GenericErrorType.UnknownError>, void>;
   searchTrials(attributes: {
     searchQuery: Option<string>;

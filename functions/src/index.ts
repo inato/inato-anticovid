@@ -75,54 +75,59 @@ const feedServices = <Ret, Argument1, Argument2>(
     environment: functions.config().sentry.environment,
   });
 
-  const algoliaIndex = setupAlgoliaIndex({
-    apiKey: functions.config().algolia.apikey,
-    indexName: functions.config().algolia.index,
-    clientId: functions.config().algolia.clientid,
-    loggingService,
-  });
-  const postgresClient = await setupPostgresClient({
-    ip: functions.config().pg.ip,
-    port: functions.config().pg.port,
-    user: functions.config().pg.user,
-    password: functions.config().pg.password,
-    db: functions.config().pg.db,
-  });
-
   const availableServices: Map<keyof Services, any> = new Map<
     keyof Services,
     () => any
   >(
     Object.entries({
-      timeService: () => new DateTimeService(),
-      emailService: () =>
+      timeService: async () => new DateTimeService(),
+      emailService: async () =>
         new PostmarkEmailService({
           apiToken: functions.config().postmark.apitoken,
         }),
-      messagingService: () => new PubSubMessageService(),
-      subscriptionRepository: () =>
+      messagingService: async () => new PubSubMessageService(),
+      subscriptionRepository: async () =>
         new FirestoreSubscriptionRepository(firestore),
-      trialRepository: () =>
-        new PostgresTrialRepository(
+      trialRepository: async () => {
+        const postgresClient = await setupPostgresClient({
+          ip: functions.config().pg.ip,
+          port: functions.config().pg.port,
+          user: functions.config().pg.user,
+          password: functions.config().pg.password,
+          db: functions.config().pg.db,
+        });
+        return new PostgresTrialRepository(
           postgresClient,
           functions.config().pg.tablename,
-        ),
-      indexingService: () => new AlgoliaIndexingService(algoliaIndex),
-      loggingService: () => loggingService,
-      reportingService: () => reportingService,
-      config: () => functions.config(),
+        );
+      },
+      indexingService: async () => {
+        const algoliaIndex = setupAlgoliaIndex({
+          apiKey: functions.config().algolia.apikey,
+          indexName: functions.config().algolia.index,
+          clientId: functions.config().algolia.clientid,
+          loggingService,
+        });
+        return new AlgoliaIndexingService(algoliaIndex);
+      },
+      loggingService: async () => loggingService,
+      reportingService: async () => reportingService,
+      config: async () => functions.config(),
     }) as any,
   );
 
-  const services = Array.from(availableServices.entries())
-    .filter(([key]) => requiredServices.includes(key))
-    .reduce((acc, [key, f]) => {
-      acc[key] = f();
-      return acc;
-    }, {} as any);
+  const services = (
+    await Promise.all(
+      Array.from(availableServices.entries())
+        .filter(([key]) => requiredServices.includes(key))
+        .map(async ([key, f]) => [key, await f()]),
+    )
+  ).reduce((acc, [key, service]) => {
+    acc[key] = service;
+    return acc;
+  }, {} as any);
 
   const cleanUp = async () => {
-    await postgresClient.end();
     await reportingService.flush();
   };
 

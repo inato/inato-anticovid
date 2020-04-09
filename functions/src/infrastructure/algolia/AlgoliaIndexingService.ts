@@ -60,6 +60,7 @@ export class AlgoliaIndexingService implements IndexingService {
     searchableAttributes,
     attributesForFaceting,
     customRanking,
+    attributesToHighlight,
   }: {
     searchableAttributes: ReadonlyArray<{
       name: string;
@@ -73,6 +74,7 @@ export class AlgoliaIndexingService implements IndexingService {
       name: string;
       orderBy: 'asc' | 'desc';
     }>;
+    attributesToHighlight: ReadonlyArray<string>;
   }) {
     return pipe(
       TaskEither.tryCatch(
@@ -90,6 +92,7 @@ export class AlgoliaIndexingService implements IndexingService {
               customRanking: customRanking.map(
                 ({ name, orderBy }) => `${orderBy}(${name})`,
               ),
+              attributesToHighlight,
             }))(),
         e =>
           unknownError(
