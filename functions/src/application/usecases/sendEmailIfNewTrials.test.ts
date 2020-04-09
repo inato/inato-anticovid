@@ -17,9 +17,9 @@ import {
   timeServiceFactory,
 } from '../services';
 
-import { sendEmail, duplicateError } from './sendEmail';
+import { sendEmailIfNewTrials, duplicateError } from './sendEmailIfNewTrials';
 
-describe('sendEmail', () => {
+describe('sendEmailIfNewTrials', () => {
   it('should send an error if email has been sent less than a day ago', async () => {
     const subscription = subscriptionFactory({
       lastEmailSentDate: new Date(),
@@ -34,7 +34,7 @@ describe('sendEmail', () => {
     });
     await subscriptionRepository.store(subscription)();
 
-    const result = await sendEmail({
+    const result = await sendEmailIfNewTrials({
       subscriptionRepository,
       indexingService,
       emailService,
@@ -54,8 +54,9 @@ describe('sendEmail', () => {
   });
 
   it('should not send an email and not return an error if there are no new trials', async () => {
+    const currentDate = new Date();
     const subscription = subscriptionFactory({
-      lastEmailSentDate: subDays(new Date(), 7),
+      lastEmailSentDate: subDays(currentDate, 7),
     });
     const subscriptionRepository = new InMemorySubscriptionRepository();
 
@@ -67,17 +68,24 @@ describe('sendEmail', () => {
     });
     await subscriptionRepository.store(subscription)();
 
-    const result = await sendEmail({
+    const result = await sendEmailIfNewTrials({
       subscriptionRepository,
       indexingService,
       emailService,
       subscriptionId: subscription.id,
       loggingService: loggingServiceFactory(),
-      timeService: timeServiceFactory(),
+      timeService: timeServiceFactory({ currentDate }),
     })();
+
+    const newSubscription = pipe(
+      await subscriptionRepository.findById(subscription.id)(),
+      Either.getOrElse<any, Option.Option<Subscription>>(() => Option.none),
+      Option.getOrElse<Subscription | null>(() => null),
+    );
 
     expect(emailService.sendNewResultsForSubscription).not.toHaveBeenCalled();
     expect(result).toStrictEqual(Either.right(undefined));
+    expect(newSubscription!.lastEmailSentDate).toBe(currentDate);
   });
 
   it('should send an email if there are new trials and update subscription', async () => {
@@ -98,7 +106,7 @@ describe('sendEmail', () => {
 
     const newDate = new Date();
 
-    const result = await sendEmail({
+    const result = await sendEmailIfNewTrials({
       subscriptionRepository,
       indexingService,
       emailService,

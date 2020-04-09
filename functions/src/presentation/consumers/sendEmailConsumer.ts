@@ -9,7 +9,7 @@ import { SubscriptionRepository, toSubscriptionId } from '../../domain';
 import { invalidInformationError } from '../../domain/errors';
 import { taskEitherExtend } from '../../domain/utils/taskEither';
 import {
-  sendEmail,
+  sendEmailIfNewTrials,
   IndexingService,
   EmailService,
   LoggingService,
@@ -38,7 +38,7 @@ export const sendEmailConsumer = ({
       loggingService.log(
         `Handling send email message for subscription ${subscriptionId}`,
       );
-      return sendEmail({
+      return sendEmailIfNewTrials({
         subscriptionId,
         subscriptionRepository,
         indexingService,

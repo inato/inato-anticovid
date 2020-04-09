@@ -17,7 +17,7 @@ import {
   TimeService,
 } from '../services';
 
-export const sendEmail = ({
+export const sendEmailIfNewTrials = ({
   subscriptionRepository,
   indexingService,
   emailService,
@@ -45,26 +45,34 @@ export const sendEmail = ({
           loggingService.log(
             `Found ${newTrials.length} new trials for subscription ${subscription.id}`,
           );
-          return newTrials.length > 0
-            ? sendEmailAndUpdateSubscription({
+          return pipe(
+            newTrials.length > 0
+              ? sendEmail({
+                  subscription,
+                  newTrials,
+                  subscriptionRepository,
+                  emailService,
+                  timeService,
+                })
+              : TaskEither.right(undefined),
+            taskEitherExtend(() =>
+              updateSubscription({
+                subscriptionRepository,
                 subscription,
                 newTrials,
-                subscriptionRepository,
-                emailService,
                 timeService,
-              })
-            : TaskEither.right(undefined);
+              }),
+            ),
+          );
         }),
       ),
     ),
   );
 
-const sendEmailAndUpdateSubscription = ({
+const sendEmail = ({
   subscription,
   newTrials,
-  subscriptionRepository,
   emailService,
-  timeService,
 }: {
   subscription: Subscription;
   newTrials: ReadonlyArray<SearchResult>;
@@ -72,19 +80,27 @@ const sendEmailAndUpdateSubscription = ({
   emailService: EmailService;
   timeService: TimeService;
 }) =>
-  pipe(
-    emailService.sendNewResultsForSubscription({
-      subscription,
-      newResults: newTrials,
+  emailService.sendNewResultsForSubscription({
+    subscription,
+    newResults: newTrials,
+  });
+
+const updateSubscription = ({
+  subscription,
+  newTrials,
+  subscriptionRepository,
+  timeService,
+}: {
+  subscription: Subscription;
+  newTrials: ReadonlyArray<SearchResult>;
+  subscriptionRepository: SubscriptionRepository;
+  timeService: TimeService;
+}) =>
+  subscriptionRepository.store(
+    subscription.buildWithNewSearchResultsAndEmailSentDate({
+      newSearchResults: newTrials.map(({ trialId }) => trialId),
+      lastEmailSentDate: timeService.currentDate,
     }),
-    taskEitherExtend(() =>
-      subscriptionRepository.store(
-        subscription.buildWithNewSearchResultsAndEmailSentDate({
-          newSearchResults: newTrials.map(({ trialId }) => trialId),
-          lastEmailSentDate: timeService.currentDate,
-        }),
-      ),
-    ),
   );
 
 const findSubscriptionIfEmailNotSentForToday = ({
