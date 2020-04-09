@@ -61,17 +61,17 @@ export class Subscription {
   }
 
   buildWithNewSearchResultsAndEmailSentDate({
-    searchResults,
+    newSearchResults,
     lastEmailSentDate,
   }: {
-    searchResults: ReadonlyArray<TrialId>;
+    newSearchResults: ReadonlyArray<TrialId>;
     lastEmailSentDate: Date;
   }) {
     return new Subscription({
       id: this.id,
       email: this.email,
       search: this.search,
-      searchResults,
+      searchResults: [...this.searchResults, ...newSearchResults],
       lastEmailSentDate,
     });
   }

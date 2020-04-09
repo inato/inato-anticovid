@@ -80,7 +80,7 @@ const sendEmailAndUpdateSubscription = ({
     taskEitherExtend(() =>
       subscriptionRepository.store(
         subscription.buildWithNewSearchResultsAndEmailSentDate({
-          searchResults: newTrials.map(({ trialId }) => trialId),
+          newSearchResults: newTrials.map(({ trialId }) => trialId),
           lastEmailSentDate: timeService.currentDate,
         }),
       ),
