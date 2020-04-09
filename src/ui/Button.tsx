@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Semantic, semanticColors, semanticTextColors, colors } from './colors';
 
 export const SearchButton = styled.button<{ semantic?: Semantic }>`
+  padding: 8px 32px;
   text-transform: uppercase;
   align-items: center;
   background-color: ${({ semantic = Semantic.primary }) =>
@@ -19,10 +20,11 @@ export const SearchButton = styled.button<{ semantic?: Semantic }>`
   min-height: 40px;
   min-width: 112px;
   border: 1px solid ${colors.Primary};
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
 
   &:hover {
     text-decoration: none;
-    box-shadow: ${colors.ButtonHoverShadow} 0px 0px 0px 2px;
+    box-shadow: 2px 2px 8px 2px ${colors.ButtonHoverShadow};
   }
 `;
 
