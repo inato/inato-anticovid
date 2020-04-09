@@ -51,7 +51,7 @@ jobs:
       - name: E2E tests
         run: |
           yarn serve -p 3000 &
-          yarn wait-on "http://localhost:3000"
+          yarn wait-on "http://localhost:3000" -t 300000
           yarn cypress run
         env:
           CYPRESS_CACHE_FOLDER: node_modules/cypress_bin

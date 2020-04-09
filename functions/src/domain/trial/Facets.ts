@@ -70,3 +70,10 @@ export const orderedCustomRanking: ReadonlyArray<{
   { name: 'registration_timestamp', orderBy: 'desc' },
   { name: 'results_publications_count', orderBy: 'desc' },
 ];
+
+export const attributesToHighlight: ReadonlyArray<string> = [
+  'public_title',
+  'acronym',
+  'therapeutic_classes',
+  'trialid',
+];
