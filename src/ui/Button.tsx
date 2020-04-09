@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Semantic, semanticColors, semanticTextColors, colors } from './colors';
+import { boxShadows } from './boxShadows';
 
-export const SearchButton = styled.button<{ semantic?: Semantic }>`
+export const StickyButton = styled.button<{ semantic?: Semantic }>`
+  padding: 8px 32px;
   text-transform: uppercase;
   align-items: center;
   background-color: ${({ semantic = Semantic.primary }) =>
@@ -19,10 +21,14 @@ export const SearchButton = styled.button<{ semantic?: Semantic }>`
   min-height: 40px;
   min-width: 112px;
   border: 1px solid ${colors.Primary};
+  box-shadow: ${boxShadows.ButtonBoxShadow};
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%);
 
   &:hover {
     text-decoration: none;
-    box-shadow: ${colors.ButtonHoverShadow} 0px 0px 0px 2px;
+    box-shadow: ${boxShadows.ButtonHoverBoxShadow};
   }
 `;
 
@@ -41,7 +47,7 @@ export const Button = styled.button`
 
   &:hover {
     cursor: pointer;
-    box-shadow: ${colors.ButtonHoverShadow} 0px 0px 0px 2px;
+    box-shadow: ${boxShadows.ButtonHoverBoxShadow};
   }
 `;
 

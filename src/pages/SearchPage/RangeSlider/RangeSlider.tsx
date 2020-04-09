@@ -99,8 +99,6 @@ const StyledRheostat = styled(Rheostat)`
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     border-radius: 100%;
-    -webkit-box-shadow: 0 2px 4px ${colors.BoxShadow};
-    -moz-box-shadow: 0 2px 4px ${colors.BoxShadow};
     box-shadow: 0 2px 4px ${colors.BoxShadow};
     height: 16px;
     margin-left: -8px;
