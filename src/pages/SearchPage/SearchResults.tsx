@@ -31,6 +31,11 @@ const StyledHits = styled(Hits)`
     border: none;
     box-shadow: none;
   }
+
+  .ais-Highlight-highlighted {
+    font-style: normal;
+    background-color: ${colors.HighlightLightBackground};
+  }
 `;
 
 const StyledPagination = styled(Pagination)`

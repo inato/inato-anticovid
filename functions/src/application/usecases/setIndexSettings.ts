@@ -3,6 +3,7 @@ import {
   orderedSearchableAttributes,
   orderedFacets,
   orderedCustomRanking,
+  attributesToHighlight,
 } from '../../domain';
 
 export const setIndexSettings = ({
@@ -14,4 +15,5 @@ export const setIndexSettings = ({
     searchableAttributes: orderedSearchableAttributes,
     attributesForFaceting: orderedFacets,
     customRanking: orderedCustomRanking,
+    attributesToHighlight,
   });

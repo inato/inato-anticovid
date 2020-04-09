@@ -9,6 +9,7 @@ import {
   orderedCustomRanking,
   orderedSearchableAttributes,
   orderedFacets,
+  attributesToHighlight,
 } from '../../domain';
 
 import { AlgoliaIndexingService } from './AlgoliaIndexingService';
@@ -36,6 +37,7 @@ describe('AlgoliaIndexingService', () => {
         customRanking: orderedCustomRanking,
         searchableAttributes: orderedSearchableAttributes,
         attributesForFaceting: orderedFacets,
+        attributesToHighlight,
       })();
 
       expect(result).toStrictEqual(Either.right(undefined));
@@ -74,6 +76,7 @@ describe('AlgoliaIndexingService', () => {
         customRanking: orderedCustomRanking,
         searchableAttributes: orderedSearchableAttributes,
         attributesForFaceting: orderedFacets,
+        attributesToHighlight,
       })();
 
       const results = await indexingService.searchTrials({
