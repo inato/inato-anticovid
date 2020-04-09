@@ -8,7 +8,8 @@
     "test": "node scripts/test.js",
     "lint": "eslint --config ./.eslintrc.js --ext ts,tsx ./src",
     "e2e": "cypress run",
-    "e2e:dev": "cypress open"
+    "e2e:dev": "cypress open",
+    "serve": "serve -s build"
   },
   "dependencies": {
     "@babel/core": "7.8.4",
