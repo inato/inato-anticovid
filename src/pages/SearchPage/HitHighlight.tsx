@@ -31,9 +31,6 @@ export const TherapeuticClasses = connectHighlight(
       hit,
     });
 
-    // eslint-disable-next-line
-    console.log({ parsedHit });
-
     return (
       <TherapeuticClassesContainer>
         {parsedHit.map((therapeuticClass: any) => (
