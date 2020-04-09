@@ -1,2 +1,2 @@
-export { Modal } from "./Modal";
-export { BodyPortal } from "./BodyPortal";
+export { Modal } from './Modal';
+export { BodyPortal } from './BodyPortal';

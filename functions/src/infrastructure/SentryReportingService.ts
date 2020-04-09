@@ -1,10 +1,11 @@
-import * as Sentry from "@sentry/node";
-import { ReportingService } from "../application/services/ReportingService";
+import * as Sentry from '@sentry/node';
+
+import { ReportingService } from '../application/services/ReportingService';
 
 export class SentryReportingService implements ReportingService {
   constructor({
     dsn,
-    environment
+    environment,
   }: {
     dsn: string | undefined;
     environment: string;

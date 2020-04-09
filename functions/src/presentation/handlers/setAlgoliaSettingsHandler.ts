@@ -1,16 +1,17 @@
-import * as functions from "firebase-functions";
+import * as functions from 'firebase-functions';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+import * as Task from 'fp-ts/lib/Task';
+
 import {
   setIndexSettings,
   IndexingService,
-  ReportingService
-} from "../../application";
-import { pipe } from "fp-ts/lib/pipeable";
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import * as Task from "fp-ts/lib/Task";
+  ReportingService,
+} from '../../application';
 
 export const setAlgoliaSettingsHandler = ({
   indexingService,
-  reportingService
+  reportingService,
 }: {
   reportingService: ReportingService;
   indexingService: IndexingService;
@@ -26,6 +27,6 @@ export const setAlgoliaSettingsHandler = ({
       () => {
         response.send(`Algolia settings have been set`);
         return Task.of(undefined);
-      }
-    )
+      },
+    ),
   )();

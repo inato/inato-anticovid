@@ -1,19 +1,25 @@
-import { Client } from "pg";
-import { Trial, TrialRepository } from "../../domain";
-import { deserialize } from "./deserialize";
-import * as TaskEither from "fp-ts/lib/TaskEither";
+import { Client } from 'pg';
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+import { pipe } from 'fp-ts/lib/pipeable';
+
+import { Trial, TrialRepository } from '../../domain';
 import {
   GenericError,
   GenericErrorType,
-  unknownError
-} from "../../domain/errors";
-import { pipe } from "fp-ts/lib/pipeable";
+  unknownError,
+} from '../../domain/errors';
+
+import { deserialize } from './deserialize';
 
 export class PostgresTrialRepository implements TrialRepository {
-  constructor(
-    private readonly client: Client,
-    private readonly tableName: string
-  ) {}
+  private readonly client: Client;
+
+  private readonly tableName: string;
+
+  constructor(client: Client, tableName: string) {
+    this.client = client;
+    this.tableName = tableName;
+  }
 
   findAllTrials(): TaskEither.TaskEither<
     GenericError<GenericErrorType.UnknownError>,
@@ -24,12 +30,12 @@ export class PostgresTrialRepository implements TrialRepository {
         () => this.client.query(`SELECT * from covid.${this.tableName}`),
         e =>
           unknownError(
-            e instanceof Error ? e.message : "Unknown pg query error"
-          )
+            e instanceof Error ? e.message : 'Unknown pg query error',
+          ),
       ),
       TaskEither.map(queryResult =>
-        queryResult.rows.map((row: unknown) => deserialize(row))
-      )
+        queryResult.rows.map((row: unknown) => deserialize(row)),
+      ),
     );
   }
 }

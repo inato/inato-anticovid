@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { colors, LaboratoryIcon } from "../../ui";
+import { colors, LaboratoryIcon } from '../../ui';
 
 export const EmptyResults = ({ className }: { className?: string }) => (
   <Container className={className}>

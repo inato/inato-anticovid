@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import TableauReport from "tableau-react";
+import React from 'react';
+import styled from 'styled-components';
+import TableauReport from 'tableau-react';
 
 import {
   Disclaimer,
@@ -8,17 +8,17 @@ import {
   SendUsFeedbackCard,
   devices,
   colors,
-  BlockTitle
-} from "../../ui";
-import { useBoolean } from "../../hooks";
-import config from "../../config";
+  BlockTitle,
+} from '../../ui';
+import { useBoolean } from '../../hooks';
+import config from '../../config';
 
-import { Introduction } from "./Introduction";
+import { Introduction } from './Introduction';
 
 export const AnalysisPage = () => {
   const {
     setToFalse: hideTableauSkeleton,
-    isTrue: isTableauSkeletonDisplayed
+    isTrue: isTableauSkeletonDisplayed,
   } = useBoolean(true);
 
   return (
@@ -34,9 +34,9 @@ export const AnalysisPage = () => {
         <TableauReport
           url={config.TableauUrl}
           options={{
-            width: "100%",
-            height: "100%",
-            onFirstVizSizeKnown: hideTableauSkeleton
+            width: '100%',
+            height: '100%',
+            onFirstVizSizeKnown: hideTableauSkeleton,
           }}
         />
       </TableauContainer>

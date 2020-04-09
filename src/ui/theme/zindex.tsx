@@ -1,3 +1,3 @@
 export const zIndexes = {
-  modal: 20
+  modal: 20,
 };

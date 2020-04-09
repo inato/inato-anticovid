@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { colors, fontSize, fontWeight, lineHeight, devices } from "../../ui";
+import { colors, fontSize, fontWeight, lineHeight, devices } from '../../ui';
 
 export const Title = styled.h1`
   font-family: Lora, Georgia;

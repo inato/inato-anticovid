@@ -1,12 +1,15 @@
-import { refreshTrialIndex } from "./refreshTrialIndex";
-import { trialFactory, InMemoryTrialRepository } from "../../domain";
-import { indexingServiceFactory } from "..";
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import * as Either from "fp-ts/lib/Either";
-import { loggingServiceFactory } from "../services";
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+import * as Either from 'fp-ts/lib/Either';
 
-describe("refreshTrialIndex", () => {
-  it("should index all trials found in the repository", async () => {
+import { trialFactory, InMemoryTrialRepository } from '../../domain';
+import { loggingServiceFactory } from '../services';
+
+import { refreshTrialIndex } from './refreshTrialIndex';
+
+import { indexingServiceFactory } from '..';
+
+describe('refreshTrialIndex', () => {
+  it('should index all trials found in the repository', async () => {
     const trial = trialFactory();
     const trials = [trial];
     const trialRepository = new InMemoryTrialRepository();
@@ -16,12 +19,12 @@ describe("refreshTrialIndex", () => {
       .fn()
       .mockReturnValue(TaskEither.right([trial.trialId]));
     const indexingService = indexingServiceFactory({
-      indexTrials
+      indexTrials,
     });
     const count = await refreshTrialIndex({
       trialRepository,
       indexingService,
-      loggingService: loggingServiceFactory()
+      loggingService: loggingServiceFactory(),
     })();
     expect(count).toEqual(Either.right(1));
     expect(indexTrials).toHaveBeenCalledWith(trials);

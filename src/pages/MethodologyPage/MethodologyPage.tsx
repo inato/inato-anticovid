@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 import {
   Disclaimer,
@@ -9,8 +9,8 @@ import {
   TextBlockWithLaboratory,
   BlockTitle,
   Accordion,
-  linkCss
-} from "../../ui";
+  linkCss,
+} from '../../ui';
 
 export const MethodologyPage = () => {
   return (
@@ -54,7 +54,7 @@ export const MethodologyPage = () => {
             Those registries and websites are very well known from most
             researchers and have been very active to include as fast as possible
             clinical studies that were registered. However, there was to our
-            knowledge no unique and centralized repository where{" "}
+            knowledge no unique and centralized repository where{' '}
             <Bold>all</Bold> clinical studies conducted worldwide on COVID-19
             could be found.
           </Paragraph>
@@ -112,10 +112,10 @@ export const MethodologyPage = () => {
             </StyledLi>
           </ul>
           <Paragraph>
-            For each publication of the result, we also include the{" "}
+            For each publication of the result, we also include the{' '}
             <StyledLink href="https://pubpeer.com" target="_blank">
               PubPeer
-            </StyledLink>{" "}
+            </StyledLink>{' '}
             link, when possible.
           </Paragraph>
         </Accordion>
@@ -149,10 +149,10 @@ export const MethodologyPage = () => {
             </StyledLi>
           </ul>
           <Paragraph>
-            Please contact{" "}
+            Please contact{' '}
             <StyledLink href="mailto:anticovid@inato.com" target="_blank">
               anticovid@inato.com
-            </StyledLink>{" "}
+            </StyledLink>{' '}
             if you have questions or remarks regarding our methodology.
           </Paragraph>
         </Accordion>

@@ -1,14 +1,14 @@
 module.exports = {
   parserOptions: {
-    project: "./tsconfig.json",
-    tsconfigRootDir: __dirname
+    project: './tsconfig.json',
+    tsconfigRootDir: __dirname,
   },
   env: {
-    browser: true
+    browser: true,
   },
   extends: [
-    "./eslint-config-inato/base",
-    "./eslint-config-inato/react",
-    "./eslint-config-inato/typescript"
-  ]
+    './eslint-config-inato/base',
+    './eslint-config-inato/react',
+    './eslint-config-inato/typescript',
+  ],
 };

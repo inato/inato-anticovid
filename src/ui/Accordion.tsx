@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
-import styled, { css } from "styled-components";
+import React, { useState, useRef } from 'react';
+import styled, { css } from 'styled-components';
 
-import { useBoolean } from "../hooks";
+import { useBoolean } from '../hooks';
 
-import { colors, ArrowRightIcon, ArrowDownIcon } from ".";
+import { colors, ArrowRightIcon, ArrowDownIcon } from '.';
 
 type AccordionProps = {
   title: string;
@@ -13,7 +13,7 @@ type AccordionProps = {
 export const Accordion = styled(
   (props: React.PropsWithChildren<AccordionProps>) => {
     const { isTrue: isActive, toggle: toggleActive } = useBoolean(false);
-    const [height, setHeight] = useState("0px");
+    const [height, setHeight] = useState('0px');
 
     const accordionContent = useRef(null);
 
@@ -22,7 +22,7 @@ export const Accordion = styled(
       // eslint-disable-next-line
       // @ts-ignore
       const contentHeight = accordionContent.current.scrollHeight;
-      setHeight(isActive ? "0px" : `${contentHeight}px`);
+      setHeight(isActive ? '0px' : `${contentHeight}px`);
     }
 
     return (
@@ -42,7 +42,7 @@ export const Accordion = styled(
         </AccordionContent>
       </AccordionSection>
     );
-  }
+  },
 )``;
 
 const AccordionSection = styled.div``;

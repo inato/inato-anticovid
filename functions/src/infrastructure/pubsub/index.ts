@@ -1,1 +1,1 @@
-export * from "./PubSubMessagingService";
+export * from './PubSubMessagingService';

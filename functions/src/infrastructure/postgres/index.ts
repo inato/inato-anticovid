@@ -1,2 +1,2 @@
-export * from "./PostgresClient";
-export * from "./PostgresTrialRepository";
+export * from './PostgresClient';
+export * from './PostgresTrialRepository';

@@ -1,7 +1,7 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback } from 'react';
 
-import { styled, css } from "../styled";
-import { colors } from "../colors";
+import { styled, css } from '../styled';
+import { colors } from '../colors';
 
 const Container = styled.div`
   position: fixed;
@@ -54,7 +54,7 @@ export const Backdrop = ({
   onEscKeyDown,
   children,
   className,
-  scrollable
+  scrollable,
 }: ModalProps) => {
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -62,14 +62,14 @@ export const Backdrop = ({
         onEscKeyDown();
       }
     },
-    [onEscKeyDown]
+    [onEscKeyDown],
   );
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown, false);
+    document.addEventListener('keydown', handleKeyDown, false);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown, false);
+      document.removeEventListener('keydown', handleKeyDown, false);
     };
   }, [handleKeyDown, onEscKeyDown]);
 

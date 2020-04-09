@@ -1,2 +1,2 @@
-export * from "./FirestoreSubscriptionRepository";
-export * from "./setupFirebase";
+export * from './FirestoreSubscriptionRepository';
+export * from './setupFirebase';

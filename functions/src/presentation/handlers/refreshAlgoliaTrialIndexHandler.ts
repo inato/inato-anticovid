@@ -1,21 +1,21 @@
-import * as functions from "firebase-functions";
-import { pipe } from "fp-ts/lib/pipeable";
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import * as Task from "fp-ts/lib/Task";
+import * as functions from 'firebase-functions';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+import * as Task from 'fp-ts/lib/Task';
 
 import {
   refreshTrialIndex,
   IndexingService,
   LoggingService,
-  ReportingService
-} from "../../application";
-import { TrialRepository } from "../../domain";
+  ReportingService,
+} from '../../application';
+import { TrialRepository } from '../../domain';
 
 export const refreshAlgoliaTrialIndexHandler = ({
   trialRepository,
   indexingService,
   loggingService,
-  reportingService
+  reportingService,
 }: {
   reportingService: ReportingService;
   trialRepository: TrialRepository;
@@ -26,7 +26,7 @@ export const refreshAlgoliaTrialIndexHandler = ({
     refreshTrialIndex({
       trialRepository,
       indexingService,
-      loggingService
+      loggingService,
     }),
     TaskEither.fold(
       error => {
@@ -37,6 +37,6 @@ export const refreshAlgoliaTrialIndexHandler = ({
       trialsCount => {
         response.send(`Indexed ${trialsCount} trials`);
         return Task.of(undefined);
-      }
-    )
+      },
+    ),
   )();

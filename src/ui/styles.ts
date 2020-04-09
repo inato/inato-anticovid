@@ -1,7 +1,7 @@
-import { css, FlattenSimpleInterpolation } from "styled-components";
+import { css, FlattenSimpleInterpolation } from 'styled-components';
 
-import { colors } from "./colors";
-import { devices } from "./media";
+import { colors } from './colors';
+import { devices } from './media';
 
 export const linkCss = css`
   text-decoration: none;
@@ -25,7 +25,7 @@ export const linkCss = css`
     }
 
     &::after {
-      content: "";
+      content: '';
       display: block;
       margin-top: -2px;
       border-bottom: 1px solid ${colors.Primary};
@@ -33,7 +33,7 @@ export const linkCss = css`
     }
 
     &:hover::after {
-      content: "";
+      content: '';
       width: 100%;
       border-bottom-color: ${colors.DefaultTextHover};
       animation: increase-width 0.3s;

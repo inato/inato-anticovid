@@ -1,8 +1,8 @@
-import React from "react";
-import { createPortal } from "react-dom";
-import { createGlobalStyle } from "styled-components";
+import React from 'react';
+import { createPortal } from 'react-dom';
+import { createGlobalStyle } from 'styled-components';
 
-import { useModal } from "../../hooks";
+import { useModal } from '../../hooks';
 
 interface BodyPortalProps {
   children: React.ReactNode;
@@ -21,6 +21,6 @@ export const BodyPortal = ({ children }: BodyPortalProps): JSX.Element => {
       <BodyOverflowLocker />
       {children}
     </>,
-    rootElement
+    rootElement,
   );
 };

@@ -1,14 +1,15 @@
-import { IndexingService } from "..";
-import { TrialRepository } from "../../domain";
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+import { pipe } from 'fp-ts/lib/pipeable';
 
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import { pipe } from "fp-ts/lib/pipeable";
-import { LoggingService } from "../services";
+import { TrialRepository } from '../../domain';
+import { LoggingService } from '../services';
+
+import { IndexingService } from '..';
 
 export const refreshTrialIndex = ({
   indexingService,
   trialRepository,
-  loggingService
+  loggingService,
 }: {
   indexingService: IndexingService;
   trialRepository: TrialRepository;
@@ -20,5 +21,5 @@ export const refreshTrialIndex = ({
       loggingService.log(`Found ${trials.length} trials`);
       return indexingService.indexTrials(trials);
     }),
-    TaskEither.map(indexedObjectIds => indexedObjectIds.length)
+    TaskEither.map(indexedObjectIds => indexedObjectIds.length),
   );

@@ -1,1 +1,1 @@
-export * from "./PostmarkEmailService";
+export * from './PostmarkEmailService';

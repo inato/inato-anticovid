@@ -1,15 +1,14 @@
-import { Trial, TrialConstructorArgs } from "./Trial";
-import { toTrialId } from "./TrialId";
+import { Trial, TrialConstructorArgs } from './Trial';
+import { toTrialId } from './TrialId';
 
-export const trialIdFactory = (trialId: string = "trialId") =>
-  toTrialId(trialId);
+export const trialIdFactory = (trialId = 'trialId') => toTrialId(trialId);
 
 export const trialFactory = ({
   trialId = trialIdFactory(),
-  publicTitle = "publicTitle",
-  webAddress = "webAddress",
-  recruitmentStatus = "recruitmentStatus",
-  therapeuticClasses = ["therapeuticClass"],
+  publicTitle = 'publicTitle',
+  webAddress = 'webAddress',
+  recruitmentStatus = 'recruitmentStatus',
+  therapeuticClasses = ['therapeuticClass'],
   registrationDate = new Date(),
   exclusionCriteria = null,
   inclusionCriteria = null,
@@ -20,8 +19,8 @@ export const trialFactory = ({
   clinicalOutcomes = [],
   surrogateOutcomes = [],
   resultsPublications = [],
-  studyType = "Basic Science",
-  rest = {}
+  studyType = 'Basic Science',
+  rest = {},
 }: Partial<TrialConstructorArgs> = {}) =>
   new Trial({
     trialId,
@@ -40,5 +39,5 @@ export const trialFactory = ({
     surrogateOutcomes,
     resultsPublications,
     studyType,
-    rest
+    rest,
   });

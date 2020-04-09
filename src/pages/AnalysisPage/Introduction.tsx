@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { Accordion, TextBlockWithLaboratory, BlockTitle } from "../../ui";
-import { InternalLink } from "../../ui/InternalLink";
+import { Accordion, TextBlockWithLaboratory, BlockTitle } from '../../ui';
+import { InternalLink } from '../../ui/InternalLink';
 
 export const Introduction = () => (
   <TextBlockWithLaboratory dataCy="analysis/intro">
@@ -34,7 +34,7 @@ export const Introduction = () => (
     </Accordion>
     <Accordion title="Who we are">
       <Paragraph>
-        Anticovid is provided by{" "}
+        Anticovid is provided by{' '}
         <a href="https://inato.com/" target="_blank" rel="noopener noreferrer">
           Inato
         </a>

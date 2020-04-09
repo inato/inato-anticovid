@@ -1,11 +1,11 @@
-import React from "react";
-import { Hits, Pagination, connectStats } from "react-instantsearch-dom";
-import styled from "styled-components";
+import React from 'react';
+import { Hits, Pagination, connectStats } from 'react-instantsearch-dom';
+import styled from 'styled-components';
 
-import { colors } from "../../ui";
+import { colors } from '../../ui';
 
-import { ClinicalTrialHit } from "./ClinicalTrialHit";
-import { EmptyResults } from "./EmptyResults";
+import { ClinicalTrialHit } from './ClinicalTrialHit';
+import { EmptyResults } from './EmptyResults';
 
 export const SearchResults = connectStats(({ nbHits }: { nbHits: number }) =>
   nbHits === 0 ? (
@@ -15,7 +15,7 @@ export const SearchResults = connectStats(({ nbHits }: { nbHits: number }) =>
       <StyledHits hitComponent={ClinicalTrialHit} />
       <StyledPagination showFirst={false} padding={2} />
     </>
-  )
+  ),
 );
 
 const StyledHits = styled(Hits)`
