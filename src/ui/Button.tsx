@@ -43,7 +43,7 @@ export const Button = styled.button`
 
   &:hover {
     cursor: pointer;
-    box-shadow: ${colors.ButtonHoverShadow} 0px 0px 0px 2px;
+    box-shadow: 2px 2px 8px 2px ${colors.ButtonHoverShadow};
   }
 `;
 
