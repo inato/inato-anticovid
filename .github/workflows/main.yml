@@ -50,7 +50,7 @@ jobs:
         working-directory: functions
       - name: E2E tests
         run: |
-          yarn serve -s build -p 3000 &
+          yarn serve -p 3000 &
           yarn wait-on "http://localhost:3000"
           yarn cypress run
         env:
