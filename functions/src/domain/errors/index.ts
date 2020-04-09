@@ -18,11 +18,11 @@ export class GenericError<T extends string> {
 
 export const genericError = <T extends string>(
   type: T,
-  reason: string
+  reason: string,
 ): GenericError<T> =>
   new GenericError({
     type,
-    reason
+    reason,
   });
 
 export const invalidInformationError = (reason: string) =>
@@ -31,15 +31,15 @@ export const invalidInformationError = (reason: string) =>
 export const forbiddenError = (reason: string) =>
   genericError(GenericErrorType.ForbiddenError, reason);
 
-export const unknownError = (reason = "Unknown error") =>
+export const unknownError = (reason = 'Unknown error') =>
   genericError(GenericErrorType.UnknownError, reason);
 
 export const aggregateNotFoundError = (reason: string) =>
   genericError(GenericErrorType.AggregateNotFound, reason);
 
 export enum GenericErrorType {
-  InvalidInformationError = "InvalidInformationError",
-  ForbiddenError = "ForbiddenError",
-  UnknownError = "UnknownError",
-  AggregateNotFound = "AggregateNotFound"
+  InvalidInformationError = 'InvalidInformationError',
+  ForbiddenError = 'ForbiddenError',
+  UnknownError = 'UnknownError',
+  AggregateNotFound = 'AggregateNotFound',
 }

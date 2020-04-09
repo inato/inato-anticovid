@@ -1,35 +1,36 @@
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import * as Either from "fp-ts/lib/Either";
-import * as Option from "fp-ts/lib/Option";
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+import * as Either from 'fp-ts/lib/Either';
+import * as Option from 'fp-ts/lib/Option';
+import { subDays } from 'date-fns';
+import { pipe } from 'fp-ts/lib/pipeable';
 
-import { sendEmail, duplicateError } from "./sendEmail";
 import {
   subscriptionFactory,
   InMemorySubscriptionRepository,
   trialFactory,
-  Subscription
-} from "../../domain";
+  Subscription,
+} from '../../domain';
 import {
   indexingServiceFactory,
   emailServiceFactory,
   loggingServiceFactory,
-  timeServiceFactory
-} from "../services";
-import { subDays } from "date-fns";
-import { pipe } from "fp-ts/lib/pipeable";
+  timeServiceFactory,
+} from '../services';
 
-describe("sendEmail", () => {
-  it("should send an error if email has been sent less than a day ago", async () => {
+import { sendEmail, duplicateError } from './sendEmail';
+
+describe('sendEmail', () => {
+  it('should send an error if email has been sent less than a day ago', async () => {
     const subscription = subscriptionFactory({
-      lastEmailSentDate: new Date()
+      lastEmailSentDate: new Date(),
     });
     const subscriptionRepository = new InMemorySubscriptionRepository();
 
     const indexingService = indexingServiceFactory({
-      searchTrials: jest.fn(() => TaskEither.right([]))
+      searchTrials: jest.fn(() => TaskEither.right([])),
     });
     const emailService = emailServiceFactory({
-      sendNewResultsForSubscription: jest.fn(() => TaskEither.right(undefined))
+      sendNewResultsForSubscription: jest.fn(() => TaskEither.right(undefined)),
     });
     await subscriptionRepository.store(subscription)();
 
@@ -39,30 +40,30 @@ describe("sendEmail", () => {
       emailService,
       subscriptionId: subscription.id,
       loggingService: loggingServiceFactory(),
-      timeService: timeServiceFactory()
+      timeService: timeServiceFactory(),
     })();
 
     expect(emailService.sendNewResultsForSubscription).not.toHaveBeenCalled();
     expect(result).toStrictEqual(
       Either.left(
         duplicateError(
-          `Mail has already been sent today for subscription ${subscription.id}`
-        )
-      )
+          `Mail has already been sent today for subscription ${subscription.id}`,
+        ),
+      ),
     );
   });
 
-  it("should not send an email and not return an error if there are no new trials", async () => {
+  it('should not send an email and not return an error if there are no new trials', async () => {
     const subscription = subscriptionFactory({
-      lastEmailSentDate: subDays(new Date(), 7)
+      lastEmailSentDate: subDays(new Date(), 7),
     });
     const subscriptionRepository = new InMemorySubscriptionRepository();
 
     const indexingService = indexingServiceFactory({
-      searchTrials: jest.fn(() => TaskEither.right([]))
+      searchTrials: jest.fn(() => TaskEither.right([])),
     });
     const emailService = emailServiceFactory({
-      sendNewResultsForSubscription: jest.fn(() => TaskEither.right(undefined))
+      sendNewResultsForSubscription: jest.fn(() => TaskEither.right(undefined)),
     });
     await subscriptionRepository.store(subscription)();
 
@@ -72,26 +73,26 @@ describe("sendEmail", () => {
       emailService,
       subscriptionId: subscription.id,
       loggingService: loggingServiceFactory(),
-      timeService: timeServiceFactory()
+      timeService: timeServiceFactory(),
     })();
 
     expect(emailService.sendNewResultsForSubscription).not.toHaveBeenCalled();
     expect(result).toStrictEqual(Either.right(undefined));
   });
 
-  it("should send an email if there are new trials and update subscription", async () => {
+  it('should send an email if there are new trials and update subscription', async () => {
     const subscription = subscriptionFactory({
       lastEmailSentDate: subDays(new Date(), 7),
-      searchResults: []
+      searchResults: [],
     });
     const newResults = [trialFactory()];
     const subscriptionRepository = new InMemorySubscriptionRepository();
 
     const indexingService = indexingServiceFactory({
-      searchTrials: jest.fn(() => TaskEither.right(newResults))
+      searchTrials: jest.fn(() => TaskEither.right(newResults)),
     });
     const emailService = emailServiceFactory({
-      sendNewResultsForSubscription: jest.fn(() => TaskEither.right(undefined))
+      sendNewResultsForSubscription: jest.fn(() => TaskEither.right(undefined)),
     });
     await subscriptionRepository.store(subscription)();
 
@@ -103,25 +104,25 @@ describe("sendEmail", () => {
       emailService,
       subscriptionId: subscription.id,
       loggingService: loggingServiceFactory(),
-      timeService: timeServiceFactory({ currentDate: newDate })
+      timeService: timeServiceFactory({ currentDate: newDate }),
     })();
 
     expect(emailService.sendNewResultsForSubscription).toHaveBeenCalledWith({
       newResults,
-      subscription
+      subscription,
     });
     expect(result).toStrictEqual(Either.right(undefined));
 
     const newSubscription = pipe(
       await subscriptionRepository.findById(subscription.id)(),
       Either.getOrElse<any, Option.Option<Subscription>>(() => Option.none),
-      Option.getOrElse<Subscription | null>(() => null)
+      Option.getOrElse<Subscription | null>(() => null),
     );
 
     expect(newSubscription).not.toEqual(null);
     expect(newSubscription!.lastEmailSentDate).toBe(newDate);
     expect(newSubscription!.searchResults).toStrictEqual(
-      newResults.map(({ trialId }) => trialId)
+      newResults.map(({ trialId }) => trialId),
     );
   });
 });

@@ -1,11 +1,11 @@
-import { Client } from "pg";
+import { Client } from 'pg';
 
 export const setupPostgresClient = async ({
   ip,
   port,
   user,
   password,
-  db
+  db,
 }: {
   ip: string;
   port: number;
@@ -14,7 +14,7 @@ export const setupPostgresClient = async ({
   db: string;
 }) => {
   const client = new Client({
-    connectionString: `postgresql://${user}:${password}@${ip}:${port}/${db}`
+    connectionString: `postgresql://${user}:${password}@${ip}:${port}/${db}`,
   });
 
   await client.connect();

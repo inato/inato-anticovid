@@ -1,7 +1,7 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import React from 'react';
+import styled, { css } from 'styled-components';
 
-import { colors, devices, NavigationOutIcon } from "../../ui";
+import { colors, devices, NavigationOutIcon } from '../../ui';
 
 import {
   TrialStatus,
@@ -9,10 +9,10 @@ import {
   TargetedPatients,
   Countries,
   RegistrationDate,
-  Outcome
-} from "./HitHighlight";
-import { Publication } from "./Publication";
-import { Acronym, ClinicalTrialPublicTitle } from "./ClinicalTrialPublicTitle";
+  Outcome,
+} from './HitHighlight';
+import { Publication } from './Publication';
+import { Acronym, ClinicalTrialPublicTitle } from './ClinicalTrialPublicTitle';
 
 export interface ClinicalTrialHitPublication {
   title?: string;
@@ -162,8 +162,8 @@ export const ClinicalTrialHit = ({
     countries,
     clinical_outcome_extracted_,
     surrogate_outcome_extracted_,
-    results_publications
-  }
+    results_publications,
+  },
 }: any) => (
   <Container
     hasPublications={results_publications && results_publications.length > 0}
@@ -201,7 +201,7 @@ export const ClinicalTrialHit = ({
         {results_publications.map(
           (publication: ClinicalTrialHitPublication) => (
             <Publication publication={publication} key={publication.url} />
-          )
+          ),
         )}
       </PublicationsContainer>
     )}

@@ -1,4 +1,4 @@
-import { styled } from "./styled";
+import { styled } from './styled';
 
 /** @component */
 export const H1 = styled.h1`

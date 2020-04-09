@@ -1,7 +1,9 @@
-import { Subscription } from "../../domain";
-import { SearchResult } from "./IndexingService";
-import * as TaskEither from "fp-ts/lib/TaskEither";
-import { GenericError, GenericErrorType } from "../../domain/errors";
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+
+import { Subscription } from '../../domain';
+import { GenericError, GenericErrorType } from '../../domain/errors';
+
+import { SearchResult } from './IndexingService';
 
 export interface EmailService {
   sendNewResultsForSubscription(attributes: {

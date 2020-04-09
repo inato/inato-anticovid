@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { format } from "date-fns";
+import React from 'react';
+import styled from 'styled-components';
+import { format } from 'date-fns';
 
 import {
   colors,
@@ -8,13 +8,13 @@ import {
   PatientsIcon,
   EarthIcon,
   TimeClockIcon,
-  MedicalKitIcon
-} from "../../ui";
+  MedicalKitIcon,
+} from '../../ui';
 
 export const TrialStatus = ({ value }: { value: string | null }) => (
   <HitHighlightContainer>
-    {value === "Recruiting" ? <GreenDot /> : <GrayDot />}
-    {value !== null ? value : "N/A"}
+    {value === 'Recruiting' ? <GreenDot /> : <GrayDot />}
+    {value !== null ? value : 'N/A'}
   </HitHighlightContainer>
 );
 
@@ -33,11 +33,11 @@ export const TherapeuticClasses = ({ value }: { value: Array<string> }) => {
 };
 
 export const RegistrationDate = ({
-  registrationDate
+  registrationDate,
 }: {
   registrationDate: string;
 }) => {
-  const formattedDate = format(new Date(registrationDate), "MMM dd yyyy");
+  const formattedDate = format(new Date(registrationDate), 'MMM dd yyyy');
   return (
     <HitHighlightContainer>
       <TimeClockIcon />
@@ -58,7 +58,7 @@ const EllipsisStyledText = styled.span`
 `;
 
 export const TargetedPatients = ({
-  targetedPatientsNumber
+  targetedPatientsNumber,
 }: {
   targetedPatientsNumber: number;
 }) => {
@@ -75,7 +75,7 @@ export const Countries = ({ countries }: { countries: Array<string> }) => {
     return null;
   }
 
-  const countriesToDisplay = countries.join(", ");
+  const countriesToDisplay = countries.join(', ');
   return (
     <HitHighlightContainer>
       <EarthIcon />
@@ -93,15 +93,15 @@ interface OutcomeProps {
 
 const getOutcomeLabelsToDisplay = ({
   hasClinicalOutcome,
-  hasSurrogateOutcome
+  hasSurrogateOutcome,
 }: OutcomeProps) => {
   if (!hasClinicalOutcome && !hasSurrogateOutcome) {
     return [];
   }
-  const outcomes = hasClinicalOutcome ? ["Clinical outcome"] : [];
+  const outcomes = hasClinicalOutcome ? ['Clinical outcome'] : [];
   if (hasSurrogateOutcome) {
     outcomes.push(
-      outcomes.length > 0 ? "surrogate outcome" : "Surrogate outcome"
+      outcomes.length > 0 ? 'surrogate outcome' : 'Surrogate outcome',
     );
   }
   return outcomes;
@@ -112,7 +112,7 @@ export const Outcome = (props: OutcomeProps) => {
   return outcomes.length === 0 ? null : (
     <HitHighlightContainer>
       <MedicalKitIcon />
-      {outcomes.join(", ")}
+      {outcomes.join(', ')}
     </HitHighlightContainer>
   );
 };

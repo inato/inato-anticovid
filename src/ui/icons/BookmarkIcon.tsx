@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const BookmarkIcon = ({ className }: { className?: string }) => {
   return (

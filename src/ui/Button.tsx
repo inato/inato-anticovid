@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { Semantic, semanticColors, semanticTextColors, colors } from "./colors";
+import { Semantic, semanticColors, semanticTextColors, colors } from './colors';
 
 export const SearchButton = styled.button<{ semantic?: Semantic }>`
   text-transform: uppercase;

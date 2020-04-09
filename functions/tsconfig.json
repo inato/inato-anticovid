@@ -1,15 +1,23 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "outDir": "lib",
+    "target": "es6",
     "sourceMap": true,
+    "inlineSources": true,
     "strict": true,
-    "target": "es2017",
-    "typeRoots": ["./node_modules/@types"]
-  },
-  "compileOnSave": true,
-  "include": ["src"],
-  "exclude": ["**/*.test.ts"]
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "lib": ["esnext"],
+    "rootDirs": ["src"],
+    "outDir": "lib",
+    "skipLibCheck": true,
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "incremental": true
+  }
 }

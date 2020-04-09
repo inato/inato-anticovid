@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import { colors } from "../colors";
+import { colors } from '../colors';
 
 export const UndoIcon = ({
   className,
-  color = colors.DefaultText
+  color = colors.DefaultText,
 }: {
   className?: string;
   color?: colors;

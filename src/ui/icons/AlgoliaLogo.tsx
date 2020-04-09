@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const AlgoliaIcon = ({ className }: { className?: string }) => (
   <svg

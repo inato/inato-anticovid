@@ -1,6 +1,6 @@
-import { darken, lighten } from "polished";
+import { darken, lighten } from 'polished';
 
-import { toColor, Color, colorToString } from "../color";
+import { toColor, Color, colorToString } from '../color';
 
 export type Variation = 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100;
 

@@ -1,14 +1,14 @@
-import React, { useState, useCallback } from "react";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import React, { useState, useCallback } from 'react';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
-import config from "../config";
+import config from '../config';
 
-import { colors, devices, fontWeight, Button } from ".";
+import { colors, devices, fontWeight, Button } from '.';
 
 export const CTAFooter = ({
   className,
-  searchTrialsTitle = "Want to go further?"
+  searchTrialsTitle = 'Want to go further?',
 }: {
   className?: string;
   searchTrialsTitle?: string;
@@ -42,15 +42,15 @@ const Form = () => {
       const target = event.target as HTMLFormElement;
       const body = {
         email:
-          (target.elements.namedItem("email") as HTMLInputElement).value ?? ""
+          (target.elements.namedItem('email') as HTMLInputElement).value ?? '',
       };
       await fetch(config.emailSubscribeHookUrl, {
-        method: "POST",
-        body: JSON.stringify(body)
+        method: 'POST',
+        body: JSON.stringify(body),
       });
       setFormSent(true);
     },
-    [setFormSent]
+    [setFormSent],
   );
 
   if (isFormSent) {

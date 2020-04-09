@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from 'react';
 
 export const useBoolean = (initialValue: boolean) => {
   const [isTrue, setState] = useState(() => initialValue);
@@ -12,8 +12,8 @@ export const useBoolean = (initialValue: boolean) => {
       isFalse: !isTrue,
       setToTrue,
       setToFalse,
-      toggle
+      toggle,
     }),
-    [isTrue, setToFalse, setToTrue, toggle]
+    [isTrue, setToFalse, setToTrue, toggle],
   );
 };

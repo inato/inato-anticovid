@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { colors, fontSize, fontWeight, lineHeight, devices } from ".";
+import { colors, fontSize, fontWeight, lineHeight, devices } from '.';
 
 export const BlockTitle = styled.h1`
   font-family: Lora, Georgia;

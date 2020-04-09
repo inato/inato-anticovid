@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { BodyPortal } from "./BodyPortal";
-import { Backdrop } from "./Backdrop";
-import { ModalBox, ModalSize, ModalAction } from "./ModalBox";
+import { BodyPortal } from './BodyPortal';
+import { Backdrop } from './Backdrop';
+import { ModalBox, ModalSize, ModalAction } from './ModalBox';
 
 interface ModalProps {
   onRequestClose?: () => void;
@@ -23,7 +23,7 @@ export const Modal = ({
   secondaryAction,
   size,
   dismissible = true,
-  scrollable
+  scrollable,
 }: ModalProps) => {
   return (
     <BodyPortal>

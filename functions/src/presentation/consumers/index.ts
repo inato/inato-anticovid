@@ -1,1 +1,1 @@
-export * from "./sendEmailConsumer";
+export * from './sendEmailConsumer';

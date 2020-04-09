@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { colors } from "../../ui";
-import { splitSentenceByLastWord } from "../../utils/splitSentenceByLastWord";
+import { colors } from '../../ui';
+import { splitSentenceByLastWord } from '../../utils/splitSentenceByLastWord';
 
-import { StyledNavigationOutIcon } from "./ClinicalTrialHit";
+import { StyledNavigationOutIcon } from './ClinicalTrialHit';
 
 export const Acronym = styled.span`
   color: ${colors.GreySecondaryText};
@@ -17,19 +17,19 @@ const UnbreakableWord = styled.span`
 
 export const ClinicalTrialPublicTitle = ({
   publicTitle,
-  acronym
+  acronym,
 }: {
   publicTitle: string;
   acronym: string | null;
 }) => {
   if (!acronym) {
     const [titleFirstPart, titleLastWord] = splitSentenceByLastWord(
-      publicTitle
+      publicTitle,
     );
 
     return (
       <>
-        {titleFirstPart}{" "}
+        {titleFirstPart}{' '}
         <UnbreakableWord>
           {titleLastWord}
           <StyledNavigationOutIcon />
@@ -40,7 +40,7 @@ export const ClinicalTrialPublicTitle = ({
 
   return (
     <>
-      {publicTitle}{" "}
+      {publicTitle}{' '}
       <Acronym>
         {acronym}
         <StyledNavigationOutIcon />

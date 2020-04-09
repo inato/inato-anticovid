@@ -1,26 +1,32 @@
-import { IndexingService, SearchResult } from "../../application";
-import { Trial, FacetFilters, Facets } from "../../domain";
-import { serialize } from "./serialize";
-import { SearchIndex } from "algoliasearch";
-import * as TaskEither from "fp-ts/lib/TaskEither";
+import { SearchIndex } from 'algoliasearch';
+import * as TaskEither from 'fp-ts/lib/TaskEither';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as Option from 'fp-ts/lib/Option';
+
 import {
   unknownError,
   GenericErrorType,
-  GenericError
-} from "../../domain/errors";
-import { pipe } from "fp-ts/lib/pipeable";
-import { deserializeSearchTrialsHits } from "./deserialize";
-import * as Option from "fp-ts/lib/Option";
-import { taskEitherExtend } from "../../domain/utils/taskEither";
+  GenericError,
+} from '../../domain/errors';
+import { Trial, FacetFilters, Facets } from '../../domain';
+import { IndexingService, SearchResult } from '../../application';
+import { taskEitherExtend } from '../../domain/utils/taskEither';
+
+import { deserializeSearchTrialsHits } from './deserialize';
+import { serialize } from './serialize';
 
 const HITS_PER_PAGE = 100;
 
 export class AlgoliaIndexingService implements IndexingService {
-  constructor(private readonly algoliaIndex: SearchIndex) { }
+  private readonly algoliaIndex: SearchIndex;
+
+  constructor(algoliaIndex: SearchIndex) {
+    this.algoliaIndex = algoliaIndex;
+  }
 
   indexTrials(
     trials: ReadonlyArray<Trial>,
-    { wait = false }: { wait?: boolean } = {}
+    { wait = false }: { wait?: boolean } = {},
   ) {
     return pipe(
       TaskEither.tryCatch(
@@ -30,8 +36,8 @@ export class AlgoliaIndexingService implements IndexingService {
               trials.map(trial => serialize(trial)),
               {
                 safe: false,
-                batchSize: 50
-              }
+                batchSize: 50,
+              },
             );
 
             if (wait) {
@@ -43,17 +49,17 @@ export class AlgoliaIndexingService implements IndexingService {
           unknownError(
             e instanceof Error
               ? e.message
-              : "Unknown algolia replacing all objects error"
-          )
+              : 'Unknown algolia replacing all objects error',
+          ),
       ),
-      TaskEither.map(({ objectIDs }) => objectIDs)
+      TaskEither.map(({ objectIDs }) => objectIDs),
     );
   }
 
   setSettings({
     searchableAttributes,
     attributesForFaceting,
-    customRanking
+    customRanking,
   }: {
     searchableAttributes: ReadonlyArray<{
       name: string;
@@ -65,7 +71,7 @@ export class AlgoliaIndexingService implements IndexingService {
     }>;
     customRanking: ReadonlyArray<{
       name: string;
-      orderBy: "asc" | "desc";
+      orderBy: 'asc' | 'desc';
     }>;
   }) {
     return pipe(
@@ -75,31 +81,31 @@ export class AlgoliaIndexingService implements IndexingService {
             this.algoliaIndex.setSettings({
               searchableAttributes: searchableAttributes.map(
                 ({ name, unordered }) =>
-                  unordered ? `unordered(${name})` : name
+                  unordered ? `unordered(${name})` : name,
               ),
               attributesForFaceting: attributesForFaceting.map(
                 ({ name, searchable }) =>
-                  searchable ? `searchable(${name})` : name
+                  searchable ? `searchable(${name})` : name,
               ),
               customRanking: customRanking.map(
-                ({ name, orderBy }) => `${orderBy}(${name})`
-              )
+                ({ name, orderBy }) => `${orderBy}(${name})`,
+              ),
             }))(),
         e =>
           unknownError(
             e instanceof Error
               ? e.message
-              : "Unknown algolia set settings error"
-          )
+              : 'Unknown algolia set settings error',
+          ),
       ),
-      TaskEither.map(() => undefined)
+      TaskEither.map(() => undefined),
     );
   }
 
   searchTrials({
     searchQuery,
     facetFilters,
-    startPage = 0
+    startPage = 0,
   }: {
     searchQuery: Option.Option<string>;
     facetFilters: FacetFilters;
@@ -117,45 +123,45 @@ export class AlgoliaIndexingService implements IndexingService {
             this.algoliaIndex.search(
               pipe(
                 searchQuery,
-                Option.getOrElse(() => "")
+                Option.getOrElse(() => ''),
               ),
               {
                 page: startPage,
                 hitsPerPage: HITS_PER_PAGE,
                 facetFilters: serializeFacetFilters(facetFilters),
                 attributesToRetrieve: [
-                  "objectID",
-                  "public_title",
-                  "registration_timestamp"
-                ]
-              }
+                  'objectID',
+                  'public_title',
+                  'registration_timestamp',
+                ],
+              },
             ))(),
         e =>
           unknownError(
-            e instanceof Error ? e.message : "Unknown algolia search error"
-          )
+            e instanceof Error ? e.message : 'Unknown algolia search error',
+          ),
       ),
       taskEitherExtend(response => {
         const hitsTask = TaskEither.fromEither(
-          deserializeSearchTrialsHits(response.hits)
+          deserializeSearchTrialsHits(response.hits),
         );
         if (response.nbPages > startPage + 1) {
           return pipe(
             this.searchTrials({
               searchQuery,
               facetFilters,
-              startPage: startPage + 1
+              startPage: startPage + 1,
             }),
             taskEitherExtend(newHits =>
               pipe(
                 hitsTask,
-                TaskEither.map(hits => [...hits, ...newHits])
-              )
-            )
+                TaskEither.map(hits => [...hits, ...newHits]),
+              ),
+            ),
           );
         }
         return hitsTask;
-      })
+      }),
     );
   }
 }
@@ -172,22 +178,24 @@ const serializeFacetFilters = ({
   const facetFilters = [
     recruitmentStatus.map(status => `${Facets.recruitmentStatus}:${status}`),
     therapeuticClasses.map(
-      therapeuticClass => `${Facets.therapeuticClasses}:${therapeuticClass}`
+      therapeuticClass => `${Facets.therapeuticClasses}:${therapeuticClass}`,
     ),
     clinicalOutcomesExtracted.map(
       clinicalOutcomeExtracted =>
-        `${Facets.clinicalOutcomeExtracted}:${clinicalOutcomeExtracted}`
+        `${Facets.clinicalOutcomeExtracted}:${clinicalOutcomeExtracted}`,
     ),
     surrogateOutcomesExtracted.map(
       surrogateOutcomeExtracted =>
-        `${Facets.surrogateOutcomeExtracted}:${surrogateOutcomeExtracted}`
+        `${Facets.surrogateOutcomeExtracted}:${surrogateOutcomeExtracted}`,
     ),
     studyTypes.map(studyType => `${Facets.studyType}:${studyType}`),
     countries.map(country => `${Facets.countries}:${country}`),
   ];
 
   if (hasResultsPublications !== null) {
-    facetFilters.push([`${Facets.hasResultsPublications}:${hasResultsPublications}`]);
+    facetFilters.push([
+      `${Facets.hasResultsPublications}:${hasResultsPublications}`,
+    ]);
   }
 
   return facetFilters;

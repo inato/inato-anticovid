@@ -1,9 +1,10 @@
-import * as isEmail from "isemail";
-import { pipe } from "fp-ts/lib/pipeable";
-import * as Either from "fp-ts/lib/Either";
+import * as isEmail from 'isemail';
+import { pipe } from 'fp-ts/lib/pipeable';
+import * as Either from 'fp-ts/lib/Either';
 
-import { EmailAddressError, invalidEmailAddressError } from "./error";
-import { GenericError } from "../errors";
+import { GenericError } from '../errors';
+
+import { EmailAddressError, invalidEmailAddressError } from './error';
 
 export class EmailAddress {
   private readonly _value: string;
@@ -29,7 +30,7 @@ export class EmailAddress {
   }
 
   private static parse(
-    value: string
+    value: string,
   ): Either.Either<GenericError<EmailAddressError.Invalid>, EmailAddress> {
     if (!EmailAddress.validate(value)) {
       return Either.left(invalidEmailAddressError(value));
@@ -38,19 +39,19 @@ export class EmailAddress {
   }
 
   static tryParse(
-    value: string
+    value: string,
   ): Either.Either<GenericError<EmailAddressError.Invalid>, EmailAddress> {
     return EmailAddress.parse(EmailAddress.sanitize(value));
   }
 
-  static unsafe_parse(value: string): EmailAddress {
+  static unsafeParse(value: string): EmailAddress {
     return pipe(
       EmailAddress.parse(value),
       Either.getOrElse<GenericError<EmailAddressError.Invalid>, EmailAddress>(
         error => {
           throw error.toError();
-        }
-      )
+        },
+      ),
     );
   }
 }

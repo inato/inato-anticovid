@@ -1,0 +1,14 @@
+{
+  "eslint.workingDirectories": [".", "./functions"],
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/build": true
+  },
+  "eslint.packageManager": "yarn",
+  "eslint.alwaysShowStatus": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "javascript.validate.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}

@@ -1,11 +1,11 @@
 import {
   SubscriptionRepository,
-  SubscriptionId
-} from "../../domain/subscription";
+  SubscriptionId,
+} from '../../domain/subscription';
 
 export const unsubscribeFromUpdates = ({
   subscriptionRepository,
-  subscriptionId
+  subscriptionId,
 }: {
   subscriptionRepository: SubscriptionRepository;
   subscriptionId: SubscriptionId;

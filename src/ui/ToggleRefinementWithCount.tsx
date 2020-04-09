@@ -1,5 +1,5 @@
-import React from "react";
-import { connectToggleRefinement } from "react-instantsearch-dom";
+import React from 'react';
+import { connectToggleRefinement } from 'react-instantsearch-dom';
 
 // improved version of https://www.algolia.com/doc/api-reference/widgets/toggle-refinement/react/#html-output with the same classes
 // I copied the code base from https://github.com/algolia/react-instantsearch/blob/master/packages/react-instantsearch-dom/src/components/ToggleRefinement.js
