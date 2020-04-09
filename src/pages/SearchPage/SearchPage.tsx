@@ -12,7 +12,6 @@ import {
   fontWeight,
   Disclaimer,
   SendUsFeedbackCard,
-  Button,
   AlarmBellRingIcon,
   SuccessAlert,
 } from '../../ui';
@@ -111,20 +110,16 @@ const StyledSearchBox = styled(SearchBox)`
   }
 `;
 
-const GetUpdateAlertsButton = styled(Button)`
+const StickyButton = styled(SearchButton)`
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%);
+`;
+
+const GetUpdateAlertsButton = styled(StickyButton)`
   display: none;
   @media ${devices.Desktop} {
-    display: inline-flex;
-    align-items: center;
-    margin-left: 14px;
-    color: ${colors.Primary};
-    background-color: transparent;
-    padding: 8px 16px;
-
-    &:hover {
-      box-shadow: none;
-      background-color: ${colors.ButtonLightHover};
-    }
+    display: flex;
   }
 `;
 
@@ -162,12 +157,7 @@ const StyledSendUsFeedbackCard = styled(SendUsFeedbackCard)`
   }
 `;
 
-const FilterButton = styled(SearchButton)`
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-  left: 50%;
-  position: fixed;
-  transform: translateX(-50%);
-
+const FilterButton = styled(StickyButton)`
   @media ${devices.Desktop} {
     display: none;
   }
@@ -243,12 +233,6 @@ export const SearchPage = () => {
                   placeholder: 'Search by keyword, drug, NCTID, ...',
                 }}
               />
-              {displayGetUpdateAlertsButton && (
-                <GetUpdateAlertsButton onClick={openModal}>
-                  <AlarmBellRingIcon />
-                  <ButtonText>Get update alerts</ButtonText>
-                </GetUpdateAlertsButton>
-              )}
             </SearchTop>
             <SearchSuggestions />
             <StyledStats
@@ -277,6 +261,12 @@ export const SearchPage = () => {
           filters
         </FilterButton>
       </InstantSearch>
+      {displayGetUpdateAlertsButton && (
+        <GetUpdateAlertsButton onClick={openModal}>
+          <AlarmBellRingIcon />
+          <ButtonText>Get update alerts</ButtonText>
+        </GetUpdateAlertsButton>
+      )}
       {isModalOpen && (
         <UpdateAlertsModal
           onRequestClose={closeModal}
