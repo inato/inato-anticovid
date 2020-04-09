@@ -8,7 +8,7 @@ import qs from 'qs';
 import {
   colors,
   devices,
-  SearchButton,
+  StickyButton,
   fontWeight,
   Disclaimer,
   SendUsFeedbackCard,
@@ -108,12 +108,6 @@ const StyledSearchBox = styled(SearchBox)`
     width: 50%;
     min-width: 500px;
   }
-`;
-
-const StickyButton = styled(SearchButton)`
-  left: 50%;
-  position: fixed;
-  transform: translateX(-50%);
 `;
 
 const GetUpdateAlertsButton = styled(StickyButton)`
