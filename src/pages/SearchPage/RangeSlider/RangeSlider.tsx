@@ -3,7 +3,6 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { connectRange } from 'react-instantsearch-dom';
 import styled from 'styled-components';
 import Rheostat, { PublicState } from 'rheostat';
-import { format } from 'date-fns';
 
 import { colors } from '../../../ui';
 
@@ -17,11 +16,18 @@ interface Props {
   min?: number;
   max?: number;
   refine: (refinement: Refinement) => void;
+  formatValueForDisplay: (value?: number) => string;
   canRefine: boolean;
 }
 
 export const RangeSlider = connectRange(
-  ({ currentRefinement, min, max, refine }: Props) => {
+  ({
+    currentRefinement,
+    min,
+    max,
+    refine,
+    formatValueForDisplay = (value?: number) => value?.toString() ?? '',
+  }: Props) => {
     const [rheostatState, setRheostatState] = useState<PublicState>();
 
     useEffect(() => {
@@ -34,7 +40,7 @@ export const RangeSlider = connectRange(
 
     const onChange = useCallback(
       ({ values: [min, max] }: PublicState) => {
-        if (min && max) {
+        if (areMinAndMaxOkForRefinement({ min, max })) {
           refine({ min, max });
         }
       },
@@ -55,13 +61,25 @@ export const RangeSlider = connectRange(
         onValuesUpdated={onValuesUpdated}
       >
         <div className="rheostat-values">
-          <div>{formatDate(rheostatState?.values[0])}</div>
-          <div>{formatDate(rheostatState?.values[1])}</div>
+          <div>{formatValueForDisplay(rheostatState?.values[0])}</div>
+          <div>{formatValueForDisplay(rheostatState?.values[1])}</div>
         </div>
       </StyledRheostat>
     );
   },
 );
+
+const areMinAndMaxOkForRefinement = ({
+  min,
+  max,
+}: {
+  min?: number;
+  max?: number;
+}) =>
+  min !== undefined &&
+  !window.isNaN(min) &&
+  max !== undefined &&
+  !window.isNaN(max);
 
 const StyledRheostat = styled(Rheostat)`
   margin: 0 4px;
@@ -131,6 +149,3 @@ const StyledRheostat = styled(Rheostat)`
     box-shadow: none;
   }
 `;
-
-const formatDate = (timestamp?: number) =>
-  timestamp ? format(new Date(timestamp), 'MMM d, uu') : '';
