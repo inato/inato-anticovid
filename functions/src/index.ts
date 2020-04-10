@@ -73,6 +73,7 @@ const feedServices = <Ret, Argument1, Argument2>(
   const reportingService = new SentryReportingService({
     dsn: functions.config().sentry.dsn,
     environment: functions.config().sentry.environment,
+    release: functions.config().sentry.release,
   });
 
   const availableServices: Map<keyof Services, any> = new Map<

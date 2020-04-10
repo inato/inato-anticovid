@@ -58,6 +58,10 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
+    env:
+      SENTRY_ORG: inato
+      SENTRY_PROJECT: anticovid-backend
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
     steps:
       - uses: actions/checkout@v2
@@ -105,6 +109,28 @@ jobs:
         if: github.ref == 'refs/heads/staging'
         with:
           args: use staging
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      - name: Create new Sentry release
+        id: sentry
+        run: |
+          curl -sL https://sentry.io/get-cli/ | bash
+          # Create new Sentry release
+          export SENTRY_RELEASE=$(sentry-cli releases propose-version)
+          sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
+          sentry-cli releases set-commits --auto $SENTRY_RELEASE
+          sentry-cli releases finalize $SENTRY_RELEASE
+          echo ::set-output name=release::$SENTRY_RELEASE
+      - name: Deploy staging sentry release
+        if: github.ref == 'refs/heads/staging'
+        run: sentry-cli releases deploys ${{ steps.sentry.outputs.release }} new -e staging
+      - name: Deploy production sentry release
+        if: github.ref == 'refs/heads/master'
+        run: sentry-cli releases deploys ${{ steps.sentry.outputs.release }} new -e staging
+      - name: Set sentry release to firebase functions
+        uses: w9jds/firebase-action@master
+        with:
+          args: functions:config:set sentry.release=${{ steps.sentry.outputs.release }}
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - uses: w9jds/firebase-action@master
