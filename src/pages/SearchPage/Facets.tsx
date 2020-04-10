@@ -54,7 +54,10 @@ export const Facets = ({
         />
         <FacetContainer>
           <h3>Recruitment target</h3>
-          <RangeSlider attribute="total_recruitment_size" />
+          <RangeSlider
+            attribute="total_recruitment_size"
+            maxAllowedValue={10000}
+          />
         </FacetContainer>
         <Facet
           attribute="clinical_outcome_extracted_"
