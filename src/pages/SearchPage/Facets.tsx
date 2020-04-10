@@ -1,6 +1,7 @@
 import React from 'react';
 import { RefinementList } from 'react-instantsearch-dom';
 import styled from 'styled-components';
+import { format } from 'date-fns';
 
 import {
   colors,
@@ -51,20 +52,27 @@ export const Facets = ({
           searchable
           showMore
         />
+        <FacetContainer>
+          <h3>Recruitment target</h3>
+          <RangeSlider attribute="total_recruitment_size" />
+        </FacetContainer>
         <Facet
           attribute="clinical_outcome_extracted_"
           title="Clinical Outcome"
         />
         <FacetContainer>
           <h3>Registration date</h3>
-          <RangeSlider attribute="registration_timestamp" />
+          <RangeSlider
+            attribute="registration_timestamp"
+            formatValueForDisplay={formatDate}
+          />
         </FacetContainer>
+        <Facet attribute="study_type" title="Study Type" showMore />
+        <Facet attribute="countries" title="Countries" searchable showMore />
         <Facet
           attribute="surrogate_outcome_extracted_"
           title="Surrogate Outcome"
         />
-        <Facet attribute="study_type" title="Study Type" showMore />
-        <Facet attribute="countries" title="Countries" searchable showMore />
         <Footer>
           {hasActiveSearchFilters && (
             <OpenSubscriptionModalButton onClick={openSubscriptionModal}>
@@ -82,6 +90,9 @@ export const Facets = ({
     </LeftPanel>
   );
 };
+
+const formatDate = (timestamp?: number) =>
+  timestamp ? format(new Date(timestamp), 'MMM d, uu') : '';
 
 const Facet = ({
   attribute,
