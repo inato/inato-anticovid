@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useMemo } from 'react';
 import { connectRange } from 'react-instantsearch-dom';
 import styled from 'styled-components';
 import Rheostat, { PublicState } from 'rheostat';
@@ -15,6 +15,7 @@ interface Props {
   currentRefinement: Refinement;
   min?: number;
   max?: number;
+  maxAllowedValue?: number;
   refine: (refinement: Refinement) => void;
   formatValueForDisplay: (value?: number) => string;
   canRefine: boolean;
@@ -27,16 +28,23 @@ export const RangeSlider = connectRange(
     max,
     refine,
     formatValueForDisplay = (value?: number) => value?.toString() ?? '',
+    maxAllowedValue,
   }: Props) => {
     const [rheostatState, setRheostatState] = useState<PublicState>();
+
+    const realMax = useMemo(
+      () =>
+        maxAllowedValue && max && max > maxAllowedValue ? maxAllowedValue : max,
+      [max, maxAllowedValue],
+    );
 
     useEffect(() => {
       setRheostatState({
         min: min ?? currentRefinement.min,
-        max: max ?? currentRefinement.max,
+        max: realMax ?? currentRefinement.max,
         values: [currentRefinement.min, currentRefinement.max],
       });
-    }, [setRheostatState, currentRefinement, min, max]);
+    }, [setRheostatState, currentRefinement, min, realMax]);
 
     const onChange = useCallback(
       ({ values: [min, max] }: PublicState) => {
