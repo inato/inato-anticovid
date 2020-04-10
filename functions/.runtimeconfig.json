@@ -17,7 +17,8 @@
   },
   "sentry": {
     "dsn": "",
-    "environment": "dev"
+    "environment": "dev",
+    "release": ""
   },
   "app": {
     "unsubscribedredirecturl": "http://localhost:3000/search?unsubscribedFromAlerts=true"

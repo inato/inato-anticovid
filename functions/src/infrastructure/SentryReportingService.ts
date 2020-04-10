@@ -6,11 +6,13 @@ export class SentryReportingService implements ReportingService {
   constructor({
     dsn,
     environment,
+    release,
   }: {
     dsn: string | undefined;
     environment: string;
+    release: string;
   }) {
-    Sentry.init({ dsn, environment });
+    Sentry.init({ dsn, environment, release });
   }
 
   reportError(e: Error) {
