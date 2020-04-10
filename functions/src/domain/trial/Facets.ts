@@ -7,6 +7,7 @@ export enum Facets {
   countries = 'countries',
   registrationTimestamp = 'registration_timestamp',
   hasResultsPublications = 'has_results_publications',
+  totalRecruitmentSize = 'total_recruitment_size',
 }
 
 export interface FacetFilters {
@@ -48,6 +49,7 @@ export const orderedFacets: ReadonlyArray<{
   { name: Facets.studyType },
   { name: Facets.surrogateOutcomeExtracted },
   { name: Facets.hasResultsPublications },
+  { name: Facets.totalRecruitmentSize },
   { name: Facets.therapeuticClasses, searchable: true },
 ];
 
