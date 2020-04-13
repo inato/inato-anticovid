@@ -126,7 +126,7 @@ jobs:
         run: sentry-cli releases deploys ${{ steps.sentry.outputs.release }} new -e staging
       - name: Deploy production sentry release
         if: github.ref == 'refs/heads/master'
-        run: sentry-cli releases deploys ${{ steps.sentry.outputs.release }} new -e staging
+        run: sentry-cli releases deploys ${{ steps.sentry.outputs.release }} new -e production
       - name: Set sentry release to firebase functions
         uses: w9jds/firebase-action@master
         with:
