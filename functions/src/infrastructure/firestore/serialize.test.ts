@@ -57,7 +57,7 @@ describe('deserialize', () => {
         study_types: [],
         surrogate_outcomes_extracted: [],
         therapeutic_classes: [],
-        total_recruitment_size: { min: undefined, max: undefined },
+        total_recruitment_size: { min: null, max: null },
       },
       search_results: ['trialId'],
     });
