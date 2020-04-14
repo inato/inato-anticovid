@@ -25,6 +25,7 @@ import icon from './Filter.svg';
 import { SearchSuggestions } from './SearchSuggestions';
 import { SearchResults } from './SearchResults';
 import { UpdateAlertsModal } from './UpdateAlertsModal';
+import { hasActiveSearchFilters } from './SearchFilters';
 
 const searchClient = algoliasearch(
   config.algolia.applicationId,
@@ -56,13 +57,6 @@ export const searchStateToUrl = (
 const urlToSearchState = (
   location: ReturnType<typeof useHistory>['location'],
 ) => qs.parse(location.search.slice(1));
-
-const hasActiveSearchFilters = (searchState: {
-  refinementList?: { [key: string]: Array<string> };
-  toggle?: { [key: string]: string };
-}) =>
-  Object.keys(searchState?.refinementList ?? {}).length > 0 ||
-  Object.keys(searchState?.toggle ?? {}).length > 0;
 
 const Container = styled.div`
   padding: 32px 16px;
