@@ -84,7 +84,7 @@ export const TargetedPatients = ({
   return (
     <HitHighlightContainer>
       <PatientsIcon />
-      {targetedPatientsNumber} patients targeted
+      {Intl.NumberFormat().format(targetedPatientsNumber)} patients targeted
     </HitHighlightContainer>
   );
 };
