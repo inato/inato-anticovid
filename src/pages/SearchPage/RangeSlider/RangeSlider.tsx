@@ -23,9 +23,9 @@ interface Props {
 
 const formatNumberValueForDisplay = (value?: number, maxValue?: number) => {
   if (value && maxValue && value >= maxValue) {
-    return `+${maxValue.toString()}`;
+    return `+${new Intl.NumberFormat().format(maxValue)}`;
   }
-  return value?.toString() ?? '';
+  return value || value === 0 ? new Intl.NumberFormat().format(value) : '';
 };
 
 export const RangeSlider = connectRange(
