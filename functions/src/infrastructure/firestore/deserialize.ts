@@ -19,10 +19,15 @@ const decodeEmail = (email: unknown) =>
 const decodeSearchQuery = (searchQuery: unknown) =>
   Option.fromNullable(decod.optional(decod.string)(searchQuery) || null);
 
-const decodeOptionalRangeValues = (range: unknown) => ({
-  min: decod.at('min', decod.optional(decod.number))(range) ?? undefined,
-  max: decod.at('max', decod.optional(decod.number))(range) ?? undefined,
-});
+const decodeOptionalRangeValues = (range: unknown) =>
+  decod.optional(
+    decod.props({
+      min: (value: unknown) =>
+        decod.at('min', decod.optional(decod.number))(value) ?? undefined,
+      max: (value: unknown) =>
+        decod.at('max', decod.optional(decod.number))(value) ?? undefined,
+    }),
+  )(range) ?? { min: undefined, max: undefined };
 
 const decodeSearch = (search: unknown) => ({
   searchQuery: decod.at('search_query', decodeSearchQuery)(search),
