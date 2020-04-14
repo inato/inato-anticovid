@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { connectRange } from 'react-instantsearch-dom';
 import styled from 'styled-components';
 import Rheostat, { PublicState } from 'rheostat';
@@ -31,44 +30,59 @@ const formatNumberValueForDisplay = (value?: number, maxValue?: number) => {
 export const RangeSlider = connectRange(
   ({
     currentRefinement,
-    min = 0,
-    max = 0,
+    min,
+    max,
     refine,
     formatValueForDisplay = formatNumberValueForDisplay,
     maxAllowedValue,
   }: Props) => {
+    if (min === undefined || max === undefined) {
+      return null;
+    }
+
     const realMax = useMemo(
       () =>
         maxAllowedValue && max && max > maxAllowedValue ? maxAllowedValue : max,
       [max, maxAllowedValue],
     );
 
-    const onValuesUpdated = useCallback(
-      ({ values: [valueMin, valueMax] }: PublicState) => {
-        const computedMax = valueMax === maxAllowedValue ? max : valueMax;
+    const [values, setValues] = useState({
+      min: currentRefinement.min ?? min,
+      max: currentRefinement.max > realMax ? realMax : currentRefinement.max,
+    });
 
+    const onChange = useCallback(
+      ({ values: [valueMin, valueMax] }: PublicState) => {
+        const computedMax =
+          maxAllowedValue && valueMax >= maxAllowedValue ? max : valueMax;
         if (areMinAndMaxOkForRefinement({ min, max: computedMax })) {
+          setValues({ max: valueMax, min: valueMin });
           refine({ min: valueMin, max: computedMax });
         }
       },
       [max, maxAllowedValue, min, refine],
     );
 
-    const values = useMemo(
-      () => [currentRefinement.min, currentRefinement.max],
-      [currentRefinement.max, currentRefinement.min],
-    );
+    const onValuesUpdated = ({ values }: PublicState) => {
+      setValues({ max: values[1], min: values[0] });
+    };
+
+    const formattedValues = useMemo(() => [values.min, values.max], [
+      values.max,
+      values.min,
+    ]);
 
     return (
       <StyledRheostat
         min={min}
         max={realMax}
-        values={values}
+        values={formattedValues}
+        onChange={onChange}
         onValuesUpdated={onValuesUpdated}
       >
         <div className="rheostat-values">
-          <div>{formatValueForDisplay(values[0])}</div>
-          <div>{formatValueForDisplay(values[1], maxAllowedValue)}</div>
+          <div>{formatValueForDisplay(values.min)}</div>
+          <div>{formatValueForDisplay(values.max, maxAllowedValue)}</div>
         </div>
       </StyledRheostat>
     );
