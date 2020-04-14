@@ -16,6 +16,8 @@ import {
 } from '../../ui';
 import config from '../../config';
 
+import { getActiveSearchFilters, SearchState } from './SearchFilters';
+
 const Bold = styled.strong`
   font-weight: ${props => props.theme.fontWeights.semiBold};
   color: ${colors.DarkGray};
@@ -176,27 +178,16 @@ export const UpdateAlertsModal = ({
   searchState,
 }: {
   onRequestClose: () => void;
-  searchState: {
-    refinementList?: { [key: string]: Array<string> };
-    toggle?: { [key: string]: string };
-  };
+  searchState: SearchState;
 }) => {
   const [email, setEmail] = useState('');
   const [subscriptionState, setSubscriptionState] = useState<
     'loading' | 'success' | 'error' | undefined
   >(undefined);
 
-  const tags = useMemo(() => {
-    return [
-      searchState.toggle?.has_results_publications
-        ? 'Has results publications'
-        : null,
-      ...Object.values(searchState.refinementList ?? []).reduce(
-        (acc, value) => [...acc, ...value],
-        [],
-      ),
-    ].filter((value): value is string => !!value);
-  }, [searchState]);
+  const tags = useMemo(() => getActiveSearchFilters(searchState), [
+    searchState,
+  ]);
 
   const emailChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);

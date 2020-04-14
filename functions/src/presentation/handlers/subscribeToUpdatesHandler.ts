@@ -83,6 +83,10 @@ const parseQueryString = ({ query }: functions.https.Request) =>
           'has_results_publications',
           decodeHasResultsPublications,
         ),
+        totalRecruitmentSize: decod.at(
+          'total_recruitment_size',
+          decodeOptionalRangeValues,
+        ),
       })(query),
     }),
     e =>
@@ -93,6 +97,16 @@ const parseQueryString = ({ query }: functions.https.Request) =>
 
 const decodeOptionalArrayOfString = (array: unknown) =>
   decod.optional(decod.array(decod.string))(array) || [];
+
+const decodeOptionalRangeValues = (range: unknown) =>
+  decod.optional(
+    decod.props({
+      min: (value: unknown) =>
+        decod.at('min', decod.optional(decod.number))(value) ?? undefined,
+      max: (value: unknown) =>
+        decod.at('max', decod.optional(decod.number))(value) ?? undefined,
+    }),
+  )(range) ?? { min: undefined, max: undefined };
 
 const decodeEmailAddress = (email: unknown) =>
   EmailAddress.unsafeParse(decod.string(email));
