@@ -15,8 +15,12 @@
         "destination": "/index.html"
       },
       {
-        "source": "/unsubscribe",
+        "source": "/functions/unsubscribeFromUpdates",
         "function": "unsubscribeFromUpdates"
+      },
+      {
+        "source": "/functions/subscribeToUpdates",
+        "function": "subscribeToUpdates"
       }
     ]
   },
