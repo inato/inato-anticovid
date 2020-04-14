@@ -57,7 +57,7 @@ describe('AlgoliaIndexingService', () => {
   });
 
   describe('searchTrials', () => {
-    it('should search trials', async () => {
+    it('should find trials about Chloroquine with 100 recruitment target maximum', async () => {
       const indexingService = new AlgoliaIndexingService(TEST_INDEX);
       const registrationDate = new Date();
       await indexingService.indexTrials(
@@ -66,8 +66,14 @@ describe('AlgoliaIndexingService', () => {
             trialId: trialIdFactory('trialId1'),
             publicTitle: 'Chloroquine',
             registrationDate,
+            totalRecruitmentSize: 1,
           }),
-          trialFactory({ trialId: trialIdFactory('trialId2') }),
+          trialFactory({
+            trialId: trialIdFactory('trialId2'),
+            publicTitle: 'Chloroquine',
+            totalRecruitmentSize: 1000,
+          }),
+          trialFactory({ trialId: trialIdFactory('trialId3') }),
         ],
         { wait: true },
       )();
@@ -81,7 +87,9 @@ describe('AlgoliaIndexingService', () => {
 
       const results = await indexingService.searchTrials({
         searchQuery: Option.some('Chloroqune'),
-        facetFilters: facetFiltersFactory(),
+        facetFilters: facetFiltersFactory({
+          totalRecruitmentSize: { min: undefined, max: 100 },
+        }),
       })();
 
       expect(results).toStrictEqual(

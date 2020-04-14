@@ -7,6 +7,7 @@ export enum Facets {
   countries = 'countries',
   registrationTimestamp = 'registration_timestamp',
   hasResultsPublications = 'has_results_publications',
+  totalRecruitmentSize = 'total_recruitment_size',
 }
 
 export interface FacetFilters {
@@ -17,6 +18,7 @@ export interface FacetFilters {
   studyTypes: Array<string>;
   countries: Array<string>;
   hasResultsPublications: boolean | null;
+  totalRecruitmentSize: { min: number | undefined; max: number | undefined };
 }
 
 export const facetFiltersFactory = ({
@@ -27,6 +29,7 @@ export const facetFiltersFactory = ({
   studyTypes = [],
   countries = [],
   hasResultsPublications = null,
+  totalRecruitmentSize = { min: undefined, max: undefined },
 }: Partial<FacetFilters> = {}) => ({
   recruitmentStatus,
   therapeuticClasses,
@@ -35,6 +38,7 @@ export const facetFiltersFactory = ({
   studyTypes,
   countries,
   hasResultsPublications,
+  totalRecruitmentSize,
 });
 
 export const orderedFacets: ReadonlyArray<{
@@ -48,6 +52,7 @@ export const orderedFacets: ReadonlyArray<{
   { name: Facets.studyType },
   { name: Facets.surrogateOutcomeExtracted },
   { name: Facets.hasResultsPublications },
+  { name: Facets.totalRecruitmentSize },
   { name: Facets.therapeuticClasses, searchable: true },
 ];
 

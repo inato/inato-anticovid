@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { connectRange } from 'react-instantsearch-dom';
 import styled from 'styled-components';
 import Rheostat, { PublicState } from 'rheostat';
-import { format } from 'date-fns';
 
 import { colors } from '../../../ui';
 
@@ -16,52 +15,77 @@ interface Props {
   currentRefinement: Refinement;
   min?: number;
   max?: number;
+  maxAllowedValue?: number;
   refine: (refinement: Refinement) => void;
+  formatValueForDisplay: (value?: number, maxValue?: number) => string;
   canRefine: boolean;
 }
 
+const formatNumberValueForDisplay = (value?: number, maxValue?: number) => {
+  if (value && maxValue && value >= maxValue) {
+    return `+${maxValue.toString()}`;
+  }
+  return value?.toString() ?? '';
+};
+
 export const RangeSlider = connectRange(
-  ({ currentRefinement, min, max, refine }: Props) => {
-    const [rheostatState, setRheostatState] = useState<PublicState>();
-
-    useEffect(() => {
-      setRheostatState({
-        min: min ?? currentRefinement.min,
-        max: max ?? currentRefinement.max,
-        values: [currentRefinement.min, currentRefinement.max],
-      });
-    }, [setRheostatState, currentRefinement, min, max]);
-
-    const onChange = useCallback(
-      ({ values: [min, max] }: PublicState) => {
-        if (min && max) {
-          refine({ min, max });
-        }
-      },
-      [refine],
+  ({
+    currentRefinement,
+    min = 0,
+    max = 0,
+    refine,
+    formatValueForDisplay = formatNumberValueForDisplay,
+    maxAllowedValue,
+  }: Props) => {
+    const realMax = useMemo(
+      () =>
+        maxAllowedValue && max && max > maxAllowedValue ? maxAllowedValue : max,
+      [max, maxAllowedValue],
     );
 
     const onValuesUpdated = useCallback(
-      (state: PublicState) => setRheostatState(state),
-      [],
+      ({ values: [valueMin, valueMax] }: PublicState) => {
+        const computedMax = valueMax === maxAllowedValue ? max : valueMax;
+
+        if (areMinAndMaxOkForRefinement({ min, max: computedMax })) {
+          refine({ min: valueMin, max: computedMax });
+        }
+      },
+      [max, maxAllowedValue, min, refine],
+    );
+
+    const values = useMemo(
+      () => [currentRefinement.min, currentRefinement.max],
+      [currentRefinement.max, currentRefinement.min],
     );
 
     return (
       <StyledRheostat
-        min={rheostatState?.min}
-        max={rheostatState?.max}
-        values={rheostatState?.values}
-        onChange={onChange}
+        min={min}
+        max={realMax}
+        values={values}
         onValuesUpdated={onValuesUpdated}
       >
         <div className="rheostat-values">
-          <div>{formatDate(rheostatState?.values[0])}</div>
-          <div>{formatDate(rheostatState?.values[1])}</div>
+          <div>{formatValueForDisplay(values[0])}</div>
+          <div>{formatValueForDisplay(values[1], maxAllowedValue)}</div>
         </div>
       </StyledRheostat>
     );
   },
 );
+
+const areMinAndMaxOkForRefinement = ({
+  min,
+  max,
+}: {
+  min?: number;
+  max?: number;
+}) =>
+  min !== undefined &&
+  !window.isNaN(min) &&
+  max !== undefined &&
+  !window.isNaN(max);
 
 const StyledRheostat = styled(Rheostat)`
   margin: 0 4px;
@@ -131,6 +155,3 @@ const StyledRheostat = styled(Rheostat)`
     box-shadow: none;
   }
 `;
-
-const formatDate = (timestamp?: number) =>
-  timestamp ? format(new Date(timestamp), 'MMM d, uu') : '';

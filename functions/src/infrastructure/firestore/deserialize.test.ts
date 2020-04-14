@@ -46,6 +46,7 @@ const setupUseCase = ({
       study_types: [],
       countries: [],
       has_results_publications: null,
+      total_recruitment_size: { min: undefined, max: undefined },
       ...search,
     },
     search_results: ['trialId'],
