@@ -31,58 +31,68 @@ export const RangeSlider = connectRange(
   ({
     currentRefinement,
     min,
-    max,
+    max: unclampedMax,
     refine,
     formatValueForDisplay = formatNumberValueForDisplay,
     maxAllowedValue,
   }: Props) => {
-    if (min === undefined || max === undefined) {
+    if (min === undefined || unclampedMax === undefined) {
       return null;
     }
 
-    const realMax = useMemo(
+    const clampedMax = useMemo(
       () =>
-        maxAllowedValue && max && max > maxAllowedValue ? maxAllowedValue : max,
-      [max, maxAllowedValue],
+        maxAllowedValue && unclampedMax && unclampedMax > maxAllowedValue
+          ? maxAllowedValue
+          : unclampedMax,
+      [maxAllowedValue, unclampedMax],
     );
 
-    const [values, setValues] = useState({
+    const [displayedValues, setDisplayedValues] = useState({
       min: currentRefinement.min ?? min,
-      max: currentRefinement.max > realMax ? realMax : currentRefinement.max,
+      max:
+        currentRefinement.max > clampedMax ? clampedMax : currentRefinement.max,
     });
 
     const onChange = useCallback(
       ({ values: [valueMin, valueMax] }: PublicState) => {
         const computedMax =
-          maxAllowedValue && valueMax >= maxAllowedValue ? max : valueMax;
+          maxAllowedValue && valueMax >= maxAllowedValue
+            ? unclampedMax
+            : valueMax;
         if (areMinAndMaxOkForRefinement({ min, max: computedMax })) {
-          setValues({ max: valueMax, min: valueMin });
+          setDisplayedValues({ max: computedMax, min: valueMin });
           refine({ min: valueMin, max: computedMax });
         }
       },
-      [max, maxAllowedValue, min, refine],
+      [maxAllowedValue, min, refine, unclampedMax],
     );
 
     const onValuesUpdated = ({ values }: PublicState) => {
-      setValues({ max: values[1], min: values[0] });
+      setDisplayedValues({ min: values[0], max: values[1] });
     };
 
-    const formattedValues = useMemo(() => [values.min, values.max], [
-      values.max,
-      values.min,
-    ]);
+    const formattedValues = useMemo(
+      () => [
+        currentRefinement.min ?? min,
+        currentRefinement.max > clampedMax ? clampedMax : currentRefinement.max,
+      ],
+      [currentRefinement.max, currentRefinement.min, min, clampedMax],
+    );
 
     return (
       <StyledRheostat
         min={min}
-        max={realMax}
+        max={clampedMax}
         values={formattedValues}
         onChange={onChange}
         onValuesUpdated={onValuesUpdated}
       >
         <div className="rheostat-values">
-          <div>{formatValueForDisplay(values.min)}</div>
-          <div>{formatValueForDisplay(values.max, maxAllowedValue)}</div>
+          <div>{formatValueForDisplay(displayedValues.min)}</div>
+          <div>
+            {formatValueForDisplay(displayedValues.max, maxAllowedValue)}
+          </div>
         </div>
       </StyledRheostat>
     );
