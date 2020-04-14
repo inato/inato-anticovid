@@ -18,6 +18,7 @@ export interface FacetFilters {
   studyTypes: Array<string>;
   countries: Array<string>;
   hasResultsPublications: boolean | null;
+  totalRecruitmentSize: { min: number | undefined; max: number | undefined };
 }
 
 export const facetFiltersFactory = ({
@@ -28,6 +29,7 @@ export const facetFiltersFactory = ({
   studyTypes = [],
   countries = [],
   hasResultsPublications = null,
+  totalRecruitmentSize = { min: undefined, max: undefined },
 }: Partial<FacetFilters> = {}) => ({
   recruitmentStatus,
   therapeuticClasses,
@@ -36,6 +38,7 @@ export const facetFiltersFactory = ({
   studyTypes,
   countries,
   hasResultsPublications,
+  totalRecruitmentSize,
 });
 
 export const orderedFacets: ReadonlyArray<{
