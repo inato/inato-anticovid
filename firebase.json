@@ -1,22 +1,27 @@
 {
   "hosting": {
     "public": "build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "redirects": [
+      {
+        "source": "/",
+        "destination": "/analysis",
+        "type": 301
+      }
     ],
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
+      },
+      {
+        "source": "/unsubscribe",
+        "function": "unsubscribeFromUpdates"
       }
     ]
   },
   "functions": {
-    "predeploy": [
-      "yarn --cwd \"$RESOURCE_DIR\" build"
-    ],
+    "predeploy": ["yarn --cwd \"$RESOURCE_DIR\" build"],
     "source": "functions"
   },
   "firestore": {
