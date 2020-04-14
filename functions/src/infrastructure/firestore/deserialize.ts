@@ -19,6 +19,11 @@ const decodeEmail = (email: unknown) =>
 const decodeSearchQuery = (searchQuery: unknown) =>
   Option.fromNullable(decod.optional(decod.string)(searchQuery) || null);
 
+const decodeOptionalRangeValues = (range: unknown) => ({
+  min: decod.at('min', decod.optional(decod.number))(range) ?? undefined,
+  max: decod.at('max', decod.optional(decod.number))(range) ?? undefined,
+});
+
 const decodeSearch = (search: unknown) => ({
   searchQuery: decod.at('search_query', decodeSearchQuery)(search),
   facetFilters: decod.props({
@@ -43,6 +48,10 @@ const decodeSearch = (search: unknown) => ({
     hasResultsPublications: decod.at(
       'has_results_publications',
       decod.nullable(decod.boolean),
+    ),
+    totalRecruitmentSize: decod.at(
+      'total_recruitment_size',
+      decodeOptionalRangeValues,
     ),
   })(search),
 });

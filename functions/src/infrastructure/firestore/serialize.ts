@@ -11,6 +11,7 @@ export const serializeSearch = ({ searchQuery, facetFilters }: Search) => ({
   study_types: facetFilters.studyTypes,
   countries: facetFilters.countries,
   has_results_publications: facetFilters.hasResultsPublications,
+  total_recruitment_size: facetFilters.totalRecruitmentSize,
 });
 
 export const serialize = (subscription: Subscription) => ({

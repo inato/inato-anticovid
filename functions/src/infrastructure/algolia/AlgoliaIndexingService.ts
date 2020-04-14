@@ -132,6 +132,7 @@ export class AlgoliaIndexingService implements IndexingService {
                 page: startPage,
                 hitsPerPage: HITS_PER_PAGE,
                 facetFilters: serializeFacetFilters(facetFilters),
+                numericFilters: serializeNumericFilters(facetFilters),
                 attributesToRetrieve: [
                   'objectID',
                   'public_title',
@@ -203,3 +204,13 @@ const serializeFacetFilters = ({
 
   return facetFilters;
 };
+
+const serializeNumericFilters = ({ totalRecruitmentSize }: FacetFilters) =>
+  [
+    totalRecruitmentSize.min
+      ? `${Facets.totalRecruitmentSize}>=${totalRecruitmentSize.min}`
+      : null,
+    totalRecruitmentSize.max
+      ? `${Facets.totalRecruitmentSize}<=${totalRecruitmentSize.max}`
+      : null,
+  ].filter((filter): filter is string => !!filter);

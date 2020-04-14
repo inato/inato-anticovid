@@ -104,6 +104,9 @@ export const serializeSearchToQueryParams = (search: Search) =>
         surrogate_outcome_extracted_:
           search.facetFilters.surrogateOutcomesExtracted,
       },
+      range: {
+        total_recruitment_size: search.facetFilters.totalRecruitmentSize,
+      },
     }),
   );
 
@@ -122,7 +125,7 @@ const cleanNullValues = (obj: {
 
 const serializeCriteriasForNewResultsForSubscriptionEmail = (
   search: Search,
-): string =>
+): string | null =>
   [
     ...pipe(
       search.searchQuery,
@@ -134,10 +137,18 @@ const serializeCriteriasForNewResultsForSubscriptionEmail = (
     ...search.facetFilters.therapeuticClasses,
     ...search.facetFilters.studyTypes,
     ...search.facetFilters.recruitmentStatus,
-    ...(search.facetFilters.hasResultsPublications
-      ? ['Has results publications']
-      : []),
+    search.facetFilters.hasResultsPublications
+      ? 'Has results publications'
+      : null,
     ...search.facetFilters.countries,
     ...search.facetFilters.clinicalOutcomesExtracted,
     ...search.facetFilters.surrogateOutcomesExtracted,
-  ].join(', ');
+    search.facetFilters.totalRecruitmentSize.min
+      ? `Min ${search.facetFilters.totalRecruitmentSize.min} patients`
+      : null,
+    search.facetFilters.totalRecruitmentSize.max
+      ? `Max ${search.facetFilters.totalRecruitmentSize.max} patients`
+      : null,
+  ]
+    .filter(filter => !!filter)
+    .join(', ');
