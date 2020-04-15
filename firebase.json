@@ -11,16 +11,16 @@
     ],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html"
-      },
-      {
         "source": "/functions/unsubscribeFromUpdates",
         "function": "unsubscribeFromUpdates"
       },
       {
         "source": "/functions/subscribeToUpdates",
         "function": "subscribeToUpdates"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   },
