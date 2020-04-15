@@ -13,5 +13,5 @@
   "firebase": {
     "projectId": "anticovid-staging"
   },
-  "baseApiUrl": "/functions"
+  "baseApiUrl": "https://us-central1-anticovid-staging.cloudfunctions.net"
 }
