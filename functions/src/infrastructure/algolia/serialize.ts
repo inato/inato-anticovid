@@ -12,6 +12,8 @@ export const serialize = (trial: Trial): Record<string, any> => {
     registration_timestamp: trial.registrationDate.getTime(),
     exclusion_criteria: (trial.exclusionCriteria ?? '').slice(0, 500),
     inclusion_criteria: (trial.inclusionCriteria ?? '').slice(0, 500),
+    intervention: (trial.intervention ?? '').slice(0, 500),
+    primary_outcome: (trial.primaryOutcome ?? '').slice(0, 500),
     has_results_publications: trial.hasResultsPublications,
     acronym: trial.acronym,
     countries: trial.countries,
