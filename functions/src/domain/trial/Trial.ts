@@ -4,6 +4,7 @@ export interface TrialConstructorArgs {
   trialId: TrialId;
   publicTitle: string;
   webAddress: string;
+  intervention: string | null;
   recruitmentStatus: string | null;
   therapeuticClasses: Array<string>;
   registrationDate: Date;
@@ -13,6 +14,7 @@ export interface TrialConstructorArgs {
   acronym: string | null;
   totalRecruitmentSize: number;
   countries: Array<string>;
+  primaryOutcome: string | null;
   clinicalOutcomes: Array<string>;
   surrogateOutcomes: Array<string>;
   resultsPublications: Array<{
@@ -29,6 +31,8 @@ export class Trial {
   public readonly publicTitle: string;
 
   public readonly webAddress: string;
+
+  public readonly intervention: string | null;
 
   public readonly recruitmentStatus: string | null;
 
@@ -47,6 +51,8 @@ export class Trial {
   public readonly totalRecruitmentSize: number;
 
   public readonly countries: Array<string>;
+
+  public readonly primaryOutcome: string | null;
 
   public readonly clinicalOutcomes: Array<string>;
 
@@ -78,6 +84,8 @@ export class Trial {
     surrogateOutcomes,
     resultsPublications,
     studyType,
+    intervention,
+    primaryOutcome,
     rest,
   }: TrialConstructorArgs) {
     this.trialId = trialId;
@@ -96,6 +104,8 @@ export class Trial {
     this.surrogateOutcomes = surrogateOutcomes;
     this.resultsPublications = resultsPublications;
     this.studyType = studyType;
+    this.intervention = intervention;
+    this.primaryOutcome = primaryOutcome;
     this.rest = rest;
   }
 }

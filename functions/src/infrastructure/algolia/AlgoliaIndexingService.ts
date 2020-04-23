@@ -49,7 +49,8 @@ export class AlgoliaIndexingService implements IndexingService {
           unknownError(
             e instanceof Error
               ? e.message
-              : 'Unknown algolia replacing all objects error',
+              : `Algolia replacing all objects error: ${(e as any).message ??
+                  'unknown'}`,
           ),
       ),
       TaskEither.map(({ objectIDs }) => objectIDs),

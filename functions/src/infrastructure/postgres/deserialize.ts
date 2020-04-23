@@ -30,6 +30,8 @@ export const deserialize = (row: unknown): Trial => {
       ['has_results_publications'],
       decod.boolean,
     ),
+    primaryOutcome: decod.at(['primary_outcome'], decod.nullable(decod.string)),
+    intervention: decod.at(['intervention'], decod.nullable(decod.string)),
     acronym: decod.at(['acronym'], decod.nullable(decod.string)),
     totalRecruitmentSize: decod.at(['total_recruitment_size'], decod.number),
     countries: decod.at(['countries'], decod.array(decod.string)),
