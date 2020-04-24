@@ -24,6 +24,8 @@ build/Release
 /coverage
 
 /build
+cypress/screenshots
+cypress/videos
 
 .DS_Store
 .env.local
