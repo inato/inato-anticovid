@@ -24,6 +24,8 @@ describe('deserialize', () => {
       countries: ['France'],
       clinical_outcome_extracted_: ['Death'],
       surrogate_outcome_extracted_: ['Viral Load'],
+      primary_outcome: 'Primary outcome',
+      intervention: 'Intervention',
       results_publications: [
         {
           title:
@@ -50,6 +52,8 @@ describe('deserialize', () => {
         countries: ['France'],
         clinicalOutcomes: ['Death'],
         surrogateOutcomes: ['Viral Load'],
+        primaryOutcome: 'Primary outcome',
+        intervention: 'Intervention',
         resultsPublications: [
           {
             title:
