@@ -5,6 +5,7 @@ import { styled } from './styled';
 import { devices } from './media';
 import { colors } from './colors';
 import { CloseIcon } from './icons';
+import { linkCss } from './styles';
 
 const COOKIE_MAX_AGE_IN_SECONDS = 60 * 60 * 24 * 30; // 30 days
 const COOKIE_NAME = `cookie_consent`;
@@ -52,6 +53,10 @@ const Container = styled.div`
   background-color: ${transparentize(0.1, colors.MainBackground)};
 `;
 
+const CloseButton = styled(CloseIcon)`
+  cursor: pointer;
+`;
+
 const ColumnsContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -60,15 +65,27 @@ const ColumnsContainer = styled.div`
 
   max-width: 1200px;
   margin: auto;
-  padding: 16px 0;
+  padding: 16px;
+
+  ${CloseButton} {
+    height: 32px;
+    width: 32px;
+    min-width: 32px;
+    margin-left: 16px;
+  }
 
   @media ${devices.Desktop} {
-    padding: 16px;
+    ${CloseButton} {
+      height: 16px;
+      width: 16px;
+      min-width: 16px;
+      margin-left: 0;
+    }
   }
 `;
 
-const CloseButton = styled(CloseIcon)`
-  cursor: pointer;
+const Text = styled.div`
+  a {
+    ${linkCss}
+  }
 `;
-
-const Text = styled.div``;
