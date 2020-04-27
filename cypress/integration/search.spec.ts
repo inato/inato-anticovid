@@ -21,6 +21,8 @@ describe('Search page', () => {
         // select the device
         cy.device(deviceType);
 
+        cy.setCookie('cookie_consent', 'true');
+
         // go to search page
         cy.visit('/search');
       });
