@@ -13,3 +13,4 @@ export * from './TextBlockWithLaboratory';
 export * from './ToggleRefinementWithCount';
 export * from './BlockTitle';
 export * from './Alert';
+export * from './CookieBanner';

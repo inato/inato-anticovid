@@ -5,7 +5,7 @@ import { Router, Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import config from './config';
-import { colors, devices } from './ui';
+import { colors, devices, CookieBanner } from './ui';
 import { SearchPage } from './pages/SearchPage';
 import logo from './Logo.svg';
 import { AnalysisPage } from './pages/AnalysisPage';
@@ -59,6 +59,7 @@ export default function App() {
           <Redirect to="/analysis" />
         </Switch>
       </Router>
+      <CookieBanner />
     </Root>
   );
 }
