@@ -31,9 +31,38 @@ firebase use staging
 firebase use production
 ```
 
-The local configuration is stored in `.runtimeconfig.json`
+The local configuration is stored in `.runtimeconfig.json`, you can create the file and fill the needed variables:
 
-If you need to launch the `refreshAlgoliaTrialIndex` function, you'll need to set the `pg.password` and `pg.ip` variables in `.runtimeconfig.json` (available in 1password)
+```json
+{
+  "algolia": {
+    "clientid": "QC98I887KP",
+    "apikey": "",
+    "index": "dev_data"
+  },
+  "pg": {
+    "ip": "",
+    "user": "app",
+    "password": "",
+    "port": "5432",
+    "tablename": "who_trial_staging",
+    "db": "postgres"
+  },
+  "postmark": {
+    "apitoken": "frgr"
+  },
+  "sentry": {
+    "dsn": "",
+    "environment": "dev",
+    "release": ""
+  },
+  "app": {
+    "unsubscribedredirecturl": "http://localhost:3000/search?unsubscribedFromAlerts=true"
+  }
+}
+```
+
+If you need to launch the `refreshAlgoliaTrialIndex` function, you'll need to set the `pg.password`, `pg.ip` and `algolia.apikey` variables in `.runtimeconfig.json` (available in 1password for Inato members)
 
 ### Usage
 
