@@ -18,6 +18,8 @@ A complete stack of AntiCovid is composed of the following:
 - Google Cloud Pub/sub, used by functions to communicated with each other.
 - A React front-end application, visitor facing, deployed on Firebase Hosting.
 
+If you're not part of Inato, you'll need an Algolia account and a Postgres database with a table filled with required data to be able to fully run all the components of this project.
+
 ## Development
 
 ### Local app

@@ -1,6 +1,5 @@
 import React, { useState, useCallback, ChangeEvent, useMemo } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import qs from 'qs';
 import { keyframes } from 'styled-components';
 
 import { Modal } from '../../ui/Modal';
@@ -14,7 +13,7 @@ import {
   fontSize,
   lineHeight,
 } from '../../ui';
-import config from '../../config';
+import { useAPIServiceContext } from '../../contexts';
 
 import { getActiveSearchFilters, SearchState } from './SearchFilters';
 
@@ -180,6 +179,7 @@ export const UpdateAlertsModal = ({
   onRequestClose: () => void;
   searchState: SearchState;
 }) => {
+  const apiService = useAPIServiceContext();
   const [email, setEmail] = useState('');
   const [subscriptionState, setSubscriptionState] = useState<
     'loading' | 'success' | 'error' | undefined
@@ -199,21 +199,21 @@ export const UpdateAlertsModal = ({
       return;
     }
     setSubscriptionState('loading');
-    const queryString = {
-      email,
-      ...searchState.toggle,
-      ...searchState.refinementList,
-    };
-    const result = await fetch(
-      `${config.baseApiUrl}/subscribeToUpdates?${qs.stringify(queryString)}`,
-    );
 
-    if (result.status === 204) {
+    const result = await apiService.subscribeToUpdates({
+      email,
+      filters: {
+        ...searchState.toggle,
+        ...searchState.refinementList,
+      },
+    });
+
+    if (result) {
       setSubscriptionState('success');
       return;
     }
     setSubscriptionState('error');
-  }, [email, searchState.refinementList, searchState.toggle]);
+  }, [apiService, email, searchState.refinementList, searchState.toggle]);
 
   return (
     <Modal
