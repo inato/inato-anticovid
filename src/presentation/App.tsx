@@ -4,11 +4,12 @@ import ReactGA from 'react-ga';
 import { Router, Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
-import config from './config';
+import config from '../config';
+import logo from '../assets/Logo.svg';
+
 import { colors, devices, CookieBanner } from './ui';
-import { SearchPage } from './pages/SearchPage';
-import logo from './Logo.svg';
 import { AnalysisPage } from './pages/AnalysisPage';
+import { SearchPage } from './pages/SearchPage';
 import { MethodologyPage } from './pages/MethodologyPage';
 
 const history = createBrowserHistory();

@@ -11,7 +11,7 @@ import {
   BlockTitle,
 } from '../../ui';
 import { useBoolean } from '../../hooks';
-import config from '../../config';
+import config from '../../../config';
 
 import { Introduction } from './Introduction';
 

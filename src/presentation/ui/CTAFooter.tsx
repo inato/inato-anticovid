@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-import config from '../config';
+import { useAPIServiceContext } from '../contexts';
 
 import { colors, devices, fontWeight, Button } from '.';
 
@@ -33,6 +33,7 @@ export const Newsletter = ({ className }: { className?: string }) => (
 );
 
 const Form = () => {
+  const apiService = useAPIServiceContext();
   const [isFormSent, setFormSent] = useState(false);
 
   const onSubmit = useCallback(
@@ -40,17 +41,14 @@ const Form = () => {
       event.preventDefault();
 
       const target = event.target as HTMLFormElement;
-      const body = {
-        email:
-          (target.elements.namedItem('email') as HTMLInputElement).value ?? '',
-      };
-      await fetch(config.emailSubscribeHookUrl, {
-        method: 'POST',
-        body: JSON.stringify(body),
-      });
+      const email =
+        (target.elements.namedItem('email') as HTMLInputElement).value ?? '';
+
+      await apiService.subscribeToNewsletter({ email });
+
       setFormSent(true);
     },
-    [setFormSent],
+    [apiService],
   );
 
   if (isFormSent) {
