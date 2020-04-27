@@ -5,7 +5,7 @@
     "index": "dev_data"
   },
   "pg": {
-    "ip": "***REMOVED***",
+    "ip": "",
     "user": "app",
     "password": "",
     "port": "5432",
