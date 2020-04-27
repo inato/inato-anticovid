@@ -12,7 +12,7 @@ export const getSubscriptionsHandler = ({
   subscriptionRepository: SubscriptionRepository;
 }) => (_request: functions.https.Request, response: functions.Response<any>) =>
   pipe(
-    pipe(getSubscriptions({ subscriptionRepository })),
+    getSubscriptions({ subscriptionRepository }),
     TaskEither.fold(
       error => {
         response.status(500).send(error.reason);
