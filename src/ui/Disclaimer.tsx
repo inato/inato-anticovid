@@ -24,6 +24,32 @@ export const Disclaimer = () => (
       Please refer to the authors before communicating or relying on the
       studies.
     </Line>
+    <PrivacyLine>
+      © 2020 Inato. All Rights Reserved ・{' '}
+      <a
+        href="https://inato.com/terms-of-use"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Terms of use
+      </a>{' '}
+      ・{' '}
+      <a
+        href="https://inato.com/privacy-policy"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Privacy policy
+      </a>{' '}
+      ・{' '}
+      <a
+        href="https://inato.com/cookie-policy"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Cookie policy
+      </a>
+    </PrivacyLine>
   </Container>
 );
 
@@ -37,4 +63,13 @@ const Container = styled.div`
 const Line = styled.span`
   font-size: 12px;
   line-height: 20px;
+
+  a {
+    color: ${colors.GreySecondaryText};
+    text-decoration: underline;
+  }
+`;
+
+const PrivacyLine = styled(Line)`
+  margin-top: 16px;
 `;
