@@ -14,10 +14,10 @@ import {
   SendUsFeedbackCard,
   AlarmBellRingIcon,
   SuccessAlert,
+  PoweredByAlgolia,
 } from '../../ui';
-import config from '../../config';
+import config from '../../../config';
 import { useBoolean } from '../../hooks';
-import { PoweredByAlgolia } from '../../ui/PoweredByAlgolia';
 
 import { Facets } from './Facets';
 import { FilteringProps } from './FilteringProps';

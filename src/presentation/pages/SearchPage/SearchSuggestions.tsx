@@ -4,7 +4,7 @@ import 'firebase/firestore';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
-import config from '../../config';
+import config from '../../../config';
 import { colors } from '../../ui';
 import { InternalLink } from '../../ui/InternalLink';
 
