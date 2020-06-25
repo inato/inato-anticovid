@@ -97,6 +97,8 @@ jobs:
         run: cp src/config/config.prod.json src/config/config.json
       - run: yarn build
         name: Build the app
+      - run: yarn --cwd ./functions build
+        name: Build the functions
       - uses: w9jds/firebase-action@master
         name: Use firebase production environment
         if: github.ref == 'refs/heads/master'
