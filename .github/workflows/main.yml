@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-node@v1
         name: Setup node
         with:
-          node-version: "10.x"
+          node-version: '10.x'
       - uses: actions/cache@v1
         name: Cache app dependencies
         with:
@@ -69,7 +69,7 @@ jobs:
       - uses: actions/setup-node@v1
         name: Setup node
         with:
-          node-version: "10.x"
+          node-version: '10.x'
       - uses: actions/cache@v1
         name: Cache app dependencies
         with:
@@ -143,13 +143,29 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - name: Index trials in Algolia for staging
         if: github.ref == 'refs/heads/staging'
-        run: curl https://us-central1-anticovid-staging.cloudfunctions.net/refreshAlgoliaTrialIndex
+        run: curl -f https://us-central1-anticovid-staging.cloudfunctions.net/refreshAlgoliaTrialIndex
       - name: Set Algolia settings for staging
         if: github.ref == 'refs/heads/staging'
-        run: curl https://us-central1-anticovid-staging.cloudfunctions.net/setAlgoliaSettings
+        run: curl -f https://us-central1-anticovid-staging.cloudfunctions.net/setAlgoliaSettings
       - name: Index trials in Algolia for production
         if: github.ref == 'refs/heads/master'
-        run: curl https://us-central1-anticovid.cloudfunctions.net/refreshAlgoliaTrialIndex
+        run: curl -f https://us-central1-anticovid.cloudfunctions.net/refreshAlgoliaTrialIndex
       - name: Set Algolia settings for production
         if: github.ref == 'refs/heads/master'
-        run: curl https://us-central1-anticovid.cloudfunctions.net/setAlgoliaSettings
+        run: curl -f https://us-central1-anticovid.cloudfunctions.net/setAlgoliaSettings
+
+  notify_slack_on_failure:
+    name: Notify slack on workflow failure
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: always() && github.event_name == 'push'
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v1
+      - uses: 8398a7/action-slack@v2
+        with:
+          status: ${{ env.WORKFLOW_CONCLUSION }}
+          fields: commit,message,job
+        if: env.WORKFLOW_CONCLUSION == 'failure'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
