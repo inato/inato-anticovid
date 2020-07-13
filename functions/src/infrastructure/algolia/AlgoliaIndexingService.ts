@@ -9,7 +9,11 @@ import {
   GenericError,
 } from '../../domain/errors';
 import { Trial, FacetFilters, Facets } from '../../domain';
-import { IndexingService, SearchResult } from '../../application';
+import {
+  IndexingService,
+  SearchResult,
+  LoggingService,
+} from '../../application';
 import { taskEitherExtend } from '../../domain/utils/taskEither';
 
 import { deserializeSearchTrialsHits } from './deserialize';
@@ -20,31 +24,27 @@ const HITS_PER_PAGE = 100;
 export class AlgoliaIndexingService implements IndexingService {
   private readonly algoliaIndex: SearchIndex;
 
-  constructor(algoliaIndex: SearchIndex) {
+  private readonly loggingService: LoggingService;
+
+  constructor({
+    algoliaIndex,
+    loggingService,
+  }: {
+    algoliaIndex: SearchIndex;
+    loggingService: LoggingService;
+  }) {
     this.algoliaIndex = algoliaIndex;
+    this.loggingService = loggingService;
   }
 
   indexTrials(
     trials: ReadonlyArray<Trial>,
     { wait = false }: { wait?: boolean } = {},
   ) {
+    const startTime = new Date().getTime();
     return pipe(
       TaskEither.tryCatch(
-        () =>
-          (async () => {
-            const result = this.algoliaIndex.replaceAllObjects(
-              trials.map(trial => serialize(trial)),
-              {
-                safe: false,
-                batchSize: 50,
-              },
-            );
-
-            if (wait) {
-              return result.wait();
-            }
-            return result;
-          })(),
+        () => this.replaceAllObjects({ trials, wait }),
         e =>
           unknownError(
             e instanceof Error
@@ -53,9 +53,38 @@ export class AlgoliaIndexingService implements IndexingService {
                   'unknown'}`,
           ),
       ),
-      TaskEither.map(({ objectIDs }) => objectIDs),
+      TaskEither.map(({ objectIDs }) => {
+        const endTime = new Date().getTime();
+        const elasped = endTime - startTime;
+        this.loggingService.log(
+          `${objectIDs.length} objects replaced in ${elasped}ms`,
+        );
+        return objectIDs;
+      }),
     );
   }
+
+  private replaceAllObjects = async ({
+    trials,
+    wait,
+  }: {
+    trials: ReadonlyArray<Trial>;
+    wait: boolean;
+  }) => {
+    const result = this.algoliaIndex.replaceAllObjects(
+      trials.map(trial => serialize(trial)),
+      {
+        safe: false,
+        batchSize: 50,
+      },
+    );
+
+    if (wait) {
+      return result.wait();
+    }
+
+    return result;
+  };
 
   setSettings({
     searchableAttributes,
