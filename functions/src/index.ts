@@ -109,7 +109,7 @@ const feedServices = <Ret, Argument1, Argument2>(
           clientId: functions.config().algolia.clientid,
           loggingService,
         });
-        return new AlgoliaIndexingService(algoliaIndex);
+        return new AlgoliaIndexingService({ algoliaIndex, loggingService });
       },
       loggingService: async () => loggingService,
       reportingService: async () => reportingService,

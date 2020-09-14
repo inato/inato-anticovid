@@ -1,6 +1,6 @@
 import * as Either from 'fp-ts/lib/Either';
 import * as Option from 'fp-ts/lib/Option';
-import algoliasearch from 'algoliasearch';
+import algoliasearch, { SearchIndex } from 'algoliasearch';
 
 import {
   trialFactory,
@@ -11,6 +11,7 @@ import {
   orderedFacets,
   attributesToHighlight,
 } from '../../domain';
+import { loggingServiceFactory } from '../../application';
 
 import { AlgoliaIndexingService } from './AlgoliaIndexingService';
 
@@ -20,6 +21,13 @@ const INDEX_NAME = `test_data_${Math.floor(Math.random() * 10000)}`;
 
 const ALGOLIA_CLIENT = algoliasearch(ALGOLIA_CLIENT_ID, TEST_API_KEY);
 const TEST_INDEX = ALGOLIA_CLIENT.initIndex(INDEX_NAME);
+
+const algoliaIndexingServiceFactory = (algoliaIndex: SearchIndex) => {
+  return new AlgoliaIndexingService({
+    algoliaIndex,
+    loggingService: loggingServiceFactory(),
+  });
+};
 
 describe('AlgoliaIndexingService', () => {
   beforeEach(async () => {
@@ -32,7 +40,7 @@ describe('AlgoliaIndexingService', () => {
 
   describe('setSettings', () => {
     it('should call setSettings index method', async () => {
-      const indexingService = new AlgoliaIndexingService(TEST_INDEX);
+      const indexingService = algoliaIndexingServiceFactory(TEST_INDEX);
       const result = await indexingService.setSettings({
         customRanking: orderedCustomRanking,
         searchableAttributes: orderedSearchableAttributes,
@@ -46,7 +54,7 @@ describe('AlgoliaIndexingService', () => {
 
   describe('indexTrials', () => {
     it('should index trials', async () => {
-      const indexingService = new AlgoliaIndexingService(TEST_INDEX);
+      const indexingService = algoliaIndexingServiceFactory(TEST_INDEX);
       const result = await indexingService.indexTrials([
         trialFactory({ trialId: trialIdFactory('trialId1') }),
         trialFactory({ trialId: trialIdFactory('trialId2') }),
@@ -58,7 +66,7 @@ describe('AlgoliaIndexingService', () => {
 
   describe('searchTrials', () => {
     it('should find trials about Chloroquine with 100 recruitment target maximum', async () => {
-      const indexingService = new AlgoliaIndexingService(TEST_INDEX);
+      const indexingService = algoliaIndexingServiceFactory(TEST_INDEX);
       const registrationDate = new Date();
       await indexingService.indexTrials(
         [

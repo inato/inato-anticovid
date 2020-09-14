@@ -1,8 +1,6 @@
 # Functions
 
-## Run locally
-
-### Installation
+## Install
 
 You will need to use node 10 (use nvm)
 
@@ -64,15 +62,15 @@ The local configuration is stored in `.runtimeconfig.json`, you can create the f
 
 If you need to launch the `refreshAlgoliaTrialIndex` function, you'll need to set the `pg.password`, `pg.ip` and `algolia.apikey` variables in `.runtimeconfig.json` (available in 1password for Inato members)
 
-### Usage
+## Run locally
 
-#### Prerequisite: have a JDK installed
+### Prerequisite: have a JDK installed
 
 ```sh
 brew install homebrew/cask/java
 ```
 
-Run:
+### Run
 
 ```sh
 yarn serve
