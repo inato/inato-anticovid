@@ -85,7 +85,7 @@
     "react": "^16.13.0",
     "react-app-polyfill": "^1.0.6",
     "react-dates": "^21.8.0",
-    "react-dev-utils": "^10.2.0",
+    "react-dev-utils": "^11.0.4",
     "react-dom": "^16.13.0",
     "react-ga": "^2.7.0",
     "react-instantsearch-dom": "^6.4.0",
